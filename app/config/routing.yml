@@ -1,0 +1,5 @@
+r_cloud_r:
+    resource: "@RCloudRBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
