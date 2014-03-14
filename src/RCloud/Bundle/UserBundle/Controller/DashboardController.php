@@ -1,15 +1,15 @@
 <?php
 
-namespace RCloud\Bundle\RBundle\Controller;
+namespace RCloud\Bundle\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class EditorController extends Controller
+class DashboardController extends Controller
 {
     /**
-     * @Route("/editor", name="show_editor")
+     * @Route("/dashboard", name="show_dashboard")
      * @Template()
      */
     public function showAction()

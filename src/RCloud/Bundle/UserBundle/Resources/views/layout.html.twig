@@ -1,0 +1,19 @@
+{# src/RCloud/Bundle/UserBundle/Resources/views/layout.html.twig #}
+
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        {% for key, message in app.session.flashbag.all() %}
+            <div class="alert alert-{{ key }}">
+                {{ message|trans({}, 'FOSUserBundle') }}
+            </div>
+        {% endfor %}
+
+        {% block fos_user_content %}{% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{# src/RCloud/Bundle/RBundle/Resources/views/Editor/showEditor.html.twig #}
+
+{% extends '::base.html.twig' %}
+
+{% block title %}RCloud R Editor{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rcloudr/css/editor.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div id="menu">
+        <button id="run">Run the code</button>
+    </div>
+    <div id="editor"></div>
+    <div id="result"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/ace/ace.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
+    <script type="text/javascript">
+        var editor = ace.edit('editor');
+        editor.setTheme('ace/theme/monokai');
+        editor.getSession().setMode('ace/mode/r');
+
+        $(document).ready(function() {
+            $('#run').click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('run_script_ajax') }}",
+                    data: {
+                        script: editor.getValue()
+                    },
+                    beforeSend: function(jqXHR, settings) {
+                        alert(editor.getValue());
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        $('#result').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
