@@ -35,10 +35,10 @@
                         script: editor.getValue()
                     },
                     beforeSend: function(jqXHR, settings) {
-                        alert(editor.getValue());
+                        $('#result').html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="" title="" />')
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-
+                        $('#result').html(textStatus);
                     },
                     success: function(data, textStatus, jqXHR) {
                         $('#result').html(data);
