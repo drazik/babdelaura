@@ -11,3 +11,7 @@ body {
     width: 100%;
     height: 200px;
 }
+
+#result {
+    font-family: Consolas;
+}
