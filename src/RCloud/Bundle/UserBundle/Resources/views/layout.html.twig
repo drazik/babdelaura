@@ -8,7 +8,7 @@
 
 {% block body %}
     <div class="wrapper">
-        {% for key, message in app.session.flashbag.all() %}
+        {% for key, messages in app.session.flashbag.all() %}
             {% for messsage in messages %}
                 <div class="alert alert-{{ key }}">
                     {{ message|trans({}, 'FOSUserBundle') }}
