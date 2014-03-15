@@ -2,8 +2,36 @@
 
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/dashboard.css') }}" />
+{% endblock %}
+
 {% block body %}
-<ul>
-    <li><a href="{{ path('show_editor') }}">Afficher l'editeur de code</a></li>
-</ul>
+    <div class="wrapper">
+        <div>
+            Bienvenue, {{ app.user.username }}. <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+        </div>
+        <ul id="dashboard" class="unstyled">
+            <li class="dashboard-item">
+                <a href="{{ path('show_editor') }}">
+                    <i class="fa fa-terminal fa-5x"></i>
+                    <span class="dashboard-item-text">Editeur</span>
+                </a>
+            </li>
+            <li class="dashboard-item">
+                <a href="#">
+                    <i class="fa fa-file-text fa-5x"></i>
+                    <span class="dashboard-item-text">Vos scripts</span>
+                </a>
+            </li>
+            <li class="dashboard-item">
+                <a href="#">
+                    <i class="fa fa-gears fa-5x"></i>
+                    <span class="dashboard-item-text">Paramètres</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
