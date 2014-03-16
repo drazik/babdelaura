@@ -6,15 +6,31 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rcloudr/css/editor.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div id="menu">
-        <button id="run">Run the code</button>
-    </div>
-    <div id="editor"></div>
-    <div id="result"></div>
+<nav>
+    <ul class="menu unstyled line">
+        <li>
+            <button class="menu-item mod left" id="run-script"><i class="fa fa-play"></i> Run</button>
+        </li>
+        <li>
+            <button class="menu-item mod left" id="save-script"><i class="fa fa-save"></i> Save</button>
+        </li>
+        <li>
+            <button class="menu-item mod left" id="download-script"><i class="fa fa-download"></i> Download</button>
+        </li>
+        <li>
+            <a class="menu-item mod left" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+        </li>
+    </ul>
+</nav>
+<div id="editor-container" class="line">
+    <div id="editor" class="mod left w50"></div>
+    <div id="result" class="mod left w50"></div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -27,7 +43,7 @@
         editor.getSession().setMode('ace/mode/r');
 
         $(document).ready(function() {
-            $('#run').click(function() {
+            $('#run-script').click(function() {
                 $.ajax({
                     type: 'POST',
                     url: "{{ path('run_script_ajax') }}",

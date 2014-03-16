@@ -2,6 +2,8 @@
 
 {% extends '::base.html.twig' %}
 
+{% block title %}Dashboard{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
@@ -11,25 +13,31 @@
 {% block body %}
     <div class="wrapper">
         <div>
-            Bienvenue, {{ app.user.username }}. <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+            Welcome, {{ app.user.username }}.
         </div>
         <ul id="dashboard" class="unstyled">
             <li class="dashboard-item">
                 <a href="{{ path('show_editor') }}">
                     <i class="fa fa-terminal fa-5x"></i>
-                    <span class="dashboard-item-text">Editeur</span>
+                    <span class="dashboard-item-text">Code editor</span>
                 </a>
             </li>
             <li class="dashboard-item">
                 <a href="#">
                     <i class="fa fa-file-text fa-5x"></i>
-                    <span class="dashboard-item-text">Vos scripts</span>
+                    <span class="dashboard-item-text">Your scripts</span>
                 </a>
             </li>
             <li class="dashboard-item">
                 <a href="#">
                     <i class="fa fa-gears fa-5x"></i>
-                    <span class="dashboard-item-text">Paramètres</span>
+                    <span class="dashboard-item-text">Settings</span>
+                </a>
+            </li>
+            <li class="dashboard-item">
+                <a href="{{ path('fos_user_security_logout') }}">
+                <i class="fa fa-power-off fa-5x"></i>
+                <span class="dashboard-item-text">Logout</span>
                 </a>
             </li>
         </ul>
