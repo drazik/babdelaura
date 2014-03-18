@@ -38,17 +38,41 @@
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/ace/ace.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
     <script type="text/javascript">
-        var editor = ace.edit('editor');
-        editor.setTheme('ace/theme/monokai');
-        editor.getSession().setMode('ace/mode/r');
-
         $(document).ready(function() {
+            var editor = ace.edit('editor');
+            editor.setTheme('ace/theme/monokai');
+            editor.getSession().setMode('ace/mode/r');
+            editor.getSession().setUseSoftTabs(true);
+
+            editor.commands.addCommand({
+                name: 'Save',
+                bindKey: {
+                    win: 'Ctrl-S',
+                    mac: 'Command-S',
+                    exec: function(editor) {
+
+                    }
+                },
+                readOnly: false
+            });
+
+            editor.commands.addCommand({
+                name: 'Run',
+                bindKey: {
+                    win: 'Ctrl-B',
+                    mac: 'Command-B',
+                    exec: function(editor) {
+                        console.log('test');
+                    }
+                }
+            });
+
             $('#run-script').click(function() {
                 $.ajax({
                     type: 'POST',
                     url: "{{ path('run_script_ajax') }}",
                     data: {
-                        script: editor.getValue()
+                        script: editor.session.getTextRange(editor.getSelectionRange()) || editor.getValue()
                     },
                     beforeSend: function(jqXHR, settings) {
                         $('#result').html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="" title="" />')
@@ -58,6 +82,25 @@
                     },
                     success: function(data, textStatus, jqXHR) {
                         $('#result').html(data);
+                    }
+                });
+            });
+
+            $('#save-script').click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "",
+                    data: {
+
+                    },
+                    beforeSend: function(jqXHR, settings) {
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        
                     }
                 });
             });
