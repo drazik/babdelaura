@@ -50,10 +50,16 @@ class Script
     private $dateModification;
 
     /**
-     * @ORM\OneToOne(targetEntity="RCloud\Bundle\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="RCloud\Bundle\UserBundle\Entity\User", inversedBy="scripts")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $owner;
 
+    public function __construct()
+    {
+        $this->setDateAdd(new \DateTime);
+        $this->setDateModification(new \DateTime);
+    }
 
     /**
      * Get id
@@ -163,7 +169,7 @@ class Script
      * @param \RCloud\Bundle\UserBundle\Entity\User $owner
      * @return Script
      */
-    public function setOwner(\RCloud\Bundle\UserBundle\Entity\User $owner = null)
+    public function setOwner(\RCloud\Bundle\UserBundle\Entity\User $owner)
     {
         $this->owner = $owner;
     

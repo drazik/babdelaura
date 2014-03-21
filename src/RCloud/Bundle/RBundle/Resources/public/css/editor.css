@@ -2,14 +2,15 @@
     height: 100%;
 }
 
-#editor,
-#result {
+.editor,
+.result {
     height: 100%;
 }
 
-#result {
+.result {
     padding: 1em;
     font-family: Consolas, Courier;
+    background-color: #ecf0f1;
 }
 
 .menu {
@@ -31,4 +32,49 @@
 
 .menu-item:hover {
     background-color: #2980b9;
+}
+
+.tabs {
+    list-style: none;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.tabs li {
+    float: left;
+}
+
+.tabs label {
+    display: block;
+    background-color: #373b3f;
+    border-radius: 4px 4px 0 0;
+    color: #729285;
+    cursor: pointer;
+    padding: .3em .4em;
+    margin-right: .2em;
+    font-size: .9em;
+}
+
+.tabs label i {
+    margin-left: .5em;
+}
+
+[id^="tab"]:checked ~ label,
+.tabs label:hover {
+    color: #fff
+}
+
+.tab-content {
+    z-index: 2;
+    display: none;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+[id^="tab"]:checked ~ [id^="tab-content"] {
+    display: block;
 }

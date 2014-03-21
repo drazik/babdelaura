@@ -9,7 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+
+use RCloud\Bundle\RBundle\Entity\Script;
 
 class ScriptController extends Controller
 {
@@ -51,5 +54,27 @@ class ScriptController extends Controller
         } else {
             throw new MethodNotAllowedException(array('XHR'));
         }
+    }
+
+    /**
+     * @Route("/script/new/save", name="save_new_script_ajax")
+     * @Method({"POST"})
+     */
+    public function saveNewScript(Request $request)
+    {
+        $scriptName = $request->request->get('scriptName');
+        $scriptContent = $request->request->get('scriptContent');
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $script = new Script();
+        $script->setName($scriptName);
+        $script->setContent($scriptContent);
+        $script->setOwner($user);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($script);
+        $em->flush();
+
+        return new Response('ok');
     }
 }

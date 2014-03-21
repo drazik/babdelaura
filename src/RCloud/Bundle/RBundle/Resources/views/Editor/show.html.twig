@@ -6,13 +6,28 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rcloudr/css/editor.css') }}">
 {% endblock %}
 
 {% block body %}
+<div class="modal desktop-hidden" id="new-script">
+    <div class="modal-content">
+        <form method="post" action="#" id="script-name-form">
+            <div class="form-group">
+                <label for="script-name">Script name</label>
+                <input type="text" name="scriptName" id="script-name">
+                <input type="submit" value="Save">
+                <button class="modal-close">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
 <nav>
     <ul class="menu unstyled line">
+        <li>
+            <button class="menu-item mod left" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
+        </li>
         <li>
             <button class="menu-item mod left" id="run-script"><i class="fa fa-play"></i> Run</button>
         </li>
@@ -27,83 +42,115 @@
         </li>
     </ul>
 </nav>
-<div id="editor-container" class="line">
-    <div id="editor" class="mod left w50"></div>
-    <div id="result" class="mod left w50"></div>
-</div>
+<ul class="tabs" id="tabs"></ul>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/ace/ace.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/mustache/mustache.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            var editor = ace.edit('editor');
-            editor.setTheme('ace/theme/monokai');
-            editor.getSession().setMode('ace/mode/r');
-            editor.getSession().setUseSoftTabs(true);
+            function initEditors(elements) {
+                for (var i = 0; i < elements.length; ++i) {
+                    initEditor(elements[i]);
+                }
+            }
 
-            editor.commands.addCommand({
-                name: 'Save',
-                bindKey: {
-                    win: 'Ctrl-S',
-                    mac: 'Command-S',
-                    exec: function(editor) {
+            function initEditor(element) {
+                var editor = ace.edit(element);
+                editor.setTheme('ace/theme/monokai');
+                editor.getSession().setMode('ace/mode/r');
+                editor.getSession().setUseSoftTabs(true);
 
-                    }
-                },
-                readOnly: false
+                editor.getSession().on('change', handleEditorChange);
+
+                $(element).data('editor', editor);
+            }
+
+            function handleEditorChange(event) {
+                
+            }
+
+            initEditors(document.querySelectorAll('.editor'));
+
+            var $tabTemplate = $('#tab-template').html();
+            var $tabsList = $('#tabs');
+            var $currentTab = $($tabsList.find('li').get(0));
+
+            $tabsList.on('change','[name="tabs"]', function(event) {
+                $currentTab = $(this).parent();
             });
 
-            editor.commands.addCommand({
-                name: 'Run',
-                bindKey: {
-                    win: 'Ctrl-B',
-                    mac: 'Command-B',
-                    exec: function(editor) {
-                        console.log('test');
+            $('#new-tab').click(function() {
+                var id = Date.now();
+                var newTabHTML= Mustache.render($tabTemplate, {
+                    liId: 'tab' + id + '-container',
+                    inputId: 'tab' + id,
+                    tabName: 'untitled',
+                    tabContentId: 'tab-content' + id
+                });
+
+                $tabsList.append(newTabHTML);
+                initEditor(document.querySelector('#tab-content' + id + ' .editor'));
+                $('#tab' + id).click();
+            });
+
+            $('#tabs').on('click', '.close-tab', function() {
+                var parents = $(this).parentsUntil('#tabs', 'li');
+                var $toRemove = $(parents[0]);
+
+                if ($toRemove.attr('id') == $currentTab.attr('id')) {
+                    if ($toRemove.prev().length == 0) {
+                        $currentTab = $toRemove.next().length == 0 ? null : $toRemove.next();
+                    } else {
+                        $currentTab = $toRemove.prev();
+                    }
+
+                    $toRemove.remove();
+
+                    if ($currentTab) {
+                        $currentTab.find('input').click();
                     }
                 }
             });
 
-            $('#run-script').click(function() {
+            $('#run-script').click(function(){
+                var editor = $currentTab.find('.editor').data('editor');
+
+                var $result = $($currentTab.find('.result')[0]);
+                console.log($result);
+
                 $.ajax({
                     type: 'POST',
                     url: "{{ path('run_script_ajax') }}",
                     data: {
-                        script: editor.session.getTextRange(editor.getSelectionRange()) || editor.getValue()
-                    },
-                    beforeSend: function(jqXHR, settings) {
-                        $('#result').html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="" title="" />')
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        $('#result').html(textStatus);
-                    },
-                    success: function(data, textStatus, jqXHR) {
-                        $('#result').html(data);
-                    }
-                });
-            });
-
-            $('#save-script').click(function() {
-                $.ajax({
-                    type: 'POST',
-                    url: "",
-                    data: {
-
+                        script: editor.getValue()
                     },
                     beforeSend: function(jqXHR, settings) {
 
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-
+                        $result.html(textStatus);
                     },
                     success: function(data, textStatus, jqXHR) {
-                        
+                        $result.html(data);
                     }
                 });
             });
         });
+    </script>
+    <script type="text/template" id="tab-template">
+        {% verbatim %}
+        <li id="{{liId}}">
+            <input class="visually-hidden" id="{{inputId}}" type="radio" name="tabs">
+            <label for="{{inputId}}">{{tabName}}<i class="fa fa-times-circle close-tab"></i></label>
+            <div class="tab-content line" id="{{tabContentId}}">
+                <div class="editor mod left w50"></div>
+                <div class="result mod left w50"></div>
+            </div>
+        </li>
+        {% endverbatim %}
     </script>
 {% endblock %}
