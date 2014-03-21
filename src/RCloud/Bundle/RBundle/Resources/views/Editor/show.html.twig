@@ -126,7 +126,7 @@
                     type: 'POST',
                     url: "{{ path('run_script_ajax') }}",
                     data: {
-                        script: editor.getValue()
+                        script: editor.session.getTextRange(editor.getSelectionRange()) || editor.getValue()
                     },
                     beforeSend: function(jqXHR, settings) {
 
