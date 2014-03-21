@@ -11,6 +11,7 @@
     padding: 1em;
     font-family: Consolas, Courier;
     background-color: #ecf0f1;
+    overflow-y: scrollbar;
 }
 
 .menu {
