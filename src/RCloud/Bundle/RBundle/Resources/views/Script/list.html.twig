@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<ul>
+    {% for script in scripts %}
+        <li>{{ script.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

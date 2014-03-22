@@ -64,28 +64,24 @@
                 editor.getSession().setMode('ace/mode/r');
                 editor.getSession().setUseSoftTabs(true);
 
-                editor.getSession().on('change', handleEditorChange);
+                // editor.getSession().on('change', handleEditorChange);
 
                 $(element).data('editor', editor);
             }
 
-            function handleEditorChange(event) {
-                
-            }
-
-            initEditors(document.querySelectorAll('.editor'));
-
             var $tabTemplate = $('#tab-template').html();
             var $tabsList = $('#tabs');
-            var $currentTab = $($tabsList.find('li').get(0));
+            var $currentTab = $tabsList.find('li').get(0);
 
+            // Changement d'onglet
             $tabsList.on('change','[name="tabs"]', function(event) {
                 $currentTab = $(this).parent();
             });
 
+            // Nouvel onglet
             $('#new-tab').click(function() {
                 var id = Date.now();
-                var newTabHTML= Mustache.render($tabTemplate, {
+                var newTabHTML = Mustache.render($tabTemplate, {
                     liId: 'tab' + id + '-container',
                     inputId: 'tab' + id,
                     tabName: 'untitled',
@@ -97,6 +93,7 @@
                 $('#tab' + id).click();
             });
 
+            // Fermeture d'un onglet
             $('#tabs').on('click', '.close-tab', function() {
                 var parents = $(this).parentsUntil('#tabs', 'li');
                 var $toRemove = $(parents[0]);
@@ -113,14 +110,19 @@
                     if ($currentTab) {
                         $currentTab.find('input').click();
                     }
+
+                    if ($tabsList.find('li').length == 0) {
+                        $('#new-tab').click();
+                    }
+                } else {
+                    $toRemove.remove();
                 }
             });
 
+            // Exécution d'un script
             $('#run-script').click(function(){
                 var editor = $currentTab.find('.editor').data('editor');
-
                 var $result = $($currentTab.find('.result')[0]);
-                console.log($result);
 
                 $.ajax({
                     type: 'POST',
@@ -139,13 +141,61 @@
                     }
                 });
             });
+
+            // Sauvegarde d'un script
+            $('#save-script').click(function() {
+                var editor = $currentTab.find('.editor').data('editor');
+                var scriptContent = editor.getValue();
+
+                if ($currentTab.attr('data-saved')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ path('save_existing_script_ajax') }}",
+                        data: {
+                            scriptId: $currentTab.attr('data-saved'),
+                            scriptContent: scriptContent
+                        }
+                    });
+                } else {
+                    var scriptName = prompt('Give a name to your new script');
+
+                    if (scriptName) {
+                        scriptName += '.R';
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ path('save_new_script_ajax') }}",
+                            data: {
+                                scriptName: scriptName,
+                                scriptContent: scriptContent
+                            },
+                            beforeSend: function(jqXHR, settings) {
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+
+                            },
+                            success: function(data, textStatus, jqXHR) {
+                                $currentTab.find('.tab-name').html(scriptName);
+                                $currentTab.attr('data-saved', data);
+                            }
+                        });
+                    }
+                }
+            });
+
+            initEditors(document.querySelectorAll('.editor'));
+
+            // Si aucun onglet n'est ouvert à l'arrivée sur la page, on en crée un
+            if (!$currentTab) {
+                $('#new-tab').click();
+            }
         });
     </script>
     <script type="text/template" id="tab-template">
         {% verbatim %}
         <li id="{{liId}}">
             <input class="visually-hidden" id="{{inputId}}" type="radio" name="tabs">
-            <label for="{{inputId}}">{{tabName}}<i class="fa fa-times-circle close-tab"></i></label>
+            <label for="{{inputId}}"><span class="tab-name">{{tabName}}</span><i class="fa fa-times-circle close-tab"></i></label>
             <div class="tab-content line" id="{{tabContentId}}">
                 <div class="editor mod left w50"></div>
                 <div class="result mod left w50"></div>

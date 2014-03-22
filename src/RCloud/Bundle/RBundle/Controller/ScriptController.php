@@ -75,6 +75,43 @@ class ScriptController extends Controller
         $em->persist($script);
         $em->flush();
 
+        return new Response($script->getId());
+    }
+
+    /**
+     * @Route("script/existing/save", name="save_existing_script_ajax")
+     * @Method({"POST"})
+     */
+    public function saveExistingScript(Request $request)
+    {
+        $scriptId = $request->request->get('scriptId');
+        $scriptContent = $request->request->get('scriptContent');
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('RCloudRBundle:Script');
+
+        $script = $repository->find($scriptId);
+
+        $script->setContent($scriptContent);
+
+        $em->flush();
+
         return new Response('ok');
+    }
+
+    /**
+     * @Route("/scripts/", name="scripts_list")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function listAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $scripts = $user->getScripts();
+
+        return array(
+            'scripts' => $scripts
+        );
     }
 }
