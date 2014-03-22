@@ -18,14 +18,20 @@
         <ul id="dashboard" class="unstyled">
             <li class="dashboard-item">
                 <a href="{{ path('show_editor') }}">
-                    <i class="fa fa-terminal fa-5x"></i>
+                    <i class="fa fa-code fa-5x"></i>
                     <span class="dashboard-item-text">Code editor</span>
                 </a>
             </li>
             <li class="dashboard-item">
-                <a href="#">
+                <a href="{{ path('scripts_list') }}">
                     <i class="fa fa-file-text fa-5x"></i>
                     <span class="dashboard-item-text">Your scripts</span>
+                </a>
+            </li>
+            <li class="dashboard-item">
+                <a href="#">
+                    <i class="fa fa-user fa-5x"></i>
+                    <span class="dashboard-item-text">Profile</span>
                 </a>
             </li>
             <li class="dashboard-item">

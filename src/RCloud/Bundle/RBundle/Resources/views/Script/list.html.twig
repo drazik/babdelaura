@@ -1,9 +1,25 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}Your scripts{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
+{% endblock %}
+
 {% block body %}
-<ul>
-    {% for script in scripts %}
-        <li>{{ script.name }}</li>
-    {% endfor %}
-</ul>
+<div class="wrapper">
+    <ul class="unstyled">
+        {% for script in scripts %}
+            <li class="script">
+                {{ script.name }}
+                <span class="script-actions">
+                    <a href="#" title="Edit {{ script.name }}"><i class="fa fa-edit"></i></a>
+                    <a href="#" title="Share {{ script.name }}"><i class="fa fa-share-square-o"></i></a>
+                    <a href="#" title="Remove {{ script.name }}"><i class="fa fa-trash-o"></i></a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
