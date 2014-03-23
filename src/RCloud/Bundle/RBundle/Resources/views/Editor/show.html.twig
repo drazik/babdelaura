@@ -42,13 +42,26 @@
         </li>
     </ul>
 </nav>
-<ul class="tabs" id="tabs"></ul>
+<section class="line">
+    <div class="mod left w20" id="existing-scripts">
+        <h1>Your scripts</h1>
+        <ul class="unstyled">
+            {% for script in scripts %}
+                <li class="existing-script" data-id="{{ script.id }}">{{ script.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <ul class="tabs mod left w80" id="tabs"></ul>
+</section>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/ace/ace.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/jquery.noty.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/layouts/bottom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/themes/default.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/mustache/mustache.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -154,6 +167,22 @@
                         data: {
                             scriptId: $currentTab.attr('data-saved'),
                             scriptContent: scriptContent
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            var notification = noty({
+                                text: 'Error during script saving : ' + textStatus,
+                                layout: 'bottom',
+                                type: 'success',
+                                closeWidth: 'button'
+                            });
+                        },
+                        success: function(data, textStatus, jqXHR) {
+                            var notification = noty({
+                                text: 'Script saved',
+                                layout: 'bottom',
+                                type: 'success',
+                                closeWidth: 'button'
+                            });
                         }
                     });
                 } else {
@@ -168,19 +197,32 @@
                                 scriptName: scriptName,
                                 scriptContent: scriptContent
                             },
-                            beforeSend: function(jqXHR, settings) {
-
-                            },
                             error: function(jqXHR, textStatus, errorThrown) {
-
+                                var notification = noty({
+                                    text: 'Error during script saving : ' + textStatus,
+                                    layout: 'bottom',
+                                    type: 'success',
+                                    closeWidth: 'button'
+                                });
                             },
                             success: function(data, textStatus, jqXHR) {
                                 $currentTab.find('.tab-name').html(scriptName);
                                 $currentTab.attr('data-saved', data);
+
+                                var notification = noty({
+                                    text: 'Script saved',
+                                    layout: 'bottom',
+                                    type: 'success',
+                                    closeWidth: 'button'
+                                });
                             }
                         });
                     }
                 }
+            });
+
+            $('#existing-scripts').on('dblclick', '.existing-script', function() {
+                alert($(this).attr('data-id'));
             });
 
             initEditors(document.querySelectorAll('.editor'));

@@ -14,6 +14,12 @@ class EditorController extends Controller
      */
     public function showAction()
     {
-        return array();
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $scripts = $user->getScripts();
+
+        return array(
+            'scripts' => $scripts
+        );
     }
 }
