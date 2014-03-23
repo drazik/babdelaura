@@ -137,22 +137,26 @@
                 var editor = $currentTab.find('.editor').data('editor');
                 var $result = $($currentTab.find('.result')[0]);
 
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ path('run_script_ajax') }}",
-                    data: {
-                        script: editor.session.getTextRange(editor.getSelectionRange()) || editor.getValue()
-                    },
-                    beforeSend: function(jqXHR, settings) {
-                        $result.html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="Loading..." title="Loading...">');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        $result.html(textStatus);
-                    },
-                    success: function(data, textStatus, jqXHR) {
-                        $result.html(data);
-                    }
-                });
+                var script = editor.session.getTextRange(editor.getSelectionRange()) || editor.getValue();
+
+                if (script) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ path('run_script_ajax') }}",
+                        data: {
+                            script: script
+                        },
+                        beforeSend: function(jqXHR, settings) {
+                            $result.html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="Loading..." title="Loading...">');
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            $result.html(textStatus);
+                        },
+                        success: function(data, textStatus, jqXHR) {
+                            $result.html(data);
+                        }
+                    }); 
+                }
             });
 
             // Sauvegarde d'un script
