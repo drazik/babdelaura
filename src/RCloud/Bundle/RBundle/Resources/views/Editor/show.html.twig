@@ -220,6 +220,8 @@
                                     type: 'success',
                                     closeWidth: 'button'
                                 });
+
+                                $('#existing-scripts ul').append('<li class="existing-script" data-id="' + data + '" data-name="' + scriptName + '" data-content="' + scriptContent + '">' + scriptName + '</li>');
                             }
                         });
                     }
