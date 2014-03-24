@@ -182,6 +182,8 @@
                             });
                         },
                         success: function(data, textStatus, jqXHR) {
+                            $('.existing-script[data-id="' + $currentTab.attr('data-saved') + '"]').attr('data-content', scriptContent);
+                            
                             var notification = noty({
                                 text: 'Script saved',
                                 layout: 'bottom',
