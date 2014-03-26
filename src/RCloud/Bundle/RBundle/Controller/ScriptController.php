@@ -77,7 +77,7 @@ class ScriptController extends Controller
             // unlink('upload/scripts/' . $fileName . '.R');
             // unlink('upload/scripts/' . $fileName . '.res');
 
-            $unlink($inputFileName);
+            unlink($inputFileName);
             unlink($outputFileName);
 
             return array(
