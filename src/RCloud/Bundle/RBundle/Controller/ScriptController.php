@@ -24,29 +24,58 @@ class ScriptController extends Controller
     public function runAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $script = $request->request->get('script');
+            $script = $request->request->get('script') . 'q(runLast=FALSE);';
+            $user = $this->get('security.context')->getToken()->getUser();
 
-            $fileName = uniqid();
-            $scriptFile = fopen('upload/scripts/' . $fileName . '.R', 'a');
+            $personalDir = 'upload/' . $user->getUsername();
+            $inputFileName = $personalDir . '/input.R';
+            $outputFileName = $personalDir . '/output.res';
 
-            fputs($scriptFile, $script);
+            // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
+            if (!is_dir($personalDir)) {
+                mkdir($personalDir);
+            }
 
-            fclose($scriptFile);
+            // écriture de input.R
+            $inputFile = fopen($inputFileName, 'a');
+            fputs($inputFile, $script);
+            fclose($inputFile);
 
-            exec('Rscript --vanilla upload/scripts/' . $fileName . '.R > upload/scripts/' . $fileName . '.res 2> upload/scripts/' . $fileName . '.res');
+            // exécution du script
+            exec('cd ' . $personalDir . ' && R CMD BATCH --slave input.R output.res');
 
-            $resultFile = fopen('upload/scripts/' . $fileName . '.res', 'r');
+            // lecture de output.res
+            $outputFile = fopen($outputFileName, 'r');
 
             $result = '';
 
-            while ($line = fgets($resultFile)) {
+            while ($line = fgets($outputFile)) {
                 $result .= nl2br($line);
             }
 
-            fclose($resultFile);
+            fclose($outputFile);
 
-            unlink('upload/scripts/' . $fileName . '.R');
-            unlink('upload/scripts/' . $fileName . '.res');
+            // $fileName = uniqid();
+            // $scriptFile = fopen('upload/scripts/' . $fileName . '.R', 'a');
+
+            // fputs($scriptFile, $script);
+
+            // fclose($scriptFile);
+
+            // exec('Rscript --vanilla upload/scripts/' . $fileName . '.R > upload/scripts/' . $fileName . '.res 2> upload/scripts/' . $fileName . '.res');
+
+            // $resultFile = fopen('upload/scripts/' . $fileName . '.res', 'r');
+
+            // $result = '';
+
+            // while ($line = fgets($resultFile)) {
+            //     $result .= nl2br($line);
+            // }
+
+            // fclose($resultFile);
+
+            // unlink('upload/scripts/' . $fileName . '.R');
+            // unlink('upload/scripts/' . $fileName . '.res');
 
             return array(
                 'result' => $result
