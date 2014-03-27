@@ -24,7 +24,7 @@ class ScriptController extends Controller
     public function runAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $script = $request->request->get('script') . 'q(runLast=FALSE);';
+            $script = $request->request->get('script');
             $user = $this->get('security.context')->getToken()->getUser();
 
             $personalDir = 'upload/' . $user->getUsername();
@@ -42,7 +42,7 @@ class ScriptController extends Controller
             fclose($inputFile);
 
             // exécution du script
-            exec('cd ' . $personalDir . ' && R CMD BATCH --save --restore --slave input.R output.res');
+            exec('cd ' . $personalDir . ' && R CMD BATCH --save input.R output.res');
 
             // lecture de output.res
             $outputFile = fopen($outputFileName, 'r');
@@ -54,28 +54,6 @@ class ScriptController extends Controller
             }
 
             fclose($outputFile);
-
-            // $fileName = uniqid();
-            // $scriptFile = fopen('upload/scripts/' . $fileName . '.R', 'a');
-
-            // fputs($scriptFile, $script);
-
-            // fclose($scriptFile);
-
-            // exec('Rscript --vanilla upload/scripts/' . $fileName . '.R > upload/scripts/' . $fileName . '.res 2> upload/scripts/' . $fileName . '.res');
-
-            // $resultFile = fopen('upload/scripts/' . $fileName . '.res', 'r');
-
-            // $result = '';
-
-            // while ($line = fgets($resultFile)) {
-            //     $result .= nl2br($line);
-            // }
-
-            // fclose($resultFile);
-
-            // unlink('upload/scripts/' . $fileName . '.R');
-            // unlink('upload/scripts/' . $fileName . '.res');
 
             unlink($inputFileName);
             unlink($outputFileName);
