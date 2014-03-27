@@ -23,7 +23,7 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        $script = 'options(device="png");' . $request->request->get('script');
+        $script = 'options(device="png");' . "\r\n" . $request->request->get('script');
         $user = $this->get('security.context')->getToken()->getUser();
 
         $personalDir = 'upload/' . $user->getUsername();
@@ -62,7 +62,7 @@ class ScriptController extends Controller
 
         while ($file = readdir($directory)) {
             if (substr($file, -3) == 'png') {
-                
+
             }
         }
 
