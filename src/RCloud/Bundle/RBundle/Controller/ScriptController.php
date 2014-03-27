@@ -42,7 +42,7 @@ class ScriptController extends Controller
             fclose($inputFile);
 
             // exécution du script
-            exec('cd ' . $personalDir . ' && R CMD BATCH --save --quiet input.R output.res');
+            exec('cd ' . $personalDir . ' && R CMD BATCH --save --slave input.R output.res');
 
             // lecture de output.res
             $outputFile = fopen($outputFileName, 'r');
