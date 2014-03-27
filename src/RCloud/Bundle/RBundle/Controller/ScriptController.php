@@ -23,47 +23,43 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        if ($request->isXmlHttpRequest()) {
-            $script = $request->request->get('script');
-            $user = $this->get('security.context')->getToken()->getUser();
+        $script = $request->request->get('script');
+        $user = $this->get('security.context')->getToken()->getUser();
 
-            $personalDir = 'upload/' . $user->getUsername();
-            $inputFileName = $personalDir . '/input.R';
-            $outputFileName = $personalDir . '/output.res';
+        $personalDir = 'upload/' . $user->getUsername();
+        $inputFileName = $personalDir . '/input.R';
+        $outputFileName = $personalDir . '/output.res';
 
-            // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
-            if (!is_dir($personalDir)) {
-                mkdir($personalDir);
-            }
-
-            // écriture de input.R
-            $inputFile = fopen($inputFileName, 'a');
-            fputs($inputFile, $script);
-            fclose($inputFile);
-
-            // exécution du script
-            exec('cd ' . $personalDir . ' && R CMD BATCH --save --quiet input.R output.res');
-
-            // lecture de output.res
-            $outputFile = fopen($outputFileName, 'r');
-
-            $result = '';
-
-            while ($line = fgets($outputFile)) {
-                $result .= nl2br($line);
-            }
-
-            fclose($outputFile);
-
-            unlink($inputFileName);
-            unlink($outputFileName);
-
-            return array(
-                'result' => $result
-            );
-        } else {
-            throw new MethodNotAllowedException(array('XHR'));
+        // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
+        if (!is_dir($personalDir)) {
+            mkdir($personalDir);
         }
+
+        // écriture de input.R
+        $inputFile = fopen($inputFileName, 'a');
+        fputs($inputFile, $script);
+        fclose($inputFile);
+
+        // exécution du script
+        exec('cd ' . $personalDir . ' && R CMD BATCH --save --quiet input.R output.res');
+
+        // lecture de output.res
+        $outputFile = fopen($outputFileName, 'r');
+
+        $result = '';
+
+        while ($line = fgets($outputFile)) {
+            $result .= nl2br($line);
+        }
+
+        fclose($outputFile);
+
+        unlink($inputFileName);
+        unlink($outputFileName);
+
+        return array(
+            'result' => $result
+        );
     }
 
     /**
