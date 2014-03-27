@@ -11,18 +11,6 @@
 {% endblock %}
 
 {% block body %}
-<div class="modal desktop-hidden" id="new-script">
-    <div class="modal-content">
-        <form method="post" action="#" id="script-name-form">
-            <div class="form-group">
-                <label for="script-name">Script name</label>
-                <input type="text" name="scriptName" id="script-name">
-                <input type="submit" value="Save">
-                <button class="modal-close">Cancel</button>
-            </div>
-        </form>
-    </div>
-</div>
 <nav>
     <ul class="menu unstyled line">
         <li>
@@ -230,7 +218,13 @@
                 }
             });
 
+            $('#existing-scripts').on('click', '.existing-script', function() {
+                $('.existing-script').removeClass('selected');
+                $(this).addClass('selected');
+            });
+
             $('#existing-scripts').on('dblclick', '.existing-script', function() {
+                $(this).removeClass('selected');
                 var id = $(this).attr('data-id');
                 var name = $(this).attr('data-name');
                 var content = $(this).attr('data-content');

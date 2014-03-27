@@ -83,3 +83,19 @@ section {
 [id^="tab"]:checked ~ [id^="tab-content"] {
     display: block;
 }
+
+.existing-script {
+    padding: 0.25em 0.25em;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.existing-script:hover {
+    border-color: rgba(41, 128, 185,.3);
+    background-color: rgba(41, 128, 185,.1);
+}
+
+.existing-script.selected {
+    border-color: rgba(41, 128, 185,.6);
+    background-color: rgba(41, 128, 185,.3);
+}
