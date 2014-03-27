@@ -99,3 +99,8 @@ section {
     border-color: rgba(41, 128, 185,.6);
     background-color: rgba(41, 128, 185,.3);
 }
+
+.existing-script::selection {
+    background-color: transparent;
+    color: inherit;
+}
