@@ -142,7 +142,9 @@
                             $result.html(textStatus);
                         },
                         success: function(data, textStatus, jqXHR) {
-                            $result.html(data);
+                            data = JSON.parse(data);
+                            $result.html(data.result);
+                            console.log(data.graphes);
                         }
                     }); 
                 }
