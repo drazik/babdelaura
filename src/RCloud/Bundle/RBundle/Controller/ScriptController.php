@@ -69,7 +69,7 @@ class ScriptController extends Controller
         }
 
         // TODO utiliser une JsonResponse
-        return JsonResponse(array(
+        return new JsonResponse(array(
             'result' => $result,
             'graphes' => $graphes
         ));
