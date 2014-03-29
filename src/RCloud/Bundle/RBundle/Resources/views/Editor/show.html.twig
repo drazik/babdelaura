@@ -142,9 +142,10 @@
                             $result.html(textStatus);
                         },
                         success: function(data, textStatus, jqXHR) {
-                            data = JSON.parse(data);
-                            $result.html(data.result);
-                            console.log(data.graphes);
+                            console.log(data);
+                            // data = JSON.parse(data);
+                            // $result.html(data.result);
+                            // console.log(data.graphes);
                         }
                     }); 
                 }
