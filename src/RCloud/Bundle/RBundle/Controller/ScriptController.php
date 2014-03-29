@@ -72,7 +72,7 @@ class ScriptController extends Controller
         return JsonResponse(array(
             'result' => $result,
             'graphes' => $graphes
-        );
+        ));
     }
 
     /**
