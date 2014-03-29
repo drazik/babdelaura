@@ -10,8 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
+use RCloud\Bundle\RBundle\Entity\Graph;
 use RCloud\Bundle\RBundle\Entity\Script;
 
 class ScriptController extends Controller
@@ -59,15 +61,17 @@ class ScriptController extends Controller
 
         // graphes
         $directory = opendir($personalDir);
-
+        $graphes = array();
         while ($file = readdir($directory)) {
             if (substr($file, -3) == 'png') {
-
+                graphes[] = $personalDir . '/' . $file;
             }
         }
 
-        return array(
-            'result' => $result
+        // TODO utiliser une JsonResponse
+        return JsonResponse(array(
+            'result' => $result,
+            'graphes' => $graphes
         );
     }
 
