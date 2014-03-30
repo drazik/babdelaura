@@ -25,7 +25,7 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        $script = 'options(device="png");' . "\r\n" . $request->request->get('script') . "\r\n" . 'q(runLast=FALSE);';
+        $script = 'options(device="png");' . "\r\n" . $request->request->get('script');
         $user = $this->get('security.context')->getToken()->getUser();
 
         $personalDir = 'upload/' . $user->getUsername();
@@ -35,6 +35,14 @@ class ScriptController extends Controller
         // on regarde si il y a bien un dossier pour l'utilisateur, si non, on le crée
         if (!is_dir($personalDir)) {
             mkdir($personalDir);
+        }
+
+        $directory = opendir($personalDir);
+        $graphes = array();
+        while ($file = readdir($directory)) {
+            if (substr($file, -3) == 'png') {
+                unlink($file);
+            }
         }
 
         // écriture de input.R
