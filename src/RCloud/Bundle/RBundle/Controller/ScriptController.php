@@ -41,7 +41,7 @@ class ScriptController extends Controller
         $graphes = array();
         while ($file = readdir($directory)) {
             if (substr($file, -3) == 'png') {
-                unlink($file);
+                unlink($personalDir . '/' . $file);
             }
         }
 
