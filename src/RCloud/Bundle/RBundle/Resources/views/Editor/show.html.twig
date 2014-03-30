@@ -145,7 +145,7 @@
                             $result.html(data.result);
                             var assetsPath = '{{ asset('') }}';
                             for (var i = 0; i < data.graphes.length; ++i) {
-                                $result.append('<img src="' . assetsPath . data.graphes[i] '">');
+                                $result.append('<img src="{{ asset('') }}' + data.graphes[i] + '" alt="Graph" title="Graph">');
                             }
                         }
                     }); 
