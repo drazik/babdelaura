@@ -144,7 +144,7 @@
                         success: function(data, textStatus, jqXHR) {
                             $result.html(data.result);
                             for (var i = 0; i < data.graphes.length; ++i) {
-                                $result.append('<img src="{{ asset('') }}' . data.graphes[i] '">');
+                                $result.append('<img src="{{ asset('') }}' . data.graphes[i] . '">');
                             }
                             console.log(data.graphes);
                         }
