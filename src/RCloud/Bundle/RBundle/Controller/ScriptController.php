@@ -25,7 +25,7 @@ class ScriptController extends Controller
      */
     public function runAction(Request $request)
     {
-        $script = 'options(device="png");' . "\r\n" . $request->request->get('script');
+        $script = 'options(device="png");' . "\r\n" . $request->request->get('script') . "\r\n" . 'q(runLast=FALSE);';
         $user = $this->get('security.context')->getToken()->getUser();
 
         $personalDir = 'upload/' . $user->getUsername();
