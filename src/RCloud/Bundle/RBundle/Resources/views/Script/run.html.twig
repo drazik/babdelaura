@@ -1,1 +1,4 @@
 {{ result|raw }}
+{% for graph in graphes %}
+    <img src="{{ asset(graph) }}" alt="Graph {{ loop.index }}" title="Graph {{ loop.index }}">
+{% endfor %}

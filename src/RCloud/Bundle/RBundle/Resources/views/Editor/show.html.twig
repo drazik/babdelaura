@@ -142,11 +142,7 @@
                             $result.html(textStatus);
                         },
                         success: function(data, textStatus, jqXHR) {
-                            $result.html(data.result);
-                            var assetsPath = '{{ asset('') }}';
-                            for (var i = 0; i < data.graphes.length; ++i) {
-                                $result.append('<img src="{{ asset('') }}' + data.graphes[i] + '" alt="Graph" title="Graph">');
-                            }
+                            $result.html(data);
                         }
                     }); 
                 }

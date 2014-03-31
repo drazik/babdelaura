@@ -76,11 +76,15 @@ class ScriptController extends Controller
             }
         }
 
-        // TODO utiliser une JsonResponse
-        return new JsonResponse(array(
+        return array(
             'result' => $result,
             'graphes' => $graphes
-        ));
+        );
+        // TODO utiliser une JsonResponse
+        // return new JsonResponse(array(
+        //     'result' => $result,
+        //     'graphes' => $graphes
+        // ));
     }
 
     /**
