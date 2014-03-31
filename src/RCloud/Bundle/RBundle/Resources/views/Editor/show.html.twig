@@ -11,6 +11,17 @@
 {% endblock %}
 
 {% block body %}
+<div class="modal desktop-hidden" id="packages-list">
+    <div class="modal-content">
+        <h1>The packages you can use</h1>
+        <ul>
+            {% for package in packages %}
+                <li>{{ package }}</li>
+            {% endfor %}
+        </ul>
+        <button class="modal-close">Close</button>
+    </div>
+</div>
 <nav>
     <ul class="menu unstyled line">
         <li>
@@ -20,11 +31,14 @@
             <button class="menu-item mod left" id="run-script"><i class="fa fa-play"></i> Run</button>
         </li>
         <li>
-            <button class="menu-item mod left" id="save-script"><i class="fa fa-save"></i> Save</button>
+            <button class="menu-item mod left" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
         </li>
         <li>
-            <button class="menu-item mod left" id="download-script"><i class="fa fa-download"></i> Download</button>
+            <button class="menu-item mod left" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
         </li>
+        {#<li>
+            <a class="menu-item mod left" id="script-download" href="#" target="_blank"><i class="fa fa-download"></i> Download</a>
+        </li>#}
         <li>
             <a class="menu-item mod left" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
         </li>
@@ -243,6 +257,14 @@
                 $('#tab' + id + '-container').find('.editor').data('editor').setValue(content);
 
                 $('#tab' + id).click();
+            });
+
+            $('#show-packages').click(function() {
+                $('#packages-list').removeClass('desktop-hidden');
+            });
+
+            $('.modal').on('click', '.modal-close', function() {
+                $('#packages-list').addClass('desktop-hidden');
             });
 
             initEditors(document.querySelectorAll('.editor'));

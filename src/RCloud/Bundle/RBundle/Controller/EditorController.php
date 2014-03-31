@@ -18,8 +18,16 @@ class EditorController extends Controller
 
         $scripts = $user->getScripts();
 
+        $packages = array(
+            'arules', 'biclust', 'FactoMineR',
+            'flexmix', 'klaR', 'kohonen', 'nnet',
+            'randomForest', 'Rmixmod', 'rpart',
+            'RSQLite', 'tree'
+        );
+
         return array(
-            'scripts' => $scripts
+            'scripts' => $scripts,
+            'packages' => $packages
         );
     }
 }
