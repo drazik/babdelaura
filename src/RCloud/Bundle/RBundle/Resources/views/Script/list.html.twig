@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block title %}Your scripts{% endblock %}
 
@@ -7,9 +7,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/font-awesome.min.css') }}" />
 {% endblock %}
 
-{% block body %}
+{% block navbarItems %}
+<li class="inbl">
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+</li>
+{% endblock %}
+
+{% block content %}
 <div class="wrapper">
-    <a href="{{ path('show_dashboard') }}">Back to dashboard</a>
     <ul class="unstyled">
         {% for script in scripts %}
             <li class="script">

@@ -90,14 +90,17 @@ ol.unstyled {
 
 #logo {
     display: inline-block;
-    height: 49px;
-    width: 68px;
+    margin-top:5px;
+    margin-left: 1em;
+    height: 40px;
+    width: 65px;
     background-image: url(../images/logo.png);
     background-size: 100% 100%;
 }
 
 .navbar {
     background-color: #3498db;
+    margin-bottom: 1em;
 }
 
 .menu {

@@ -1,6 +1,6 @@
 {# src/RCloud/Bundle/RBundle/Resources/views/Editor/showEditor.html.twig #}
 
-{% extends '::base.html.twig' %}
+{% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block title %}RCloud R Editor{% endblock %}
 
@@ -10,7 +10,24 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rcloudr/css/editor.css') }}">
 {% endblock %}
 
-{% block body %}
+{% block navbarItems %}
+<li class="inbl">
+    <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
+</li>
+<li class="inbl">
+    <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Run</button>
+</li>
+<li class="inbl">
+    <button class="menu-item inbl" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
+</li>
+<li class="inbl">
+    <button class="menu-item inbl" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
+</li>
+<li class="inbl">
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+</li>
+{% endblock %}
+{% block content %}
 <div class="modal desktop-hidden" id="packages-list">
     <div class="modal-content">
         <h1>The packages you can use</h1>
@@ -22,28 +39,7 @@
         <button class="modal-close">Close</button>
     </div>
 </div>
-<nav class="line navbar">
-    <ul class="menu unstyled inbl line">
-        <li class="inbl">
-            <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
-        </li>
-        <li class="inbl">
-            <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Run</button>
-        </li>
-        <li class="inbl">
-            <button class="menu-item inbl" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
-        </li>
-        <li class="inbl">
-            <button class="menu-item inbl" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
-        </li>
-        {#<li>
-            <a class="menu-item mod left" id="script-download" href="#" target="_blank"><i class="fa fa-download"></i> Download</a>
-        </li>#}
-        <li class="inbl">
-            <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
-        </li>
-    </ul>
-</nav>
+
 <section class="line">
     <div class="mod left w20" id="existing-scripts">
         <h1>Your scripts</h1>
