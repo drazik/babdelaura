@@ -22,25 +22,25 @@
         <button class="modal-close">Close</button>
     </div>
 </div>
-<nav>
-    <ul class="menu unstyled line">
-        <li>
-            <button class="menu-item mod left" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
+<nav class="line navbar">
+    <ul class="menu unstyled inbl line">
+        <li class="inbl">
+            <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
         </li>
-        <li>
-            <button class="menu-item mod left" id="run-script"><i class="fa fa-play"></i> Run</button>
+        <li class="inbl">
+            <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Run</button>
         </li>
-        <li>
-            <button class="menu-item mod left" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
+        <li class="inbl">
+            <button class="menu-item inbl" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
         </li>
-        <li>
-            <button class="menu-item mod left" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
+        <li class="inbl">
+            <button class="menu-item inbl" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
         </li>
         {#<li>
             <a class="menu-item mod left" id="script-download" href="#" target="_blank"><i class="fa fa-download"></i> Download</a>
         </li>#}
-        <li>
-            <a class="menu-item mod left" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+        <li class="inbl">
+            <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
         </li>
     </ul>
 </nav>
@@ -60,7 +60,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/ace/ace.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/jquery.noty.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/layouts/bottom.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/themes/default.js') }}"></script>

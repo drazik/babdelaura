@@ -11,6 +11,8 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/jquery/jquery.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
