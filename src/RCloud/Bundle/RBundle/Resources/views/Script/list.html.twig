@@ -40,6 +40,7 @@
         $('.remove-script').click(function(event) {
             event.preventDefault();
             $this = $(this);
+            $scripts = $('.script');
 
             $.ajax({
                 type: 'POST',
@@ -55,7 +56,10 @@
                 },
                 success: function(data, textStatus, jqXHR) {
                     if (data.success) {
-                        $this.parent().parent().fadeOut().delay(500).remove();
+                        var $element = $this.parent().parent();
+                        $element.fadeOut(function(){
+                            $element.remove();
+                        });
                     } else {
                         var notification = noty({
                             text: data.message,
