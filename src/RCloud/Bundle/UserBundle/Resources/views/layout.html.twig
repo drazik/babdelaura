@@ -1,6 +1,6 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/layout.html.twig #}
 
-{% extends '::base.html.twig' %}
+{% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block title %}User profile{% endblock %}
 
@@ -8,11 +8,14 @@
     {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block navbarItems %}
+<li class="inbl">
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+</li>
+{% endblock %}
+
+{% block content %}
     <div class="wrapper">
-        <div>
-            <a href="{{ path('show_dashboard') }}">Back to dashboard</a>
-        </div>
         {% for key, messages in app.session.flashbag.all() %}
             {% for message in messages %}
                 <div class="alert alert-{{ key }}">

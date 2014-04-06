@@ -22,10 +22,50 @@
                 <span class="script-actions">
                     <a href="#" title="Edit {{ script.name }}"><i class="fa fa-edit"></i></a>
                     <a href="#" title="Share {{ script.name }}"><i class="fa fa-share-square-o"></i></a>
-                    <a href="#" title="Remove {{ script.name }}"><i class="fa fa-trash-o"></i></a>
+                    <a class="remove-script" href="#" title="Remove {{ script.name }}" data-script-id="{{ script.id }}"><i class="fa fa-trash-o"></i></a>
                 </span>
             </li>
         {% endfor %}
     </ul>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/jquery.noty.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/layouts/bottom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/rcloudr/js/noty/themes/default.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        $('.remove-script').click(function(event) {
+            event.preventDefault();
+            $this = $(this);
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ path('script_remove_ajax') }}",
+                data: {
+                    scriptId: $this.attr('data-script-id')
+                },
+                beforeSend: function(jqXHR, settings) {
+                    // $result.html('<img src="{{ asset('bundles/rcloudr/images/ajax-loader.gif') }}" alt="Loading..." title="Loading...">');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // $result.html(textStatus);
+                },
+                success: function(data, textStatus, jqXHR) {
+                    if (data.success) {
+                        $this.parent().parent().fadeOut().delay(500).remove();
+                    } else {
+                        var notification = noty({
+                            text: data.message,
+                            layout: 'bottom',
+                            type: 'error'
+                        });
+                    }
+                }
+            });
+        });
+    });
+    </script>
 {% endblock %}

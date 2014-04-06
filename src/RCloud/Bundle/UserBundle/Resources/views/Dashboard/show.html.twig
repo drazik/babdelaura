@@ -1,6 +1,6 @@
 {# src/RCloud/Bundle/UserBundle/Resources/views/Dashboard/show.html.twig #}
 
-{% extends '::base.html.twig' %}
+{% extends 'RCloudRBundle::layout.html.twig' %}
 
 {% block title %}Dashboard{% endblock %}
 
@@ -10,11 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/rclouduser/css/dashboard.css') }}" />
 {% endblock %}
 
-{% block body %}
+{% block content %}
     <div class="wrapper">
-        <div>
-            Welcome, {{ app.user.username }}.
-        </div>
         <ul id="dashboard" class="unstyled">
             <li class="dashboard-item">
                 <a href="{{ path('show_editor') }}">

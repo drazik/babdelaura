@@ -8,19 +8,7 @@
         <ul class="menu unstyled inbl line">
             {% block navbarItems %}
                 <li class="inbl">
-                    <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
-                </li>
-                <li class="inbl">
-                    <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Run</button>
-                </li>
-                <li class="inbl">
-                    <button class="menu-item inbl" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
-                </li>
-                <li class="inbl">
-                    <button class="menu-item inbl" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
-                </li>
-                <li class="inbl">
-                    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+                    <button class="menu-item inbl" id="new-tab">Welcome, {{ app.user.username }}.</button>
                 </li>
             {% endblock %}
         </ul>

@@ -145,4 +145,32 @@ class ScriptController extends Controller
             'scripts' => $scripts
         );
     }
+
+    /**
+     * @Route("/script/remove", name="script_remove_ajax")
+     * @Method({"POST"})
+     */
+    public function removeAction(Request $request)
+    {
+        $scriptId = $scriptId = $request->request->get('scriptId');
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('RCloudRBundle:Script');
+
+        $script = $repository->find($scriptId);
+
+        $success = array(
+            'success' => true
+        );
+
+        if (null === $script) {
+            $success['success'] = false;
+            $success['message'] = 'This script doesn\'t exist';
+        } else {
+            $em->remove($script);
+            $em->flush();
+        }
+
+        return new JsonResponse($success);
+    }
 }
