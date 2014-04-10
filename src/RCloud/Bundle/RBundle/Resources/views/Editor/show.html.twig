@@ -2,7 +2,7 @@
 
 {% extends 'RCloudRBundle::layout.html.twig' %}
 
-{% block title %}RCloud R Editor{% endblock %}
+{% block title %}Editeur{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,40 +12,40 @@
 
 {% block navbarItems %}
 <li class="inbl">
-    <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> New tab</button>
+    <button class="menu-item inbl" id="new-tab"><i class="fa fa-plus"></i> Nouvel onglet</button>
 </li>
 <li class="inbl">
-    <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Run</button>
+    <button class="menu-item inbl" id="run-script"><i class="fa fa-play"></i> Exécuter</button>
 </li>
 <li class="inbl">
-    <button class="menu-item inbl" id="save-script"><i class="fa fa-hdd-o"></i> Save</button>
+    <button class="menu-item inbl" id="save-script"><i class="fa fa-hdd-o"></i> Enregistrer</button>
 </li>
 <li class="inbl">
     <button class="menu-item inbl" id="show-packages"><i class="fa fa-puzzle-piece"></i> Packages</button>
 </li>
 <li class="inbl">
-    <button class="menu-item inbl" id="print-graphes"><i class="fa fa-print"></i> Print graphes</button>
+    <button class="menu-item inbl" id="print-graphes"><i class="fa fa-print"></i> Imprimer les graphiques</button>
 </li>
 <li class="inbl">
-    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Back to dashboard</a>
+    <a class="menu-item inbl" href="{{ path('show_dashboard') }}"><i class="fa fa-arrow-left"></i> Revenir au dashboard</a>
 </li>
 {% endblock %}
 {% block content %}
 <div class="modal desktop-hidden" id="packages-list">
     <div class="modal-content">
-        <h1>The packages you can use</h1>
+        <h1>Les packages utilisables</h1>
         <ul>
             {% for package in packages %}
                 <li>{{ package }}</li>
             {% endfor %}
         </ul>
-        <button class="modal-close">Close</button>
+        <button class="modal-close">Fermer</button>
     </div>
 </div>
 
 <section class="line">
     <div class="mod left w20" id="existing-scripts">
-        <h1>Your scripts</h1>
+        <h1>Vos scripts</h1>
         <ul class="unstyled">
             {% for script in scripts %}
                 <li class="existing-script" data-id="{{ script.id }}" data-name="{{ script.name }}" data-content="{{ script.content }}">{{ script.name }}</li>
@@ -97,7 +97,7 @@
                 var newTabHTML = Mustache.render($tabTemplate, {
                     liId: 'tab' + id + '-container',
                     inputId: 'tab' + id,
-                    tabName: 'untitled',
+                    tabName: 'Sans titre',
                     tabContentId: 'tab-content' + id,
                     saved: false
                 });
@@ -175,7 +175,7 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             var notification = noty({
-                                text: 'Error during script saving : ' + textStatus,
+                                text: 'Erreur lors de l\'enregistrement : ' + textStatus,
                                 layout: 'bottom',
                                 type: 'success',
                                 closeWidth: 'button'
@@ -185,7 +185,7 @@
                             $('.existing-script[data-id="' + $currentTab.attr('data-saved') + '"]').attr('data-content', scriptContent);
                             
                             var notification = noty({
-                                text: 'Script saved',
+                                text: 'Script enregistré',
                                 layout: 'bottom',
                                 type: 'success',
                                 closeWidth: 'button'
@@ -193,7 +193,7 @@
                         }
                     });
                 } else {
-                    var scriptName = prompt('Give a name to your new script');
+                    var scriptName = prompt('Donnez un nom à ce script');
 
                     if (scriptName) {
                         scriptName += '.R';
@@ -206,7 +206,7 @@
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 var notification = noty({
-                                    text: 'Error during script saving : ' + textStatus,
+                                    text: 'Erreur lors de l\'enregistrement : ' + textStatus,
                                     layout: 'bottom',
                                     type: 'success',
                                     closeWidth: 'button'
@@ -217,7 +217,7 @@
                                 $currentTab.attr('data-saved', data);
 
                                 var notification = noty({
-                                    text: 'Script saved',
+                                    text: 'Script enregistré',
                                     layout: 'bottom',
                                     type: 'success',
                                     closeWidth: 'button'

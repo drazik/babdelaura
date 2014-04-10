@@ -4,7 +4,7 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Bienvenue{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="password" id="password" name="_password" placeholder="Password" required="required" />
+                        <input type="password" id="password" name="_password" placeholder="Mot de passe" required="required" />
                     </div>
 
                     <div class="checkbox">
@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                         <button class="button" id="_submit" name="_submit" type="submit">{{ 'security.login.submit'|trans }}</button>
-                        <a class="button button-secondary" href="{{ path('fos_user_registration_register') }}">Register</a>
+                        <a class="button button-secondary" href="{{ path('fos_user_registration_register') }}">Inscription</a>
                     </div>
                 </form>
             {% endblock %}

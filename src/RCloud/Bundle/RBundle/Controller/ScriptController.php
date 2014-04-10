@@ -165,7 +165,7 @@ class ScriptController extends Controller
 
         if (null === $script) {
             $success['success'] = false;
-            $success['message'] = 'This script doesn\'t exist';
+            $success['message'] = 'Ce script n\'existe pas';
         } else {
             $em->remove($script);
             $em->flush();
