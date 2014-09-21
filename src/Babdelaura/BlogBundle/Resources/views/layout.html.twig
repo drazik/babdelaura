@@ -10,7 +10,9 @@
     </head>
     <body>
 
-        <header class="header"></header>
+        <header class="header">
+            <a class="header-link" href="#">Revenir à l'accueil</a>
+        </header>
 
         <nav class="main-nav" id="main-nav">
             <div class="wrapper">
@@ -83,6 +85,8 @@
             {#<script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>#}
             <script src="{{ asset('bundles/babdelaurablog/js/Modernizr.js') }}"></script>
             <script src="{{ asset('bundles/babdelaurablog/js/jquery-2.1.1.min.js') }}"></script>
+            <script src="{{ asset('bundles/babdelaurablog/js/jquery.cookie.js') }}"></script>
+            <script src="{{ asset('bundles/babdelaurablog/js/info-cookies.js') }}"></script>
             <script src="{{ asset('bundles/babdelaurablog/js/main-nav.js') }}"></script>
         {% endblock %}
     </body>
