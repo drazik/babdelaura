@@ -1,0 +1,19 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+
+  <h1>Supprimer un article</h1>
+
+    <p>
+      Etes-vous certain de vouloir supprimer l'article "{{ article.titre }}" ?
+    </p>
+
+
+    <form action="{{ path('babdelaurablog_admin_supprimerArticle', {'slug': article.slug}) }}" method="post">
+      <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">Retour à l'article</a>
+
+      <button class="button" type="submit">Supprimer</button>
+      {{ form_rest(form) }}
+    </form>
+
+ {% endblock %}

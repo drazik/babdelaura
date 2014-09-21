@@ -1,0 +1,57 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+
+{% block mainContent %}
+
+    <h1>Résultats pour la recherche : {{ motsCles }}</h1>
+
+
+    {% for article in listeArticles %}
+        {% set nbCommentaires = article.getNbCommentaires(true) %}
+        <section class="article">
+
+          <header class="article-header">
+              <h1 class="article-title"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
+
+              <aside class="article-infos">
+                  Le {{ article.datePublication|date("d/m/Y à H:i") }} -
+                  <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires">
+                    {{nbCommentaires}}
+                    {% if nbCommentaires <= 1 %}
+                      commentaire
+                    {% else %}
+                      commentaires
+                    {% endif %}
+                  </a>
+              </aside>
+              {#
+              {% if article.image %}
+                <img src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}" />
+              {% endif %}
+              #}
+          </header>
+
+          <div class="article-content">
+            {{article.contenu |truncate(500,true)| raw}}
+          </div>
+          <div class="align-right">
+              <a class="button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">Lire la suite</a>
+
+          </div>
+          {% if not loop.last %}
+            <hr class="article-separator" />
+          {% endif %}
+        </section>
+
+
+    {% endfor %}
+
+    <div class="articles-list-controls">
+      {{ knp_pagination_render(listeArticles) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}

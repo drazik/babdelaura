@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Oups ! </title>
+    <link rel="stylesheet" media="screen" href="{{ asset('bundles/babdelaurablog/css/main.css') }}" />
+</head>
+
+<body>
+    <header class="header"></header>
+    <div class="content wrapper row">
+        <div class="twelve columns text-centered">
+            <h1 class="big-title">Oups!</h1>
+
+            {% block content %}
+            {% endblock %}
+
+            <p>Vous pouvez cliquer <a href="{{ path('babdelaurablog_accueil') }}">ici</a> pour revenir à l'accueil du blog.</p>
+        </div>
+    </div>
+</body>
+
+</html>

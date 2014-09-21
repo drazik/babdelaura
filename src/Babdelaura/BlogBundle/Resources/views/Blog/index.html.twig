@@ -1,0 +1,43 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+
+{% block mainContent %}
+
+    <h1>Les derniers articles</h1>
+    <ul class="grid">
+        {% for article in listeArticles %}
+            {% set nbCommentaires = article.getNbCommentaires(true) %}
+            <li class="grid-item">
+                <figure class="grid-item-article">
+                    <img class="grid-item-article-image" src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}">
+                    <figcaption class="grid-item-article-infos">
+                        <h2 class="grid-item-article-title">
+                            <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre|truncate(30,true)}}</a>
+                        </h2>
+
+                        <a class="grid-item-article-comments" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires">
+                        {{nbCommentaires}}
+                        {% if nbCommentaires <= 1 %}
+                          commentaire
+                        {% else %}
+                          commentaires
+                        {% endif %}
+                        </a>
+
+                        <a class="grid-item-article-read button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">
+                            Lire l'article
+                        </a>
+                    </figcaption>
+                </figure>
+            </li>
+        {% endfor %}
+    </ul>
+    <a class="button button-full-width" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('bundles/babdelaurablog/js/toucheffect.js') }}"></script>
+
+{% endblock %}

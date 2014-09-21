@@ -1,0 +1,87 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+
+<h1>Liste des articles</h1>
+
+<form method="post" {{ form_enctype(form) }}>
+    {{ form_label(form.categories, "Catégories") }}
+    {{ form_errors(form.categories)}}
+    {{ form_widget(form.categories) }}
+
+    {{ form_label(form.publication, "Publication") }}
+    {{ form_errors(form.publication)}}
+    {{ form_widget(form.publication) }}
+
+    {{ form_rest(form) }}
+    <button class="button button-small" type="submit">Filtrer </button>
+</form>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Titre</th>
+            <th>Date</th>
+            <th>Edition</th>
+            <th>Publication</th>
+            <th>Catégories</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in listeArticles %}
+            {% set nbCommentairesNonValides = article.getNbCommentaires(false) %}
+            <tr>
+                <td class="text-centered">
+                    {% if nbCommentairesNonValides > 0 %}
+                        {% set badgeClass = 'badge-danger' %}
+                    {% else %}
+                        {% set badgeClass = 'badge-success' %}
+                    {% endif %}
+                    <a class="badge {{badgeClass}}" href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}#commentaires">{{nbCommentairesNonValides}}</a>
+
+                </td>
+                <td>{{ article.titre|truncate(50,true) }}</td>
+                <td>{{article.datePublication|date("d/m/Y H:i")}}</td>
+                <td>{% if article.dateEdition is not null %}
+                        {{article.dateEdition|date("d/m/Y H:i")}}</td>
+                    {% else %}
+                        -
+                    {% endif %}
+
+                {% if article.publication %}
+                    <td class="text-centered"><i class="fa fa-check"></i>
+                {% else %}
+                    <td class="text-centered"><i class="fa fa-times"></i>
+                {% endif %}
+                </td>
+
+                <td>
+                    {% for categorie in article.categories %}
+                        {{categorie.nom ~ " "}}
+                    {% endfor %}
+                </td>
+
+                <td>
+                    <ul class="actions">
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}"><i class="fa fa-eye"></i></a>
+                        </li>
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i></a>
+                        </li>
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_depublierArticle', {'slug' : article.slug}) }}"><i class="fa fa-trash-o"></i></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <div class="text-centered">
+        {{ knp_pagination_render(listeArticles) }}
+    </div>
+{% endblock %}

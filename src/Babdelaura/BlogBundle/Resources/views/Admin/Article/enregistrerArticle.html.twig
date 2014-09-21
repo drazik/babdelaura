@@ -1,0 +1,142 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+    <h1>Ajout d'un article</h1>
+    <form method="post" {{ form_enctype(form) }}>
+        <div class="form-group">
+            {{ form_label(form.titre, "Titre") }}
+            {{ form_errors(form.titre)}}
+            {{ form_widget(form.titre) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.contenu, "Contenu de l'article") }}
+            {{ form_errors(form.contenu)}}
+            {{ form_widget(form.contenu) }}
+        </div>
+
+        <div class="row">
+            <div class="form-group six columns">
+                <button class="button" id="button-choose-image" type="button">
+                    <i class="fa fa-camera"></i> Choisir une image principale
+                </button>
+
+                {% if article.image %}
+                    {% set src = asset(article.image.webPath) %}
+                {% else %}
+                    {% set src = asset('bundles/babdelaurablog/images/no-photo.png') %}
+                {% endif %}
+
+                <img class="image-preview" id="image-preview" src="{{ src }}" />
+                {{ form_widget(form.imageTemp) }}
+            </div>
+
+            <div class="form-group six columns">
+                {{ form_label(form.categories, "Catégories") }}
+                {{ form_errors(form.categories)}}
+                {{ form_widget(form.categories) }}
+            </div>
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.publication) }}
+            {{ form_label(form.publication, "Publier l'article") }}
+            {{ form_errors(form.publication)}}
+        </div>
+
+        {{ form_rest(form) }}
+        <button class="button" type="submit">Enregistrer l'article</button>
+    </form>
+
+    <div class="modal" id="modal-choose-image">
+        <div class="modal-shadow"></div>
+        <div class="modal-container">
+            <button class="modal-close"><i class="fa fa-times"></i>
+            </button>
+            <div class="modal-content"></div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{asset('bundles/babdelaurablog/js/ckeditor/ckeditor.js')}}"></script>
+    <script>
+        CKEDITOR.config.entities = false;
+        CKEDITOR.config.entities_latin = false;
+
+        CKEDITOR.replace('babdelaura_blogbundle_article_contenu', {
+            filebrowserBrowseUrl: '{{path('babdelaurablog_admin_listerImages')}}',
+            filebrowserUploadUrl: '{{path('babdelaurablog_admin_uploaderImage')}}',
+            contentsCss: '{{asset('bundles/babdelaurablog/css/contents.css')}}'
+        });
+
+        (function($) {
+            var $chooseImageButton = $('#button-choose-image');
+            var $chooseImageModal = $('#modal-choose-image');
+            var $chooseImageCloseButton = $chooseImageModal.find('.modal-close');
+            var $chooseImageInput = $('#babdelaura_blogbundle_article_imageTemp');
+            var $chooseImagePreview = $('#image-preview');
+            var modalContentAlreadyFilled = false;
+
+            function openModal() {
+                $chooseImageModal.addClass('open');
+                getGallery();
+            }
+
+            function closeModal() {
+                $chooseImageModal.removeClass('open');
+            }
+
+            function getGallery(url) {
+                var ajaxUrl = url || '{{path('babdelaurablog_admin_listerImages')}}';
+                $.ajax({
+                    url: ajaxUrl,
+                    type: 'get',
+                    beforeSend: showLoader,
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error(textStatus, errorThrown);
+                    },
+                    success: fillModalContent
+                });
+            }
+
+            function showLoader() {
+                $chooseImageModal.find('.modal-content').html('<p>Chargement</p>');
+            }
+
+            function fillModalContent(data) {
+                $chooseImageModal.find('.modal-content').html(data);
+                modalContentAlreadyFilled = true;
+            }
+
+            function selectImage(event) {
+                var $image = $(event.target);
+
+                $chooseImageInput.val($image.attr('id'));
+                previewImage($image.attr('src'));
+
+                closeModal();
+            }
+
+            function previewImage(src) {
+                $chooseImagePreview.attr('src', src);
+            }
+
+            $chooseImageButton.on('click', openModal);
+            $chooseImageCloseButton.on('click', closeModal);
+            $chooseImageModal.on('click', '.image-gallery-item', selectImage);
+            $chooseImageModal.on('click', '.page:not(.current)', function(event) {
+                event.preventDefault();
+                var url = $(event.target).attr('href');
+
+                getGallery(url);
+            });
+
+            $(window).on('beforeunload', function(event) { return ''; });
+        })(jQuery);
+
+
+    </script>
+{% endblock %}

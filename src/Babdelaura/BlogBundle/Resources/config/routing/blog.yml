@@ -1,0 +1,55 @@
+babdelaurablog_accueil:
+    path: /
+    defaults: {_controller: BabdelauraBlogBundle:Blog:index}
+
+babdelaurablog_tousLesArticles:
+    path: /articles/
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerTousArticlesBlog}
+
+babdelaurablog_categorie:
+    path: /categorie/{slug}/
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesCategorie}
+
+babdelaurablog_article:
+    path: /{annee}/{mois}/{jour}/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Article:afficherArticle}
+    requirements:
+        annee: \d{4}
+        mois: \d{2}
+        jour: \d{2}
+
+
+babdelaurablog_articlesJour:
+    path: /{annee}/{mois}/{jour}/
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesDate}
+    requirements:
+        annee: \d{4}
+        mois: \d{2}
+        jour: \d{2}
+
+babdelaurablog_articlesMois:
+    path: /{annee}/{mois}/
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesDate, jour: null}
+    requirements:
+        annee: \d{4}
+        mois: \d{2}
+
+babdelaurablog_articlesAnnee:
+    path: /{annee}/
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesDate, mois: null, jour: null}
+    requirements:
+        annee: \d{4}
+
+babdelaurablog_recherche:
+    path: /rechercher
+    defaults: {_controller: BabdelauraBlogBundle:Blog:rechercher}
+
+babdelaurablog_ajouterCommentaire:
+    path: /ajouterCommentaire/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Commentaire:enregistrerCommentaire}
+
+babdelaurablog_page:
+    path: /page/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:afficherPage}
+
+

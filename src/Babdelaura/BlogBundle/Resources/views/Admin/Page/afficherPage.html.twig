@@ -1,0 +1,32 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="eight columns">
+        <h1>Visualiser la page</h1>
+        <section class="article">
+            <header>
+                {% if page.publication %}
+                    {% set classTitre = "article-title" %}
+                {% else %}
+                    {% set classTitre = "article-title draft" %}
+                {% endif %}
+
+                <h1 class="{{classTitre}}">{{ page.titre }}</h1>
+
+                <aside class="article-infos">
+                    Le {{ page.datePublication|date("d/m/Y à H:i") }}
+                </aside>
+            </header>
+            <div class="article-content">
+                <p>{{page.contenu | raw}}</p>
+            </div>
+        </section>
+    </div>
+    <div class="four columns">
+        <h1>Gestion</h1>
+        <a class="button" href="{{ path('babdelaurablog_admin_modifierPage', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
+        <a class="button" href="{{ path('babdelaurablog_admin_depublierPage', {'slug' : page.slug}) }}"><i class="fa fa-trash-o"></i> Dépublier</a>
+    </div>
+</div>
+{% endblock %}

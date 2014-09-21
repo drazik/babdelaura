@@ -1,0 +1,48 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+    <h1>Liste des pages</h1>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Edition</th>
+                <th class="text-centered">Publication</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in listePages %}
+            <tr>
+                <td>{{ page.titre|truncate(50,true) }}</td>
+                <td>{{page.datePublication|date("d/m/Y H:i")}}</td>
+                <td>{{page.dateEdition|date("d/m/Y H:i")}}</td>
+                {% if page.publication %}
+                    <td class="text-centered"><i class="fa fa-check"></i>
+                </td>
+                {% else %}
+                    <td class="text-centered"><i class="fa fa-times"></i>
+                {% endif %}
+                <td>
+                    <ul class="actions">
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_afficherPage', {'slug' : page.slug}) }}"><i class="fa fa-eye"></i></a>
+                        </li>
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_modifierPage', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i></a>
+                        </li>
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_depublierPage', {'slug' : page.slug}) }}"><i class="fa fa-trash-o"></i></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-centered">
+        {{ knp_pagination_render(listePages) }}
+    </div>
+{% endblock %}

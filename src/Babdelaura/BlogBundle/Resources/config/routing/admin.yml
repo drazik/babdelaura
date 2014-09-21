@@ -1,0 +1,3 @@
+babdelaurablog_admin_accueil:
+    path: /admin/
+    defaults: {_controller: BabdelauraBlogBundle:Admin:index}

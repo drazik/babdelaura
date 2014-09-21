@@ -1,0 +1,22 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+
+{% block mainContent %}
+
+    <section class="article">
+        <header>
+            <h1 class="article-title">{{ page.titre }}</h1>
+            <aside class="article-infos">
+                Le {{ page.datePublication|date("d/m/Y à H:i") }}
+            </aside>
+        </header>
+        <div class="article-content">
+            <p>{{page.contenu | raw}}</p>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}

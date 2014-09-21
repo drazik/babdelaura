@@ -1,0 +1,11 @@
+babdelaurablog_admin_validerCommentaire:
+    path: /admin/validerCommentaire/{slug}/{idCom}
+    defaults: {_controller: BabdelauraBlogBundle:Commentaire:validerCommentaire}
+
+babdelaurablog_admin_validerCommentairesArticle:
+    path: /admin/validerTousCommentaires/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Article:validerCommentaires}
+
+babdelaurablog_admin_listerCommentairesNonValides:
+    path: /admin/commentairesNonValides/
+    defaults: {_controller: BabdelauraBlogBundle:Commentaire:listerCommentairesNonValides}

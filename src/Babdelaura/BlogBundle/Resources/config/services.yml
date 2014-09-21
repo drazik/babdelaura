@@ -1,0 +1,7 @@
+parameters:
+#    babdelaura_blog.example.class: Babdelaura\BlogBundle\Example
+
+services:
+#    babdelaura_blog.example:
+#        class: %babdelaura_blog.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

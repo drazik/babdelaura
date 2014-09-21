@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Bric à Brac de Laura</title>
+        <link rel="stylesheet" media="screen" href="{{asset('bundles/babdelaurablog/css/main.css') }}" />
+
+        {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
+    </head>
+    <body>
+
+        <header class="header"></header>
+
+        <nav class="main-nav" id="main-nav">
+            <div class="wrapper">
+                {{render(controller('BabdelauraBlogBundle:Blog:mainMenu'))}}
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="content-inner wrapper row">
+                {% block content %}
+                <div class="eight columns">
+                    {% block mainContent %}
+                    {% endblock %}
+                </div>
+                <div class="four columns">
+                    {% block sidebar %}
+                    <section class="sidebar-section">
+                        <form method="get" action="{{ path('babdelaurablog_recherche') }}">
+                            <input name="motscles" id="search" placeholder="Rechercher" />
+                        </form>
+                    </section>
+                    <section class="sidebar-section">
+                        <h1 class="sidebar-title">Où me trouver</h1>
+                        <ul class="social-links">
+                            <li class="social-link">
+                                <a href="https://www.facebook.com/BabDeLaura" target="_blank" title="Facebook">
+                                    <span class="social-icon social-fb"></span>
+                                    Bric à Brac de Laura
+                                </a>
+                            </li>
+                            <li class="social-link">
+                                <a href="https://twitter.com/BabDeLaura" target="_blank" title="Twitter">
+                                    <span class="social-icon social-twitter"></span>
+                                    @BabDeLaura
+                                </a>
+                            </li>
+                            <li class="social-link">
+                                <a href="http://www.pinterest.com/BabDeLaura/" target="_blank" title="Pinterest">
+                                    <span class="social-icon social-pinterest"></span>
+                                    BabDeLaura
+                                </a>
+                            </li>
+                            <li class="social-link">
+                                <a href="http://instagram.com/BabDeLaura" target="_blank" title="Instagram">
+                                    <span class="social-icon social-instagram"></span>
+                                    BabDeLaura
+                                </a>
+                            </li>
+                            {#<li class="social-link">
+                                <a href="mailto:bab-de-laura@hotmail.fr" title="Instagram">
+                                    <span class="social-icon social-instagram"></span>
+                                    BabDeLaura
+                                </a>
+                            </li>#}
+
+                        </ul>
+                    </section>
+                    {{render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))}}
+                    {% endblock %}
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+        <footer class="footer">
+            Site développé du bout de mes ongles.
+        </footer>
+
+
+        {% block javascripts %}
+            {#<script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>#}
+            <script src="{{ asset('bundles/babdelaurablog/js/Modernizr.js') }}"></script>
+            <script src="{{ asset('bundles/babdelaurablog/js/jquery-2.1.1.min.js') }}"></script>
+            <script src="{{ asset('bundles/babdelaurablog/js/main-nav.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

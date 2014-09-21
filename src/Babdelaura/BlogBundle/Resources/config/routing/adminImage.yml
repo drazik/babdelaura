@@ -1,0 +1,8 @@
+babdelaurablog_admin_listerImages:
+    path: /admin/gallerie
+    defaults: {_controller: BabdelauraBlogBundle:Image:listerImages}
+
+babdelaurablog_admin_uploaderImage:
+    path: /admin/uploadImage
+    defaults: {_controller: BabdelauraBlogBundle:Image:upload}
+

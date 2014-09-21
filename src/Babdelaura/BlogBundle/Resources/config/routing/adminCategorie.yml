@@ -1,0 +1,11 @@
+babdelaurablog_admin_listerCategories:
+    path: /admin/categories
+    defaults: {_controller: BabdelauraBlogBundle:Categorie:listerToutesCategories}
+
+babdelaurablog_admin_ajouterCategorie:
+    path: /admin/ajouterCategorie
+    defaults: {_controller: BabdelauraBlogBundle:Categorie:enregistrerCategorie}
+
+babdelaurablog_admin_modifierCategorie:
+    path: /admin/modifierCategorie/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Categorie:enregistrerCategorie}

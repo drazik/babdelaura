@@ -1,0 +1,19 @@
+babdelaurablog_admin_ajouterPage:
+    path: /admin/ajouterPage
+    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPage}
+
+babdelaurablog_admin_afficherPage:
+    path: /admin/page/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:afficherPageAdmin}
+
+babdelaurablog_admin_modifierPage:
+    path: /admin/modifierPage/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPage}
+
+babdelaurablog_admin_listerPages:
+    path: /admin/pages
+    defaults: {_controller: BabdelauraBlogBundle:Page:listerToutesPagesAdmin}
+
+babdelaurablog_admin_depublierPage:
+    path: /admin/depublierPage/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:depublierPage}

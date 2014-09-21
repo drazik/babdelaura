@@ -1,0 +1,41 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+    <h1>Ajout d'une page</h1>
+    <form method="post" {{ form_enctype(form) }}>
+        <div class="form-group">
+            {{ form_label(form.titre, "Titre") }}
+            {{ form_errors(form.titre)}}
+            {{ form_widget(form.titre) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.contenu, "Contenu de la page") }}
+            {{ form_errors(form.contenu)}}
+            {{ form_widget(form.contenu) }}
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.publication) }}
+            {{ form_label(form.publication, "Publier la page") }}
+            {{ form_errors(form.publication)}}
+        </div>
+
+        {{ form_rest(form) }}
+        <button class="button" type="submit">Enregistrer la page</button>
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('bundles/babdelaurablog/js/ckeditor/ckeditor.js')}}"></script>
+    <script>
+        CKEDITOR.config.entities = false;
+        CKEDITOR.config.entities_latin = false;
+        CKEDITOR.replace('babdelaura_blogbundle_page_contenu', {
+            filebrowserBrowseUrl: '{{path('babdelaurablog_admin_listerImages')}}',
+            filebrowserUploadUrl: '{{path('babdelaurablog_admin_uploaderImage')}}',
+            contentsCss: '{{asset('bundles/babdelaurablog/css/contents.css')}}'
+        });
+    </script>
+{% endblock %}

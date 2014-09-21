@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Bric à Brac de Laura</title>
+        <link rel="stylesheet" media="screen" href="{{asset('bundles/babdelaurablog/css/main.css') }}" />
+    </head>
+
+    <body>
+        {% for image in listeImages %}
+            <img class="image-gallery-item" src="{{ asset(image.webPath) }}" id="{{image.id}}"/>
+        {% endfor %}
+
+        <div class="text-centered">
+            {{ knp_pagination_render(listeImages) }}
+        </div>
+
+        <script src="{{asset('bundles/babdelaurablog/js/jquery-2.1.1.min.js')}}"></script>
+        <script>
+            function getUrlParam( paramName ) {
+                var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+                var match = window.location.search.match(reParam);
+                return ( match && match.length > 1 ) ? match[ 1 ] : null;
+            }
+
+            (function($){
+                var images = $('img');
+                images.on('click', function(e){
+                    var $this = $(this);
+                    var funcNum = getUrlParam('CKEditorFuncNum');
+                    var fileUrl = $this.attr('src');
+                    window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                    window.close();
+                });
+
+            })(jQuery);
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,86 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+<div class="row">
+    <div class="eight columns">
+        <h1>Visualiser l'article</h1>
+        <section class="article">
+            {% set nbCommentaires = article.nbCommentaires %}
+            {% set nbCommentairesNonValides = article.getNbCommentaires(false) %}
+            <header>
+                {% if article.publication %}
+                    {% set classTitre = "article-title" %}
+                {% else %}
+                    {% set classTitre = "article-title draft" %}
+                {% endif %}
+                <h1 class="{{classTitre}}">{{ article.titre }}</h1>
+                <aside class="article-infos">
+                    Le {{ article.datePublication|date("d/m/Y à H:i") }} -
+                    <a href="#commentaires">{{nbCommentaires}} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %} {% if nbCommentairesNonValides > 0 %} (dont {{nbCommentairesNonValides}} à valider){% endif %}</a>
+                    <ul class="article-categories">
+                        {% for categorie in article.categories %}
+                            <li class="article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
+                        {% endfor %}
+                    </ul>
+                </aside>
+            </header>
+            <div class="article-content">
+                <p>{{article.contenu | raw}}</p>
+            </div>
+        </section>
+    </div>
+    <div class="four columns">
+        <h1>Gestion</h1>
+        <a class="button" href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
+        <a class="button" href="{{ path('babdelaurablog_admin_depublierArticle', {'slug' : article.slug}) }}"><i class="fa fa-trash-o"></i> Dépublier</a>
+    </div>
+</div>
+<div class="row">
+    <div class="eight columns">
+        <h1 id="commentaires">Commentaires</h1>
+        {% if nbCommentaires > 0 %}
+
+            <ul class="comments">
+                {% for commentaire in article.commentaires %}
+                <li class="comment">
+                    <header class="comment-header">
+                        {% if commentaire.valide == false %}
+                            {% set badgeClass = 'badge-danger' %}
+                        {% else %}
+                            {% set badgeClass = 'badge-success' %}
+                        {% endif %}
+                        <span class="comment-number badge {{badgeClass}}">#{{ loop.index }}</span>
+                        {% if commentaire.site %}
+                            <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
+                        {% else %}
+                            {{ commentaire.auteur }}
+                        {% endif %}
+                        <span class="comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
+                        {% if commentaire.valide == false %}
+                            <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="button button-small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
+                        {% endif %}
+                    </header>
+                    <div class="comment-content">
+                        {{ commentaire.contenu }}
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+            <p>
+                Aucun commentaire.
+            </p>
+        {% endif %}
+    </div>
+    <div class="four columns">
+        <h1>Gestion</h1>
+        {% if nbCommentairesNonValides > 0 %}
+            <a class="button" href="{{path('babdelaurablog_admin_validerCommentairesArticle', {'slug' : article.slug})}}"><i class="fa fa-check-square-o"></i> Tout valider</a>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

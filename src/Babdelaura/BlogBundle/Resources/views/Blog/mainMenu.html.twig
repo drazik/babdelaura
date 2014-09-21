@@ -1,0 +1,18 @@
+<button class="main-nav-toggle" id="main-nav-toggle">
+    <i class="fa fa-bars"></i>
+</button>
+<ul class="main-nav-container" id="main-nav-container">
+    <li class="main-nav-item"><a href="{{ path('babdelaurablog_accueil') }}" title="">Accueil</a></li>
+
+    {% for categorie in listeCategories %}
+        <li class="main-nav-item">
+            <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}" title="{{categorie.nom}}">{{categorie.nom}}</a>
+        </li>
+    {% endfor %}
+
+    {% for page in listePages %}
+        <li class="main-nav-item">
+            <a href="{{ path('babdelaurablog_page', {'slug' : page.slug}) }}" title="{{page.titre}}">{{page.titre}}</a>
+        </li>
+    {% endfor %}
+</ul>

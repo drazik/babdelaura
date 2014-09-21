@@ -1,0 +1,35 @@
+babdelaura_user:
+    resource: "@BabdelauraUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+babdelaura_blog:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/blog.yml"
+    prefix:   /
+
+babdelaura_admin:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/admin.yml"
+    prefix:   /
+
+babdelaura_adminArticle:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminArticle.yml"
+    prefix:   /
+
+babdelaura_adminCategorie:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminCategorie.yml"
+    prefix:   /
+
+babdelaura_adminCommentaire:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminCommentaire.yml"
+    prefix:   /
+
+babdelaura_adminImage:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminImage.yml"
+    prefix:   /
+
+babdelaura_adminPage:
+    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminPage.yml"
+    prefix:   /
+
+ohinstagrambundle:
+    resource: "@OhInstagramBundle/Resources/config/routing.yml"
+    prefix:   /
