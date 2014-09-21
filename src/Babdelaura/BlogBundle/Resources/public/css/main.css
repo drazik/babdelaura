@@ -1475,7 +1475,7 @@
 
 .visually-hidden {
   position: absolute;
-  left: 10000px;
+  left: -10000px;
   width: 1px;
   height: 1px;
   overflow: hidden; }
@@ -1532,8 +1532,7 @@ html {
  * Remove default margin.
  */
 body {
-  margin: 0;
-}
+  margin: 0; }
 
 /* HTML5 display definitions
    ========================================================================== */
@@ -1543,7 +1542,7 @@ body {
  * Correct `block` display not defined for `main` in IE 11.
  */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
-  display: block;}
+  display: block; }
 
 /**
  * 1. Correct `inline-block` display not defined in IE 8/9.
@@ -1928,6 +1927,7 @@ html, body {
     margin-bottom: 2em; } }
 
 .header {
+  position: relative;
   height: 250px;
   background-color: #f9f9fa;
   background-image: url(../images/header-brushes.png), url(../images/header-bijoux.jpg);
@@ -1945,6 +1945,14 @@ html, body {
   @media screen and (max-width: 500px) {
     .header {
       height: 125px; } }
+
+.header-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-indent: -10000em; }
 
 .sidebar-section {
   padding-bottom: 1em;
@@ -2058,7 +2066,6 @@ td {
 .article-content img {
   display: block;
   max-width: 100%;
-  height: auto !important;
   margin: 0 auto; }
 
 .article-content figcaption {
@@ -2487,11 +2494,16 @@ a.button {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
   padding: 0.5em;
   box-shadow: 0 0 10px 0 #585858; }
 
 .notification-success {
   background-color: #2ecc71;
+  color: #fff; }
+
+.notification-info {
+  background-color: #a4c3cb;
   color: #fff; }
 
 .notification-close {

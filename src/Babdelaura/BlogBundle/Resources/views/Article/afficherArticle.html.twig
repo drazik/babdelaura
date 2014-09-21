@@ -49,7 +49,7 @@
             {% if commentaire.valide %}
             <li class="comment">
                 <header class="comment-header">
-                    {#<span class="comment-number">#{{ loop.index }}</span>#}
+                    <i class="fa fa-user"></i>
                     {% if commentaire.site %}
                         <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
                     {% else %}
