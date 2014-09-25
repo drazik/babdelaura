@@ -3,7 +3,7 @@
     <ul class="instagram-photos">
         {% for result in results%}
             <li class="instagram-photo">
-                <a href="{{ result.link }}" target="_blank"><img src="{{ result.images.thumbnail.url }}" /></a>
+                <a href="{{ result.link }}" target="_blank"><img src="{{ result.images.thumbnail.url }}" alt="Image Instagram" /></a>
             </li>
         {% endfor %}
     </ul>
