@@ -98,7 +98,7 @@ class ArticleController extends Controller
 
 
     public function afficherArticleAction($annee, $mois, $jour, $slug) {
-        $repository = $this>-getDoctrine()
+        $repository = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('BabdelauraBlogBundle:Article');
 

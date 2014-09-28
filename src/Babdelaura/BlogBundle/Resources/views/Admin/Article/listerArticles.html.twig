@@ -39,7 +39,10 @@
                     {% else %}
                         {% set badgeClass = 'badge-success' %}
                     {% endif %}
-                    <a class="badge {{badgeClass}}" href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}#commentaires">{{nbCommentairesNonValides}}</a>
+                    <a href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}#commentaires">
+                        <span class="badge {{badgeClass}}">{{nbCommentairesNonValides}}</span>
+                        <span class="badge">{{article.nbCommentaires}}</span>
+                    </a>
 
                 </td>
                 <td>{{ article.titre|truncate(50,true) }}</td>
