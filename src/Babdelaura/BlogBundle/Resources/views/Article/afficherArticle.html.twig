@@ -9,21 +9,31 @@
         </div>
     {% endfor %}
 
-    <section class="article">
+    <section class="article" itemscope itemtype="http://schema.org/BlogPosting">
         {% set nbCommentaires = article.getNbCommentaires(true) %}
         <header>
-            <h1 class="article-title">{{ article.titre }}</h1>
+            <h1 class="article-title" itemprop="name">{{ article.titre }}</h1>
             <aside class="article-infos">
-                Le {{ article.datePublication|date("d/m/Y à H:i") }} -
-                <a href="#commentaires">{{ nbCommentaires }} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %}</a>
+                <time pubdate itemprop="datePublished">
+                    Le {{ article.datePublication|date("d/m/Y à H:i") }}
+                </time>
+                -
+                <a href="#commentaires" title="Accéder aux commentaires">
+                    {{ nbCommentaires }}
+                    {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %}
+                </a>
                 <ul class="article-categories">
                     {% for categorie in article.categories %}
-                        <li class="article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
+                        <li class="article-category">
+                            <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}">
+                                {{categorie.nom}}{% if not loop.last %},{% endif %}
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </aside>
         </header>
-        <div class="article-content">
+        <div class="article-content" itemprop="">
             <p>{{article.contenu | raw}}</p>
         </div>
     </section>
