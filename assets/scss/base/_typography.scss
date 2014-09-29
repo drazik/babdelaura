@@ -1,0 +1,43 @@
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+p {
+    line-height: 1.5;
+}
+
+a,
+a:visited {
+    color: $blue-light;
+    transition: color .3s;
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: $blue-medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Vidaloka', sans-serif;
+    color: $blue-medium;
+}
+
+.big-title {
+    font-size: 3em;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child,
+p:first-child {
+    margin-top: 0;
+}

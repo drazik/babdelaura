@@ -1,0 +1,54 @@
+.modal-shadow {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, .65);
+}
+
+.modal-container {
+    position: fixed;
+    top: 2em;
+    bottom: 2em;
+    left: 2em;
+    right: 2em;
+    display: none;
+    z-index: 101;
+    background-color: #fff;
+    overflow-y: scroll;
+}
+
+.modal.open .modal-shadow,
+.modal.open .modal-container {
+    display: block;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    border-width: 0;
+    background-color: transparent;
+}
+
+.modal-content {
+    padding: 1em 3em 1em 1em;
+}
+
+@media screen and (max-width: 500px) {
+    .modal-container {
+        top: 1em;
+        bottom: 1em;
+        left: 1em;
+        right: 1em;
+    }
+
+    .modal-close {
+        font-size: 2em;
+        top: .25em;
+        right: .25em;
+    }
+}

@@ -1,0 +1,27 @@
+.button {
+    display: inline-block;
+    padding: 1em;
+    background-color: $blue-light;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    border-width: 0;
+}
+
+a.button {
+    color: #fff;
+}
+
+.button:hover,
+.button:focus {
+    background-color: $blue-medium;
+}
+
+.button-full-width {
+    display: block;
+    width: 100%;
+}
+
+.button-small {
+    padding: .4em;
+}
