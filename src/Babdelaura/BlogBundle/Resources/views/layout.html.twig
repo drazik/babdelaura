@@ -4,8 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <title>Bric à Brac de Laura</title>
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:400,700|Lato:400,700|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Arvo:400,700|Vidaloka' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Vidaloka' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" media="screen" href="{{asset('bundles/babdelaurablog/css/main.css') }}" />
 
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
@@ -84,7 +84,9 @@
 
 
         {% block javascripts %}
-            {#<script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>#}
+            {% if app.environment == 'prod' %}
+                <script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>
+            {% endif %}
             <script src="{{ asset('bundles/babdelaurablog/js/Modernizr.js') }}"></script>
             <script src="{{ asset('bundles/babdelaurablog/js/jquery-2.1.1.min.js') }}"></script>
             <script src="{{ asset('bundles/babdelaurablog/js/jquery.cookie.js') }}"></script>
