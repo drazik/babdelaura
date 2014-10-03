@@ -9,9 +9,7 @@ require('./jquery.cookie');
         this.initEvents();
     }
 
-    InfoCookies.prototype.initEvents = function() {
-        $('#info-cookies-confirm').on('click', this.close.bind(this));
-    };
+    InfoCookies.prototype.initEvents = function() {};
 
     InfoCookies.prototype.check = function() {
         if (!this.viewed()) {
@@ -25,10 +23,14 @@ require('./jquery.cookie');
 
     InfoCookies.prototype.show = function() {
         $('body').append('<div class="notification notification-info" id="info-cookies"><div class="notification-content">En poursuivant votre navigation sur ce site, vous acceptez l\'utilisation de cookies afin de réaliser des statistiques de visites anonymes. <button class="button button-small" id="info-cookies-confirm" type="button">OK</button></div></div>');
+
+        $('#info-cookies-confirm').on('click', this.close);
     };
 
     InfoCookies.prototype.close = function(event) {
         event.preventDefault();
+
+        console.log('closed');
 
         $.cookie('infocookies', 'viewed', {expire: 30 * 12});
         $('#info-cookies').fadeOut();

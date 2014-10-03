@@ -1,5 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var InfoCookies = require('./modules/info-cookies');
+
+var infosCookies = new InfoCookies();
+infosCookies.check();
 },{"./modules/info-cookies":2}],2:[function(require,module,exports){
 var jQuery = require('jquery');
 require('./jquery.cookie');
@@ -12,9 +15,7 @@ require('./jquery.cookie');
         this.initEvents();
     }
 
-    InfoCookies.prototype.initEvents = function() {
-        $('#info-cookies-confirm').on('click', this.close.bind(this));
-    };
+    InfoCookies.prototype.initEvents = function() {};
 
     InfoCookies.prototype.check = function() {
         if (!this.viewed()) {
@@ -28,10 +29,14 @@ require('./jquery.cookie');
 
     InfoCookies.prototype.show = function() {
         $('body').append('<div class="notification notification-info" id="info-cookies"><div class="notification-content">En poursuivant votre navigation sur ce site, vous acceptez l\'utilisation de cookies afin de réaliser des statistiques de visites anonymes. <button class="button button-small" id="info-cookies-confirm" type="button">OK</button></div></div>');
+
+        $('#info-cookies-confirm').on('click', this.close);
     };
 
     InfoCookies.prototype.close = function(event) {
         event.preventDefault();
+
+        console.log('closed');
 
         $.cookie('infocookies', 'viewed', {expire: 30 * 12});
         $('#info-cookies').fadeOut();
