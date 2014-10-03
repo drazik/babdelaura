@@ -1,0 +1,1 @@
+var InfoCookies = require('./modules/info-cookies');
