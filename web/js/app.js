@@ -2,14 +2,17 @@
 (function() {
     var InfoCookies = require('./modules/info-cookies');
     var MainNav = require('./modules/main-nav');
+    var TouchEffect = require('./modules/toucheffect');
 
     var infosCookies = new InfoCookies();
     infosCookies.check();
 
     var mainNav = new MainNav();
+
+    var touchEffect = new TouchEffect();
 })();
 
-},{"./modules/info-cookies":2,"./modules/main-nav":4}],2:[function(require,module,exports){
+},{"./modules/info-cookies":2,"./modules/main-nav":4,"./modules/toucheffect":5}],2:[function(require,module,exports){
 var jQuery = require('jquery');
 require('./jquery.cookie');
 
@@ -50,7 +53,7 @@ require('./jquery.cookie');
 
     module.exports = InfoCookies;
 })(jQuery);
-},{"./jquery.cookie":3,"jquery":5}],3:[function(require,module,exports){
+},{"./jquery.cookie":3,"jquery":6}],3:[function(require,module,exports){
 /*!
  * jQuery Cookie Plugin v1.4.1
  * https://github.com/carhartl/jquery-cookie
@@ -169,7 +172,7 @@ require('./jquery.cookie');
 
 }));
 
-},{"jquery":5}],4:[function(require,module,exports){
+},{"jquery":6}],4:[function(require,module,exports){
 var jQuery = require('jquery');
 
 (function($) {
@@ -177,7 +180,6 @@ var jQuery = require('jquery');
     'use strict';
 
     function MainNav() {
-        console.log('main nav constructor');
         this.$mainNav = $('#main-nav');
         this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
         this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
@@ -198,7 +200,36 @@ var jQuery = require('jquery');
 
     module.exports = MainNav;
 })(jQuery);
-},{"jquery":5}],5:[function(require,module,exports){
+},{"jquery":6}],5:[function(require,module,exports){
+var jQuery = require('jquery');
+
+(function($) {
+
+    'use strict';
+
+    function TouchEffect() {
+        this.$articles = $('.grid-item-article');
+
+        if (this.$articles.length > 0 && Modernizr.touch) {
+            this.initEvents();
+        }
+    }
+
+    TouchEffect.prototype.initEvents = function() {
+        this.$articles.on('click', '.grid-item-article-read', function(event) {
+            event.stopPropagation();
+        });
+
+        this.$articles.on('click', this.toggleArticle);
+    };
+
+    TouchEffect.prototype.toggleArticle = function(event) {
+        $(this).toggleClass('hover');
+    };
+
+    module.exports = TouchEffect;
+})(jQuery);
+},{"jquery":6}],6:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/

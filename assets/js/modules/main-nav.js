@@ -5,7 +5,6 @@ var jQuery = require('jquery');
     'use strict';
 
     function MainNav() {
-        console.log('main nav constructor');
         this.$mainNav = $('#main-nav');
         this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
         this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
