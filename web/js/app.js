@@ -1,9 +1,15 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var InfoCookies = require('./modules/info-cookies');
+(function() {
+    var InfoCookies = require('./modules/info-cookies');
+    var MainNav = require('./modules/main-nav');
 
-var infosCookies = new InfoCookies();
-infosCookies.check();
-},{"./modules/info-cookies":2}],2:[function(require,module,exports){
+    var infosCookies = new InfoCookies();
+    infosCookies.check();
+
+    var mainNav = new MainNav();
+})();
+
+},{"./modules/info-cookies":2,"./modules/main-nav":4}],2:[function(require,module,exports){
 var jQuery = require('jquery');
 require('./jquery.cookie');
 
@@ -44,7 +50,7 @@ require('./jquery.cookie');
 
     module.exports = InfoCookies;
 })(jQuery);
-},{"./jquery.cookie":3,"jquery":4}],3:[function(require,module,exports){
+},{"./jquery.cookie":3,"jquery":5}],3:[function(require,module,exports){
 /*!
  * jQuery Cookie Plugin v1.4.1
  * https://github.com/carhartl/jquery-cookie
@@ -163,7 +169,36 @@ require('./jquery.cookie');
 
 }));
 
-},{"jquery":4}],4:[function(require,module,exports){
+},{"jquery":5}],4:[function(require,module,exports){
+var jQuery = require('jquery');
+
+(function($) {
+
+    'use strict';
+
+    function MainNav() {
+        console.log('main nav constructor');
+        this.$mainNav = $('#main-nav');
+        this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
+        this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
+        this.$mainNavContainer = this.$mainNav.find('#main-nav-container');
+
+        this.initEvents();
+    }
+
+    MainNav.prototype.initEvents = function() {
+        this.$mainNavToggleButton.on('click', this.toggleNavigation.bind(this));
+    };
+
+    MainNav.prototype.toggleNavigation = function(event) {
+        this.$mainNav.toggleClass('open');
+        this.$mainNavToggleIcon.toggleClass('fa-bars');
+        this.$mainNavToggleIcon.toggleClass('fa-times');
+    };
+
+    module.exports = MainNav;
+})(jQuery);
+},{"jquery":5}],5:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
