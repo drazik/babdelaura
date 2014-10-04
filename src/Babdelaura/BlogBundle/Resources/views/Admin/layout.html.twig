@@ -7,6 +7,8 @@
     <title>Administration - Bric à Brac de Laura</title>
     <link rel="stylesheet" media="screen" href="{{asset('bundles/babdelaurablog/css/main.css') }}" />
 
+    <script src="{{ asset('js/Modernizr.js') }}"></script>
+
      {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
 </head>
 
@@ -78,9 +80,7 @@
     </footer>
 
     {% block javascripts %}
-        <script src="{{ asset('bundles/babdelaurablog/js/Modernizr.js') }}"></script>
-        <script src="{{ asset('bundles/babdelaurablog/js/jquery-2.1.1.min.js') }}"></script>
-        <script src="{{ asset('bundles/babdelaurablog/js/main-nav.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     {% endblock %}
 </body>
 
