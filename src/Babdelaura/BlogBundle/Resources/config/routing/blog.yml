@@ -2,6 +2,10 @@ babdelaurablog_accueil:
     path: /
     defaults: {_controller: BabdelauraBlogBundle:Blog:index}
 
+babdelaurablog_rss:
+    path: /rss
+    defaults: {_controller: BabdelauraBlogBundle:Blog:feedRss}
+
 babdelaurablog_tousLesArticles:
     path: /articles/
     defaults: {_controller: BabdelauraBlogBundle:Article:listerTousArticlesBlog}

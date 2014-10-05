@@ -73,4 +73,18 @@ class BlogController extends Controller
 
 
     }
+
+    public function feedRssAction() {
+        $repository = $this->getDoctrine()
+                           ->getManager()
+                           ->getRepository('BabdelauraBlogBundle:Article');
+
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+
+        $listeArticles = $repository->findBy(array(), array('datePublication' => 'desc'), $nbArticlesParPage);
+
+
+        return $this->render('BabdelauraBlogBundle:Blog:feed.rss.twig', array('listeArticles' => $listeArticles));
+
+    }
 }

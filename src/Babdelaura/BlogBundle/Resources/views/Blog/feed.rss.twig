@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+        <title><![CDATA[Bric à Brac de Laura]]></title>
+        <description><![CDATA[Créatrice de bijoux en pâte polymère et fan de nail-art, je souhaite partagez mes passions avec vous.]]></description>
+        <link>http://www.bricabrac-de-laura.fr</link>
+
+       {% for article in listeArticles %}
+        <item>
+            <title>{{article.titre}}</title>
+            <description><![CDATA[{{article.contenu | raw}}]]></description>
+            <pubDate>{{article.datePublication | date("D, d M Y H:i:s O")}}</pubDate>
+            <category>
+                <![CDATA[{% for cat in article.categories %}
+                    {{cat.nom}}{% if not loop.last %},{% endif %}
+                {% endfor %}]]>
+            </category>
+            <link>{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}</link>
+            <comments>
+                {{path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires
+            </comments>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>
