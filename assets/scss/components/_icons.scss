@@ -1,22 +1,32 @@
 .social-icon {
     display: inline-block;
+    border-radius: 4px;
     width: 32px;
     height: 32px;
     vertical-align: middle;
+    background-image: url(../images/sprite-contact.png);
 }
 
 .social-fb {
-    background-image: url(../images/fb.png);
+    background-position: 0 0;
 }
 
 .social-twitter {
-    background-image: url(../images/twitter.png);
-}
-
-.social-pinterest {
-    background-image: url(../images/pinterest.png);
+    background-position: 0 -32px;
 }
 
 .social-instagram {
-    background-image: url(../images/instagram.png);
+    background-position: 0 -64px;
+}
+
+.social-pinterest {
+    background-position: 0 -96px;
+}
+
+.social-hellocoton {
+    background-position: 0 -128px;
+}
+
+.social-mail {
+    background-position: 0 -160px;
 }

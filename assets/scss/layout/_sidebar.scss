@@ -1,6 +1,11 @@
 .sidebar-section {
+    padding-top: 1em;
     padding-bottom: 1em;
     border-bottom: 1px solid #34495e;
+}
+
+.sidebar-section:first-child {
+    padding-top: 0;
 }
 
 .sidebar-section:last-child {

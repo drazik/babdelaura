@@ -38,7 +38,8 @@
 
 .main-nav-item a:hover,
 .main-nav-item a:focus,
-.main-nav-item a:active {
+.main-nav-item a:active
+.main-nav-item.current {
     background-color: $blue-light;
     color: #fff;
 }

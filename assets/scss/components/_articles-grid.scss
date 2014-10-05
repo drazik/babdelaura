@@ -1,10 +1,14 @@
+.grid-title {
+    font-family: 'Lobster', cursive;
+}
+
 .grid {
     list-style: none;
     overflow: hidden;
     margin: 0;
     padding: 0;
 }
- 
+
 .grid-item {
     float: left;
     width: 48%;
