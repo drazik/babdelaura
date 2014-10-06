@@ -15,9 +15,9 @@
                     {{cat.nom}}{% if not loop.last %},{% endif %}
                 {% endfor %}]]>
             </category>
-            <link>{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}</link>
+            <link>http://www.bricabrac-de-laura.fr{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}</link>
             <comments>
-                {{path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires
+                http://www.bricabrac-de-laura.fr{{path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires
             </comments>
         </item>
         {% endfor %}
