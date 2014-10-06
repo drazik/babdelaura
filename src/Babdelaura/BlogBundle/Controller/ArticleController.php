@@ -243,7 +243,9 @@ class ArticleController extends Controller
         $request = $this->get('request');
 
         $session = $this->get('session');
-        $session->set('url', $this->generateUrl('babdelaurablog_admin_listerArticles') . '?page=' . $request->query->get('page'));
+
+        $numPage = $request->get('page') == '' ? 1 : $request->get('page');
+        $session->set('url', $this->generateUrl('babdelaurablog_admin_listerArticles') . '?page=' . $numPage);
 
 
         if ($request->isMethod('POST')) {
