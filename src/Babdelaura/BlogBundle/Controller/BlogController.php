@@ -81,7 +81,7 @@ class BlogController extends Controller
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
-        $listeArticles = $repository->findBy(array(), array('datePublication' => 'desc'), $nbArticlesParPage);
+        $listeArticles = $repository->findBy(array('publication'=> true), array('datePublication' => 'desc'), $nbArticlesParPage);
 
 
         return $this->render('BabdelauraBlogBundle:Blog:feed.rss.twig', array('listeArticles' => $listeArticles));
