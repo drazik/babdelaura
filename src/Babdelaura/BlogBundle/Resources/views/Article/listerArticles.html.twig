@@ -2,11 +2,6 @@
 
 
 {% block mainContent %}
-
-    {% if categorie is defined %}
-        <h1>{{ categorie.nom }}</h1>
-    {% endif %}
-
     {% for article in listeArticles %}
         {% set nbCommentaires = article.getNbCommentaires(true) %}
         <section class="article">
