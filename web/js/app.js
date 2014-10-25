@@ -20,11 +20,7 @@ require('./jquery.cookie');
 
     'use strict';
 
-    function InfoCookies() {
-        this.initEvents();
-    }
-
-    InfoCookies.prototype.initEvents = function() {};
+    function InfoCookies() {}
 
     InfoCookies.prototype.check = function() {
         if (!this.viewed()) {
@@ -44,8 +40,6 @@ require('./jquery.cookie');
 
     InfoCookies.prototype.close = function(event) {
         event.preventDefault();
-
-        console.log('closed');
 
         $.cookie('infocookies', 'viewed', {expire: 30 * 12});
         $('#info-cookies').fadeOut();
