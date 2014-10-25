@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     sass = require('gulp-sass'),
+    browserify = require('gulp-browserify'),
     prefix = require('gulp-autoprefixer');
 
 gulp.task('styles', function() {
@@ -14,14 +15,15 @@ gulp.task('styles', function() {
 });
 
 gulp.task('js', function() {
-    gulp.src('./assets/js/*.js')
+    gulp.src('./assets/js/app.js')
         .pipe(plumber())
+        .pipe(browserify())
         .pipe(gulp.dest('./web/js'));
 });
 
 gulp.task('compile', ['styles', 'js']);
 
 gulp.task('watch', ['compile'], function() {
-    gulp.watch('assets/scss/**/*.scss', ['styles']);
-    // gulp.watch('assets/js/*.js', ['js']);
+    gulp.watch('./assets/scss/**/*.scss', ['styles']);
+    gulp.watch('./assets/js/**/*.js', ['js']);
 });
