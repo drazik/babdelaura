@@ -9,3 +9,9 @@ babdelaurablog_admin_validerCommentairesArticle:
 babdelaurablog_admin_listerCommentairesNonValides:
     path: /admin/commentairesNonValides/
     defaults: {_controller: BabdelauraBlogBundle:Commentaire:listerCommentairesNonValides}
+
+babdelaurablog_admin_ajouterCommentaire:
+    path: /admin/ajouterCommentaire/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Commentaire:enregistrerCommentaireAdmin}
+
+
