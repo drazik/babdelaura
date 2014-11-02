@@ -13,3 +13,5 @@
 /composer.phar
 /dploy.yaml
 /node_modules/
+/*.sublime-project
+/*.sublime-workspace
