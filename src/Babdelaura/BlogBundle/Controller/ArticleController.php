@@ -282,7 +282,15 @@ class ArticleController extends Controller
         $session = $this->get('session');
         $session->set('url', $this->generateUrl('babdelaurablog_admin_afficherArticle', array('slug' => $slug)));
 
-        return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig',array('article' => $article));
+
+        $commentaire = new Commentaire;
+        $commentaire->setAuteur('Laura');
+        $commentaire->setEmail('bab-de-laura@hotmail.fr');
+        $commentaire->setSite('http://www.bricabrac-de-laura.fr');
+        $commentaire->setValide(true);
+        $form = $this->createForm(new CommentaireType, $commentaire);
+
+        return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig',array('article' => $article,'form' => $form->createView()));
     }
 
     public function validerCommentairesAction($slug) {
