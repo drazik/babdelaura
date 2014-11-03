@@ -48,6 +48,7 @@ class CommentaireController extends Controller
 
     public function enregistrerCommentaireAdminAction($slug) {
         $commentaire = new Commentaire;
+        $commentaire->setValide(true);
 
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
