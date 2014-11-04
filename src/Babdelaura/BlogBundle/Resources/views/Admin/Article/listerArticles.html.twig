@@ -45,7 +45,7 @@
                     </a>
 
                 </td>
-                <td><a href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}">{{ article.titre|truncate(50,true) }}</a></td>
+                <td><a class="link-unstyled" href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}">{{ article.titre|truncate(50,true) }}</a></td>
                 <td>
                     {% if article.datePublication > date() %}
                         <i class="fa fa-clock-o"></i>
