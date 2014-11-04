@@ -16,7 +16,7 @@ class BlogController extends Controller
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
 
-        $listeArticles = $repository->findBy(array('publication' => true),array('id'=> 'desc'), 6);
+        $listeArticles = $repository->getArticlesIndex();
 
         return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('listeArticles' => $listeArticles));
     }
@@ -52,9 +52,6 @@ class BlogController extends Controller
 
 
         // return $this->render('BabdelauraBlogBundle:Article:resultatsRecherche.html.twig', array('listeArticles' => $listeArticles, 'motsCles' =>$motsCles));
-
-
-
 
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');

@@ -102,7 +102,8 @@ class ArticleController extends Controller
                          ->getManager()
                          ->getRepository('BabdelauraBlogBundle:Article');
 
-        $article = $repository->findOneBySlug($slug);
+        $article = $repository->getArticle($slug);
+        $article = array_shift($article);
 
         if (!$article) {
           throw $this->createNotFoundException('L\'article n\'existe pas');
@@ -253,11 +254,10 @@ class ArticleController extends Controller
             $data = $form->getData();
             // return new Response(var_dump($data));
             $publication = $data['publication'] === null ? null : (boolean) $data['publication'];
-            $query = $repository->getArticlesPaginator($data['categories'], $publication);
-
+            $query = $repository->getArticlesPaginator($data['categories'], $publication, true);
         }
         else {
-            $query = $repository->getArticlesPaginator();
+            $query = $repository->getArticlesPaginator(null, null, true);
         }
         $paginator  = $this->get('knp_paginator');
         $listeArticles = $paginator->paginate(

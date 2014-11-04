@@ -10,7 +10,7 @@ use Babdelaura\BlogBundle\Entity\Categorie;
 
 class ArticleRepository extends EntityRepository {
 
-    public function getArticlesPaginator(Categorie $categorie = null, $publication = null) {
+    public function getArticlesPaginator(Categorie $categorie = null, $publication = null, $modeAdmin = false) {
         $query = $this->createQueryBuilder('a')
                       ->leftJoin('a.image', 'i')
                       ->addSelect('i');
@@ -24,11 +24,18 @@ class ArticleRepository extends EntityRepository {
         }
 
         if($publication === true) {
-            $query = $query->where('a.publication = true');
+            $query = $query->andwhere('a.publication = true');
         }
         elseif($publication === false) {
-            $query = $query->where('a.publication = false');
+            $query = $query->andwhere('a.publication = false');
         }
+
+        if(!$modeAdmin){
+            $query = $query->andwhere('a.datePublication <= ?1')
+                           ->setParameter(1, new \DateTime());
+        }
+
+
 
         $query = $query->orderBy('a.id','DESC')
                        ->getQuery();
@@ -36,6 +43,35 @@ class ArticleRepository extends EntityRepository {
         return $query;
 
     }
+
+    public function getArticle($slug) {
+        $query = $this->createQueryBuilder('a');
+
+        $query = $query->where('a.slug = :slug')
+                       ->setParameter('slug', $slug)
+                       ->andwhere('a.datePublication <= ?1')
+                       ->setParameter(1, new \DateTime())
+                       ->andwhere('a.publication = true')
+                       ->setMaxResults(1);
+
+         return $query->getQuery()->getResult();
+  }
+
+
+  public function getArticlesIndex() {
+        $query = $this->createQueryBuilder('a');
+
+        $query = $query->where('a.datePublication <= ?1')
+                       ->setParameter(1, new \DateTime())
+                       ->andwhere('a.publication = true')
+                       ->orderBy('a.id','DESC')
+                       ->setMaxResults(6);
+
+         return $query->getQuery()->getResult();
+
+    }
+
+
 
     public function rechercher($motsCles) {
 
@@ -50,7 +86,8 @@ class ArticleRepository extends EntityRepository {
                            ->setParameter('word', '%'.$motCle.'%');
         }
         $query = $query->andwhere('a.publication = true');
-
+        $query = $query->andwhere('a.datePublication <= ?1')
+                       ->setParameter(1, new \DateTime());
 
         $query = $query->orderBy('a.id','DESC');
 
@@ -62,6 +99,8 @@ class ArticleRepository extends EntityRepository {
                       ->where('a.id < :id')
                       ->setParameter('id', $id)
                       ->andwhere('a.publication = true')
+                      ->andwhere('a.datePublication <= ?1')
+                      ->setParameter(1, new \DateTime())
                       ->orderBy('a.id','DESC')
                       ->setMaxResults(1)
                       ->getQuery();
@@ -74,6 +113,8 @@ class ArticleRepository extends EntityRepository {
                       ->where('a.id > :id')
                       ->setParameter('id', $id)
                       ->andwhere('a.publication = true')
+                      ->andwhere('a.datePublication <= ?1')
+                      ->setParameter(1, new \DateTime())
                       ->orderBy('a.id','ASC')
                       ->setMaxResults(1)
                       ->getQuery();
@@ -87,8 +128,10 @@ class ArticleRepository extends EntityRepository {
                       ->leftJoin('a.image', 'i')
                       ->addSelect('i');
         $query = $query->where('a.publication = true')
+                       ->andwhere('a.datePublication <= ?1')
+                       ->setParameter(1, new \DateTime())
                        ->andwhere('YEAR(a.datePublication) = :annee')
-                        ->setParameter('annee', $annee);
+                       ->setParameter('annee', $annee);
 
         if ($mois != null) {
             $query = $query ->andwhere('MONTH(a.datePublication) = :mois')

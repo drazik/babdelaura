@@ -38,6 +38,12 @@
             </div>
         </div>
 
+        <div class="form-group">
+            {{ form_label(form.datePublication, "Date de publication") }}
+            {{ form_errors(form.datePublication)}}
+            {{ form_widget(form.datePublication) }}
+        </div>
+
         <div class="checkbox">
             {{ form_widget(form.publication) }}
             {{ form_label(form.publication, "Publier l'article") }}

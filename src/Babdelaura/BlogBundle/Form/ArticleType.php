@@ -23,6 +23,7 @@ class ArticleType extends AbstractType
                   'class'    => 'BabdelauraBlogBundle:Categorie',
                   'property' => 'nom',
                   'multiple' => true))
+            ->add('datePublication','datetime')
             ;
     }
 
