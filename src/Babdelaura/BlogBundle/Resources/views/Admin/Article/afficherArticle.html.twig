@@ -13,7 +13,10 @@
                 {% else %}
                     {% set classTitre = "article-title draft" %}
                 {% endif %}
-                <h1 class="{{classTitre}}">{{ article.titre }}</h1>
+                <h1 class="{{classTitre}}">
+                    <i class="fa fa-clock-o"></i>
+                    {{ article.titre }}
+                </h1>
                 <aside class="article-infos">
                     Le {{ article.datePublication|date("d/m/Y à H:i") }} -
                     <a href="#commentaires">{{nbCommentaires}} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %} {% if nbCommentairesNonValides > 0 %} (dont {{nbCommentairesNonValides}} à valider){% endif %}</a>
