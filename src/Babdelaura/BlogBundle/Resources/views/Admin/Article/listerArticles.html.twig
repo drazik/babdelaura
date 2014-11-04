@@ -46,7 +46,12 @@
 
                 </td>
                 <td><a href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : article.slug}) }}">{{ article.titre|truncate(50,true) }}</a></td>
-                <td>{{article.datePublication|date("d/m/Y H:i")}}</td>
+                <td>
+                    {% if article.datePublication > date() %}
+                        <i class="fa fa-clock-o"></i>
+                    {% endif %}
+                    {{article.datePublication|date("d/m/Y H:i")}}
+                </td>
                 <td>{% if article.dateEdition is not null %}
                         {{article.dateEdition|date("d/m/Y H:i")}}</td>
                     {% else %}
