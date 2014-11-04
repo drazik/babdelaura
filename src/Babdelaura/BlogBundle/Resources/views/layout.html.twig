@@ -7,6 +7,8 @@
         <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
 
+        <script src="{{ asset('js/Modernizr.js') }}"></script>
+
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
     </head>
     <body>
@@ -92,11 +94,7 @@
             {% if app.environment == 'prod' %}
                 <script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>
             {% endif %}
-            <script src="{{ asset('bundles/babdelaurablog/js/Modernizr.js') }}"></script>
-            <script src="{{ asset('bundles/babdelaurablog/js/jquery-2.1.1.min.js') }}"></script>
-            <script src="{{ asset('bundles/babdelaurablog/js/jquery.cookie.js') }}"></script>
-            <script src="{{ asset('bundles/babdelaurablog/js/info-cookies.js') }}"></script>
-            <script src="{{ asset('bundles/babdelaurablog/js/main-nav.js') }}"></script>
+            <script src="{{ asset('js/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>

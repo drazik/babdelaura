@@ -46,6 +46,38 @@ class CommentaireController extends Controller
 
     }
 
+    public function enregistrerCommentaireAdminAction($slug) {
+        $commentaire = new Commentaire;
+        $commentaire->setValide(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
+
+        $form = $this->createForm(new CommentaireType, $commentaire);
+        $request = $this->get('request');
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if($form->isValid()) {
+                if($commentaire->getSite()){
+                    if(!preg_match('#^http://#', $commentaire->getSite())) {
+                        $commentaire->setSite('http://'.$commentaire->getSite());
+                    }
+                }
+                $article->addCommentaire($commentaire);
+                $em->persist($article);
+
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('babdelaurablog_admin_afficherArticle', array('slug' => $slug)));
+            }
+
+            return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig', array('article' => $article, 'form' => $form->createView()));
+        }
+
+    }
+
     public function validerCommentaireAction($slug, $idCom) {
         $em = $this->getDoctrine()->getManager();
         $commentaire = $em->getRepository('BabdelauraBlogBundle:Commentaire')->findOneById($idCom);
