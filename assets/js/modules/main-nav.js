@@ -17,7 +17,7 @@ var jQuery = require('jquery');
         this.$mainNavToggleButton.on('click', this.toggleNavigation.bind(this));
     };
 
-    MainNav.prototype.toggleNavigation = function(event) {
+    MainNav.prototype.toggleNavigation = function() {
         this.$mainNav.toggleClass('open');
         this.$mainNavToggleIcon.toggleClass('fa-bars');
         this.$mainNavToggleIcon.toggleClass('fa-times');

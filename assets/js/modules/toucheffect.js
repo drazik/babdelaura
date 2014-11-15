@@ -20,7 +20,7 @@ var jQuery = require('jquery');
         this.$articles.on('click', this.toggleArticle);
     };
 
-    TouchEffect.prototype.toggleArticle = function(event) {
+    TouchEffect.prototype.toggleArticle = function() {
         $(this).toggleClass('hover');
     };
 
