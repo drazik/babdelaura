@@ -6,10 +6,6 @@ var jQuery = require('jquery');
 
     function TouchEffect() {
         this.$articles = $('.grid-item-article');
-
-        if (this.$articles.length > 0 && Modernizr.touch) {
-            this.initEvents();
-        }
     }
 
     TouchEffect.prototype.initEvents = function() {
@@ -22,6 +18,12 @@ var jQuery = require('jquery');
 
     TouchEffect.prototype.toggleArticle = function() {
         $(this).toggleClass('hover');
+    };
+
+    TouchEffect.prototype.run = function() {
+        if (this.$articles.length > 0 && Modernizr.touch) {
+            this.initEvents();
+        }
     };
 
     module.exports = TouchEffect;

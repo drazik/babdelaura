@@ -8,6 +8,9 @@
     var infosCookies = new InfoCookies();
     infosCookies.check();
 
-    new MainNav();
-    new TouchEffect();
+    var mainNav = new MainNav();
+    mainNav.run();
+
+    var touchEffect = new TouchEffect();
+    touchEffect.run();
 })();

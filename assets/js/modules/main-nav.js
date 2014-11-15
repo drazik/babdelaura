@@ -9,8 +9,6 @@ var jQuery = require('jquery');
         this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
         this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
         this.$mainNavContainer = this.$mainNav.find('#main-nav-container');
-
-        this.initEvents();
     }
 
     MainNav.prototype.initEvents = function() {
@@ -21,6 +19,10 @@ var jQuery = require('jquery');
         this.$mainNav.toggleClass('open');
         this.$mainNavToggleIcon.toggleClass('fa-bars');
         this.$mainNavToggleIcon.toggleClass('fa-times');
+    };
+
+    MainNav.prototype.run = function() {
+        this.initEvents();
     };
 
     module.exports = MainNav;
