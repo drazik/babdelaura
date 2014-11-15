@@ -16,7 +16,9 @@ class BlogController extends Controller
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
 
-        $listeArticles = $repository->getArticlesIndex();
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+
+        $listeArticles = $repository->getArticles(2);
 
         return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('listeArticles' => $listeArticles));
     }
@@ -78,8 +80,7 @@ class BlogController extends Controller
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
-        $listeArticles = $repository->findBy(array('publication'=> true), array('datePublication' => 'desc'), $nbArticlesParPage);
-
+        $listeArticles = $repository->getArticles($nbArticlesParPage);
 
         return $this->render('BabdelauraBlogBundle:Blog:feed.rss.twig', array('listeArticles' => $listeArticles));
 
