@@ -1,172 +1,18 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function() {
-    var InfoCookies = require('./modules/info-cookies');
+    'use strict';
+
     var MainNav = require('./modules/main-nav');
     var TouchEffect = require('./modules/toucheffect');
 
-    var infosCookies = new InfoCookies();
-    infosCookies.check();
-
     var mainNav = new MainNav();
+    mainNav.run();
 
     var touchEffect = new TouchEffect();
+    touchEffect.run();
 })();
 
-},{"./modules/info-cookies":2,"./modules/main-nav":4,"./modules/toucheffect":5}],2:[function(require,module,exports){
-var jQuery = require('jquery');
-require('./jquery.cookie');
-
-(function($) {
-
-    'use strict';
-
-    function InfoCookies() {}
-
-    InfoCookies.prototype.check = function() {
-        if (!this.viewed()) {
-            this.show();
-        }
-    };
-
-    InfoCookies.prototype.viewed = function() {
-        return $.cookie('infocookies');
-    };
-
-    InfoCookies.prototype.show = function() {
-        $('body').append('<div class="notification notification-info" id="info-cookies"><div class="notification-content">En poursuivant votre navigation sur ce site, vous acceptez l\'utilisation de cookies afin de réaliser des statistiques de visites anonymes. <button class="button button-small" id="info-cookies-confirm" type="button">OK</button></div></div>');
-
-        $('#info-cookies-confirm').on('click', this.close);
-    };
-
-    InfoCookies.prototype.close = function(event) {
-        event.preventDefault();
-
-        $.cookie('infocookies', 'viewed', {expire: 30 * 12});
-        $('#info-cookies').fadeOut();
-    };
-
-    module.exports = InfoCookies;
-})(jQuery);
-},{"./jquery.cookie":3,"jquery":6}],3:[function(require,module,exports){
-/*!
- * jQuery Cookie Plugin v1.4.1
- * https://github.com/carhartl/jquery-cookie
- *
- * Copyright 2006, 2014 Klaus Hartl
- * Released under the MIT license
- */
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD
-        define(['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // CommonJS
-        factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
-
-    var pluses = /\+/g;
-
-    function encode(s) {
-        return config.raw ? s : encodeURIComponent(s);
-    }
-
-    function decode(s) {
-        return config.raw ? s : decodeURIComponent(s);
-    }
-
-    function stringifyCookieValue(value) {
-        return encode(config.json ? JSON.stringify(value) : String(value));
-    }
-
-    function parseCookieValue(s) {
-        if (s.indexOf('"') === 0) {
-            // This is a quoted cookie as according to RFC2068, unescape...
-            s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-        }
-
-        try {
-            // Replace server-side written pluses with spaces.
-            // If we can't decode the cookie, ignore it, it's unusable.
-            // If we can't parse the cookie, ignore it, it's unusable.
-            s = decodeURIComponent(s.replace(pluses, ' '));
-            return config.json ? JSON.parse(s) : s;
-        } catch(e) {}
-    }
-
-    function read(s, converter) {
-        var value = config.raw ? s : parseCookieValue(s);
-        return $.isFunction(converter) ? converter(value) : value;
-    }
-
-    var config = $.cookie = function (key, value, options) {
-
-        // Write
-
-        if (arguments.length > 1 && !$.isFunction(value)) {
-            options = $.extend({}, config.defaults, options);
-
-            if (typeof options.expires === 'number') {
-                var days = options.expires, t = options.expires = new Date();
-                t.setTime(+t + days * 864e+5);
-            }
-
-            return (document.cookie = [
-                encode(key), '=', stringifyCookieValue(value),
-                options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path    ? '; path=' + options.path : '',
-                options.domain  ? '; domain=' + options.domain : '',
-                options.secure  ? '; secure' : ''
-            ].join(''));
-        }
-
-        // Read
-
-        var result = key ? undefined : {};
-
-        // To prevent the for loop in the first place assign an empty array
-        // in case there are no cookies at all. Also prevents odd result when
-        // calling $.cookie().
-        var cookies = document.cookie ? document.cookie.split('; ') : [];
-
-        for (var i = 0, l = cookies.length; i < l; i++) {
-            var parts = cookies[i].split('=');
-            var name = decode(parts.shift());
-            var cookie = parts.join('=');
-
-            if (key && key === name) {
-                // If second argument (value) is a function it's a converter...
-                result = read(cookie, value);
-                break;
-            }
-
-            // Prevent storing a cookie that we couldn't decode.
-            if (!key && (cookie = read(cookie)) !== undefined) {
-                result[name] = cookie;
-            }
-        }
-
-        return result;
-    };
-
-    config.defaults = {};
-
-    $.removeCookie = function (key, options) {
-        if ($.cookie(key) === undefined) {
-            return false;
-        }
-
-        // Must not alter options, thus extending a fresh object...
-        $.cookie(key, '', $.extend({}, options, { expires: -1 }));
-        return !$.cookie(key);
-    };
-
-}));
-
-},{"jquery":6}],4:[function(require,module,exports){
+},{"./modules/main-nav":2,"./modules/toucheffect":3}],2:[function(require,module,exports){
 var jQuery = require('jquery');
 
 (function($) {
@@ -178,23 +24,26 @@ var jQuery = require('jquery');
         this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
         this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
         this.$mainNavContainer = this.$mainNav.find('#main-nav-container');
-
-        this.initEvents();
     }
 
     MainNav.prototype.initEvents = function() {
         this.$mainNavToggleButton.on('click', this.toggleNavigation.bind(this));
     };
 
-    MainNav.prototype.toggleNavigation = function(event) {
+    MainNav.prototype.toggleNavigation = function() {
         this.$mainNav.toggleClass('open');
         this.$mainNavToggleIcon.toggleClass('fa-bars');
         this.$mainNavToggleIcon.toggleClass('fa-times');
     };
 
+    MainNav.prototype.run = function() {
+        this.initEvents();
+    };
+
     module.exports = MainNav;
 })(jQuery);
-},{"jquery":6}],5:[function(require,module,exports){
+
+},{"jquery":4}],3:[function(require,module,exports){
 var jQuery = require('jquery');
 
 (function($) {
@@ -203,10 +52,6 @@ var jQuery = require('jquery');
 
     function TouchEffect() {
         this.$articles = $('.grid-item-article');
-
-        if (this.$articles.length > 0 && Modernizr.touch) {
-            this.initEvents();
-        }
     }
 
     TouchEffect.prototype.initEvents = function() {
@@ -217,13 +62,20 @@ var jQuery = require('jquery');
         this.$articles.on('click', this.toggleArticle);
     };
 
-    TouchEffect.prototype.toggleArticle = function(event) {
+    TouchEffect.prototype.toggleArticle = function() {
         $(this).toggleClass('hover');
+    };
+
+    TouchEffect.prototype.run = function() {
+        if (this.$articles.length > 0 && Modernizr.touch) {
+            this.initEvents();
+        }
     };
 
     module.exports = TouchEffect;
 })(jQuery);
-},{"jquery":6}],6:[function(require,module,exports){
+
+},{"jquery":4}],4:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.1
  * http://jquery.com/
