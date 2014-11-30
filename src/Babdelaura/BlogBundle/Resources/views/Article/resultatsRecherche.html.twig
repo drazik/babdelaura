@@ -8,13 +8,16 @@
 
     {% for article in listeArticles %}
         {% set nbCommentaires = article.getNbCommentaires(true) %}
-        <section class="article">
+        <section class="article" itemscope itemtype="http://schema.org/BlogPosting">
 
           <header class="article-header">
-              <h1 class="article-title"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
+              <h1 class="article-title" itemprop="name"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
 
               <aside class="article-infos">
-                  Le {{ article.datePublication|date("d/m/Y à H:i") }} -
+                  <time pubdate itemprop="datePublished">
+                    Le {{ article.datePublication|date("d/m/Y à H:i") }}
+                  </time>
+                  -
                   <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires">
                     {{nbCommentaires}}
                     {% if nbCommentaires <= 1 %}
@@ -23,6 +26,11 @@
                       commentaires
                     {% endif %}
                   </a>
+                    <ul class="article-categories" itemprop="keywords">
+                      {% for cat in article.categories %}
+                          <li class="article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : cat.slug}) }}">{{cat.nom}}{% if not loop.last %},{% endif %}</a></li>
+                      {% endfor %}
+                  </ul>
               </aside>
               {#
               {% if article.image %}
@@ -31,7 +39,7 @@
               #}
           </header>
 
-          <div class="article-content">
+          <div class="article-content" itemprop="articleBody">
             {{article.contenu |truncate(500,true)| raw}}
           </div>
           <div class="align-right">
