@@ -22,7 +22,7 @@
                     {{ nbCommentaires }}
                     {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %}
                 </a>
-                <ul class="article-categories">
+                <ul class="article-categories" itemprop="keywords">
                     {% for categorie in article.categories %}
                         <li class="article-category">
                             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}">

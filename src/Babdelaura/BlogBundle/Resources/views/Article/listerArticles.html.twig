@@ -21,7 +21,7 @@
                       commentaires
                     {% endif %}
                   </a>
-                  <ul class="article-categories">
+                  <ul class="article-categories" itemprop="keywords">
                     {% for cat in article.categories %}
                         <li class="article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : cat.slug}) }}">{{cat.nom}}{% if not loop.last %},{% endif %}</a></li>
                     {% endfor %}
