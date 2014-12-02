@@ -2,6 +2,7 @@
 
 {% block facebookMetas %}
     {% set ogTitle = 'Articles de la catégorie ' ~ categorie.nom %}
+    {% set ogDescription = ogTitle %}
 
     {{ parent() }}
 {% endblock %}

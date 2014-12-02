@@ -2,6 +2,7 @@
 
 {% block facebookMetas %}
     {% set ogTitle = 'Résultats pour la recherche : ' ~ motsCles %}
+    {% set ogDescription = ogTitle %}
 
     {{ parent() }}
 {% endblock %}
