@@ -1,6 +1,17 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
 
+{% block facebookMetas %}
+    {% set ogImage = asset(article.image.webPath) %}
+    {% set ogTitle = article.titre %}
+    {% set ogDescription = article.contenu | truncate(500,true) | striptags %}
+    
+    {{ parent() }}
+    <meta property="article:author" content="https://www.facebook.com/BabDeLaura" />
+    <meta property="article:publisher" content="https://www.facebook.com/BabDeLaura" />
+{% endblock %}
+
+
 {% block mainContent %}
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
