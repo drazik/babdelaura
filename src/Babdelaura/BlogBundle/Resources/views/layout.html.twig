@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width" />
 
         {% block facebookMetas %}
-            <meta property="og:site_name" content="Le Bric à Brac de Laura" />
+            <meta property="og:site_name" content="Bric à Brac de Laura" />
             <meta property="og:locale" content="fr_FR" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
             <meta property="og:image" content="{{ ogImage|default(asset('images/header-bijoux.jpg')) }}" />
-            <meta property="og:title" content="{{ ogTitle|default('Le Bric à Brac de Laura') }}" />
+            <meta property="og:title" content="{{ ogTitle|default('Bric à Brac de Laura') }}" />
             <meta property="og:description" content="{{ ogDescription|default('Blog traitant du nail art et de la création de bijoux en pâte polymère.') }}" />
         {% endblock %}
 
