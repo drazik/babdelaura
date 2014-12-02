@@ -1,0 +1,24 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 91.234.104.228
+    database_port: 3306
+    database_name: blog
+    database_user: laura
+    database_password: fdlslV92
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: fr
+    secret: ThisTokenIsNotSoSecretChangeIt
+    debug_toolbar: true
+    debug_redirects: false
+    use_assetic_controller: true
+    nbArticlesParPage: 6
+    nbElementsParPageAdmin: 15
+    nbImagesParPage: 10
+    instagram_api_client_id: d3f3e44938494e9fb449093623054047
+    instagram_api_client_secret: 56d9463500234568bbea77a3f03831ad
+    instagram_timeout: 30
+    instagram_connect_timeout: 8
