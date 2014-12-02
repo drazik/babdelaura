@@ -201,14 +201,6 @@ class Article
     }
 
     /**
-    * @ORM\PrePersist
-    */
-    public function updateDatePublication()
-    {
-        $this->setDatePublication(new \Datetime());
-    }
-
-    /**
      * Set dateEdition
      *
      * @param \DateTime $dateEdition
