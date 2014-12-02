@@ -1,4 +1,5 @@
 .form-group {
+    position: relative;
     margin: 1em 0;
 }
 
@@ -43,4 +44,13 @@
     input {
         padding: .5em;
     }
+}
+
+.hidden-image-path {
+    position: absolute;
+    top: 90px;
+    left: 20px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
 }
