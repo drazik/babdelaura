@@ -18,7 +18,7 @@ class BlogController extends Controller
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
-        $listeArticles = $repository->getArticles(2);
+        $listeArticles = $repository->getArticles($nbArticlesParPage);
 
         return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('listeArticles' => $listeArticles));
     }
