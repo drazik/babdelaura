@@ -1,5 +1,11 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
+{% block facebookMetas %}
+    {% set ogTitle = 'Articles de la catégorie ' ~ categorie.nom %}
+    {% set ogDescription = ogTitle %}
+
+    {{ parent() }}
+{% endblock %}
 
 {% block mainContent %}
     {% for article in listeArticles %}
