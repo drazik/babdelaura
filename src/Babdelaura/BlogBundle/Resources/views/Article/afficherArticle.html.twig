@@ -1,10 +1,10 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
+{% set metaDescription = article.contenu | truncate(500,true) | striptags %}
 
 {% block facebookMetas %}
     {% set ogImage = asset(article.image.webPath) %}
     {% set ogTitle = article.titre %}
-    {% set ogDescription = article.contenu | truncate(500,true) | striptags %}
     
     {{ parent() }}
     <meta property="article:author" content="https://www.facebook.com/BabDeLaura" />

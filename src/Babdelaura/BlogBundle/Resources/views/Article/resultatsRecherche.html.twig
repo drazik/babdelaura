@@ -1,8 +1,9 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
+{% set metaDescription = 'Résultats pour la recherche : ' ~ motsCles %}
+
 {% block facebookMetas %}
-    {% set ogTitle = 'Résultats pour la recherche : ' ~ motsCles %}
-    {% set ogDescription = ogTitle %}
+    {% set ogTitle = metaDescription %}
 
     {{ parent() }}
 {% endblock %}

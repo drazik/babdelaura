@@ -1,8 +1,9 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
+{% set metaDescription = page.contenu | truncate(500,true) | striptags %}
+
 {% block facebookMetas %}
     {% set ogTitle = page.titre %}
-    {% set ogDescription = page.contenu | truncate(500,true) | striptags %}
 
     {{ parent() }}
 {% endblock %}
