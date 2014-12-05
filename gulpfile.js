@@ -24,9 +24,17 @@ gulp.task('js', function() {
         .pipe(gulp.dest('web/js'));
 });
 
-gulp.task('compile', ['styles', 'js']);
+gulp.task('images', function() {
+    gulp.src('assets/images/**/*')
+        .pipe(plumber())
+        .pipe(newer('web/images'))
+        .pipe(gulp.dest('web/images'));
+});
+
+gulp.task('compile', ['styles', 'js', 'images']);
 
 gulp.task('watch', ['compile'], function() {
     gulp.watch('assets/scss/**/*.scss', ['styles']);
     gulp.watch('assets/js/**/*.js', ['js']);
+    gulp.watch('assets/images/**/*', ['images']);
 });
