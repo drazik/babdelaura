@@ -1,79 +1,71 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-(function() {
-    'use strict';
+'use strict';
 
-    var MainNav = require('./modules/main-nav');
-    var TouchEffect = require('./modules/toucheffect');
+var MainNav = require('./modules/main-nav');
+var TouchEffect = require('./modules/toucheffect');
 
-    var mainNav = new MainNav();
-    mainNav.run();
+var mainNav = new MainNav();
+mainNav.run();
 
-    var touchEffect = new TouchEffect();
-    touchEffect.run();
-})();
+var touchEffect = new TouchEffect();
+touchEffect.run();
 
 },{"./modules/main-nav":2,"./modules/toucheffect":3}],2:[function(require,module,exports){
-var jQuery = require('jquery');
+'use strict';
 
-(function($) {
+var $ = require('jquery');
 
-    'use strict';
+function MainNav() {
+    this.$mainNav = $('#main-nav');
+    this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
+    this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
+    this.$mainNavContainer = this.$mainNav.find('#main-nav-container');
+}
 
-    function MainNav() {
-        this.$mainNav = $('#main-nav');
-        this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
-        this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
-        this.$mainNavContainer = this.$mainNav.find('#main-nav-container');
-    }
+MainNav.prototype.initEvents = function() {
+    this.$mainNavToggleButton.on('click', this.toggleNavigation.bind(this));
+};
 
-    MainNav.prototype.initEvents = function() {
-        this.$mainNavToggleButton.on('click', this.toggleNavigation.bind(this));
-    };
+MainNav.prototype.toggleNavigation = function() {
+    this.$mainNav.toggleClass('open');
+    this.$mainNavToggleIcon.toggleClass('fa-bars');
+    this.$mainNavToggleIcon.toggleClass('fa-times');
+};
 
-    MainNav.prototype.toggleNavigation = function() {
-        this.$mainNav.toggleClass('open');
-        this.$mainNavToggleIcon.toggleClass('fa-bars');
-        this.$mainNavToggleIcon.toggleClass('fa-times');
-    };
+MainNav.prototype.run = function() {
+    this.initEvents();
+};
 
-    MainNav.prototype.run = function() {
-        this.initEvents();
-    };
-
-    module.exports = MainNav;
-})(jQuery);
+module.exports = MainNav;
 
 },{"jquery":4}],3:[function(require,module,exports){
-var jQuery = require('jquery');
+'use strict';
 
-(function($) {
+var $ = require('jquery');
 
-    'use strict';
+function TouchEffect() {
+    this.$articles = $('.grid-item-article');
+}
 
-    function TouchEffect() {
-        this.$articles = $('.grid-item-article');
+TouchEffect.prototype.initEvents = function() {
+    this.$articles.on('click', '.grid-item-article-read', function(event) {
+        event.stopPropagation();
+    });
+
+    this.$articles.on('click', this.toggleArticle);
+};
+
+TouchEffect.prototype.toggleArticle = function() {
+    $(this).toggleClass('hover');
+};
+
+TouchEffect.prototype.run = function() {
+    if (this.$articles.length > 0 && Modernizr.touch) {
+        this.initEvents();
     }
+};
 
-    TouchEffect.prototype.initEvents = function() {
-        this.$articles.on('click', '.grid-item-article-read', function(event) {
-            event.stopPropagation();
-        });
-
-        this.$articles.on('click', this.toggleArticle);
-    };
-
-    TouchEffect.prototype.toggleArticle = function() {
-        $(this).toggleClass('hover');
-    };
-
-    TouchEffect.prototype.run = function() {
-        if (this.$articles.length > 0 && Modernizr.touch) {
-            this.initEvents();
-        }
-    };
-
-    module.exports = TouchEffect;
-})(jQuery);
+module.exports = TouchEffect;
 
 },{"jquery":4}],4:[function(require,module,exports){
 /*!
