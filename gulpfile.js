@@ -4,6 +4,7 @@ var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     prefix = require('gulp-autoprefixer'),
     newer = require('gulp-newer');
+    imagemin = require('gulp-imagemin');
 
 gulp.task('styles', function() {
     gulp.src('assets/scss/*.scss')
@@ -28,6 +29,7 @@ gulp.task('images', function() {
     gulp.src('assets/images/**/*')
         .pipe(plumber())
         .pipe(newer('web/images'))
+        .pipe(imagemin())
         .pipe(gulp.dest('web/images'));
 });
 
