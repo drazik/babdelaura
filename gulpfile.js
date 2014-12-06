@@ -3,8 +3,9 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     browserify = require('gulp-browserify'),
     prefix = require('gulp-autoprefixer'),
-    newer = require('gulp-newer');
-    imagemin = require('gulp-imagemin');
+    newer = require('gulp-newer'),
+    imagemin = require('gulp-imagemin'),
+    uglify = require('gulp-uglifyjs');
 
 gulp.task('styles', function() {
     gulp.src('assets/scss/*.scss')
@@ -22,6 +23,7 @@ gulp.task('js', function() {
         .pipe(plumber())
         .pipe(newer('web/js/app.js'))
         .pipe(browserify())
+        .pipe(uglify())
         .pipe(gulp.dest('web/js'));
 });
 
