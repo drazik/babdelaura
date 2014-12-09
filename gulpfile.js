@@ -35,10 +35,18 @@ gulp.task('images', function() {
         .pipe(gulp.dest('web/images'));
 });
 
-gulp.task('compile', ['styles', 'js', 'images']);
+gulp.task('fonts', function() {
+    gulp.src('assets/fonts/**/*')
+        .pipe(plumber())
+        .pipe(newer('web/fonts'))
+        .pipe(gulp.dest('web/fonts'));
+});
+
+gulp.task('compile', ['styles', 'js', 'images', 'fonts']);
 
 gulp.task('watch', ['compile'], function() {
     gulp.watch('assets/scss/**/*.scss', ['styles']);
     gulp.watch('assets/js/**/*.js', ['js']);
     gulp.watch('assets/images/**/*', ['images']);
+    gulp.watch('assets/fonts/**/*', ['fonts']);
 });
