@@ -1,6 +1,8 @@
 'use strict';
 
 var $ = require('jquery');
+require('browsernizr/test/touchevents');
+var modernizr = require('browsernizr');
 
 function TouchEffect() {
     this.$articles = $('.grid-item-article');
@@ -19,7 +21,7 @@ TouchEffect.prototype.toggleArticle = function() {
 };
 
 TouchEffect.prototype.run = function() {
-    if (this.$articles.length > 0 && Modernizr.touch) {
+    if (this.$articles.length > 0 && modernizr.touchevents) {
         this.initEvents();
     }
 };
