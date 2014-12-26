@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglifyjs');
 
 gulp.task('styles', function() {
-    gulp.src('assets/scss/*.scss')
+    return gulp.src('assets/scss/*.scss')
         .pipe(plumber())
         .pipe(newer('web/css'))
         .pipe(sass({
@@ -19,16 +19,15 @@ gulp.task('styles', function() {
 });
 
 gulp.task('js', function() {
-    gulp.src('assets/js/app.js')
+    return gulp.src('assets/js/app.js')
         .pipe(plumber())
-        .pipe(newer('web/js/app.js'))
         .pipe(browserify())
         .pipe(uglify())
         .pipe(gulp.dest('web/js'));
 });
 
 gulp.task('images', function() {
-    gulp.src('assets/images/**/*')
+    return gulp.src('assets/images/**/*')
         .pipe(plumber())
         .pipe(newer('web/images'))
         .pipe(imagemin())
@@ -36,7 +35,7 @@ gulp.task('images', function() {
 });
 
 gulp.task('fonts', function() {
-    gulp.src('assets/fonts/**/*')
+    return gulp.src('assets/fonts/**/*')
         .pipe(plumber())
         .pipe(newer('web/fonts'))
         .pipe(gulp.dest('web/fonts'));
