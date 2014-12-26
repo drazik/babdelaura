@@ -10,7 +10,6 @@ var gulp = require('gulp'),
 gulp.task('styles', function() {
     return gulp.src('assets/scss/*.scss')
         .pipe(plumber())
-        .pipe(newer('web/css'))
         .pipe(sass({
             outputStyle: 'compressed'
         }))
