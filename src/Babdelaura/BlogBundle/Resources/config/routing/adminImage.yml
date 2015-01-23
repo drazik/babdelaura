@@ -3,6 +3,6 @@ babdelaurablog_admin_listerImages:
     defaults: {_controller: BabdelauraBlogBundle:Image:listerImages}
 
 babdelaurablog_admin_uploaderImage:
-    path: /admin/uploadImage
-    defaults: {_controller: BabdelauraBlogBundle:Image:upload}
+    path: /admin/uploadImage/{addWatermark}
+    defaults: {_controller: BabdelauraBlogBundle:Image:upload, addWatermark: true}
 

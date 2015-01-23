@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Babdelaura\BlogBundle\Entity\Image;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Point;
 
 class ImageController extends Controller
 {
@@ -34,7 +36,7 @@ class ImageController extends Controller
     }
 
 
-    public function uploadAction() {
+    public function uploadAction($addWatermark) {
         $uploaded = new UploadedFile(
             $_FILES['upload']['tmp_name'],
             $_FILES['upload']['name'],
@@ -51,6 +53,21 @@ class ImageController extends Controller
         $em->persist($image);
         $em->flush();
 
+        if($addWatermark){
+            $imagine = new Imagine();
+
+            $imageSource = $imagine->open($image->getWebPath());
+            $watermark = $imagine->open(__DIR__.'/../../../../web/images/watermark.png');
+
+            $imageSourceSize = $imageSource->getSize();
+            $watermarkSize = $watermark->getSize();
+            $offset = 2;
+
+            $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - $offset, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - $offset);
+
+            $imageSource->paste($watermark, $bottomRight);
+            $imageSource->save($image->getWebPath());
+        }
         return new Response('Image Chargée');
     }
 

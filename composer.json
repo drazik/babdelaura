@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "stof/doctrine-extensions-bundle": "dev-master",
         "oh/instagram-bundle" : "dev-master",
-        "knplabs/knp-paginator-bundle": "~2.4"
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "imagine/imagine": "0.6.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
