@@ -5,11 +5,13 @@
 {% block facebookMetas %}
     {% set ogImage = asset(article.image.webPath) %}
     {% set ogTitle = article.titre %}
-    
+
     {{ parent() }}
     <meta property="article:author" content="https://www.facebook.com/BabDeLaura" />
     <meta property="article:publisher" content="https://www.facebook.com/BabDeLaura" />
 {% endblock %}
+
+{% block pageTitle %}{{article.titre}} | {% endblock %}
 
 
 {% block mainContent %}
@@ -47,6 +49,7 @@
         <div class="article-content" itemprop="articleBody">
             <p>{{article.contenu | raw}}</p>
         </div>
+        {% include 'BabdelauraBlogBundle::Article/social-share.html.twig' %}
     </section>
 
     <nav class="article-navigation">

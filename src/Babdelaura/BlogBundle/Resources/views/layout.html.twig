@@ -15,13 +15,21 @@
             <meta property="og:description" content="{{ metaDescription|default('Blog traitant du nail art et de la création de bijoux en pâte polymère.') }}" />
         {% endblock %}
 
-        <title>Bric à Brac de Laura</title>
+        <title>{% block pageTitle %}{% endblock %}Bric à Brac de Laura</title>
 
         <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
 
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
     </head>
     <body>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
         <header class="header">
             <a class="header-link" href="{{ path('babdelaurablog_accueil') }}">Revenir à l'accueil</a>
