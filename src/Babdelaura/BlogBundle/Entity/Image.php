@@ -201,4 +201,44 @@ class Image
     {
         return $this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add articles
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Article $articles
+     * @return Image
+     */
+    public function addArticle(\Babdelaura\BlogBundle\Entity\Article $articles)
+    {
+        $this->articles[] = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Article $articles
+     */
+    public function removeArticle(\Babdelaura\BlogBundle\Entity\Article $articles)
+    {
+        $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
 }

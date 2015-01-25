@@ -9,7 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Commentaire
  *
  * @ORM\Table()
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="Babdelaura\BlogBundle\Repository\CommentaireRepository")
+ *
  */
 class Commentaire
 {

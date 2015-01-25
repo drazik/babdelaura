@@ -149,4 +149,20 @@ class ArticleRepository extends EntityRepository {
         return $query;
 
     }
-}
+
+    public function getNbArticles($publication = false) {
+      $query = $this->createQueryBuilder('a')
+                ->select('COUNT(a)');
+
+      if ($publication) {
+        $query = $query->where('a.publication = true')
+                       ->andwhere('a.datePublication <= ?1')
+                       ->setParameter(1, new \DateTime());
+      }
+
+      $query = $query->getQuery()
+               ->getSingleScalarResult();
+
+      return $query;
+    }
+  }

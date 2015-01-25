@@ -10,8 +10,21 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     public function indexAction()  {
+        $repositoryArticle = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Article');
+        $nbArticlesTotal = $repositoryArticle->getNbArticles();
+        $nbArticlePublies = $repositoryArticle->getNbArticles(true);
 
-        return $this->render('BabdelauraBlogBundle:Admin:index.html.twig');
+        $repositoryCommentaire = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Commentaire');
+        $nbCommentairesTotal = $repositoryCommentaire->getNbCommentaires();
+        $nbCommentairesNonValides = $repositoryCommentaire->getNbCommentaires(false);
+
+
+        return $this->render('BabdelauraBlogBundle:Admin:index.html.twig',
+                      array('nbArticlesTotal' => $nbArticlesTotal,
+                          'nbArticlePublies' => $nbArticlePublies,
+                          'nbCommentairesTotal' => $nbCommentairesTotal,
+                          'nbCommentairesNonValides' => $nbCommentairesNonValides
+                      ));
 
   }
 }

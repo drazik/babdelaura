@@ -1,4 +1,6 @@
 {% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
 {% block content %}
     <h1>Espace d'administration</h1>
+    <p> Nombre articles : {{nbArticlesTotal}} dont {{nbArticlePublies}} publiés</p>
+    <p> Nombre commentaires : {{nbCommentairesTotal}} dont {{nbCommentairesNonValides}} à valider</p>
 {% endblock %}
