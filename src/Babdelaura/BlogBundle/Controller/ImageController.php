@@ -41,7 +41,7 @@ class ImageController extends Controller
         $addWatermark = $addWatermark === 'false' ? false : true;
         $request = $this->get('request');
 
-        if ($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest() && !$addWatermark) {
             $uploaded = new UploadedFile(
                 $_FILES['mainImageFile']['tmp_name'],
                 $_FILES['mainImageFile']['name'],
