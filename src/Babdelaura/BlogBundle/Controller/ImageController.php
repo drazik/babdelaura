@@ -85,7 +85,7 @@ class ImageController extends Controller
                 'success' => true,
                 'image' => array(
                     'id' => $image->getId(),
-                    'url' => $request->getSchemeAndHttpHost() . '/' . $image->getWebPath()
+                    'url' => $this->generateUrl('babdelaurablog_accueil', array(), true) . $image->getWebPath()
                 )
             ));
         } else {
