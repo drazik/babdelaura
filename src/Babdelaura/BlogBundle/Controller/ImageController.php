@@ -6,6 +6,7 @@ namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Babdelaura\BlogBundle\Entity\Image;
 use Imagine\Gd\Imagine;
@@ -37,15 +38,25 @@ class ImageController extends Controller
 
 
     public function uploadAction($addWatermark) {
-        $uploaded = new UploadedFile(
-            $_FILES['upload']['tmp_name'],
-            $_FILES['upload']['name'],
-            $_FILES['upload']['type'],
-            $_FILES['upload']['size']
-        );
+        $addWatermark = $addWatermark === 'false' ? false : true;
+        $request = $this->get('request');
+
+        if ($request->isXmlHttpRequest()) {
+            $uploaded = new UploadedFile(
+                $_FILES['mainImageFile']['tmp_name'],
+                $_FILES['mainImageFile']['name'],
+                $_FILES['mainImageFile']['type'],
+                $_FILES['mainImageFile']['size']);
+        } else {
+            $uploaded = new UploadedFile(
+                $_FILES['upload']['tmp_name'],
+                $_FILES['upload']['name'],
+                $_FILES['upload']['type'],
+                $_FILES['upload']['size']
+            );
+        }
 
         $image = new Image;
-        // $image->setAlt('truc');
         $image->setFile($uploaded);
 
         $em = $this->getDoctrine()->getManager();
@@ -68,7 +79,16 @@ class ImageController extends Controller
             $imageSource->paste($watermark, $bottomRight);
             $imageSource->save($image->getWebPath());
         }
-        return new Response('Image Chargée');
+        
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array(
+                'success' => true,
+                'image' => array(
+                    'url' => $request->getSchemeAndHttpHost() . '/' . $image->getWebPath()
+                )
+            ));
+        } else {
+            return new Response('Image Chargée');
+        }
     }
-
 }
