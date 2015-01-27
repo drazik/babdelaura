@@ -77,7 +77,7 @@ class ImageController extends Controller
             $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - $offset, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - $offset);
 
             $imageSource->paste($watermark, $bottomRight);
-            $imageSource->save($image->getWebPath());
+            $imageSource->save($image->getWebPath(), array('jpeg_quality' => 100));
         }
         
         if ($request->isXmlHttpRequest()) {
