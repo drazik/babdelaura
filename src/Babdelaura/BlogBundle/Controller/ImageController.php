@@ -84,6 +84,7 @@ class ImageController extends Controller
             return new JsonResponse(array(
                 'success' => true,
                 'image' => array(
+                    'id' => $image->getId(),
                     'url' => $request->getSchemeAndHttpHost() . '/' . $image->getWebPath()
                 )
             ));

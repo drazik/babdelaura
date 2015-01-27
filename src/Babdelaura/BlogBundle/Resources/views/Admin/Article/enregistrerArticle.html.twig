@@ -169,6 +169,7 @@
                     processData: false
                 }).done(function(data) {
                     console.log(data);
+                    $chooseImageInput.val(data.image.id);
                     previewImage(data.image.url);
                     closeModal();
                 }).fail(function(jqXHR, status, errorThrown) {
