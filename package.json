@@ -28,7 +28,8 @@
     "minimist": "~1.1.0"
   },
   "dependencies": {
-    "jquery": "^2.1.1",
-    "browsernizr": "~1.0.2"
+    "browsernizr": "~1.0.2",
+    "chartist": "^0.7.1",
+    "jquery": "^2.1.1"
   }
 }
