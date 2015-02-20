@@ -83,7 +83,9 @@ class PageController extends Controller
 
         $request = $this->get('request')->query;
         $session = $this->get('session');
-        $session->set('url', $this->generateUrl('babdelaurablog_admin_listerPages') . '?page=' . $request->get('page'));
+
+        $numPage = $request->get('page') == '' ? 1 : $request->get('page');
+        $session->set('url', $this->generateUrl('babdelaurablog_admin_listerPages') . '?page=' . $numPage);
 
         $nbPagesParPage = $this->container->getParameter('nbElementsParPageAdmin');
         $paginator  = $this->get('knp_paginator');
@@ -108,6 +110,44 @@ class PageController extends Controller
         $page = $repository->findOneBySlug($slug);
 
         return $this->render('BabdelauraBlogBundle:Page:afficherPage.html.twig', array('page' => $page));
+    }
+
+    public function supprimerPageAction($slug)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository('BabdelauraBlogBundle:Page')->findOneBySlug($slug);
+
+        // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+        // Cela permet de protéger la suppression de page contre cette faille
+        $form = $this->createFormBuilder()->getForm();
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+          $form->bind($request);
+
+          if ($form->isValid()) {
+            // On supprime la page
+
+            $em->remove($page);
+            $em->flush();
+
+            // On définit un message flash
+            $this->get('session')->getFlashBag()->add('info', 'Page bien supprimée');
+
+
+            return $this->redirect($this->generateUrl('babdelaurablog_admin_listerPages', array('numPage' => 1)));
+          }
+        }
+
+        $path = $this->get('router')->generate('babdelaurablog_admin_supprimerPage', array('slug' => $page->getSlug()));
+
+        // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+          'entite' => $page,
+          'form'    => $form->createView(),
+          'path'    => $path
+        ));
     }
 
 }

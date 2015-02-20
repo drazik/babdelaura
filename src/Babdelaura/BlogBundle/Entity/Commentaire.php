@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Babdelaura\BlogBundle\Repository\CommentaireRepository")
  *
  */
-class Commentaire
+class Commentaire implements DescriptionEntite
 {
     /**
      * @var integer
@@ -248,5 +248,21 @@ class Commentaire
     public function getValide()
     {
         return $this->valide;
+    }
+
+    public function getType() {
+        return 'commentaire';
+    }
+
+    public function getPathList() {
+        return 'babdelaurablog_admin_listerCommentairesNonValides';
+    }
+
+    public function getDescription() {
+        return $this->contenu;
+    }
+
+    public function getPrefixeType() {
+        return "le ";
     }
 }

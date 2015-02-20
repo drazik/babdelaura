@@ -33,7 +33,10 @@
                             <a href="{{ path('babdelaurablog_admin_modifierPage', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i></a>
                         </li>
                         <li class="action">
-                            <a href="{{ path('babdelaurablog_admin_depublierPage', {'slug' : page.slug}) }}"><i class="fa fa-trash-o"></i></a>
+                            <a href="{{ path('babdelaurablog_admin_depublierPage', {'slug' : page.slug}) }}"><i class="fa fa-times"></i></a>
+                        </li>
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_supprimerPage', {'slug' : page.slug}) }}"><i class="fa fa-trash-o"></i></a>
                         </li>
                     </ul>
                 </td>

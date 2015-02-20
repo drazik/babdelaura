@@ -56,5 +56,43 @@ class CategorieController extends Controller
         ));
     }
 
+    public function supprimerCategorieAction($slug)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $categorie = $em->getRepository('BabdelauraBlogBundle:Categorie')->findOneBySlug($slug);
+
+        // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+        // Cela permet de protéger la suppression de categorie contre cette faille
+        $form = $this->createFormBuilder()->getForm();
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+          $form->bind($request);
+
+          if ($form->isValid()) {
+            // On supprime la categorie
+
+            $em->remove($categorie);
+            $em->flush();
+
+            // On définit un message flash
+            $this->get('session')->getFlashBag()->add('info', 'Catégorie bien supprimée');
+
+
+            return $this->redirect($this->generateUrl('babdelaurablog_admin_listerCategories', array('numPage' => 1)));
+          }
+        }
+
+        $path = $this->get('router')->generate('babdelaurablog_admin_supprimerCategorie', array('slug' => $categorie->getSlug()));
+
+        // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+          'entite' => $categorie,
+          'form'    => $form->createView(),
+          'path'    => $path
+        ));
+    }
+
 
  }

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Babdelaura\BlogBundle\Repository\ArticleRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Article
+class Article implements DescriptionEntite
 {
     /**
      * @var integer
@@ -414,4 +414,20 @@ class Article
         return $this;
     }
 
+
+    public function getType() {
+        return 'article';
+    }
+
+    public function getPathList() {
+        return 'babdelaurablog_admin_listerArticles';
+    }
+
+    public function getDescription() {
+        return $this->titre;
+    }
+
+    public function getPrefixeType() {
+        return "l'";
+    }
 }

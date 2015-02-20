@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class Page
+class Page implements DescriptionEntite
 {
     /**
      * @var integer
@@ -230,5 +230,22 @@ class Page
     public function getPublication()
     {
         return $this->publication;
+    }
+
+
+    public function getType() {
+        return 'page';
+    }
+
+    public function getPathList() {
+        return 'babdelaurablog_admin_listerPages';
+    }
+
+    public function getDescription() {
+        return $this->titre;
+    }
+
+    public function getPrefixeType() {
+        return "la ";
     }
 }

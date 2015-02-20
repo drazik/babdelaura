@@ -189,10 +189,13 @@ class ArticleController extends Controller
           }
         }
 
+        $path = $this->get('router')->generate('babdelaurablog_admin_supprimerArticle', array('slug' => $article->getSlug()));
+
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-        return $this->render('BabdelauraBlogBundle:Admin/Article:supprimerArticle.html.twig', array(
-          'article' => $article,
-          'form'    => $form->createView()
+        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+          'entite' => $article,
+          'form'    => $form->createView(),
+          'path'    => $path
         ));
     }
 

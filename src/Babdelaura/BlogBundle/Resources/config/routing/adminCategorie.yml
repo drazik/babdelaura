@@ -9,3 +9,7 @@ babdelaurablog_admin_ajouterCategorie:
 babdelaurablog_admin_modifierCategorie:
     path: /admin/modifierCategorie/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Categorie:enregistrerCategorie}
+
+babdelaurablog_admin_supprimerCategorie:
+    path: /admin/supprimerCategorie/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Categorie:supprimerCategorie}
