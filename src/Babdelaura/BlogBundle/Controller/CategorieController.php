@@ -51,6 +51,10 @@ class CategorieController extends Controller
 
         $listeCategories = $repository->findAll();
 
+        $session = $this->get('session');
+        $session->set('url', $this->generateUrl('babdelaurablog_admin_listerCategories'));
+
+
         return $this->render('BabdelauraBlogBundle:Admin/Categorie:listerCategories.html.twig', array(
           'listeCategories' => $listeCategories
         ));
@@ -92,6 +96,21 @@ class CategorieController extends Controller
           'form'    => $form->createView(),
           'path'    => $path
         ));
+    }
+
+    public function changerVisibiliteCategorieAction($slug) {
+        $em =  $this->getDoctrine()->getManager();
+
+        $categorie = $em->getRepository('BabdelauraBlogBundle:Categorie')->findOneBySlug($slug);
+
+        $categorie->setVisible(!$categorie->getVisible());
+
+        $em->persist($categorie);
+        $em->flush();
+
+        $session = $this->get('session');
+
+        return $this->redirect($session->get('url'));
     }
 
 

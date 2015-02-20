@@ -14,12 +14,15 @@
             {% for categorie in listeCategories %}
             <tr>
                 <td>{{ categorie.nom }}</td>
-                {% if categorie.visible %}
-                    <td class="text-centered"><i class="fa fa-check"></i>
-                </td>
-                {% else %}
-                    <td class="text-centered"><i class="fa fa-times"></i>
-                {% endif %}
+
+                <td class="text-centered"><a href="{{ path('babdelaurablog_admin_changerVisibiliteCategorie', {'slug' : categorie.slug}) }}">
+                    {% if categorie.visible %}
+                        <i class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-times"></i>
+                    {% endif %}
+                </a></td>
+
                 <td>
                     <ul class="actions">
                         <li class="action">

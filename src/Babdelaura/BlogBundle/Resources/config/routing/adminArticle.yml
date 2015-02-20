@@ -18,6 +18,6 @@ babdelaurablog_admin_supprimerArticle:
     path: /admin/supprimerArticle/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Article:supprimerArticle}
 
-babdelaurablog_admin_depublierArticle:
-    path: /admin/depublierArticle/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Article:depublierArticle}
+babdelaurablog_admin_publierArticle:
+    path: /admin/publierArticle/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Article:publierArticle}
