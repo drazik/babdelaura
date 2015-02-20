@@ -17,3 +17,7 @@ babdelaurablog_admin_listerPages:
 babdelaurablog_admin_depublierPage:
     path: /admin/depublierPage/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Page:depublierPage}
+
+babdelaurablog_admin_supprimerPage:
+    path: /admin/supprimerPage/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:supprimerPage}

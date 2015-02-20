@@ -1,0 +1,19 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+
+  <h1>Confirmer la suppression</h1>
+
+    <p>
+      Etes-vous certain de vouloir supprimer {{entite.prefixeType}}{{entite.type}} "{{ entite.description }}" ?
+    </p>
+
+
+    <form action="{{ path }}" method="post">
+      <a href="{{ path(entite.pathList)}}" class="button">Annuler</a>
+
+      <button class="button" type="submit">Supprimer</button>
+      {{ form_rest(form) }}
+    </form>
+
+ {% endblock %}

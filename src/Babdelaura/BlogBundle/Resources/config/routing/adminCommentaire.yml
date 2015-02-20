@@ -14,4 +14,8 @@ babdelaurablog_admin_ajouterCommentaire:
     path: /admin/ajouterCommentaire/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Commentaire:enregistrerCommentaireAdmin}
 
+babdelaurablog_admin_supprimerCommentaire:
+    path: /admin/supprimerCommentaire/{idCom}
+    defaults: {_controller: BabdelauraBlogBundle:Commentaire:supprimerCommentaire}
+
 

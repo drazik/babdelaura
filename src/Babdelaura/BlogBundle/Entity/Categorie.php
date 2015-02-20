@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Categorie
+class Categorie implements DescriptionEntite
 {
     /**
      * @var integer
@@ -60,7 +60,7 @@ class Categorie
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,7 +83,7 @@ class Categorie
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {
@@ -106,7 +106,7 @@ class Categorie
     /**
      * Get visible
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getVisible()
     {
@@ -139,7 +139,7 @@ class Categorie
     /**
      * Get articles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArticles()
     {
@@ -162,10 +162,26 @@ class Categorie
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    public function getType() {
+        return 'categorie';
+    }
+
+    public function getPathList() {
+        return 'babdelaurablog_admin_listerCategories';
+    }
+
+    public function getDescription() {
+        return $this->nom;
+    }
+
+    public function getPrefixeType() {
+        return "la ";
     }
 }

@@ -116,9 +116,44 @@ class CommentaireController extends Controller
         $listeCommentaires->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
 
         return $this->render('BabdelauraBlogBundle:Admin/Commentaire:listerCommentairesNonValides.html.twig', array('listeCommentaires' => $listeCommentaires));
+    }
+
+    public function supprimerCommentaireAction($idCom)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $commentaire = $em->getRepository('BabdelauraBlogBundle:Commentaire')->findOneById($idCom);
+
+        // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+        // Cela permet de protéger la suppression de commentaire contre cette faille
+        $form = $this->createFormBuilder()->getForm();
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+          $form->bind($request);
+
+          if ($form->isValid()) {
+            // On supprime le commentaire
+
+            $em->remove($commentaire);
+            $em->flush();
+
+            // On définit un message flash
+            $this->get('session')->getFlashBag()->add('info', 'Commentaire bien supprimé');
 
 
+            return $this->redirect($this->generateUrl('babdelaurablog_admin_listerCommentairesNonValides', array('numPage' => 1)));
+          }
+        }
 
+        $path = $this->get('router')->generate('babdelaurablog_admin_supprimerCommentaire', array('idCom' => $commentaire->getId()));
+
+        // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+          'entite' => $commentaire,
+          'form'    => $form->createView(),
+          'path'    => $path
+        ));
     }
 
 }
