@@ -44,12 +44,12 @@ class PageController extends Controller
          return $this->render('BabdelauraBlogBundle:Admin/Page:enregistrerPage.html.twig', array('form' => $form->createView()));
     }
 
-    public function depublierPageAction($slug) {
+    public function publierPageAction($slug) {
         $em =  $this->getDoctrine()->getManager();
 
         $page = $em->getRepository('BabdelauraBlogBundle:Page')->findOneBySlug($slug);
 
-        $page->setPublication(false);
+        $page->setPublication(!$page->getPublication());
 
         $em->persist($page);
         $em->flush();

@@ -18,12 +18,15 @@
                 <td>{{ page.titre|truncate(50,true) }}</td>
                 <td>{{page.datePublication|date("d/m/Y H:i")}}</td>
                 <td>{{page.dateEdition|date("d/m/Y H:i")}}</td>
+
+                <td class="text-centered"><a href="{{ path('babdelaurablog_admin_publierPage', {'slug' : page.slug}) }}">
                 {% if page.publication %}
-                    <td class="text-centered"><i class="fa fa-check"></i>
-                </td>
+                    <i class="fa fa-check"></i>
                 {% else %}
-                    <td class="text-centered"><i class="fa fa-times"></i>
+                    <i class="fa fa-times"></i>
                 {% endif %}
+
+                </a></td>
                 <td>
                     <ul class="actions">
                         <li class="action">
@@ -31,9 +34,6 @@
                         </li>
                         <li class="action">
                             <a href="{{ path('babdelaurablog_admin_modifierPage', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i></a>
-                        </li>
-                        <li class="action">
-                            <a href="{{ path('babdelaurablog_admin_depublierPage', {'slug' : page.slug}) }}"><i class="fa fa-times"></i></a>
                         </li>
                         <li class="action">
                             <a href="{{ path('babdelaurablog_admin_supprimerPage', {'slug' : page.slug}) }}"><i class="fa fa-trash-o"></i></a>

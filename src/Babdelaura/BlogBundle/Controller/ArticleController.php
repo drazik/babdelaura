@@ -199,12 +199,12 @@ class ArticleController extends Controller
         ));
     }
 
-    public function depublierArticleAction($slug) {
+    public function publierArticleAction($slug) {
         $em =  $this->getDoctrine()->getManager();
 
         $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
 
-        $article->setPublication(false);
+        $article->setPublication(!$article->getPublication());
 
         $em->persist($article);
         $em->flush();

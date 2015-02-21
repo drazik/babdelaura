@@ -58,11 +58,13 @@
                         -
                     {% endif %}
 
-                {% if article.publication %}
-                    <td class="text-centered"><i class="fa fa-check"></i>
-                {% else %}
-                    <td class="text-centered"><i class="fa fa-times"></i>
-                {% endif %}
+                <td class="text-centered"><a href="{{ path('babdelaurablog_admin_publierArticle', {'slug' : article.slug}) }}">
+                    {% if article.publication %}
+                       <i class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-times"></i>
+                    {% endif %}
+                </a>
                 </td>
 
                 <td>
@@ -78,9 +80,6 @@
                         </li>
                         <li class="action">
                             <a href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i></a>
-                        </li>
-                        <li class="action">
-                            <a href="{{ path('babdelaurablog_admin_depublierArticle', {'slug' : article.slug}) }}"><i class="fa fa-times"></i></a>
                         </li>
                         <li class="action">
                             <a href="{{ path('babdelaurablog_admin_supprimerArticle', {'slug' : article.slug}) }}"><i class="fa fa-trash-o"></i></a>

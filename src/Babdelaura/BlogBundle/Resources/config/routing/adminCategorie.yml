@@ -13,3 +13,7 @@ babdelaurablog_admin_modifierCategorie:
 babdelaurablog_admin_supprimerCategorie:
     path: /admin/supprimerCategorie/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Categorie:supprimerCategorie}
+
+babdelaurablog_admin_changerVisibiliteCategorie:
+    path: /admin/changerVisibiliteCategorie/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Categorie:changerVisibiliteCategorie}
