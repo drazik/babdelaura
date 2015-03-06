@@ -113,6 +113,10 @@
             {{ form_label(form.contenu, "Votre commentaire") }}
             {{ form_widget(form.contenu) }}
         </div>
+        <div class="form-group">
+            {{ form_label(form.recaptcha, "") }}
+            {{ form_widget(form.recaptcha) }}
+        </div>
         {{ form_widget(form._token) }}
 
         <button class="button" type="submit">Envoyer mon commentaire</button>
