@@ -5,6 +5,7 @@ namespace Babdelaura\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
 
 class CommentaireType extends AbstractType
 {
@@ -19,7 +20,13 @@ class CommentaireType extends AbstractType
             ->add('email','email', array('required' => false))
             ->add('site','text', array('required' => false))
             ->add('contenu','textarea')
-        ;
+            ->add('recaptcha', 'ewz_recaptcha', array(
+                  'mapped'      => false,
+                  'constraints' => array(
+                    new True()
+                    )
+                ));
+
     }
 
     /**

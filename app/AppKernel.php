@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Babdelaura\UserBundle\BabdelauraUserBundle(),
             new Oh\InstagramBundle\OhInstagramBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
