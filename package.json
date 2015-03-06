@@ -4,7 +4,7 @@
   "description": "Symfony Standard Edition\r ========================",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gulp:watch": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
     "minimist": "~1.1.0"
   },
   "dependencies": {
-    "jquery": "^2.1.1",
-    "browsernizr": "~1.0.2"
+    "browsernizr": "~1.0.2",
+    "chartist": "^0.7.1",
+    "jquery": "^2.1.1"
   }
 }

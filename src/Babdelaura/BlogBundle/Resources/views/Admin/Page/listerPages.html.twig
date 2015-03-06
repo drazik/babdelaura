@@ -21,9 +21,9 @@
 
                 <td class="text-centered"><a href="{{ path('babdelaurablog_admin_publierPage', {'slug' : page.slug}) }}">
                 {% if page.publication %}
-                    <i class="fa fa-check"></i>
+                    <i class="fa fa-check" onmouseover="this.className = 'fa fa-times';" onmouseout="this.className = 'fa fa-check';"></i>
                 {% else %}
-                    <i class="fa fa-times"></i>
+                    <i class="fa fa-times" onmouseout="this.className = 'fa fa-times';" onmouseover="this.className = 'fa fa-check';"></i>
                 {% endif %}
 
                 </a></td>
