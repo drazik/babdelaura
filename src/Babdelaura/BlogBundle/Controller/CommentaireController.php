@@ -16,7 +16,10 @@ class CommentaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
 
-        $form = $this->createForm(new CommentaireType, $commentaire);
+        $form = $this->createForm(new CommentaireType, $commentaire, array(
+            'method' => 'POST',
+            'action' => '#commentaires'
+        ));
         $request = $this->get('request');
 
         if ($request->getMethod() == 'POST') {
@@ -38,7 +41,7 @@ class CommentaireController extends Controller
                             'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
                 );
 
-                return $this->redirect($this->generateUrl('babdelaurablog_article', array('slug' => $slug, 'annee' => $article->getDatePublication()->format("Y"), 'mois' => $article->getDatePublication()->format("m"),'jour'=> $article->getDatePublication()->format("d"))));
+                return $this->redirect($this->generateUrl('babdelaurablog_article', array('slug' => $slug, 'annee' => $article->getDatePublication()->format("Y"), 'mois' => $article->getDatePublication()->format("m"),'jour'=> $article->getDatePublication()->format("d"))) . '#commentaires');
             }
 
             return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig', array('article' => $article, 'form' => $form->createView()));
