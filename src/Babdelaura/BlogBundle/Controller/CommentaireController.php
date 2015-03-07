@@ -16,10 +16,7 @@ class CommentaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
 
-        $form = $this->createForm(new CommentaireType, $commentaire, array(
-            'method' => 'POST',
-            'action' => '#commentaires'
-        ));
+        $form = $this->createForm(new CommentaireType, $commentaire);
         $request = $this->get('request');
 
         if ($request->getMethod() == 'POST') {
