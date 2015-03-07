@@ -9,6 +9,13 @@ use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
 
 class CommentaireType extends AbstractType
 {
+    private $isAdmin;
+
+    public function __construct($isAdmin = false) {
+        parent::__construct();
+        $this->isAdmin = $isAdmin;
+    }
+
         /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -19,13 +26,15 @@ class CommentaireType extends AbstractType
             ->add('auteur','text')
             ->add('email','email', array('required' => false))
             ->add('site','text', array('required' => false))
-            ->add('contenu','textarea')
-            ->add('recaptcha', 'ewz_recaptcha', array(
-                  'mapped'      => false,
-                  'constraints' => array(
-                    new True()
-                    )
-                ));
+            ->add('contenu','textarea');
+
+        if (!$isAdmin) {
+            $builder->add('recaptcha', 'ewz_recaptcha', array(
+                'mapped'      => false,
+                'constraints' => array(
+                    new True() )
+            ));
+        }
 
     }
 
