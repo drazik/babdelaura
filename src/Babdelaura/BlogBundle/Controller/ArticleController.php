@@ -290,7 +290,7 @@ class ArticleController extends Controller
         $commentaire->setAuteur('Laura');
         $commentaire->setEmail('bab-de-laura@hotmail.fr');
         $commentaire->setSite('http://www.bricabrac-de-laura.fr');
-        $form = $this->createForm(new CommentaireType, $commentaire);
+        $form = $this->createForm(new CommentaireType(true) , $commentaire);
 
         return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig',array('article' => $article,'form' => $form->createView()));
     }

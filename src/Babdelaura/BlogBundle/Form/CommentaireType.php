@@ -12,7 +12,6 @@ class CommentaireType extends AbstractType
     private $isAdmin;
 
     public function __construct($isAdmin = false) {
-        parent::__construct();
         $this->isAdmin = $isAdmin;
     }
 
@@ -28,7 +27,7 @@ class CommentaireType extends AbstractType
             ->add('site','text', array('required' => false))
             ->add('contenu','textarea');
 
-        if (!$isAdmin) {
+        if (!$this->isAdmin) {
             $builder->add('recaptcha', 'ewz_recaptcha', array(
                 'mapped'      => false,
                 'constraints' => array(
