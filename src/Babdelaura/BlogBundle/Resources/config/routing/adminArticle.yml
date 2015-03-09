@@ -4,6 +4,7 @@ babdelaurablog_admin_listerArticles:
 
 babdelaurablog_admin_afficherArticle:
     path: /admin/article/{slug}
+    methods: [GET]
     defaults: {_controller: BabdelauraBlogBundle:Article:afficherArticleAdmin}
 
 babdelaurablog_admin_ajouterArticle:

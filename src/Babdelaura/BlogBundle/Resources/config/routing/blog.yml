@@ -17,6 +17,7 @@ babdelaurablog_categorie:
 babdelaurablog_article:
     path: /{annee}/{mois}/{jour}/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Article:afficherArticle}
+    methods: [GET]
     requirements:
         annee: \d{4}
         mois: \d{2}
@@ -49,8 +50,13 @@ babdelaurablog_recherche:
     defaults: {_controller: BabdelauraBlogBundle:Blog:rechercher}
 
 babdelaurablog_ajouterCommentaire:
-    path: /ajouterCommentaire/{slug}
+    path: /{annee}/{mois}/{jour}/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Commentaire:enregistrerCommentaire}
+    methods: [POST]
+    requirements:
+        annee: \d{4}
+        mois: \d{2}
+        jour: \d{2}
 
 babdelaurablog_page:
     path: /page/{slug}

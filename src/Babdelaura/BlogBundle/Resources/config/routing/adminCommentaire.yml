@@ -11,7 +11,8 @@ babdelaurablog_admin_listerCommentairesNonValides:
     defaults: {_controller: BabdelauraBlogBundle:Commentaire:listerCommentairesNonValides}
 
 babdelaurablog_admin_ajouterCommentaire:
-    path: /admin/ajouterCommentaire/{slug}
+    path: /admin/article/{slug}
+    methods: [POST]
     defaults: {_controller: BabdelauraBlogBundle:Commentaire:enregistrerCommentaireAdmin}
 
 babdelaurablog_admin_supprimerCommentaire:

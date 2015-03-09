@@ -1,10 +1,11 @@
 /web/bundles/
-/web/uploads/
+/web/uploads/*
 /app/bootstrap*
 /app/cache/*
 /app/config/parameters.yml
-/app/config/parametersProd.yml
 /app/config/security.yml
+/app/config/parametersProd.yml
+/app/config/parametersPreprod.yml
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep

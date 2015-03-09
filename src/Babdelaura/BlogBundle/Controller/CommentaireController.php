@@ -14,7 +14,8 @@ class CommentaireController extends Controller
         $commentaire = new Commentaire;
 
         $em = $this->getDoctrine()->getManager();
-        $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
+        $repository = $em->getRepository('BabdelauraBlogBundle:Article');
+        $article = $repository->findOneBySlug($slug);
 
         $form = $this->createForm(new CommentaireType, $commentaire);
         $request = $this->get('request');
@@ -37,11 +38,21 @@ class CommentaireController extends Controller
                             'notice',
                             'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
                 );
+                $form = $this->createForm(new CommentaireType, new Commentaire);
 
-                return $this->redirect($this->generateUrl('babdelaurablog_article', array('slug' => $slug, 'annee' => $article->getDatePublication()->format("Y"), 'mois' => $article->getDatePublication()->format("m"),'jour'=> $article->getDatePublication()->format("d"))) . '#commentaires');
             }
 
-            return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig', array('article' => $article, 'form' => $form->createView()));
+            $articlePrecedent = $repository->getPrecedent($article->getId());
+            $articlePrecedent = array_shift($articlePrecedent);
+
+            $articleSuivant = $repository->getSuivant($article->getId());
+            $articleSuivant = array_shift($articleSuivant);
+
+            return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig', array(
+                'article' => $article,
+                'form' => $form->createView(),
+                'articlePrecedent' => $articlePrecedent,
+                'articleSuivant' => $articleSuivant));
         }
 
     }
@@ -69,11 +80,12 @@ class CommentaireController extends Controller
                 $em->persist($article);
 
                 $em->flush();
-
-                return $this->redirect($this->generateUrl('babdelaurablog_admin_afficherArticle', array('slug' => $slug)));
+                $form = $this->createForm(new CommentaireType(true), new Commentaire);
             }
 
-            return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig', array('article' => $article, 'form' => $form->createView()));
+            return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig', array(
+                'article' => $article,
+                'form' => $form->createView()));
         }
 
     }

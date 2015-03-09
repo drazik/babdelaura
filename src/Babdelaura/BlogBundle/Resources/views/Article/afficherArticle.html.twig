@@ -95,7 +95,7 @@
             Aucun commentaire. Soyez le premier à commenter.
         </p>
     {% endif %}
-    <form class="comment-form" action="{{ path('babdelaurablog_ajouterCommentaire', {'slug' : article.slug}) }}" method="post" class="comment-form" id="new-comment">
+    <form class="comment-form" action="#commentaires" method="post" class="comment-form" id="new-comment">
         <h1>Poster un commentaire</h1>
         <div class="form-group">
             {{ form_label(form.auteur, "Votre nom") }}
@@ -114,7 +114,7 @@
             {{ form_widget(form.contenu) }}
         </div>
         <div class="form-group">
-            {{ form_label(form.recaptcha, "") }}
+            {{ form_label(form.recaptcha, "Veuillez recopier le texte qui se trouve dans l'image ci-dessous") }}
             {{ form_widget(form.recaptcha) }}
         </div>
         {{ form_widget(form._token) }}
