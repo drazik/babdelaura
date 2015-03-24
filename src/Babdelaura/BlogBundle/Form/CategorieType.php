@@ -19,7 +19,8 @@ class CategorieType extends AbstractType
             ->add('visible','checkbox', array('required' => false))
             ->add('parent', 'entity', array(
                   'class'    => 'BabdelauraBlogBundle:Categorie',
-                  'property' => 'nom'))
+                  'property' => 'nom',
+                  'required' => false))
         ;
     }
 
