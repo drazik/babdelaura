@@ -251,4 +251,23 @@ class Categorie implements DescriptionEntite
     {
         return $this->enfants;
     }
+
+    /**
+     * Get enfants visibles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnfantsVisibles()
+    {
+        $enfantsVisibles = array();
+
+        foreach ($this->enfants as $enfant) {
+            if($enfant->getVisible()) {
+                $enfantsVisibles[] = $enfant;
+            }
+        }
+        return $enfantsVisibles;
+    }
+
+
 }
