@@ -17,9 +17,12 @@ class CategorieType extends AbstractType
         $builder
             ->add('nom','text')
             ->add('visible','checkbox', array('required' => false))
+            ->add('parent', 'entity', array(
+                  'class'    => 'BabdelauraBlogBundle:Categorie',
+                  'property' => 'nom'))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

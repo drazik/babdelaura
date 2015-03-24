@@ -6,6 +6,7 @@
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Parent</th>
                 <th class="text-centered">Visible</th>
                 <th></th>
             </tr>
@@ -14,6 +15,12 @@
             {% for categorie in listeCategories %}
             <tr>
                 <td>{{ categorie.nom }}</td>
+                <td>
+                    {% if categorie.parent %}
+                        {{ categorie.parent.nom }}
+                    {% endif %}
+
+                </td>
 
                 <td class="text-centered"><a href="{{ path('babdelaurablog_admin_changerVisibiliteCategorie', {'slug' : categorie.slug}) }}">
                     {% if categorie.visible %}
@@ -22,7 +29,6 @@
                         <i class="fa fa-times" onmouseout="this.className = 'fa fa-times';" onmouseover="this.className = 'fa fa-check';"></i>
                     {% endif %}
                 </a></td>
-
                 <td>
                     <ul class="actions">
                         <li class="action">

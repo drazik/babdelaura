@@ -7,6 +7,16 @@
     {% for categorie in listeCategories %}
         <li class="main-nav-item">
             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}" title="{{categorie.nom}}">{{categorie.nom}}</a>
+            {% set enfants = categorie.enfants %}
+            {% if enfants|length >  0 %}
+                <ul class="main-nav-submenu">
+                    {% for categorieEnfant in enfants %}
+                        <li class="main-nav-submenu-item">
+                            <a href="{{ path('babdelaurablog_categorie', {'slug' : categorieEnfant.slug}) }}" title="{{categorieEnfant.nom}}">{{categorieEnfant.nom}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </li>
     {% endfor %}
 
