@@ -4,7 +4,8 @@
   "description": "Symfony Standard Edition\r ========================",
   "main": "gulpfile.js",
   "scripts": {
-    "gulp:watch": "gulp watch"
+    "gulp:watch": "gulp watch",
+    "gulp:task": "gulp"
   },
   "repository": {
     "type": "git",

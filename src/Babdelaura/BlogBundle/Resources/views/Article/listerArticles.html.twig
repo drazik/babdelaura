@@ -1,6 +1,10 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
-{% set metaDescription = 'Articles de la catégorie ' ~ categorie.nom %}
+{% if categorie is defined %}
+  {% set metaDescription = 'Articles de la catégorie ' ~ categorie.nom %}
+{% else %}
+  {% set metaDescription = 'Tous les articles' %}
+{% endif %}
 
 {% block facebookMetas %}
     {% set ogTitle = metaDescription %}
