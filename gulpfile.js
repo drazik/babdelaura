@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     browserify = require('gulp-browserify'),
