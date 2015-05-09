@@ -57,6 +57,7 @@ gulp.task('jpg', function() {
 
     return gulp.src('assets/images/**/*.jpg')
         .pipe(plumber())
+        .pipe(newer('web/images'))
         .pipe(imageminJpegRecompress({ loop: 3 })())
         .pipe(gulp.dest('web/images'));
 });
@@ -66,6 +67,7 @@ gulp.task('png', function() {
 
     return gulp.src('assets/images/**/*.png')
         .pipe(plumber())
+        .pipe(newer('web/images'))
         .pipe(imageminPngquant({ quality: '65-80', speed: 4 })())
         .pipe(gulp.dest('web/images'));
 });
@@ -77,6 +79,7 @@ gulp.task('fonts', function() {
 
     return gulp.src('assets/fonts/**/*')
         .pipe(plumber())
+        .pipe(newer('web/fonts'))
         .pipe(fontmin())
         .pipe(gulp.dest('web/fonts'));
 });
