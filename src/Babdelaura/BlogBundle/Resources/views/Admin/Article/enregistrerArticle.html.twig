@@ -30,7 +30,7 @@
                 {% if article.image %}
                     {% set src = asset(article.image.webPath) %}
                 {% else %}
-                    {% set src = asset('bundles/babdelaurablog/images/no-photo.png') %}
+                    {% set src = asset('images/no-photo.png') %}
                 {% endif %}
 
                 <img class="image-preview" id="image-preview" src="{{ src }}" />
