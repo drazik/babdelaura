@@ -1,19 +1,21 @@
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
-    sass = require('gulp-sass'),
     browserify = require('gulp-browserify'),
-    prefix = require('gulp-autoprefixer'),
     newer = require('gulp-newer'),
     imagemin = require('gulp-imagemin'),
     uglify = require('gulp-uglifyjs');
 
 gulp.task('styles', function() {
+    var sass = require('gulp-sass');
+    var postcss = require('gulp-postcss');
+    var autoprefixer = require('autoprefixer-core');
+
     return gulp.src('assets/scss/*.scss')
         .pipe(plumber())
         .pipe(sass({
             outputStyle: 'compressed'
         }))
-        .pipe(prefix('last 3 versions', '> 1%'))
+        .pipe(postcss([ autoprefixer({ browsers: ['last 2 versions'] }) ]))
         .pipe(gulp.dest('web/css'));
 });
 
