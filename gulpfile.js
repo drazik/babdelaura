@@ -2,8 +2,7 @@
 
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
-    newer = require('gulp-newer'),
-    imagemin = require('gulp-imagemin');
+    newer = require('gulp-newer');
 
 gulp.task('styles', function() {
     var sass = require('gulp-sass');
