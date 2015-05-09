@@ -52,13 +52,25 @@ gulp.task('js', function() {
     })
 });
 
-gulp.task('images', function() {
-    return gulp.src('assets/images/**/*')
+gulp.task('jpg', function() {
+    var imageminJpegRecompress = require('imagemin-jpeg-recompress');
+
+    return gulp.src('assets/images/**/*.jpg')
         .pipe(plumber())
-        .pipe(newer('web/images'))
-        .pipe(imagemin())
+        .pipe(imageminJpegRecompress({ loop: 3 })())
         .pipe(gulp.dest('web/images'));
 });
+
+gulp.task('png', function() {
+    var imageminPngquant = require('imagemin-pngquant');
+
+    return gulp.src('assets/images/**/*.png')
+        .pipe(plumber())
+        .pipe(imageminPngquant({ quality: '65-80', speed: 4 })())
+        .pipe(gulp.dest('web/images'));
+});
+
+gulp.task('images', ['jpg', 'png']);
 
 gulp.task('fonts', function() {
     return gulp.src('assets/fonts/**/*')
