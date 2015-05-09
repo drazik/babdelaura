@@ -24,7 +24,6 @@
     "globby": "^2.0.0",
     "gulp": "^3.8.8",
     "gulp-fontmin": "^0.7.1",
-    "gulp-imagemin": "~2.0.0",
     "gulp-newer": "~0.4.0",
     "gulp-plumber": "^0.6.5",
     "gulp-postcss": "^5.1.6",
