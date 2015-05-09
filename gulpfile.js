@@ -2,10 +2,8 @@
 
 var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
-    browserify = require('gulp-browserify'),
     newer = require('gulp-newer'),
-    imagemin = require('gulp-imagemin'),
-    uglify = require('gulp-uglifyjs');
+    imagemin = require('gulp-imagemin');
 
 gulp.task('styles', function() {
     var sass = require('gulp-sass');
@@ -22,11 +20,36 @@ gulp.task('styles', function() {
 });
 
 gulp.task('js', function() {
-    return gulp.src('assets/js/app.js')
-        .pipe(plumber())
-        .pipe(browserify())
+    var browserify = require('browserify');
+    var source = require('vinyl-source-stream');
+    var buffer = require('vinyl-buffer');
+    var globby = require('globby');
+    var through = require('through2');
+    var gutil = require('gulp-util');
+    var uglify = require('gulp-uglify');
+
+    var bundledStream = through();
+
+    bundledStream
+        .pipe(source('app.js'))
+        .pipe(buffer())
         .pipe(uglify())
+        .on('error', gutil.log)
         .pipe(gulp.dest('web/js'));
+
+    globby(['./assets/js/*.js'], function(err, entries) {
+        if (err) {
+            bundledStream.emit('error', err);
+            return;
+        }
+
+        var b = browserify({
+            entries: entries,
+            debug: false
+        });
+
+        b.bundle().pipe(bundledStream);
+    })
 });
 
 gulp.task('images', function() {
