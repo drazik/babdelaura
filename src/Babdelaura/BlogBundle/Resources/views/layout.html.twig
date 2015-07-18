@@ -100,7 +100,9 @@
 
                         </ul>
                     </section>
-                    {#{{render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))}}#}
+                    {% if app.environment == 'prod' %}
+                        {{render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))}}
+                    {% endif %}
                     {% endblock %}
                 </div>
                 {% endblock %}
