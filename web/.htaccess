@@ -50,3 +50,7 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "script-src 'self' https://www.google.com http://assets.pinterest.com http://platform.twitter.com http://connect.facebook.net"
+</IfModule>
