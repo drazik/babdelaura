@@ -179,6 +179,10 @@
             });
         })(jQuery);
 
+        window.addEventListener('beforeunload', function(event) {
+            var confirmationMessage = "T'es sûre et certaine de vouloir quitter la page ?";
 
+            event.returnValue = confirmationMessage;
+        });
     </script>
 {% endblock %}
