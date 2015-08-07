@@ -53,6 +53,6 @@ DirectoryIndex app.php
 
 <IfModule mod_headers.c>
     #Header set Content-Security-Policy "script-src 'self' https://www.google.com http://assets.pinterest.com http://platform.twitter.com http://connect.facebook.net"
-    Header set X-Frame-Options "DENY"
+    #Header set X-Frame-Options "DENY"
     Header set X-Content-Type-Options "nosniff"
 </IfModule>
