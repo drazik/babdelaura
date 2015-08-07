@@ -15,66 +15,66 @@
 </head>
 
 <body>
-    <header class="header"></header>
-    <nav class="main-nav" id="main-nav">
-        <div class="wrapper">
-            <button class="main-nav-toggle" id="main-nav-toggle">
+    <header class="bab-Header"></header>
+    <nav class="bab-MainNav" id="main-nav">
+        <div class="bab-Wrapper">
+            <button class="bab-MainNav-toggle" id="main-nav-toggle">
                 <i class="fa fa-bars"></i>
             </button>
-            <ul class="main-nav-container" id="main-nav-container">
-                <li class="main-nav-item">
+            <ul class="bab-MainNav-container" id="main-nav-container">
+                <li class="bab-MainNav-item">
                     <a href="{{ path('babdelaurablog_admin_accueil')}}" title="">Accueil</a>
                 </li>
-                <li class="main-nav-item">
+                <li class="bab-MainNav-item">
                     <a href="#" title="">Articles <i class="fa fa-caret-down"></i></a>
-                    <ul class="main-nav-submenu">
-                        <li class="main-nav-submenu-item">
+                    <ul class="bab-MainNav-submenu">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path('babdelaurablog_admin_listerArticles') }}">Liste des articles</a>
                         </li>
-                        <li class="main-nav-submenu-item">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path('babdelaurablog_admin_ajouterArticle') }}">Ajouter un article</a>
                         </li>
                     </ul>
                 </li>
-                <li class="main-nav-item">
+                <li class="bab-MainNav-item">
                     <a href="#" title="">Catégories <i class="fa fa-caret-down"></i></a>
-                    <ul class="main-nav-submenu">
-                        <li class="main-nav-submenu-item">
+                    <ul class="bab-MainNav-submenu">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_listerCategories')}}">Liste des catégories</a>
                         </li>
-                        <li class="main-nav-submenu-item">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_ajouterCategorie')}}">Ajouter une catégorie</a>
                         </li>
                     </ul>
                 </li>
-                <li class="main-nav-item"><a href="#" title="">Commentaires <i class="fa fa-caret-down"></i></a>
-                    <ul class="main-nav-submenu">
-                        <li class="main-nav-submenu-item">
+                <li class="bab-MainNav-item">
+                    <a href="#" title="">Commentaires <i class="fa fa-caret-down"></i></a>
+                    <ul class="bab-MainNav-submenu">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_listerCommentairesNonValides')}}">Valider les commentaires</a>
                         </li>
                     </ul>
                 </li>
-                <li class="main-nav-item">
+                <li class="bab-MainNav-item">
                     <a href="#" title="">Pages <i class="fa fa-caret-down"></i></a>
-                    <ul class="main-nav-submenu">
-                        <li class="main-nav-submenu-item">
+                    <ul class="bab-MainNav-submenu">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_listerPages')}}">Liste des pages</a>
                         </li>
-                        <li class="main-nav-submenu-item">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_ajouterPage')}}">Ajouter une page</a>
                         </li>
                     </ul>
                 </li>
-                <li class="main-nav-item"><a href="{{ path('logout') }}" title="">Déconnexion</a>
+                <li class="bab-MainNav-item">
+                    <a href="{{ path('logout') }}" title="">Déconnexion</a>
                 </li>
             </ul>
         </div>
     </nav>
     <div class="content-inner wrapper row">
         <div class="twelve columns">
-            {% block content %}
-
-            {% endblock %}
+            {% block content %}{% endblock %}
         </div>
     </div>
     <footer class="footer">
