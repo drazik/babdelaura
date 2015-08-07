@@ -14,7 +14,7 @@ MainNav.prototype.initEvents = function() {
 };
 
 MainNav.prototype.toggleNavigation = function() {
-    this.$mainNav.toggleClass('open');
+    this.$mainNav.toggleClass('bab-MainNav--open');
     this.$mainNavToggleIcon.toggleClass('fa-bars');
     this.$mainNavToggleIcon.toggleClass('fa-times');
 };
