@@ -57,7 +57,7 @@
         </div>
 
         {{ form_rest(form) }}
-        <button class="button" type="submit">Enregistrer l'article</button>
+        <button class="button" type="submit" id="submit-btn">Enregistrer l'article</button>
     </form>
 
     <div class="modal" id="modal-choose-image">
@@ -99,6 +99,7 @@
             var $chooseImageInput = $('#babdelaura_blogbundle_article_imageTemp');
             var $chooseImagePreview = $('#image-preview');
             var modalContentAlreadyFilled = false;
+            var clickedSave = false;
 
             function openModal() {
                 $chooseImageModal.addClass('open');
@@ -177,12 +178,19 @@
                     console.log(jqXHR.status);
                 });
             });
+
+            $('#submit-btn').on('click', function() {
+                clickedSave = true;
+            });
+
+            window.addEventListener('beforeunload', function(event) {
+                if (!clickedSave) {
+                    var confirmationMessage = "T'es sûre et certaine de vouloir quitter la page ?";
+
+                    event.returnValue = confirmationMessage;
+                }
+            });
         })(jQuery);
 
-        window.addEventListener('beforeunload', function(event) {
-            var confirmationMessage = "T'es sûre et certaine de vouloir quitter la page ?";
-
-            event.returnValue = confirmationMessage;
-        });
     </script>
 {% endblock %}
