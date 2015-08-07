@@ -37,7 +37,7 @@ class ArticleRepository extends EntityRepository {
 
 
 
-        $query = $query->orderBy('a.id','DESC')
+        $query = $query->orderBy('a.datePublication','DESC')
                        ->getQuery();
 
         return $query;
@@ -64,7 +64,7 @@ class ArticleRepository extends EntityRepository {
         $query = $query->where('a.datePublication <= ?1')
                        ->setParameter(1, new \DateTime())
                        ->andwhere('a.publication = true')
-                       ->orderBy('a.id','DESC')
+                       ->orderBy('a.datePublication','DESC')
                        ->setMaxResults($nbArticles);
 
          return $query->getQuery()->getResult();
