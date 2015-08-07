@@ -1,12 +1,12 @@
 {
   "name": "babdelaura",
   "version": "0.0.0",
-  "description": "Symfony Standard Edition\r ========================",
+  "description": "Blog traitant du nail art et de la création de bijoux en pâte polymère",
   "main": "gulpfile.js",
   "scripts": {
     "server": "php app/console server:run",
-    "start": "gulp watch",
-    "task": "gulp"
+    "watch": "gulp watch",
+    "start": "npm run server & npm run watch"
   },
   "repository": {
     "type": "git",
