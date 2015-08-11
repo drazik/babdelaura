@@ -67,6 +67,78 @@
     overflow: hidden;
 }
 
+.bab-Article--grid {
+    margin: 0;
+    position: relative;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    perspective: 1700px;
+    perspective-origin: 0 50%;
+}
+
+.bab-Article--grid .bab-Article-image {
+    max-width: 100%;
+    display: block;
+    position: relative;
+    transform: translateX(0);
+    transition: transform 0.4s;
+}
+
+.bab-Article--grid:hover .bab-Article-image,
+.bab-Article--grid.hover .bab-Article-image {
+    transform: translateX(25%);
+}
+
+.bab-Article--grid .bab-Article-infos {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1em;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: #2c3f52;
+    color: #ed4e6e;
+    box-shadow: 0 0 10px 0 $grey-darker;
+    height: 100%;
+    width: 70%;
+    opacity: 0;
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+    transform: rotateY(-90deg);
+    transition: transform 0.4s, opacity 0.1s 0.3s;
+    font-size: 1rem;
+}
+
+.bab-Article--grid:hover .bab-Article-infos,
+.bab-Article--grid.hover .bab-Article-infos {
+    opacity: 1;
+    transform: rotateY(0deg);
+    transition: transform 0.4s, opacity 0.1s;
+}
+
+.bab-Article--grid .bab-Article-title {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.bab-Article--grid .bab-Article-title a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.bab-Article--grid .bab-Article-title a:hover {
+    color: $grey-medium;
+}
+
+.bab-Article--grid .bab-Article-infos .button {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
 @media screen and (max-width: 350px) {
     .bab-Article-navigation .button {
         float: none;
