@@ -15,11 +15,11 @@
 {% block mainContent %}
     {% for article in listeArticles %}
         {% set nbCommentaires = article.getNbCommentaires(true) %}
-        <section class="article" itemscope itemtype="http://schema.org/BlogPosting">
+        <section itemscope itemtype="http://schema.org/BlogPosting">
 
-          <header class="article-header">
-              <h1 class="article-title" itemprop="name"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
-              <aside class="article-infos">
+          <header class="bab-Article-header">
+              <h1 class="bab-Article-title" itemprop="name"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
+              <aside class="bab-Article-infos">
                   <time pubdate itemprop="datePublished">
                     Le {{ article.datePublication|date("d/m/Y à H:i") }}
                   </time>
@@ -32,9 +32,9 @@
                       commentaires
                     {% endif %}
                   </a>
-                  <ul class="article-categories" itemprop="keywords">
+                  <ul class="bab-Article-categories" itemprop="keywords">
                     {% for cat in article.categories %}
-                        <li class="article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : cat.slug}) }}">{{cat.nom}}{% if not loop.last %},{% endif %}</a></li>
+                        <li class="bab-Article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : cat.slug}) }}">{{cat.nom}}{% if not loop.last %},{% endif %}</a></li>
                     {% endfor %}
                 </ul>
               </aside>
@@ -45,7 +45,7 @@
               #}
           </header>
 
-          <div class="article-content" itemprop="articleBody">
+          <div class="bab-Article-content" itemprop="articleBody">
             {{article.contenu | truncate(500,true) | raw}}
           </div>
           <div class="align-right">
@@ -53,7 +53,7 @@
 
           </div>
           {% if not loop.last %}
-            <hr class="article-separator" />
+            <hr class="bab-Article-separator" />
           {% endif %}
         </section>
 

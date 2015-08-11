@@ -22,11 +22,11 @@
         </div>
     {% endfor %}
 
-    <section class="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <section itemscope itemtype="http://schema.org/BlogPosting">
         {% set nbCommentaires = article.getNbCommentaires(true) %}
         <header>
-            <h1 class="article-title" itemprop="name">{{ article.titre }}</h1>
-            <aside class="article-infos">
+            <h1 class="bab-Article-title" itemprop="name">{{ article.titre }}</h1>
+            <aside class="bab-Article-infos">
                 <time pubdate itemprop="datePublished">
                     Le {{ article.datePublication|date("d/m/Y à H:i") }}
                 </time>
@@ -35,9 +35,9 @@
                     {{ nbCommentaires }}
                     {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %}
                 </a>
-                <ul class="article-categories" itemprop="keywords">
+                <ul class="bab-Article-categories" itemprop="keywords">
                     {% for categorie in article.categories %}
-                        <li class="article-category">
+                        <li class="bab-Article-category">
                             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}">
                                 {{categorie.nom}}{% if not loop.last %},{% endif %}
                             </a>
@@ -46,13 +46,13 @@
                 </ul>
             </aside>
         </header>
-        <div class="article-content" itemprop="articleBody">
+        <div class="bab-Article-content" itemprop="articleBody">
             <p>{{article.contenu | raw}}</p>
         </div>
         {% include 'BabdelauraBlogBundle::Article/social-share.html.twig' %}
     </section>
 
-    <nav class="article-navigation">
+    <nav class="bab-Article-navigation">
         {% if articlePrecedent is not null %}
             <a class="button" href="{{ path('babdelaurablog_article', {'slug': articlePrecedent.slug, 'annee': articlePrecedent.datePublication|date("Y"), 'mois': articlePrecedent.datePublication|date("m"), 'jour': articlePrecedent.datePublication|date("d")}) }}">
                 <i class="fa fa-chevron-circle-left"></i> Article précédent

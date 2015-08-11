@@ -1,45 +1,45 @@
-.article-title {
+.bab-Article-title {
     font-family: 'Lobster', cursive;
     font-weight: normal;
     color: $blue-medium;
 }
 
-.article-title a {
+.bab-Article-title a {
     text-decoration: none;
 }
 
-.draft {
+.bab-Article-title--draft {
     color: $grey-dark;
 }
 
-.article-infos {
+.bab-Article-infos {
     color: #95a5a6;
     font-size: .8em;
     margin-top: 1em;
     margin-bottom: 1em;
 }
 
-.article-categories {
+.bab-Article-categories {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.article-category {
+.bab-Article-category {
     display: inline;
 }
 
-.article-separator {
+.bab-Article-separator {
     border: 1px solid $grey-medium;
     width: 70%;
     margin: 2em auto;
 }
 
-.article-content p {
+.bab-Article-content p {
     text-align: justify;
 }
 
-.article-content img {
+.bab-Article-content img {
     display: block;
     max-width: 100%;
     height: auto !important;
@@ -47,36 +47,27 @@
     transform: rotate(.0001deg);
 }
 
-.article-content figcaption {
+.bab-Article-content figcaption {
     text-align: center;
 }
 
-.article-content iframe {
+.bab-Article-content iframe {
     display: block;
     max-width: 100%;
     margin: 0 auto;
 }
 
-.article-content li {
+.bab-Article-content li + li {
     margin-top: 0.6em;
-    margin-bottom: 0.6em;
-
-    &:first-child {
-        margin-top: 0;
-    }
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
-.article-navigation {
+.bab-Article-navigation {
     margin-top: 1em;
     margin-bottom: 1em;
 }
 
 @media screen and (max-width: 350px) {
-    .article-navigation .button {
+    .bab-Article-navigation .button {
         float: none;
         display: block;
         width: 100%;

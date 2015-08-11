@@ -4,14 +4,14 @@
 <div class="row">
     <div class="eight columns">
         <h1>Visualiser l'article</h1>
-        <section class="article">
+        <section>
             {% set nbCommentaires = article.nbCommentaires %}
             {% set nbCommentairesNonValides = article.getNbCommentaires(false) %}
             <header>
                 {% if article.publication %}
-                    {% set classTitre = "article-title" %}
+                    {% set classTitre = "bab-Article-title" %}
                 {% else %}
-                    {% set classTitre = "article-title draft" %}
+                    {% set classTitre = "bab-Article-title bab-Article-title--draft" %}
                 {% endif %}
                 <h1 class="{{classTitre}}">
                     {% if date(article.datePublication) > date() %}
@@ -19,17 +19,17 @@
                     {% endif %}
                     {{ article.titre }}
                 </h1>
-                <aside class="article-infos">
+                <aside class="bab-Article-infos">
                     Le {{ article.datePublication|date("d/m/Y à H:i") }} -
                     <a href="#commentaires">{{nbCommentaires}} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %} {% if nbCommentairesNonValides > 0 %} (dont {{nbCommentairesNonValides}} à valider){% endif %}</a>
-                    <ul class="article-categories">
+                    <ul class="bab-Article-categories">
                         {% for categorie in article.categories %}
-                            <li class="article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
+                            <li class="bab-Article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
                         {% endfor %}
                     </ul>
                 </aside>
             </header>
-            <div class="article-content">
+            <div class="bab-Article-content">
                 <p>{{article.contenu | raw}}</p>
             </div>
         </section>
