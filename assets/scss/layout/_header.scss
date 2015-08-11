@@ -2,22 +2,28 @@
     position: relative;
     height: 250px;
     background-color: $grey-lighter;
-    background-image: url(../images/header-brushes.png), url(../images/header-bijoux.jpg);
+    background-image: url('../images/header-brushes.png'), url('../images/header-bijoux.jpg');
     background-repeat: no-repeat;
     background-position: 90% center, top left;
     background-size: 65%, auto;
+}
 
-    @media screen and (max-width: 1050px) {
-        background-image: url(../images/header-brushes.png);
+@media screen and (max-width: 1050px) {
+    .bab-Header {
+        background-image: url('../images/header-brushes.png');
         background-position: center center;
         background-size: 100%;
     }
+}
 
-    @media screen and (min-width: 501px) and (max-width: 920px) {
+@media screen and (min-width: 501px) and (max-width: 920px) {
+    .bab-Header {
         background-size: 100%;
     }
+}
 
-    @media screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
+    .bab-Header {
         height: 125px;
     }
 }
