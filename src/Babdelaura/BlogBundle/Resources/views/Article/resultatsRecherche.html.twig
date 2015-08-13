@@ -50,7 +50,7 @@
             {{article.contenu |truncate(500,true)| raw}}
           </div>
           <div class="align-right">
-              <a class="button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">Lire la suite</a>
+              <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">Lire la suite</a>
 
           </div>
           {% if not loop.last %}

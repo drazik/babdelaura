@@ -24,7 +24,7 @@
                         {% endif %}
                         </a>
 
-                        <a class="button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">
+                        <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">
                             Lire l'article
                         </a>
                     </figcaption>
@@ -32,6 +32,6 @@
             </li>
         {% endfor %}
     </ul>
-    <a class="button button-full-width" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
+    <a class="bab-Button bab-Button--fullWidth" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
 
 {% endblock %}

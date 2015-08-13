@@ -133,14 +133,14 @@
     color: $grey-medium;
 }
 
-.bab-Article--grid .bab-Article-infos .button {
+.bab-Article--grid .bab-Article-infos .bab-Button {
     position: absolute;
     bottom: 1em;
     right: 1em;
 }
 
 @media screen and (max-width: 350px) {
-    .bab-Article-navigation .button {
+    .bab-Article-navigation .bab-Button {
         float: none;
         display: block;
         width: 100%;

@@ -36,8 +36,8 @@
     </div>
     <div class="four columns">
         <h1>Gestion</h1>
-        <a class="button" href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
-        <a class="button" href="{{ path('babdelaurablog_admin_publierArticle', {'slug' : article.slug}) }}"><i class="fa fa-times"></i> Dépublier</a>
+        <a class="bab-Button" href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
+        <a class="bab-Button" href="{{ path('babdelaurablog_admin_publierArticle', {'slug' : article.slug}) }}"><i class="fa fa-times"></i> Dépublier</a>
     </div>
 </div>
 <div class="row">
@@ -62,7 +62,7 @@
                         {% endif %}
                         <span class="comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
                         {% if commentaire.valide == false %}
-                            <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="button button-small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
+                            <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
                         {% endif %}
                     </header>
                     <div class="comment-content">
@@ -98,14 +98,14 @@
             {{ form_widget(form.contenu) }}
         </div>
         {{ form_widget(form._token) }}
-        <button class="button" type="submit">Envoyer mon commentaire</button>
+        <button class="bab-Button" type="submit">Envoyer mon commentaire</button>
     </form>
 
     </div>
     <div class="four columns">
         <h1>Gestion</h1>
         {% if nbCommentairesNonValides > 0 %}
-            <a class="button" href="{{path('babdelaurablog_admin_validerCommentairesArticle', {'slug' : article.slug})}}"><i class="fa fa-check-square-o"></i> Tout valider</a>
+            <a class="bab-Button" href="{{path('babdelaurablog_admin_validerCommentairesArticle', {'slug' : article.slug})}}"><i class="fa fa-check-square-o"></i> Tout valider</a>
         {% endif %}
 
 

@@ -23,7 +23,7 @@
                         <i class="fa fa-upload"></i> Ajouter une image principale
                     </button>
                 </div>#}
-                <button class="button" id="button-choose-image" type="button">
+                <button class="bab-Button" id="button-choose-image" type="button">
                     <i class="fa fa-camera"></i> Choisir une image principale
                 </button>
 
@@ -57,7 +57,7 @@
         </div>
 
         {{ form_rest(form) }}
-        <button class="button" type="submit">Enregistrer l'article</button>
+        <button class="bab-Button" type="submit">Enregistrer l'article</button>
     </form>
 
     <div class="modal" id="modal-choose-image">
@@ -69,7 +69,7 @@
                 <h1>Ajouter une image</h1>
                 <form id="upload-main-image" method="post" action="{{url('babdelaurablog_admin_uploaderImage', {'addWatermark': 'false'})}}" enctype="multipart/form-data">
                     <input type="file" name="mainImageFile" />
-                    <button class="button" type="submit"><i class="fa fa-upload"></i> Envoyer l'image</button>
+                    <button class="bab-Button" type="submit"><i class="fa fa-upload"></i> Envoyer l'image</button>
                 </form>
                 <h1>Sélectionner une image dans la gallerie</h1>
                 <div id="gallery"></div>

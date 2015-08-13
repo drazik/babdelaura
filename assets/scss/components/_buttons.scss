@@ -1,4 +1,4 @@
-.button {
+.bab-Button {
     display: inline-block;
     padding: 1em;
     background-color: $blue-light;
@@ -8,20 +8,16 @@
     border-width: 0;
 }
 
-a.button {
-    color: #fff;
-}
-
-.button:hover,
-.button:focus {
+.bab-Button:hover,
+.bab-Button:focus {
     background-color: $blue-medium;
 }
 
-.button-full-width {
+.bab-Button--fullWidth {
     display: block;
     width: 100%;
 }
 
-.button-small {
+.bab-Button--small {
     padding: .4em;
 }
