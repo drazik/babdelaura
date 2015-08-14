@@ -17,8 +17,8 @@
 {% block mainContent %}
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="notification notification-success">
-            <div class="notification-content">{{ flashMessage }}</div>
+        <div class="bab-Notification bab-Notification--success">
+            <div class="bab-Notification-content">{{ flashMessage }}</div>
         </div>
     {% endfor %}
 
@@ -128,7 +128,7 @@
     {{parent()}}
     <script>
         (function($) {
-            var $notification = $('.notification');
+            var $notification = $('.bab-Notification');
 
             function closeNotification() {
                 $notification.remove();

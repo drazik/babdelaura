@@ -1,4 +1,4 @@
-.notification {
+.bab-Notification {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,17 +8,17 @@
     box-shadow: 0 0 10px 0 #585858;
 }
 
-.notification-success {
+.bab-Notification--success {
     background-color: #2ecc71;
     color: #fff;
 }
 
-.notification-info {
+.bab-Notification--info {
     background-color: #a4c3cb;
     color: #fff;
 }
 
-.notification-close {
+.bab-Notification-close {
     border-width: 0;
     background-color: transparent;
     position: absolute;
@@ -27,6 +27,6 @@
     color: #000;
 }
 
-.notification-content {
+.bab-Notification-content {
     text-align: center;
 }
