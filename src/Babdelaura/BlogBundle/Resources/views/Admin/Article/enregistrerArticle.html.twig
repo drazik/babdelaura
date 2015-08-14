@@ -146,7 +146,7 @@
 
             $chooseImageButton.on('click', openModal);
             $chooseImageCloseButton.on('click', closeModal);
-            $chooseImageModal.on('click', '.image-gallery-item', selectImage);
+            $chooseImageModal.on('click', '.bab-ImageGallery-item', selectImage);
             $chooseImageModal.on('click', '.page:not(.current)', function(event) {
                 event.preventDefault();
                 var url = $(event.target).attr('href');
