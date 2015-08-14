@@ -1,4 +1,4 @@
-.modal-shadow {
+.bab-Modal-shadow {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -9,7 +9,7 @@
     background-color: rgba(0, 0, 0, .65);
 }
 
-.modal-container {
+.bab-Modal-container {
     position: fixed;
     top: 2em;
     bottom: 2em;
@@ -21,12 +21,12 @@
     overflow-y: scroll;
 }
 
-.modal.open .modal-shadow,
-.modal.open .modal-container {
+.bab-Modal--open .bab-Modal-shadow,
+.bab-Modal--open .bab-Modal-container {
     display: block;
 }
 
-.modal-close {
+.bab-Modal-close {
     position: absolute;
     top: 1em;
     right: 1em;
@@ -34,19 +34,19 @@
     background-color: transparent;
 }
 
-.modal-content {
+.bab-Modal-content {
     padding: 1em 3em 1em 1em;
 }
 
 @media screen and (max-width: 500px) {
-    .modal-container {
+    .bab-Modal-container {
         top: 1em;
         bottom: 1em;
         left: 1em;
         right: 1em;
     }
 
-    .modal-close {
+    .bab-Modal-close {
         font-size: 2em;
         top: .25em;
         right: .25em;

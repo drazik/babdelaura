@@ -60,12 +60,12 @@
         <button class="bab-Button" type="submit">Enregistrer l'article</button>
     </form>
 
-    <div class="modal" id="modal-choose-image">
-        <div class="modal-shadow"></div>
-        <div class="modal-container">
-            <button class="modal-close"><i class="fa fa-times"></i>
+    <div class="bab-Modal" id="modal-choose-image">
+        <div class="bab-Modal-shadow"></div>
+        <div class="bab-Modal-container">
+            <button class="bab-Modal-close"><i class="fa fa-times"></i>
             </button>
-            <div class="modal-content">
+            <div class="bab-Modal-content">
                 <h1>Ajouter une image</h1>
                 <form id="upload-main-image" method="post" action="{{url('babdelaurablog_admin_uploaderImage', {'addWatermark': 'false'})}}" enctype="multipart/form-data">
                     <input type="file" name="mainImageFile" />
@@ -95,18 +95,18 @@
         (function($) {
             var $chooseImageButton = $('#button-choose-image');
             var $chooseImageModal = $('#modal-choose-image');
-            var $chooseImageCloseButton = $chooseImageModal.find('.modal-close');
+            var $chooseImageCloseButton = $chooseImageModal.find('.bab-Modal-close');
             var $chooseImageInput = $('#babdelaura_blogbundle_article_imageTemp');
             var $chooseImagePreview = $('#image-preview');
             var modalContentAlreadyFilled = false;
 
             function openModal() {
-                $chooseImageModal.addClass('open');
+                $chooseImageModal.addClass('bab-Modal--open');
                 getGallery();
             }
 
             function closeModal() {
-                $chooseImageModal.removeClass('open');
+                $chooseImageModal.removeClass('bab-Modal--open');
             }
 
             function getGallery(url) {
@@ -147,7 +147,7 @@
             $chooseImageButton.on('click', openModal);
             $chooseImageCloseButton.on('click', closeModal);
             $chooseImageModal.on('click', '.bab-ImageGallery-item', selectImage);
-            $chooseImageModal.on('click', '.page:not(.current)', function(event) {
+            $chooseImageModal.on('click', '.bab-Pagination-page:not(.bab-Paginatin-page--current)', function(event) {
                 event.preventDefault();
                 var url = $(event.target).attr('href');
 
