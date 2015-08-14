@@ -50,11 +50,11 @@
                 <li class="comment">
                     <header class="comment-header">
                         {% if commentaire.valide == false %}
-                            {% set badgeClass = 'badge-danger' %}
+                            {% set badgeClass = 'bab-Badge--danger' %}
                         {% else %}
-                            {% set badgeClass = 'badge-success' %}
+                            {% set badgeClass = 'bab-Badge--success' %}
                         {% endif %}
-                        <span class="comment-number badge {{badgeClass}}">#{{ loop.index }}</span>
+                        <span class="comment-number bab-Badge {{badgeClass}}">#{{ loop.index }}</span>
                         {% if commentaire.site %}
                             <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
                         {% else %}
