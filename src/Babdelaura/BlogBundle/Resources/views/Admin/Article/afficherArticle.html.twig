@@ -45,10 +45,10 @@
         <h1 id="commentaires">Commentaires</h1>
         {% if nbCommentaires > 0 %}
 
-            <ul class="comments">
+            <ul class="list-unstyled">
                 {% for commentaire in article.commentaires %}
-                <li class="comment">
-                    <header class="comment-header">
+                <li class="bab-Comment">
+                    <header class="bab-Comment-header">
                         {% if commentaire.valide == false %}
                             {% set badgeClass = 'bab-Badge--danger' %}
                         {% else %}
@@ -60,12 +60,12 @@
                         {% else %}
                             {{ commentaire.auteur }}
                         {% endif %}
-                        <span class="comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
+                        <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
                         {% if commentaire.valide == false %}
                             <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
                         {% endif %}
                     </header>
-                    <div class="comment-content">
+                    <div class="bab-Comment-content">
                         {{ commentaire.contenu }}
                     </div>
                 </li>
