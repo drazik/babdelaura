@@ -18,10 +18,8 @@ td {
     border-top: 1px solid $grey-light;
 }
 
-.table-stripped {
-    tbody tr:nth-child(odd) td {
-        background-color: $grey-lighter;
-    }
+.table-stripped tbody tr:nth-child(odd) td {
+    background-color: $grey-lighter;
 }
 
 .table-actions {
