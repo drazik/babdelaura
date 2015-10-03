@@ -6,7 +6,9 @@
   "scripts": {
     "server": "php app/console server:run",
     "watch": "gulp watch",
-    "start": "npm run server & npm run watch"
+    "start": "npm run server & npm run watch",
+    "build": "gulp compile",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
