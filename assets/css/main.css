@@ -1,7 +1,7 @@
 @import 'normalize.css';
 @import 'vendor/font-awesome';
 
-@import 'helpers/variables';
+/*@import 'helpers/variables';*/
 @import 'helpers/utils';
 
 @import 'base/fonts';
