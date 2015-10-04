@@ -1,7 +1,8 @@
+@import 'normalize.css';
+
 @import 'helpers/variables';
 @import 'helpers/utils';
 
-@import 'base/normalize';
 @import 'base/typography';
 
 p {
