@@ -6,11 +6,11 @@ var cssnext = require('cssnext');
 module.exports = function() {
     var processors = [
         cssnext({
-            compress: true
+            url: false
         })
     ];
 
-    return gulp.src('assets/css/*.css')
+    return gulp.src('assets/css/main.css')
         .pipe(plumber())
         .pipe(postcss(processors))
         .pipe(gulp.dest('web/css'));
