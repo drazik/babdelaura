@@ -55,3 +55,23 @@
     color: #555 !important;
     text-decoration: none;
 }
+
+.offset-1 {
+    padding-left: 2rem;
+}
+
+.offset-2 {
+    padding-left: 4rem;
+}
+
+.offset-3 {
+    padding-left: 6rem;
+}
+
+.offset-4 {
+    padding-left: 8rem;
+}
+
+.offset-5 {
+    padding-left: 10rem;
+}
