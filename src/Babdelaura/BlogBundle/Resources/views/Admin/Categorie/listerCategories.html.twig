@@ -3,6 +3,9 @@
 {% macro afficherCategorie(categorie) %}
     <tr>
         <td class="offset-{{ categorie.niveau }}">
+            {% if categorie.niveau > 0 %}
+                <i class="fa fa-arrow-up"></i>
+            {% endif %}
             {{ categorie.categorie.nom }}
         </td>
         <td class="text-centered">
