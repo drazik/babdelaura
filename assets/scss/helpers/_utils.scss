@@ -37,14 +37,10 @@
     margin-right: 0;
 }
 
-@mixin list-unstyled {
+.list-unstyled {
     margin: 0;
     padding: 0;
     list-style: none;
-}
-
-.list-unstyled {
-    @include list-unstyled;
 }
 
 .image-preview {
