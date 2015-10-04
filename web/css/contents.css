@@ -483,28 +483,29 @@ th {
 }
 
 .offset-1 {
-    padding-left: 16px;
-    padding-left: 1rem;
+    padding-left: calc(0.5em + 2px);
 }
 
 .offset-2 {
-    padding-left: 32px;
-    padding-left: 2rem;
+    padding-left: calc(0.5em + 19px);
 }
 
 .offset-3 {
-    padding-left: 48px;
-    padding-left: 3rem;
+    padding-left: calc(0.5em + 19px * 2);
 }
 
 .offset-4 {
-    padding-left: 64px;
-    padding-left: 4rem;
+    padding-left: calc(0.5em + 19px * 3);
 }
 
 .offset-5 {
-    padding-left: 80px;
-    padding-left: 5rem;
+    padding-left: calc(0.5em + 19px * 4);
+}
+
+.rotate-90 {
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
 }
 
 body {

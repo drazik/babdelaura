@@ -57,21 +57,25 @@
 }
 
 .offset-1 {
-    padding-left: 1rem;
+    padding-left: calc(0.5em + 2px);
 }
 
 .offset-2 {
-    padding-left: 2rem;
+    padding-left: calc(0.5em + 19px);
 }
 
 .offset-3 {
-    padding-left: 3rem;
+    padding-left: calc(0.5em + 19px * 2);
 }
 
 .offset-4 {
-    padding-left: 4rem;
+    padding-left: calc(0.5em + 19px * 3);
 }
 
 .offset-5 {
-    padding-left: 5rem;
+    padding-left: calc(0.5em + 19px * 4);
+}
+
+.rotate-90 {
+    transform: rotate(90deg);
 }
