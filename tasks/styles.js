@@ -10,7 +10,7 @@ module.exports = function() {
         })
     ];
 
-    return gulp.src('assets/css/main.css')
+    return gulp.src('assets/css/*.css')
         .pipe(plumber())
         .pipe(postcss(processors))
         .pipe(gulp.dest('web/css'));
