@@ -5,6 +5,8 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+
 use Babdelaura\BlogBundle\Entity\Categorie;
 use Babdelaura\BlogBundle\Form\CategorieType;
 
@@ -49,15 +51,30 @@ class CategorieController extends Controller
 
 
 
-        $listeCategories = $repository->findAll();
+        $listeAllCategories = $repository->findAll();
+
+        $listeCategories = $this->listerEnfants(null, 0, $listeAllCategories);
 
         $session = $this->get('session');
         $session->set('url', $this->generateUrl('babdelaurablog_admin_listerCategories'));
 
-
         return $this->render('BabdelauraBlogBundle:Admin/Categorie:listerCategories.html.twig', array(
           'listeCategories' => $listeCategories
         ));
+    }
+
+    private function listerEnfants($parent, $niveau, $listeCategories) {
+        $result = array();
+        foreach ($listeCategories as $categorie) {
+           if ($parent == $categorie->getParent()) {
+              $result[] = array(                 
+                 'categorie' => $categorie,
+                 'niveau' => $niveau,
+                 'enfants' => $this->listerEnfants($categorie, $niveau + 1, $listeCategories)
+              );      
+           }
+        }
+        return $result;
     }
 
     public function supprimerCategorieAction($slug)
