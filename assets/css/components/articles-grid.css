@@ -12,6 +12,7 @@
 .grid-item {
     float: left;
     width: 48%;
+    max-width: 300px;
     margin: 0 0 1.3em;
 }
 
