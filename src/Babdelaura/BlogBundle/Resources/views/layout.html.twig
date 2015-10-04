@@ -34,18 +34,18 @@
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
 
-        <header class="header">
-            <a class="header-link" href="{{ path('babdelaurablog_accueil') }}">Revenir à l'accueil</a>
+        <header class="bab-Header">
+            <a class="bab-Header-link" href="{{ path('babdelaurablog_accueil') }}">Revenir à l'accueil</a>
         </header>
 
-        <nav class="main-nav" id="main-nav">
-            <div class="wrapper">
-                {{render(controller('BabdelauraBlogBundle:Blog:mainMenu'))}}
+        <nav class="bab-MainNav" id="main-nav">
+            <div class="bab-Wrapper">
+                {{ render(controller('BabdelauraBlogBundle:Blog:mainMenu')) }}
             </div>
         </nav>
 
         <div class="content">
-            <div class="content-inner wrapper row">
+            <div class="content-inner bab-Wrapper row">
                 {% block content %}
                 <div class="eight columns">
                     {% block mainContent %}
@@ -53,47 +53,47 @@
                 </div>
                 <div class="four columns">
                     {% block sidebar %}
-                    <section class="sidebar-section">
+                    <section class="bab-Sidebar-section">
                         <form method="get" action="{{ path('babdelaurablog_recherche') }}">
                             <input name="motscles" id="search" placeholder="Rechercher" />
                         </form>
                     </section>
-                    <section class="sidebar-section">
-                        <h1 class="sidebar-title">Où me trouver</h1>
-                        <ul class="social-links">
-                            <li class="social-link">
+                    <section class="bab-Sidebar-section">
+                        <h1 class="bab-Sidebar-title">Où me trouver</h1>
+                        <ul class="bab-Social">
+                            <li class="bab-Social-link">
                                 <a href="https://www.facebook.com/BabDeLaura" target="_blank" title="Facebook">
-                                    <span class="social-icon social-fb"></span>
+                                    <i class="bab-Social-icon bab-Social-icon--fb"></i>
                                     Bric à Brac de Laura
                                 </a>
                             </li>
-                            <li class="social-link">
+                            <li class="bab-Social-link">
                                 <a href="https://twitter.com/BabDeLaura" target="_blank" title="Twitter">
-                                    <span class="social-icon social-twitter"></span>
+                                    <i class="bab-Social-icon bab-Social-icon--twitter"></i>
                                     @BabDeLaura
                                 </a>
                             </li>
-                            <li class="social-link">
+                            <li class="bab-Social-link">
                                 <a href="http://www.pinterest.com/BabDeLaura/" target="_blank" title="Pinterest">
-                                    <span class="social-icon social-pinterest"></span>
+                                    <i class="bab-Social-icon bab-Social-icon--pinterest"></i>
                                     BabDeLaura
                                 </a>
                             </li>
-                            <li class="social-link">
+                            <li class="bab-Social-link">
                                 <a href="http://instagram.com/BabDeLaura" target="_blank" title="Instagram">
-                                    <span class="social-icon social-instagram"></span>
+                                    <i class="bab-Social-icon bab-Social-icon--instagram"></i>
                                     BabDeLaura
                                 </a>
                             </li>
-                            <li class="social-link">
+                            <li class="bab-Social-link">
                                 <a href="http://www.hellocoton.fr/mapage/bricabrac-de-laura" target="_blank" title="Hellocoton">
-                                    <span class="social-icon social-hellocoton"></span>
+                                    <i class="bab-Social-icon bab-Social-icon--hellocoton"></i>
                                     Bricabrac-de-laura
                                 </a>
                             </li>
-                            <li class="social-link">
+                            <li class="bab-Social-link">
                                 <a href="mailto:bab-de-laura@hotmail.fr" title="Mail">
-                                    <span class="social-icon social-mail"></span>
+                                    <i class="bab-Social-icon bab-Social-icon--mail"></i>
                                     Contact
                                 </a>
                             </li>
@@ -108,7 +108,7 @@
                 {% endblock %}
             </div>
         </div>
-        <footer class="footer">
+        <footer class="bab-Footer">
             Site développé du bout de mes ongles.
         </footer>
 

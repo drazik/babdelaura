@@ -8,10 +8,10 @@
         {% for article in listeArticles %}
             {% set nbCommentaires = article.getNbCommentaires(true) %}
             <li class="grid-item">
-                <figure class="grid-item-article" itemscope itemtype="http://schema.org/BlogPosting">
-                    <img class="grid-item-article-image" src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}">
-                    <figcaption class="grid-item-article-infos">
-                        <h2 class="grid-item-article-title" itemprop="name">
+                <figure class="bab-Article--grid" itemscope itemtype="http://schema.org/BlogPosting">
+                    <img class="bab-Article-image" src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}">
+                    <figcaption class="bab-Article-infos">
+                        <h2 class="bab-Article-title" itemprop="name">
                             <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre|truncate(30,true)}}</a>
                         </h2>
 
@@ -24,7 +24,7 @@
                         {% endif %}
                         </a>
 
-                        <a class="grid-item-article-read button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">
+                        <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">
                             Lire l'article
                         </a>
                     </figcaption>
@@ -32,6 +32,6 @@
             </li>
         {% endfor %}
     </ul>
-    <a class="button button-full-width" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
+    <a class="bab-Button bab-Button--fullWidth" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
 
 {% endblock %}

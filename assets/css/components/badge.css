@@ -1,0 +1,18 @@
+.bab-Badge {
+    display: inline-block;
+    font-size: .8em;
+    font-weight: bold;
+    color: #fff !important;
+    text-decoration: none;
+    background-color: #1abc9c;
+    padding: .2em .7em;
+    border-radius: 10px;
+}
+
+.bab-Badge--danger {
+    background-color: #e74c3c;
+}
+
+.bab-Badge--success {
+    background-color: #27ae60;
+}

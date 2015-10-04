@@ -1,0 +1,57 @@
+.text-centered {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.pull-right {
+    float: right;
+}
+
+.visually-hidden {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.float-container {
+    overflow: hidden;
+}
+
+.actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.action {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.action:last-child {
+    margin-right: 0;
+}
+
+.list-unstyled {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.image-preview {
+    display: inline-block;
+    height: 150px;
+    width: 150px;
+    border: 1px solid #7f8c8d;
+    vertical-align: middle;
+}
+
+.link-unstyled {
+    color: #555 !important;
+    text-decoration: none;
+}

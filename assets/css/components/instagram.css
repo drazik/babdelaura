@@ -1,0 +1,15 @@
+.bab-Instagram-photo {
+    float: left;
+    width: 45%;
+    margin-right: 10%;
+    margin-bottom: 1em;
+}
+
+.bab-Instagram-photo + .bab-Instagram-photo {
+    margin-left: 0;
+}
+
+.bab-Instagram-photo img {
+    width: 100%;
+    vertical-align: bottom;
+}

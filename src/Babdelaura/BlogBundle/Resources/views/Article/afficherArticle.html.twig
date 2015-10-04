@@ -17,16 +17,16 @@
 {% block mainContent %}
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="notification notification-success">
-            <div class="notification-content">{{ flashMessage }}</div>
+        <div class="bab-Notification bab-Notification--success">
+            <div class="bab-Notification-content">{{ flashMessage }}</div>
         </div>
     {% endfor %}
 
-    <section class="article" itemscope itemtype="http://schema.org/BlogPosting">
+    <section itemscope itemtype="http://schema.org/BlogPosting">
         {% set nbCommentaires = article.getNbCommentaires(true) %}
         <header>
-            <h1 class="article-title" itemprop="name">{{ article.titre }}</h1>
-            <aside class="article-infos">
+            <h1 class="bab-Article-title" itemprop="name">{{ article.titre }}</h1>
+            <aside class="bab-Article-infos">
                 <time pubdate itemprop="datePublished">
                     Le {{ article.datePublication|date("d/m/Y à H:i") }}
                 </time>
@@ -35,9 +35,9 @@
                     {{ nbCommentaires }}
                     {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %}
                 </a>
-                <ul class="article-categories" itemprop="keywords">
+                <ul class="bab-Article-categories" itemprop="keywords">
                     {% for categorie in article.categories %}
-                        <li class="article-category">
+                        <li class="bab-Article-category">
                             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}">
                                 {{categorie.nom}}{% if not loop.last %},{% endif %}
                             </a>
@@ -46,21 +46,21 @@
                 </ul>
             </aside>
         </header>
-        <div class="article-content" itemprop="articleBody">
+        <div class="bab-Article-content" itemprop="articleBody">
             <p>{{article.contenu | raw}}</p>
         </div>
         {% include 'BabdelauraBlogBundle::Article/social-share.html.twig' %}
     </section>
 
-    <nav class="article-navigation">
+    <nav class="bab-Article-navigation">
         {% if articlePrecedent is not null %}
-            <a class="button" href="{{ path('babdelaurablog_article', {'slug': articlePrecedent.slug, 'annee': articlePrecedent.datePublication|date("Y"), 'mois': articlePrecedent.datePublication|date("m"), 'jour': articlePrecedent.datePublication|date("d")}) }}">
+            <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': articlePrecedent.slug, 'annee': articlePrecedent.datePublication|date("Y"), 'mois': articlePrecedent.datePublication|date("m"), 'jour': articlePrecedent.datePublication|date("d")}) }}">
                 <i class="fa fa-chevron-circle-left"></i> Article précédent
             </a>
         {% endif %}
 
         {% if articleSuivant is not null %}
-            <a class="button pull-right" href="{{ path('babdelaurablog_article', {'slug': articleSuivant.slug, 'annee': articleSuivant.datePublication|date("Y"), 'mois': articleSuivant.datePublication|date("m"), 'jour': articleSuivant.datePublication|date("d")}) }}">
+            <a class="bab-Button pull-right" href="{{ path('babdelaurablog_article', {'slug': articleSuivant.slug, 'annee': articleSuivant.datePublication|date("Y"), 'mois': articleSuivant.datePublication|date("m"), 'jour': articleSuivant.datePublication|date("d")}) }}">
                 Article suivant <i class="fa fa-chevron-circle-right"></i>
             </a>
         {% endif %}
@@ -68,20 +68,20 @@
 
     <h1 id="commentaires">Commentaires</h1>
     {% if nbCommentaires > 0 %}
-    <ul class="comments">
+    <ul class="list-unstyled">
         {% for commentaire in article.commentaires %}
             {% if commentaire.valide %}
-            <li class="comment">
-                <header class="comment-header">
+            <li class="bab-Comment">
+                <header class="bab-Comment-header">
                     <i class="fa fa-user"></i>
                     {% if commentaire.site %}
                         <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
                     {% else %}
                         {{ commentaire.auteur }}
                     {% endif %}
-                    <span class="comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
+                    <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
                 </header>
-                <div class="comment-content">
+                <div class="bab-Comment-content">
                     {{ commentaire.contenu }}
                 </div>
             </li>
@@ -119,7 +119,7 @@
         </div>
         {{ form_widget(form._token) }}
 
-        <button class="button" type="submit">Envoyer mon commentaire</button>
+        <button class="bab-Button" type="submit">Envoyer mon commentaire</button>
     </form>
 
 {% endblock %}
@@ -128,7 +128,7 @@
     {{parent()}}
     <script>
         (function($) {
-            var $notification = $('.notification');
+            var $notification = $('.bab-Notification');
 
             function closeNotification() {
                 $notification.remove();

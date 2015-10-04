@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.bab-Wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.bab-Wrapper--small {
+    max-width: 300px;
+}
+
+.content {
+    width: 100%;
+}
+
+.content-inner {
+    padding-top: 2em;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+@media screen and (max-width: 500px) {
+    .main-content,
+    .sidebar {
+        display: block;
+        width: 100%;
+    }
+
+    .sidebar {
+        margin-top: 2em;
+    }
+}

@@ -4,14 +4,14 @@
 <div class="row">
     <div class="eight columns">
         <h1>Visualiser l'article</h1>
-        <section class="article">
+        <section>
             {% set nbCommentaires = article.nbCommentaires %}
             {% set nbCommentairesNonValides = article.getNbCommentaires(false) %}
             <header>
                 {% if article.publication %}
-                    {% set classTitre = "article-title" %}
+                    {% set classTitre = "bab-Article-title" %}
                 {% else %}
-                    {% set classTitre = "article-title draft" %}
+                    {% set classTitre = "bab-Article-title bab-Article-title--draft" %}
                 {% endif %}
                 <h1 class="{{classTitre}}">
                     {% if date(article.datePublication) > date() %}
@@ -19,25 +19,25 @@
                     {% endif %}
                     {{ article.titre }}
                 </h1>
-                <aside class="article-infos">
+                <aside class="bab-Article-infos">
                     Le {{ article.datePublication|date("d/m/Y à H:i") }} -
                     <a href="#commentaires">{{nbCommentaires}} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %} {% if nbCommentairesNonValides > 0 %} (dont {{nbCommentairesNonValides}} à valider){% endif %}</a>
-                    <ul class="article-categories">
+                    <ul class="bab-Article-categories">
                         {% for categorie in article.categories %}
-                            <li class="article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
+                            <li class="bab-Article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
                         {% endfor %}
                     </ul>
                 </aside>
             </header>
-            <div class="article-content">
+            <div class="bab-Article-content">
                 <p>{{article.contenu | raw}}</p>
             </div>
         </section>
     </div>
     <div class="four columns">
         <h1>Gestion</h1>
-        <a class="button" href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
-        <a class="button" href="{{ path('babdelaurablog_admin_publierArticle', {'slug' : article.slug}) }}"><i class="fa fa-times"></i> Dépublier</a>
+        <a class="bab-Button" href="{{ path('babdelaurablog_admin_modifierArticle', {'slug' : article.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
+        <a class="bab-Button" href="{{ path('babdelaurablog_admin_publierArticle', {'slug' : article.slug}) }}"><i class="fa fa-times"></i> Dépublier</a>
     </div>
 </div>
 <div class="row">
@@ -45,27 +45,27 @@
         <h1 id="commentaires">Commentaires</h1>
         {% if nbCommentaires > 0 %}
 
-            <ul class="comments">
+            <ul class="list-unstyled">
                 {% for commentaire in article.commentaires %}
-                <li class="comment">
-                    <header class="comment-header">
+                <li class="bab-Comment">
+                    <header class="bab-Comment-header">
                         {% if commentaire.valide == false %}
-                            {% set badgeClass = 'badge-danger' %}
+                            {% set badgeClass = 'bab-Badge--danger' %}
                         {% else %}
-                            {% set badgeClass = 'badge-success' %}
+                            {% set badgeClass = 'bab-Badge--success' %}
                         {% endif %}
-                        <span class="comment-number badge {{badgeClass}}">#{{ loop.index }}</span>
+                        <span class="comment-number bab-Badge {{badgeClass}}">#{{ loop.index }}</span>
                         {% if commentaire.site %}
                             <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
                         {% else %}
                             {{ commentaire.auteur }}
                         {% endif %}
-                        <span class="comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
+                        <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
                         {% if commentaire.valide == false %}
-                            <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="button button-small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
+                            <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
                         {% endif %}
                     </header>
-                    <div class="comment-content">
+                    <div class="bab-Comment-content">
                         {{ commentaire.contenu }}
                     </div>
                 </li>
@@ -98,14 +98,14 @@
             {{ form_widget(form.contenu) }}
         </div>
         {{ form_widget(form._token) }}
-        <button class="button" type="submit">Envoyer mon commentaire</button>
+        <button class="bab-Button" type="submit">Envoyer mon commentaire</button>
     </form>
 
     </div>
     <div class="four columns">
         <h1>Gestion</h1>
         {% if nbCommentairesNonValides > 0 %}
-            <a class="button" href="{{path('babdelaurablog_admin_validerCommentairesArticle', {'slug' : article.slug})}}"><i class="fa fa-check-square-o"></i> Tout valider</a>
+            <a class="bab-Button" href="{{path('babdelaurablog_admin_validerCommentairesArticle', {'slug' : article.slug})}}"><i class="fa fa-check-square-o"></i> Tout valider</a>
         {% endif %}
 
 

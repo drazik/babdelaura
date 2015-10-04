@@ -1,0 +1,52 @@
+.bab-Social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bab-Social-link {
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.bab-Social-link a {
+    text-decoration: none;
+}
+
+.bab-Social-icon {
+    display: inline-block;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    background-image: url('../images/sprite-contact.png');
+}
+
+.bab-Social-icon--fb {
+    background-position: 0 0;
+}
+
+.bab-Social-icon--twitter {
+    background-position: 0 -32px;
+}
+
+.bab-Social-icon--instagram {
+    background-position: 0 -64px;
+}
+
+.bab-Social-icon--pinterest {
+    background-position: 0 -96px;
+}
+
+.bab-Social-icon--hellocoton {
+    background-position: 0 -128px;
+}
+
+.bab-Social-icon--mail {
+    background-position: 0 -160px;
+}
+
+.social-share-item {
+    display: inline-block;
+    vertical-align: middle;
+}

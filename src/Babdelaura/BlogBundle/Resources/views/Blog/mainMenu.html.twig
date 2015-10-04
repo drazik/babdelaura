@@ -1,11 +1,11 @@
-<button class="main-nav-toggle" id="main-nav-toggle">
+<button class="bab-MainNav-toggle" id="main-nav-toggle">
     <i class="fa fa-bars"></i>
 </button>
-<ul class="main-nav-container" id="main-nav-container">
-    <li class="main-nav-item"><a href="{{ path('babdelaurablog_accueil') }}" title="">Accueil</a></li>
+<ul class="bab-MainNav-container" id="main-nav-container">
+    <li class="bab-MainNav-item"><a href="{{ path('babdelaurablog_accueil') }}" title="">Accueil</a></li>
 
     {% for categorie in listeCategories %}
-        <li class="main-nav-item">
+        <li class="bab-MainNav-item">
             {% set enfants = categorie.enfantsVisibles %}
             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}" title="{{categorie.nom}}">
                 {{categorie.nom}}
@@ -14,9 +14,9 @@
                 {% endif %}
             </a>
             {% if enfants|length >  0 %}
-                <ul class="main-nav-submenu">
+                <ul class="bab-MainNav-submenu">
                     {% for categorieEnfant in enfants %}
-                        <li class="main-nav-submenu-item">
+                        <li class="bab-MainNav-submenuItem">
                             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorieEnfant.slug}) }}" title="{{categorieEnfant.nom}}">{{categorieEnfant.nom}}</a>
                         </li>
                     {% endfor %}
@@ -26,7 +26,7 @@
     {% endfor %}
 
     {% for page in listePages %}
-        <li class="main-nav-item">
+        <li class="bab-MainNav-item">
             <a href="{{ path('babdelaurablog_page', {'slug' : page.slug}) }}" title="{{page.titre}}">{{page.titre}}</a>
         </li>
     {% endfor %}

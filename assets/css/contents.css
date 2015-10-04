@@ -1,0 +1,17 @@
+@import 'normalize.css';
+
+/*@import 'helpers/variables';*/
+@import 'helpers/utils';
+
+@import 'base/typography';
+
+p {
+    text-align: justify;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}

@@ -1,15 +1,17 @@
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
-var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer-core');
+var cssnext = require('cssnext');
 
 module.exports = function() {
-    return gulp.src('assets/scss/*.scss')
+    var processors = [
+        cssnext({
+            url: false
+        })
+    ];
+
+    return gulp.src('assets/css/*.css')
         .pipe(plumber())
-        .pipe(sass({
-            outputStyle: 'compressed'
-        }))
-        .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
+        .pipe(postcss(processors))
         .pipe(gulp.dest('web/css'));
 };
