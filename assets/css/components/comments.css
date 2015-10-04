@@ -5,7 +5,7 @@
 }
 
 .bab-Comment + .bab-Comment {
-    border-top: 1px dotted $blue-medium;
+    border-top: 1px dotted #16a085;
 }
 
 .bab-Comment-header {

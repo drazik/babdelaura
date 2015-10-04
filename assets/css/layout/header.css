@@ -1,7 +1,7 @@
 .bab-Header {
     position: relative;
     height: 250px;
-    background-color: $grey-lighter;
+    background-color: #f9f9fa;
     background-image: url('../images/header-brushes.png'), url('../images/header-bijoux.jpg');
     background-repeat: no-repeat;
     background-position: 90% center, top left;

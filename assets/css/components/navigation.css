@@ -39,7 +39,7 @@
 .bab-MainNav-item:hover,
 .bab-MainNav-item a:focus,
 .bab-MainNav-item a:active {
-    background-color: $blue-light;
+    background-color: #1abc9c;
     color: #fff;
 }
 
@@ -54,7 +54,7 @@
     opacity: 0;
     visibility: hidden;
     background-color: #fff;
-    border: 1px solid $grey-medium;
+    border: 1px solid #bdc3c7;
     border-radius: 3px;
     list-style: none;
     padding: 0;
@@ -77,7 +77,7 @@
     top: -16px;
     left: 20px;
     border: 8px solid transparent;
-    border-bottom-color: $grey-medium;
+    border-bottom-color: #bdc3c7;
     z-index: 2;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .bab-MainNav-submenuItem a:hover {
-    background-color: $grey-light;
+    background-color: #ddd;
 }
 
 @media screen and (max-width: 500px) {

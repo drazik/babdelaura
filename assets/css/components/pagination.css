@@ -14,13 +14,13 @@
     float: left;
     padding: .7em 1em;
     text-decoration: none;
-    border: 1px solid $grey-medium;
+    border: 1px solid #bdc3c7;
     border-right-width: 0;
 }
 
 .bab-Pagination-page:hover,
 .bab-Pagination-page:focus {
-    background-color: $grey-light;
+    background-color: #ddd;
 }
 
 .bab-Pagination li:first-child .page {
@@ -36,5 +36,5 @@
 
 .bab-Pagination-page--current {
     color: #fff;
-    background-color: $blue-medium;
+    background-color: #16a085;
 }

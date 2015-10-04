@@ -1,7 +1,7 @@
 .bab-Article-title {
     font-family: 'Lobster', cursive;
     font-weight: normal;
-    color: $blue-medium;
+    color: #16a085;
 }
 
 .bab-Article-title a {
@@ -9,7 +9,7 @@
 }
 
 .bab-Article-title--draft {
-    color: $grey-dark;
+    color: #7f8c8d;
 }
 
 .bab-Article-infos {
@@ -30,7 +30,7 @@
 }
 
 .bab-Article-separator {
-    border: 1px solid $grey-medium;
+    border: 1px solid #bdc3c7;
     width: 70%;
     margin: 2em auto;
 }
@@ -98,7 +98,7 @@
     margin-bottom: 0;
     background: #2c3f52;
     color: #ed4e6e;
-    box-shadow: 0 0 10px 0 $grey-darker;
+    box-shadow: 0 0 10px 0 #7f8c8der;
     height: 100%;
     width: 70%;
     opacity: 0;
@@ -130,7 +130,7 @@
 }
 
 .bab-Article--grid .bab-Article-title a:hover {
-    color: $grey-medium;
+    color: #bdc3c7;
 }
 
 .bab-Article--grid .bab-Article-infos .bab-Button {

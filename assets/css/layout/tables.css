@@ -7,7 +7,7 @@ th {
     line-height: 1.5;
     padding: .5em;
     vertical-align: bottom;
-    border-bottom: 2px solid $grey-light;
+    border-bottom: 2px solid #ddd;
 }
 
 td {
@@ -15,11 +15,11 @@ td {
     line-height: 1.5;
     padding: .5em;
     vertical-align: top;
-    border-top: 1px solid $grey-light;
+    border-top: 1px solid #ddd;
 }
 
 .table-stripped tbody tr:nth-child(odd) td {
-    background-color: $grey-lighter;
+    background-color: #f9f9fa;
 }
 
 .table-actions {

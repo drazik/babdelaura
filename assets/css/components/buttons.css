@@ -1,7 +1,7 @@
 .bab-Button {
     display: inline-block;
     padding: 1em;
-    background-color: $blue-light;
+    background-color: #1abc9c;
     color: #fff;
     text-decoration: none;
     text-align: center;
@@ -10,7 +10,7 @@
 
 .bab-Button:hover,
 .bab-Button:focus {
-    background-color: $blue-medium;
+    background-color: #16a085;
 }
 
 .bab-Button--fullWidth {
