@@ -18,7 +18,6 @@ class AdminController extends Controller
         $nbCommentairesTotal = $repositoryCommentaire->getNbCommentaires();
         $nbCommentairesNonValides = $repositoryCommentaire->getNbCommentaires(false);
 
-
         return $this->render('BabdelauraBlogBundle:Admin:index.html.twig',
                       array('nbArticlesTotal' => $nbArticlesTotal,
                           'nbArticlePublies' => $nbArticlePublies,

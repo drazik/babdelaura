@@ -2,6 +2,10 @@ babdelaurablog_admin_listerArticles:
     path: /admin/articles/
     defaults: {_controller: BabdelauraBlogBundle:Article:listerTousArticlesAdmin}
 
+babdelaurablog_admin_listerArticlesGrille:
+    path: /admin/articles/grille
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesGrilleAdmin}
+
 babdelaurablog_admin_afficherArticle:
     path: /admin/article/{slug}
     methods: [GET]

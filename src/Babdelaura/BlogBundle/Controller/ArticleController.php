@@ -275,6 +275,19 @@ class ArticleController extends Controller
 
     }
 
+    public function listerArticlesGrilleAdminAction() {
+        $repository = $this->getDoctrine()
+                           ->getManager()
+                           ->getRepository('BabdelauraBlogBundle:Article');
+
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+        $listeArticles = $repository->getArticles($nbArticlesParPage);
+
+
+        return $this->render('BabdelauraBlogBundle:Admin/Article:listerArticlesGrille.html.twig', array('listeArticles' => $listeArticles));
+
+    }
+
     public function afficherArticleAdminAction($slug) {
         $repository = $this->getDoctrine()
                          ->getManager()
