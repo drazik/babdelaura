@@ -5,7 +5,7 @@
     margin-bottom: 1em;
 }
 
-.bab-Instagram-photo + .bab-Instagram-photo {
+.bab-Instagram-photo:nth-child(even) {
     margin-right: 0;
 }
 
