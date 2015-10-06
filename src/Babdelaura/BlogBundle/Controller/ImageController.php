@@ -15,25 +15,35 @@ use Imagine\Image\Point;
 class ImageController extends Controller
 {
     public function listerImagesAction() {
+        $request = $this->get('request');
+
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Image');
 
 
-        $query = $repository->findBy(array(),array('id'=>'desc'));
+        $items = $repository->findBy(array(),array('id'=>'desc'));
+        $query = $request->query;
 
-        $request = $this->get('request')->query;
-        $nbImagesParPage = $this->container->getParameter('nbImagesParPage');
+        if ($request->isXmlHttpRequest()) {
+            $templateName = 'BabdelauraBlogBundle:Image:listerImages.html.twig';
+            $nbImagesParPage = $this->container->getParameter('nbImagesParPage');
+        }
+        else {
+            $templateName = 'BabdelauraBlogBundle:Admin/Image:listerImages.html.twig';
+            $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
+        }
+
         $paginator  = $this->get('knp_paginator');
         $listeImages = $paginator->paginate(
-            $query,
-            $request->get('page', 1),
+            $items,
+            $query->get('page', 1),
             $nbImagesParPage
         );
-        $listeImages->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
+        $listeImages->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');        
 
-         return $this->render('BabdelauraBlogBundle:Image:listerImages.html.twig', array(
-          'listeImages' => $listeImages));
+        return $this->render($templateName, array(
+          'listeImages' => $listeImages));         
     }
 
 

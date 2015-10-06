@@ -1,0 +1,14 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+    <h1>Gallerie</h1>
+    <div class="text-centered">
+            {{ knp_pagination_render(listeImages) }}
+    </div>
+    {% for image in listeImages %}
+        <img class="bab-ImageGallery-item" src="{{ asset(image.webPath) }}" id="{{image.id}}"/>
+    {% endfor %}
+    <div class="text-centered">
+            {{ knp_pagination_render(listeImages) }}
+    </div>
+{% endblock %}
