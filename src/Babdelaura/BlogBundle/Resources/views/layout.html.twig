@@ -114,10 +114,10 @@
 
 
         {% block javascripts %}
+            <script src="{{ asset('js/app.js') }}" async></script>
             {% if app.environment == 'prod' %}
                 <script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}" async></script>
             {% endif %}
-            <script src="{{ asset('js/app.js') }}" async></script>
 
             <script type="text/javascript" async defer data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>
         {% endblock %}
