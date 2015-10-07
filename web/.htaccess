@@ -52,7 +52,7 @@ DirectoryIndex app.php
 </IfModule>
 
 <IfModule mod_headers.c>
-    Header set Content-Security-Policy "script-src 'self'"
+    #Header set Content-Security-Policy "script-src 'self'"
     Header set X-Frame-Options "ALLOW-FROM 'self' http://www.hellocoton.fr"
     Header set X-Content-Type-Options "nosniff"
 </IfModule>
