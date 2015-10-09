@@ -6,7 +6,8 @@ var cssnext = require('cssnext');
 module.exports = function() {
     var processors = [
         cssnext({
-            url: false
+            url: false,
+            compress: true
         })
     ];
 
