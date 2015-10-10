@@ -25,7 +25,7 @@ class ImageController extends Controller
         $items = $repository->findBy(array(),array('id'=>'desc'));
         $query = $request->query;
 
-        if ($request->isXmlHttpRequest()) {
+        if ($query->get('CKEditor') !== null) {
             $templateName = 'BabdelauraBlogBundle:Image:listerImages.html.twig';
             $nbImagesParPage = $this->container->getParameter('nbImagesParPage');
         }
@@ -40,10 +40,10 @@ class ImageController extends Controller
             $query->get('page', 1),
             $nbImagesParPage
         );
-        $listeImages->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');        
+        $listeImages->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
 
         return $this->render($templateName, array(
-          'listeImages' => $listeImages));         
+          'listeImages' => $listeImages));
     }
 
 
@@ -89,7 +89,7 @@ class ImageController extends Controller
             $imageSource->paste($watermark, $bottomRight);
             $imageSource->save($image->getWebPath(), array('jpeg_quality' => 100));
         }
-        
+
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
                 'success' => true,
