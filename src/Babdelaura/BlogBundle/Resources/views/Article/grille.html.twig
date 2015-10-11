@@ -18,7 +18,13 @@
                     {% endif %}
                     </a>
 
-                    <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">
+                    {% if modeAdmin %}
+                        {% set href = path('babdelaurablog_admin_afficherArticle', {'slug': article.slug})  %}
+                    {% else %}
+                        {% set href = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")})  %}
+                    {% endif %}
+
+                    <a class="bab-Button" href="{{ href }}">
                         Lire l'article
                     </a>
                 </figcaption>
