@@ -149,7 +149,7 @@
             $chooseImageButton.on('click', openModal);
             $chooseImageCloseButton.on('click', closeModal);
             $chooseImageModal.on('click', '.bab-ImageGallery-item', selectImage);
-            $chooseImageModal.on('click', '.bab-Pagination-page:not(.bab-Paginatin-page--current)', function(event) {
+            $chooseImageModal.on('click', '.bab-Pagination-page:not(.bab-Pagination-page--current)', function(event) {
                 event.preventDefault();
                 var url = $(event.target).attr('href');
 
