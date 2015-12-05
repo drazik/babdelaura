@@ -2,14 +2,13 @@
 'use strict';
 
 var jQuery = require('jquery');
-var PhotoSwipe = require('photoswipe');
-var PhotoSwipeUiDefault = require('photoswipe/dist/photoswipe-ui-default');
 
 window.jQuery = jQuery;
 window.$ = jQuery;
 
 var MainNav = require('./modules/main-nav');
 var TouchEffect = require('./modules/toucheffect');
+var Gallery = require('./modules/gallery');
 require('./modules/jquery.cookiebar');
 
 var mainNav = new MainNav();
@@ -18,29 +17,64 @@ mainNav.run();
 var touchEffect = new TouchEffect();
 touchEffect.run();
 
-var pswpElements = document.querySelectorAll('.pswp');
+var gallery = new Gallery();
+gallery.initialize();
 
-var photoSwipeItems = [
-    {
-        src: 'https://placekitten.com/1200/1000',
-        w: 1200,
-        h: 1000
-    },
-    {
-        src: 'https://placekitten.com/1200/900',
-        w: 1200,
-        h: 900
+},{"./modules/gallery":2,"./modules/jquery.cookiebar":3,"./modules/main-nav":4,"./modules/toucheffect":5,"jquery":21}],2:[function(require,module,exports){
+'use strict';
+
+var PhotoSwipe = require('photoswipe');
+var PhotoSwipeUiDefault = require('photoswipe/dist/photoswipe-ui-default');
+
+function Gallery() {
+    this.pswpElement = document.querySelector('.pswp');
+    this.itemsContainer = document.querySelector('.gallery');
+
+    if (this.pswpElement == null || this.itemsContainer == null) {
+        return;
     }
-];
 
-var options = {
-    index: 0
+    this.images = this.itemsContainer.querySelectorAll('img');
+    this.images = Array.apply(null, this.images);
+
+    this.photoSwipeItems = [];
+    this.gallery = null;
+}
+
+Gallery.prototype.initialize = function () {
+    this.images.forEach(function(image) {
+        var tmpImage = new Image();
+
+        tmpImage.onload = function() {
+            var item = {
+                src: image.src,
+                w: tmpImage.width,
+                h: tmpImage.height
+            };
+
+            this.photoSwipeItems.push(item);
+        }.bind(this);
+
+        tmpImage.src = image.src;
+    }.bind(this))
+
+    this.initEvents();
 };
 
-var gallery = new PhotoSwipe(pswpElements[0], PhotoSwipeUiDefault, photoSwipeItems, options);
-gallery.init();
+Gallery.prototype.initEvents = function () {
+    this.images.forEach(function(image) {
+        image.addEventListener('click', this.show.bind(this));
+    }.bind(this));
+};
 
-},{"./modules/jquery.cookiebar":2,"./modules/main-nav":3,"./modules/toucheffect":4,"jquery":20,"photoswipe":22,"photoswipe/dist/photoswipe-ui-default":21}],2:[function(require,module,exports){
+Gallery.prototype.show = function (event) {
+    this.gallery = new PhotoSwipe(this.pswpElement, PhotoSwipeUiDefault, this.photoSwipeItems);
+    this.gallery.init();
+};
+
+module.exports = Gallery;
+
+},{"photoswipe":23,"photoswipe/dist/photoswipe-ui-default":22}],3:[function(require,module,exports){
 var jQuery = require('jquery');
 /*
  * Copyright (C) 2012 PrimeBox (info@primebox.co.uk)
@@ -234,7 +268,7 @@ var jQuery = require('jquery');
 		});
 	}
 })(jQuery);
-},{"jquery":20}],3:[function(require,module,exports){
+},{"jquery":21}],4:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -262,7 +296,7 @@ MainNav.prototype.run = function() {
 
 module.exports = MainNav;
 
-},{"jquery":20}],4:[function(require,module,exports){
+},{"jquery":21}],5:[function(require,module,exports){
 'use strict';
 
 var $ = require('jquery');
@@ -293,7 +327,7 @@ TouchEffect.prototype.run = function() {
 
 module.exports = TouchEffect;
 
-},{"browsernizr":5,"browsernizr/test/touchevents":19,"jquery":20}],5:[function(require,module,exports){
+},{"browsernizr":6,"browsernizr/test/touchevents":20,"jquery":21}],6:[function(require,module,exports){
 var Modernizr = require('./lib/Modernizr'),
     ModernizrProto = require('./lib/ModernizrProto'),
     classes = require('./lib/classes'),
@@ -316,7 +350,7 @@ for (var i = 0; i < Modernizr._q.length; i++) {
 
 module.exports = Modernizr;
 
-},{"./lib/Modernizr":6,"./lib/ModernizrProto":7,"./lib/classes":8,"./lib/setClasses":15,"./lib/testRunner":16}],6:[function(require,module,exports){
+},{"./lib/Modernizr":7,"./lib/ModernizrProto":8,"./lib/classes":9,"./lib/setClasses":16,"./lib/testRunner":17}],7:[function(require,module,exports){
 var ModernizrProto = require('./ModernizrProto');
 
 
@@ -334,7 +368,7 @@ var ModernizrProto = require('./ModernizrProto');
   
 
 module.exports = Modernizr;
-},{"./ModernizrProto":7}],7:[function(require,module,exports){
+},{"./ModernizrProto":8}],8:[function(require,module,exports){
 var tests = require('./tests');
 
 
@@ -378,24 +412,24 @@ var tests = require('./tests');
   
 
 module.exports = ModernizrProto;
-},{"./tests":18}],8:[function(require,module,exports){
+},{"./tests":19}],9:[function(require,module,exports){
 
   var classes = [];
   
 module.exports = classes;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 
   var createElement = function() {
     return document.createElement.apply(document, arguments);
   };
   
 module.exports = createElement;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 
   var docElement = document.documentElement;
   
 module.exports = docElement;
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var createElement = require('./createElement');
 
 
@@ -415,7 +449,7 @@ var createElement = require('./createElement');
   
 
 module.exports = getBody;
-},{"./createElement":9}],12:[function(require,module,exports){
+},{"./createElement":10}],13:[function(require,module,exports){
 var ModernizrProto = require('./ModernizrProto');
 var docElement = require('./docElement');
 var createElement = require('./createElement');
@@ -481,7 +515,7 @@ var getBody = require('./getBody');
   
 
 module.exports = injectElementWithStyles;
-},{"./ModernizrProto":7,"./createElement":9,"./docElement":10,"./getBody":11}],13:[function(require,module,exports){
+},{"./ModernizrProto":8,"./createElement":10,"./docElement":11,"./getBody":12}],14:[function(require,module,exports){
 
   /**
    * is returns a boolean for if typeof obj is exactly type.
@@ -491,7 +525,7 @@ module.exports = injectElementWithStyles;
   }
   
 module.exports = is;
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var ModernizrProto = require('./ModernizrProto');
 
 
@@ -504,7 +538,7 @@ var ModernizrProto = require('./ModernizrProto');
   
 
 module.exports = prefixes;
-},{"./ModernizrProto":7}],15:[function(require,module,exports){
+},{"./ModernizrProto":8}],16:[function(require,module,exports){
 var Modernizr = require('./Modernizr');
 var docElement = require('./docElement');
 
@@ -533,7 +567,7 @@ var docElement = require('./docElement');
   
 
 module.exports = setClasses;
-},{"./Modernizr":6,"./docElement":10}],16:[function(require,module,exports){
+},{"./Modernizr":7,"./docElement":11}],17:[function(require,module,exports){
 var tests = require('./tests');
 var Modernizr = require('./Modernizr');
 var classes = require('./classes');
@@ -603,7 +637,7 @@ var is = require('./is');
   
 
 module.exports = testRunner;
-},{"./Modernizr":6,"./classes":8,"./is":13,"./tests":18}],17:[function(require,module,exports){
+},{"./Modernizr":7,"./classes":9,"./is":14,"./tests":19}],18:[function(require,module,exports){
 var ModernizrProto = require('./ModernizrProto');
 var injectElementWithStyles = require('./injectElementWithStyles');
 
@@ -612,12 +646,12 @@ var injectElementWithStyles = require('./injectElementWithStyles');
   
 
 module.exports = testStyles;
-},{"./ModernizrProto":7,"./injectElementWithStyles":12}],18:[function(require,module,exports){
+},{"./ModernizrProto":8,"./injectElementWithStyles":13}],19:[function(require,module,exports){
 
   var tests = [];
   
 module.exports = tests;
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var Modernizr = require('./../lib/Modernizr');
 var prefixes = require('./../lib/prefixes');
 var testStyles = require('./../lib/testStyles');
@@ -675,7 +709,7 @@ This test will also return `true` for Firefox 4 Multitouch support.
   });
 
 
-},{"./../lib/Modernizr":6,"./../lib/prefixes":14,"./../lib/testStyles":17}],20:[function(require,module,exports){
+},{"./../lib/Modernizr":7,"./../lib/prefixes":15,"./../lib/testStyles":18}],21:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -9887,7 +9921,7 @@ return jQuery;
 
 }));
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /*! PhotoSwipe Default UI - 4.1.0 - 2015-07-11
 * http://photoswipe.com
 * Copyright (c) 2015 Dmitry Semenov; */
@@ -10748,7 +10782,7 @@ return PhotoSwipeUI_Default;
 
 
 });
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /*! PhotoSwipe - v4.1.0 - 2015-07-11
 * http://photoswipe.com
 * Copyright (c) 2015 Dmitry Semenov; */
