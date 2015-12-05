@@ -41,6 +41,8 @@ function Gallery() {
     this.gallery = null;
     this.options = {
         bgOpacity: 0.85,
+        closeOnScroll: false,
+        history: false
     };
 }
 
