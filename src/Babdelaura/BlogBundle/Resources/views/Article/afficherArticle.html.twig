@@ -46,7 +46,7 @@
                 </ul>
             </aside>
         </header>
-        <div class="bab-Article-content" itemprop="articleBody">
+        <div class="bab-Article-content bab-Article-content--gallery gallery" itemprop="articleBody">
             <p>{{article.contenu | raw}}</p>
         </div>
         {% include 'BabdelauraBlogBundle::Article/social-share.html.twig' %}
@@ -122,6 +122,7 @@
         <button class="bab-Button" type="submit">Envoyer mon commentaire</button>
     </form>
 
+    {% include 'BabdelauraBlogBundle::photoswipe.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
