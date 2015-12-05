@@ -47,6 +47,10 @@
     transform: rotate(.0001deg);
 }
 
+.bab-Article-content--gallery img {
+    cursor: pointer;
+}
+
 .bab-Article-content figcaption {
     text-align: center;
 }
