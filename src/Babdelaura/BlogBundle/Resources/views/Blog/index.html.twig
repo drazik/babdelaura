@@ -4,7 +4,7 @@
 {% block mainContent %}
 
     <h1 class="grid-title">Les derniers articles</h1>
-    {% include "BabdelauraBlogBundle:Article:grille.html.twig" %}
+    {% include "BabdelauraBlogBundle:Article:grille.html.twig" with {'modeAdmin': false} %}
     <a class="bab-Button bab-Button--fullWidth" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
 
 {% endblock %}

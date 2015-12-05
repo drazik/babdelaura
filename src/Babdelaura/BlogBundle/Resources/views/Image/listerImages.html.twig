@@ -29,8 +29,10 @@
                     var $this = $(this);
                     var funcNum = getUrlParam('CKEditorFuncNum');
                     var fileUrl = $this.attr('src');
-                    window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
-                    window.close();
+                    if (window.opener) {
+                        window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                        window.close();
+                    }
                 });
 
             })(jQuery);

@@ -53,8 +53,9 @@ DirectoryIndex app.php
 
 <IfModule mod_headers.c>
     #Header set Content-Security-Policy "script-src 'self'"
-    Header set X-Frame-Options "ALLOW-FROM 'self' http://www.hellocoton.fr"
-    Header set X-Content-Type-Options "nosniff"
+    #Header set X-Frame-Options "ALLOW-FROM 'self' http://www.hellocoton.fr"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
 </IfModule>
 
 <IfModule mod_expires.c>

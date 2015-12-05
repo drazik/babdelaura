@@ -281,7 +281,7 @@ class ArticleController extends Controller
                            ->getRepository('BabdelauraBlogBundle:Article');
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
-        $listeArticles = $repository->getArticles($nbArticlesParPage);
+        $listeArticles = $repository->getArticles($nbArticlesParPage, true);
 
 
         return $this->render('BabdelauraBlogBundle:Admin/Article:listerArticlesGrille.html.twig', array('listeArticles' => $listeArticles));

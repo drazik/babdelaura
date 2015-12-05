@@ -58,14 +58,17 @@ class ArticleRepository extends EntityRepository {
   }
 
 
-  public function getArticles($nbArticles) {
+  public function getArticles($nbArticles, $modeAdmin = false) {
         $query = $this->createQueryBuilder('a');
 
-        $query = $query->where('a.datePublication <= ?1')
-                       ->setParameter(1, new \DateTime())
-                       ->andwhere('a.publication = true')
-                       ->orderBy('a.datePublication','DESC')
+        $query = $query->orderBy('a.datePublication','DESC')
                        ->setMaxResults($nbArticles);
+
+        if(!$modeAdmin){
+            $query = $query->where('a.publication = true')
+                           ->andwhere('a.datePublication <= ?1')
+                           ->setParameter(1, new \DateTime());
+        }
 
          return $query->getQuery()->getResult();
 
