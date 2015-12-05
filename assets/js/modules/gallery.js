@@ -16,6 +16,9 @@ function Gallery() {
 
     this.photoSwipeItems = [];
     this.gallery = null;
+    this.options = {
+        bgOpacity: 0.85,
+    };
 }
 
 Gallery.prototype.initialize = function () {
@@ -45,7 +48,7 @@ Gallery.prototype.initEvents = function () {
 };
 
 Gallery.prototype.show = function (event) {
-    this.gallery = new PhotoSwipe(this.pswpElement, PhotoSwipeUiDefault, this.photoSwipeItems);
+    this.gallery = new PhotoSwipe(this.pswpElement, PhotoSwipeUiDefault, this.photoSwipeItems, this.options);
     this.gallery.init();
 };
 
