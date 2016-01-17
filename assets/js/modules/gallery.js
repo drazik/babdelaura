@@ -44,12 +44,13 @@ Gallery.prototype.initialize = function () {
 };
 
 Gallery.prototype.initEvents = function () {
-    this.images.forEach(function(image) {
-        image.addEventListener('click', this.show.bind(this));
+    this.images.forEach(function(image, index) {
+        image.addEventListener('click', this.show.bind(this, index));
     }.bind(this));
 };
 
-Gallery.prototype.show = function (event) {
+Gallery.prototype.show = function (index) {
+    this.options.index = index || 0;
     this.gallery = new PhotoSwipe(this.pswpElement, PhotoSwipeUiDefault, this.photoSwipeItems, this.options);
     this.gallery.init();
 };
