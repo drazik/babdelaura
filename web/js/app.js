@@ -48,6 +48,10 @@ function Gallery() {
 }
 
 Gallery.prototype.initialize = function () {
+    if (this.pswpElement == null || this.itemsContainer == null) {
+        return;
+    }
+
     this.images.forEach(function(image) {
         var tmpImage = new Image();
 
