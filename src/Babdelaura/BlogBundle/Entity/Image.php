@@ -37,6 +37,20 @@ class Image
      */
     private $alt;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="width", type="integer")
+     */
+    private $width;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="height", type="integer")
+     */
+    private $height;
+
     private $file;
 
     private $tempFilename;
@@ -235,7 +249,7 @@ class Image
     /**
      * Get articles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArticles()
     {
