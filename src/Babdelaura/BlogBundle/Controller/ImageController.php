@@ -48,47 +48,55 @@ class ImageController extends Controller
 
 
     public function uploadAction($addWatermark) {
+        $imagine = new Imagine();
         $addWatermark = $addWatermark === 'false' ? false : true;
         $request = $this->get('request');
+        $formInputName = $request->isXmlHttpRequest() && !$addWatermark ? 'mainImageFile' : 'upload';
+        $file = $_FILES[$formInputName];
+        $error = $this->handleError($file);
 
-        if ($request->isXmlHttpRequest() && !$addWatermark) {
-            $uploaded = new UploadedFile(
-                $_FILES['mainImageFile']['tmp_name'],
-                $_FILES['mainImageFile']['name'],
-                $_FILES['mainImageFile']['type'],
-                $_FILES['mainImageFile']['size']);
-        } else {
-            $uploaded = new UploadedFile(
-                $_FILES['upload']['tmp_name'],
-                $_FILES['upload']['name'],
-                $_FILES['upload']['type'],
-                $_FILES['upload']['size']
-            );
+        if ($error) {
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(array(
+                    'success' => false,
+                    'message' => $error
+                ));
+            } else {
+                return new Response($error);
+            }
         }
 
-        $image = new Image;
-        $image->setFile($uploaded);
+        $uploaded = new UploadedFile(
+            $_FILES[$formInputName]['tmp_name'],
+            $_FILES[$formInputName]['name'],
+            $_FILES[$formInputName]['type'],
+            $_FILES[$formInputName]['size']
+        );
 
-        $em = $this->getDoctrine()->getManager();
+        $imageSource = $imagine->open($_FILES[$formInputName]['tmp_name']);
+        $imageSourceSize = $imageSource->getSize();
 
-        $em->persist($image);
-        $em->flush();
-
-        if($addWatermark){
-            $imagine = new Imagine();
-
-            $imageSource = $imagine->open($image->getWebPath());
+        if ($addWatermark) {
             $watermark = $imagine->open(__DIR__.'/../../../../web/images/watermark.png');
 
-            $imageSourceSize = $imageSource->getSize();
             $watermarkSize = $watermark->getSize();
             $offset = 2;
 
             $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - $offset, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - $offset);
 
             $imageSource->paste($watermark, $bottomRight);
-            $imageSource->save($image->getWebPath(), array('jpeg_quality' => 100));
+            $imageSource->save($_FILES[$formInputName]['tmp_name'] . '.' . $uploaded->guessExtension(), array('jpeg_quality' => 100));
         }
+
+        $image = new Image;
+        $image->setWidth($imageSourceSize->getWidth());
+        $image->setHeight($imageSourceSize->getHeight());
+        $image->setFile($uploaded);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($image);
+        $em->flush();
 
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
@@ -101,5 +109,38 @@ class ImageController extends Controller
         } else {
             return new Response('Image Chargée');
         }
+    }
+
+    private function handleError($file) {
+        $message = 'Error uploading file';
+
+        switch($file['error']) {
+            case UPLOAD_ERR_OK:
+                $message = false;
+                break;
+
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $message .= ' - file too large';
+                break;
+
+            case UPLOAD_ERR_PARTIAL:
+                $message .= ' - file upload was not completed.';
+                break;
+
+            case UPLOAD_ERR_NO_FILE:
+                $message .= ' - zero-length file uploaded.';
+                break;
+
+            default:
+                $message .= ' - internal error #'.$_FILES['newfile']['error'];
+                break;
+        }
+
+        if (!$message && !is_uploaded_file($file['tmp_name'])) {
+            $message = 'Error uploading file - unknown error.';
+        }
+
+        return $message;
     }
 }

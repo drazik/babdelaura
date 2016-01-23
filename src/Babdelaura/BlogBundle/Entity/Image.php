@@ -37,6 +37,20 @@ class Image
      */
     private $alt;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="width", type="integer")
+     */
+    private $width;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="height", type="integer")
+     */
+    private $height;
+
     private $file;
 
     private $tempFilename;
@@ -235,10 +249,58 @@ class Image
     /**
      * Get articles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * Set width
+     *
+     * @param integer $width
+     *
+     * @return Image
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Get width
+     *
+     * @return integer
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set height
+     *
+     * @param integer $height
+     *
+     * @return Image
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Get height
+     *
+     * @return integer
+     */
+    public function getHeight()
+    {
+        return $this->height;
     }
 }

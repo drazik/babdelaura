@@ -1,5 +1,6 @@
 'use strict';
 
+var url = require('url');
 var PhotoSwipe = require('photoswipe');
 var PhotoSwipeUiDefault = require('photoswipe/dist/photoswipe-ui-default');
 
@@ -29,19 +30,19 @@ Gallery.prototype.initialize = function () {
     }
 
     this.images.forEach(function(image) {
-        var tmpImage = new Image();
+        var params = url.parse(image.src, true).query;
+        var item = {
+            src: image.src,
+            w: parseInt(params.width, 10),
+            h: parseInt(params.height, 10)
+        };
 
-        tmpImage.onload = function() {
-            var item = {
-                src: image.src,
-                w: tmpImage.width,
-                h: tmpImage.height
-            };
-
+        if (item.w > 0 && item.h > 0) {
             this.photoSwipeItems.push(item);
-        }.bind(this);
+            return;
+        }
 
-        tmpImage.src = image.src;
+        this.loadImage(image);
     }.bind(this))
 
     this.initEvents();
@@ -57,6 +58,22 @@ Gallery.prototype.show = function (index) {
     this.options.index = index || 0;
     this.gallery = new PhotoSwipe(this.pswpElement, PhotoSwipeUiDefault, this.photoSwipeItems, this.options);
     this.gallery.init();
+};
+
+Gallery.prototype.loadImage = function (image) {
+    var tmpImage = new Image();
+
+    tmpImage.onload = function() {
+        var item = {
+            src: image.src,
+            w: tmpImage.width,
+            h: tmpImage.height
+        };
+
+        this.photoSwipeItems.push(item);
+    }.bind(this);
+
+    tmpImage.src = image.src;
 };
 
 module.exports = Gallery;
