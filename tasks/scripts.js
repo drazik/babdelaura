@@ -13,7 +13,6 @@ module.exports = function() {
     bundledStream
         .pipe(source('app.js'))
         .pipe(buffer())
-        // .pipe(uglify())
         .on('error', gutil.log)
         .pipe(gulp.dest('web/js'));
 
