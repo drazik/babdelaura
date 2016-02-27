@@ -1,33 +1,28 @@
 var gulp = require('gulp');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var globby = require('globby');
-var through = require('through2');
 var gutil = require('gulp-util');
-var uglify = require('gulp-uglify');
+var webpack = require('webpack');
 
-module.exports = function() {
-    var bundledStream = through();
-
-    bundledStream
-        .pipe(source('app.js'))
-        .pipe(buffer())
-        .on('error', gutil.log)
-        .pipe(gulp.dest('web/js'));
-
-    globby(['./assets/js/*.js'], function(err, entries) {
+module.exports = function(callback) {
+    webpack({
+        entry: './assets/js/app.js',
+        output: {
+            path: './web/js',
+            filename: 'app.js'
+        },
+        module: {
+            loaders: [
+                {
+                    test: /\.js$/,
+                    loader: 'babel'
+                }
+            ]
+        }
+    }, function(err, stats) {
         if (err) {
-            bundledStream.emit('error', err);
-            return;
+            throw new gutil.PluginError('webpack', err);
         }
 
-        var b = browserify({
-            entries: entries
-        });
-
-        b.bundle().pipe(bundledStream);
+        gutil.log('[webpack]', stats.toString());
+        callback();
     });
-
-    return bundledStream;
 };

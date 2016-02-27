@@ -1,21 +1,18 @@
-'use strict';
+// 'use strict';
+//
+// var jQuery = require('jquery');
+//
+// window.jQuery = jQuery;
+// window.$ = jQuery;
 
-var jQuery = require('jquery');
 
-window.jQuery = jQuery;
-window.$ = jQuery;
+// var Gallery = require('./modules/gallery');
+// require('./modules/jquery.cookiebar');
 
-var MainNav = require('./modules/main-nav');
-var TouchEffect = require('./modules/toucheffect');
-var Gallery = require('./modules/gallery');
-require('./modules/jquery.cookiebar');
-require('./modules/spoiler');
+// var touchEffect = new TouchEffect();
+// touchEffect.run();
+//
+// var gallery = new Gallery();
+// gallery.initialize();
 
-var mainNav = new MainNav();
-mainNav.run();
-
-var touchEffect = new TouchEffect();
-touchEffect.run();
-
-var gallery = new Gallery();
-gallery.initialize();
+import Nav from './modules/nav';
