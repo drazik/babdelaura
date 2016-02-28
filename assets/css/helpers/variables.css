@@ -1,2 +1,7 @@
 @custom-media --small-viewport (max-width: 550px);
 @custom-media --medium-viewport (max-width: 1200px);
+
+:root {
+    --grid-horizontal-gutter: 30px;
+    --grid-vertical-gutter: 30px;
+}

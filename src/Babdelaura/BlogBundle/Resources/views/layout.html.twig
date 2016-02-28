@@ -45,67 +45,69 @@
         </nav>
 
         <div class="content">
-            <div class="content-inner bab-Wrapper row">
-                {% block content %}
-                <div class="eight columns">
-                    {% block mainContent %}
-                    {% endblock %}
-                </div>
-                <div class="four columns">
-                    {% block sidebar %}
-                    <section class="bab-Sidebar-section">
-                        <form method="get" action="{{ path('babdelaurablog_recherche') }}">
-                            <input name="motscles" id="search" placeholder="Rechercher" />
-                        </form>
-                    </section>
-                    <section class="bab-Sidebar-section">
-                        <h1 class="bab-Sidebar-title">Où me trouver</h1>
-                        <ul class="bab-Social">
-                            <li class="bab-Social-link">
-                                <a href="https://www.facebook.com/BabDeLaura" target="_blank" title="Facebook">
-                                    <i class="bab-Social-icon bab-Social-icon--fb"></i>
-                                    Bric à Brac de Laura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="https://twitter.com/BabDeLaura" target="_blank" title="Twitter">
-                                    <i class="bab-Social-icon bab-Social-icon--twitter"></i>
-                                    @BabDeLaura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="http://www.pinterest.com/BabDeLaura/" target="_blank" title="Pinterest">
-                                    <i class="bab-Social-icon bab-Social-icon--pinterest"></i>
-                                    BabDeLaura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="http://instagram.com/BabDeLaura" target="_blank" title="Instagram">
-                                    <i class="bab-Social-icon bab-Social-icon--instagram"></i>
-                                    BabDeLaura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="http://www.hellocoton.fr/mapage/bricabrac-de-laura" target="_blank" title="Hellocoton">
-                                    <i class="bab-Social-icon bab-Social-icon--hellocoton"></i>
-                                    Bricabrac-de-laura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="mailto:bab-de-laura@hotmail.fr" title="Mail">
-                                    <i class="bab-Social-icon bab-Social-icon--mail"></i>
-                                    Contact
-                                </a>
-                            </li>
+            <div class="content-inner bab-Wrapper">
+                <div class="bab-Grid">
+                    {% block content %}
+                    <div class="bab-Grid-cell bab-Grid-cell--2-3 bab-Grid-cell--1-1@small">
+                        {% block mainContent %}
+                        {% endblock %}
+                    </div>
+                    <div class="bab-Grid-cell bab-Grid-cell--1-3 bab-Grid-cell--1-1@small">
+                        {% block sidebar %}
+                        <section class="bab-Sidebar-section">
+                            <form method="get" action="{{ path('babdelaurablog_recherche') }}">
+                                <input name="motscles" id="search" placeholder="Rechercher" />
+                            </form>
+                        </section>
+                        <section class="bab-Sidebar-section">
+                            <h1 class="bab-Sidebar-title">Où me trouver</h1>
+                            <ul class="bab-Social">
+                                <li class="bab-Social-link">
+                                    <a href="https://www.facebook.com/BabDeLaura" target="_blank" title="Facebook">
+                                        <i class="bab-Social-icon bab-Social-icon--fb"></i>
+                                        Bric à Brac de Laura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="https://twitter.com/BabDeLaura" target="_blank" title="Twitter">
+                                        <i class="bab-Social-icon bab-Social-icon--twitter"></i>
+                                        @BabDeLaura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="http://www.pinterest.com/BabDeLaura/" target="_blank" title="Pinterest">
+                                        <i class="bab-Social-icon bab-Social-icon--pinterest"></i>
+                                        BabDeLaura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="http://instagram.com/BabDeLaura" target="_blank" title="Instagram">
+                                        <i class="bab-Social-icon bab-Social-icon--instagram"></i>
+                                        BabDeLaura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="http://www.hellocoton.fr/mapage/bricabrac-de-laura" target="_blank" title="Hellocoton">
+                                        <i class="bab-Social-icon bab-Social-icon--hellocoton"></i>
+                                        Bricabrac-de-laura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="mailto:bab-de-laura@hotmail.fr" title="Mail">
+                                        <i class="bab-Social-icon bab-Social-icon--mail"></i>
+                                        Contact
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </section>
-                    {% if app.environment == 'prod' %}
-                        {{render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))}}
-                    {% endif %}
+                            </ul>
+                        </section>
+                        {% if app.environment == 'prod' %}
+                            {{render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))}}
+                        {% endif %}
+                        {% endblock %}
+                    </div>
                     {% endblock %}
                 </div>
-                {% endblock %}
             </div>
         </div>
         <footer class="bab-Footer">

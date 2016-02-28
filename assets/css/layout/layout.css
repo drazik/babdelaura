@@ -8,6 +8,10 @@ body {
     width: 100%;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .bab-Wrapper {
     max-width: 900px;
     margin: 0 auto;
@@ -17,7 +21,7 @@ body {
     max-width: 300px;
 }
 
-.content {
+.content {w
     width: 100%;
 }
 

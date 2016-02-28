@@ -1,7 +1,7 @@
 <ul class="bab-Grid bab-Grid--inlineBlock list-unstyled">
     {% for article in listeArticles %}
         {% set nbCommentaires = article.getNbCommentaires(true) %}
-        <li class="bab-Grid-cell bab-Grid-cell--1-2">
+        <li class="bab-Grid-cell bab-Grid-cell--1-2 bab-Grid-cell--1-1@small">
             <figure class="bab-Article--grid" itemscope itemtype="http://schema.org/BlogPosting">
                 <img class="bab-Article-image" src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}">
                 <figcaption class="bab-Article-infos">
