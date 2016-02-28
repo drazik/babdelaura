@@ -17,7 +17,7 @@
 {% block mainContent %}
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="bab-Notification bab-Notification--success">
+        <div class="bab-Notification bab-Notification--success js-notification">
             <div class="bab-Notification-content">{{ flashMessage }}</div>
         </div>
     {% endfor %}
@@ -123,19 +123,4 @@
     </form>
 
     {% include 'BabdelauraBlogBundle::photoswipe.html.twig' with {'id': 'pswp-element'} %}
-{% endblock %}
-
-{% block javascripts %}
-    {{parent()}}
-    <script>
-        (function($) {
-            var $notification = $('.bab-Notification');
-
-            function closeNotification() {
-                $notification.remove();
-            }
-
-            setTimeout(closeNotification, 10000);
-        })(jQuery);
-    </script>
 {% endblock %}
