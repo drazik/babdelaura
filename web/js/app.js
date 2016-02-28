@@ -56,6 +56,10 @@
 
 	var _gallery2 = _interopRequireDefault(_gallery);
 
+	var _notification = __webpack_require__(15);
+
+	var _notification2 = _interopRequireDefault(_notification);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // 'use strict';
@@ -80,6 +84,11 @@
 	var galleryContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-gallery')));
 	galleryContainers.forEach(function (container) {
 	  return new _gallery2.default(container);
+	});
+
+	var notificationContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-notification')));
+	notificationContainers.forEach(function (container) {
+	  return new _notification2.default(container);
 	});
 
 /***/ },
@@ -6708,6 +6717,49 @@
 	  this.off();
 	  this.root();
 	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Notification = function () {
+	    function Notification(container) {
+	        var _this = this;
+
+	        _classCallCheck(this, Notification);
+
+	        this.options = {
+	            timeBeforeClose: 10000
+	        };
+
+	        this.container = container;
+
+	        setTimeout(function () {
+	            return _this.close;
+	        }, this.options.timeBeforeClose);
+	    }
+
+	    _createClass(Notification, [{
+	        key: "close",
+	        value: function close() {
+	            this.container.parentNode.removeChild(this.container);
+	        }
+	    }]);
+
+	    return Notification;
+	}();
+
+	exports.default = Notification;
 
 /***/ }
 /******/ ]);
