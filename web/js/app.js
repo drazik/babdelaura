@@ -97,7 +97,6 @@
 	        this.container = container;
 	        this.toggleButton = this.container.querySelector('.js-nav-toggle');
 	        this.toggleIcon = this.toggleButton.querySelector('.js-nav-toggle-icon');
-	        console.log(this.toggleIcon);
 	        this.itemsContainer = this.container.querySelector('.js-nav-items');
 
 	        this.initEvents();

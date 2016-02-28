@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "browsernizr": "^2.1.0",
+    "dom-delegate": "^2.0.3",
     "font-awesome": "^4.4.0",
     "jquery": "^2.2.1",
     "normalize.css": "^3.0.3",
