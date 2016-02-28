@@ -145,7 +145,7 @@
     right: 1em;
 }
 
-@media screen and (max-width: 350px) {
+@media (--small-viewport) {
     .bab-Article-navigation .bab-Button {
         float: none;
         display: block;

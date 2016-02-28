@@ -4,6 +4,7 @@
 @import 'photoswipe/dist/default-skin/default-skin.css';
 
 @import 'helpers/utils';
+@import 'helpers/variables';
 
 @import 'base/fonts';
 @import 'base/typography';

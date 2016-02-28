@@ -38,7 +38,7 @@
     padding: 1em 3em 1em 1em;
 }
 
-@media screen and (max-width: 500px) {
+@media (--small-viewport){
     .bab-Modal-container {
         top: 1em;
         bottom: 1em;

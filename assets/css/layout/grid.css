@@ -56,7 +56,7 @@
     clear: both;
 }
 
-@media screen and (max-width: 550px) {
+@media (--small-viewport) {
     .row > * {
         float: none;
         width: 100% !important;

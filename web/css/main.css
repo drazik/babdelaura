@@ -4109,7 +4109,7 @@ body {
     clear: both;
 }
 
-@media screen and (max-width: 550px) {
+@media (max-width: 550px) {
     .row > * {
         float: none;
         width: 100% !important;
@@ -4127,7 +4127,7 @@ body {
     background-size: 65%, auto;
 }
 
-@media screen and (max-width: 1050px) {
+@media (max-width: 1200px) {
     .bab-Header {
         background-image: url('../images/header-brushes.png');
         background-position: center center;
@@ -4135,13 +4135,7 @@ body {
     }
 }
 
-@media screen and (min-width: 501px) and (max-width: 920px) {
-    .bab-Header {
-        background-size: 100%;
-    }
-}
-
-@media screen and (max-width: 500px) {
+@media (max-width: 550px) {
     .bab-Header {
         height: 125px;
     }
@@ -4418,7 +4412,7 @@ td {
     right: 1em;
 }
 
-@media screen and (max-width: 350px) {
+@media (max-width: 550px) {
     .bab-Article-navigation .bab-Button {
         float: none;
         display: block;
@@ -4450,7 +4444,7 @@ td {
     margin-right: 4%;
 }
 
-@media screen and (max-width: 750px) {
+@media (max-width: 550px) {
     .grid-item {
         float: none;
         width: 100%;
@@ -4623,7 +4617,7 @@ td {
     background-color: #ddd;
 }
 
-@media screen and (max-width: 500px) {
+@media (max-width: 550px) {
     .bab-MainNav-toggle {
         display: block;
     }
@@ -4836,7 +4830,7 @@ td {
     padding: 1em 3em 1em 1em;
 }
 
-@media screen and (max-width: 500px) {
+@media (max-width: 550px){
     .bab-Modal-container {
         top: 1em;
         bottom: 1em;

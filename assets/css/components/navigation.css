@@ -99,7 +99,7 @@
     background-color: #ddd;
 }
 
-@media screen and (max-width: 500px) {
+@media (--small-viewport) {
     .bab-MainNav-toggle {
         display: block;
     }
