@@ -1,3 +1,23 @@
+.bab-Grid {
+
+}
+
+.bab-Grid--inlineBlock {
+    font-size: 0; /* inline-block container */
+}
+
+.bab-Grid-cell {
+
+}
+
+.bab-Grid--inlineBlock .bab-Grid-cell {
+    display: inline-block;
+}
+
+.bab-Grid-cell--1-2 {
+    width: 50%;
+}
+
 .row {
     width: 100%;
 }
