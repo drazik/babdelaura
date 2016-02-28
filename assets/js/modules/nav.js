@@ -19,8 +19,8 @@ export default class Nav {
     }
 
     toggle() {
-        this.itemsContainer.classList.toggle(this.options.itemsContainerOpenClass);
-        this.toggleIcon.classList.toggle(this.toggleIconOpenClass);
-        this.toggleIcon.classList.toggle(this.toggleIconCloseClass);
+        this.container.classList.toggle(this.options.itemsContainerOpenClass);
+        this.toggleIcon.classList.toggle(this.options.toggleIconOpenClass);
+        this.toggleIcon.classList.toggle(this.options.toggleIconCloseClass);
     }
 }

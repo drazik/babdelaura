@@ -52,6 +52,24 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var navContainer = document.querySelector('.js-nav'); // 'use strict';
+	//
+	// var jQuery = require('jquery');
+	//
+	// window.jQuery = jQuery;
+	// window.$ = jQuery;
+
+	// var Gallery = require('./modules/gallery');
+	// require('./modules/jquery.cookiebar');
+
+	// var touchEffect = new TouchEffect();
+	// touchEffect.run();
+	//
+	// var gallery = new Gallery();
+	// gallery.initialize();
+
+	new _nav2.default(navContainer);
+
 /***/ },
 /* 1 */
 /***/ function(module, exports) {
@@ -79,6 +97,7 @@
 	        this.container = container;
 	        this.toggleButton = this.container.querySelector('.js-nav-toggle');
 	        this.toggleIcon = this.toggleButton.querySelector('.js-nav-toggle-icon');
+	        console.log(this.toggleIcon);
 	        this.itemsContainer = this.container.querySelector('.js-nav-items');
 
 	        this.initEvents();
@@ -96,9 +115,9 @@
 	    }, {
 	        key: 'toggle',
 	        value: function toggle() {
-	            this.itemsContainer.classList.toggle(this.options.itemsContainerOpenClass);
-	            this.toggleIcon.classList.toggle(this.toggleIconOpenClass);
-	            this.toggleIcon.classList.toggle(this.toggleIconCloseClass);
+	            this.container.classList.toggle(this.options.itemsContainerOpenClass);
+	            this.toggleIcon.classList.toggle(this.options.toggleIconOpenClass);
+	            this.toggleIcon.classList.toggle(this.options.toggleIconCloseClass);
 	        }
 	    }]);
 
