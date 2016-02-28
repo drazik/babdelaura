@@ -15,7 +15,13 @@
 // var gallery = new Gallery();
 // gallery.initialize();
 
+import 'classlist-polyfill';
+
 import Nav from './modules/nav';
+import Gallery from './modules/gallery';
 
 const navContainer = document.querySelector('.js-nav');
 new Nav(navContainer);
+
+const galleryContainers = [...document.querySelectorAll('.js-gallery')];
+galleryContainers.forEach(container => new Gallery(container));
