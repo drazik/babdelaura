@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block mainContent %}
-
     <section>
         <header>
             <h1 class="bab-Article-title">{{ page.titre }}</h1>
@@ -18,8 +17,7 @@
             </aside>
         </header>
         <div class="bab-Article-content">
-            {{page.contenu | raw}}
+            {{ page.contenu | raw }}
         </div>
     </section>
-
 {% endblock %}

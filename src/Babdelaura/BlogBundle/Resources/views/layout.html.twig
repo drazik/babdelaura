@@ -19,8 +19,6 @@
 
         <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
 
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
     </head>
     <body>
@@ -121,11 +119,11 @@
             </p>
         </div>
 
-
         {% block javascripts %}
             <script src="{{ asset('js/app.js') }}"></script>
+
             {% if app.environment == 'prod' %}
-                <script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>
+                <script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}" async></script>
             {% endif %}
 
             <script type="text/javascript" async defer data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>

@@ -17,50 +17,42 @@
         {% set nbCommentaires = article.getNbCommentaires(true) %}
         <section itemscope itemtype="http://schema.org/BlogPosting">
 
-          <header class="bab-Article-header">
-              <h1 class="bab-Article-title" itemprop="name"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
-              <aside class="bab-Article-infos">
-                  <time pubdate itemprop="datePublished">
-                    Le {{ article.datePublication|date("d/m/Y à H:i") }}
-                  </time>
-                  -
-                  <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires" title="Accéder aux commentaires de l'article">
-                    {{nbCommentaires}}
-                    {% if nbCommentaires <= 1 %}
-                      commentaire
-                    {% else %}
-                      commentaires
-                    {% endif %}
-                  </a>
-                  <ul class="bab-Article-categories" itemprop="keywords">
-                    {% for cat in article.categories %}
-                        <li class="bab-Article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : cat.slug}) }}">{{cat.nom}}{% if not loop.last %},{% endif %}</a></li>
-                    {% endfor %}
-                </ul>
-              </aside>
-              {#
-              {% if article.image %}
-                <img src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}" />
-              {% endif %}
-              #}
-          </header>
+            <header class="bab-Article-header">
+                <h1 class="bab-Article-title" itemprop="name"><a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre}}</a></h1>
+                <aside class="bab-Article-infos">
+                    <time pubdate itemprop="datePublished">
+                        Le {{ article.datePublication|date("d/m/Y à H:i") }}
+                    </time>
+                    -
+                    <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires" title="Accéder aux commentaires de l'article">
+                        {{nbCommentaires}}
+                        {% if nbCommentaires <= 1 %}
+                          commentaire
+                        {% else %}
+                          commentaires
+                        {% endif %}
+                    </a>
+                    <ul class="bab-Article-categories" itemprop="keywords">
+                        {% for cat in article.categories %}
+                            <li class="bab-Article-category"><a href="{{ path('babdelaurablog_categorie', {'slug' : cat.slug}) }}">{{cat.nom}}{% if not loop.last %},{% endif %}</a></li>
+                        {% endfor %}
+                    </ul>
+                </aside>
+            </header>
 
-          <div class="bab-Article-content" itemprop="articleBody">
-            {{article.contenu | truncate(500,true) | raw}}
-          </div>
-          <div class="align-right">
-              <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">Lire la suite</a>
-
-          </div>
-          {% if not loop.last %}
-            <hr class="bab-Article-separator" />
-          {% endif %}
+            <div class="bab-Article-content" itemprop="articleBody">
+                {{article.contenu | truncate(500,true) | raw}}
+            </div>
+            <div class="align-right">
+                <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">Lire la suite</a>
+            </div>
+            {% if not loop.last %}
+                <hr class="bab-Article-separator" />
+            {% endif %}
         </section>
-
-
     {% endfor %}
 
     <div class="bab-Article-navigation">
-      {{ knp_pagination_render(listeArticles) }}
+        {{ knp_pagination_render(listeArticles) }}
     </div>
 {% endblock %}

@@ -124,3 +124,8 @@
 
     {% include 'BabdelauraBlogBundle::photoswipe.html.twig' with {'id': 'pswp-element'} %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js" async></script>
+{% endblock %}
