@@ -19,7 +19,6 @@
 
         <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
 
-        <script>var ESPACE_ADMIN = false;</script>
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
@@ -113,6 +112,14 @@
         <footer class="bab-Footer">
             Site développé du bout de mes ongles.
         </footer>
+        <div class="bab-CookieBar js-cookie-bar">
+            <p class="bab-CookieBar-content">
+                En poursuivant votre navigation sur ce site, vous acceptez l’utilisation de cookies.
+                <button class="bab-CookieBar-button js-cookie-bar-button" type="button">
+                    J'accepte
+                </button>
+            </p>
+        </div>
 
 
         {% block javascripts %}

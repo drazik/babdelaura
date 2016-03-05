@@ -20,6 +20,10 @@ import 'classlist-polyfill';
 import Nav from './modules/nav';
 import Gallery from './modules/gallery';
 import Notification from './modules/notification';
+import CookieBar from './modules/cookie-bar';
+
+const cookieBarContainer = document.querySelector('.js-cookie-bar');
+new CookieBar(cookieBarContainer);
 
 const navContainer = document.querySelector('.js-nav');
 new Nav(navContainer);

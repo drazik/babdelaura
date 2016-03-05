@@ -60,6 +60,10 @@
 
 	var _notification2 = _interopRequireDefault(_notification);
 
+	var _cookieBar = __webpack_require__(16);
+
+	var _cookieBar2 = _interopRequireDefault(_cookieBar);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // 'use strict';
@@ -77,6 +81,9 @@
 	//
 	// var gallery = new Gallery();
 	// gallery.initialize();
+
+	var cookieBarContainer = document.querySelector('.js-cookie-bar');
+	new _cookieBar2.default(cookieBarContainer);
 
 	var navContainer = document.querySelector('.js-nav');
 	new _nav2.default(navContainer);
@@ -6760,6 +6767,89 @@
 	}();
 
 	exports.default = Notification;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CookieBar = function () {
+	    function CookieBar(container) {
+	        _classCallCheck(this, CookieBar);
+
+	        this.options = {
+	            containerOpenClass: 'bab-CookieBar--open',
+	            cookieName: 'bab-accept-cookies',
+	            cookieValue: 'true',
+	            cookieDuration: 365
+	        };
+
+	        this.container = container;
+	        this.button = this.container.querySelector('.js-cookie-bar-button');
+
+	        var cookie = this.getCookie(this.options.cookieName);
+
+	        if (cookie !== this.options.cookieValue) {
+	            this.open();
+	        }
+
+	        this.initEvents();
+	    }
+
+	    _createClass(CookieBar, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            this.button.addEventListener('click', function () {
+	                return _this.accept();
+	            });
+	        }
+	    }, {
+	        key: 'accept',
+	        value: function accept() {
+	            this.close();
+
+	            this.setCookie(this.options.cookieName, this.options.cookieValue, this.options.cookieDuration);
+	        }
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            this.container.classList.add(this.options.containerOpenClass);
+	        }
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.container.classList.remove(this.options.containerOpenClass);
+	        }
+	    }, {
+	        key: 'getCookie',
+	        value: function getCookie(name) {
+	            var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	            return v ? v[2] : null;
+	        }
+	    }, {
+	        key: 'setCookie',
+	        value: function setCookie(name, value, days) {
+	            var d = new Date();
+	            d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
+	            document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
+	        }
+	    }]);
+
+	    return CookieBar;
+	}();
+
+	exports.default = CookieBar;
 
 /***/ }
 /******/ ]);
