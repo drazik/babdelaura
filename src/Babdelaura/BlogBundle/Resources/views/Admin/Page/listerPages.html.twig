@@ -15,7 +15,7 @@
         <tbody>
             {% for page in listePages %}
             <tr>
-                <td>{{ page.titre|truncate(50,true) }}</td>
+                <td><a class="link-unstyled" href="{{ path('babdelaurablog_admin_afficherPage', {'slug' : page.slug}) }}">{{ page.titre|truncate(50,true) }}</a></td>
                 <td>{{page.datePublication|date("d/m/Y H:i")}}</td>
                 <td>{{page.dateEdition|date("d/m/Y H:i")}}</td>
 
