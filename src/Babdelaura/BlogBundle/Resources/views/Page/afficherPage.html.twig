@@ -13,9 +13,6 @@
     <section>
         <header>
             <h1 class="bab-Article-title">{{ page.titre }}</h1>
-            <aside class="bab-Article-infos">
-                Le {{ page.datePublication|date("d/m/Y à H:i") }}
-            </aside>
         </header>
         <div class="bab-Article-content">
             {{page.contenu | raw}}
