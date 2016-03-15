@@ -48,21 +48,27 @@
 
 	__webpack_require__(1);
 
-	var _nav = __webpack_require__(2);
+	__webpack_require__(2);
+
+	var _nav = __webpack_require__(3);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _gallery = __webpack_require__(3);
+	var _gallery = __webpack_require__(4);
 
 	var _gallery2 = _interopRequireDefault(_gallery);
 
-	var _notification = __webpack_require__(15);
+	var _notification = __webpack_require__(16);
 
 	var _notification2 = _interopRequireDefault(_notification);
 
-	var _cookieBar = __webpack_require__(16);
+	var _cookieBar = __webpack_require__(17);
 
 	var _cookieBar2 = _interopRequireDefault(_cookieBar);
+
+	var _articlesGrid = __webpack_require__(18);
+
+	var _articlesGrid2 = _interopRequireDefault(_articlesGrid);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -96,6 +102,11 @@
 	var notificationContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-notification')));
 	notificationContainers.forEach(function (container) {
 	  return new _notification2.default(container);
+	});
+
+	var articlesGridContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-articles-grid')));
+	articlesGridContainers.forEach(function (container) {
+	  return new _articlesGrid2.default(container);
 	});
 
 /***/ },
@@ -325,6 +336,232 @@
 /* 2 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	/*!
+	 * FEATURE.JS 1.0.0, A Fast, simple and lightweight browser feature
+	 * detection library in just 1kb.
+	 *
+	 * http://featurejs.com
+	 *
+	 * CSS 3D Transform, CSS Transform, CSS Transition, Canvas, SVG,
+	 * addEventListener, querySelectorAll, matchMedia, classList API,
+	 * placeholder, localStorage, History API, Viewport Units, REM Units,
+	 * CORS, WebGL, Service Worker, Context Menu, Geolocation,
+	 * Device Motion, Device Orientation, Touch, Async, Defer,
+	 * Srcset, Sizes & Picture Element.
+	 *
+	 *
+	 * USAGE EXAMPLE:
+	 * if (feature.webGL) {
+	 *   console.log("webGL supported!");
+	 * }
+	 *
+	 * Author: @viljamis, https://viljamis.com
+	 */
+
+	/* globals DocumentTouch */
+	;(function (window, document, undefined) {
+	  "use strict";
+
+	  // For minification only
+
+	  var docEl = document.documentElement;
+
+	  /**
+	   * Utilities
+	   */
+	  var util = {
+
+	    /**
+	     * Simple create element method
+	     */
+	    create: function create(el) {
+	      return document.createElement(el);
+	    },
+
+	    /**
+	     * Test if it's an old device that we want to filter out
+	     */
+	    old: !!/(Android\s(1.|2.))|(Silk\/1.)/i.test(navigator.userAgent),
+
+	    /**
+	     * Function that takes a standard CSS property name as a parameter and
+	     * returns it's prefixed version valid for current browser it runs in
+	     */
+	    pfx: function () {
+	      var style = document.createElement("dummy").style;
+	      var prefixes = ["Webkit", "Moz", "O", "ms"];
+	      var memory = {};
+	      return function (prop) {
+	        if (typeof memory[prop] === "undefined") {
+	          var ucProp = prop.charAt(0).toUpperCase() + prop.substr(1),
+	              props = (prop + " " + prefixes.join(ucProp + " ") + ucProp).split(" ");
+	          memory[prop] = null;
+	          for (var i in props) {
+	            if (style[props[i]] !== undefined) {
+	              memory[prop] = props[i];
+	              break;
+	            }
+	          }
+	        }
+	        return memory[prop];
+	      };
+	    }()
+
+	  };
+
+	  /**
+	   * The Feature.js object
+	   */
+
+	  var Feature = {
+	    // Test if CSS 3D transforms are supported
+	    css3Dtransform: function () {
+	      var test = !util.old && util.pfx("perspective") !== null;
+	      return !!test;
+	    }(),
+
+	    // Test if CSS transforms are supported
+	    cssTransform: function () {
+	      var test = !util.old && util.pfx("transformOrigin") !== null;
+	      return !!test;
+	    }(),
+
+	    // Test if CSS transitions are supported
+	    cssTransition: function () {
+	      var test = util.pfx("transition") !== null;
+	      return !!test;
+	    }(),
+
+	    // Test if addEventListener is supported
+	    addEventListener: !!window.addEventListener,
+
+	    // Test if querySelectorAll is supported
+	    querySelectorAll: !!document.querySelectorAll,
+
+	    // Test if matchMedia is supported
+	    matchMedia: !!window.matchMedia,
+
+	    // Test if Device Motion is supported
+	    deviceMotion: "DeviceMotionEvent" in window,
+
+	    // Test if Device Orientation is supported
+	    deviceOrientation: "DeviceOrientationEvent" in window,
+
+	    // Test if Context Menu is supported
+	    contextMenu: "contextMenu" in docEl && "HTMLMenuItemElement" in window,
+
+	    // Test if classList API is supported
+	    classList: "classList" in docEl,
+
+	    // Test if placeholder attribute is supported
+	    placeholder: "placeholder" in util.create("input"),
+
+	    // Test if localStorage is supported
+	    localStorage: function () {
+	      var test = "x";
+	      try {
+	        localStorage.setItem(test, test);
+	        localStorage.removeItem(test);
+	        return true;
+	      } catch (err) {
+	        return false;
+	      }
+	    }(),
+
+	    // Test if History API is supported
+	    historyAPI: window.history && "pushState" in window.history,
+
+	    // Test if ServiceWorkers are supported
+	    serviceWorker: "serviceWorker" in navigator,
+
+	    // Test if viewport units are supported
+	    viewportUnit: function (el) {
+	      try {
+	        el.style.width = "1vw";
+	        var test = el.style.width !== "";
+	        return !!test;
+	      } catch (err) {
+	        return false;
+	      }
+	    }(util.create("dummy")),
+
+	    // Test if REM units are supported
+	    remUnit: function (el) {
+	      try {
+	        el.style.width = "1rem";
+	        var test = el.style.width !== "";
+	        return !!test;
+	      } catch (err) {
+	        return false;
+	      }
+	    }(util.create("dummy")),
+
+	    // Test if Canvas is supported
+	    canvas: function (el) {
+	      return !!(el.getContext && el.getContext("2d"));
+	    }(util.create("canvas")),
+
+	    // Test if SVG is supported
+	    svg: !!document.createElementNS && !!document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGRect,
+
+	    // Test if WebGL is supported
+	    webGL: function (el) {
+	      try {
+	        return !!(window.WebGLRenderingContext && (el.getContext("webgl") || el.getContext("experimental-webgl")));
+	      } catch (err) {
+	        return false;
+	      }
+	    }(util.create("canvas")),
+
+	    // Test if cors is supported
+	    cors: "XMLHttpRequest" in window && "withCredentials" in new XMLHttpRequest(),
+
+	    // Tests if touch events are supported, but doesn't necessarily reflect a touchscreen device
+	    touch: !!("ontouchstart" in window || window.navigator && window.navigator.msPointerEnabled && window.MSGesture || window.DocumentTouch && document instanceof DocumentTouch),
+
+	    // Test if async attribute is supported
+	    async: "async" in util.create("script"),
+
+	    // Test if defer attribute is supported
+	    defer: "defer" in util.create("script"),
+
+	    // Test if Geolocation is supported
+	    geolocation: "geolocation" in navigator,
+
+	    // Test if img srcset attribute is supported
+	    srcset: "srcset" in util.create("img"),
+
+	    // Test if img sizes attribute is supported
+	    sizes: "sizes" in util.create("img"),
+
+	    // Test if Picture element is supported
+	    pictureElement: "HTMLPictureElement" in window,
+
+	    // Run all the tests and add supported classes
+	    testAll: function testAll() {
+	      var classes = " js";
+	      for (var test in this) {
+	        if (test !== "testAll" && test !== "constructor" && this[test]) {
+	          classes += " " + test;
+	        }
+	      }
+	      docEl.className += classes.toLowerCase();
+	    }
+
+	  };
+
+	  /**
+	   * Expose a public-facing API
+	   */
+	  window.feature = Feature;
+	})(window, document);
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -377,7 +614,7 @@
 	exports.default = Nav;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -388,17 +625,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _url = __webpack_require__(4);
+	var _url = __webpack_require__(5);
 
-	var _photoswipe = __webpack_require__(11);
+	var _photoswipe = __webpack_require__(12);
 
 	var _photoswipe2 = _interopRequireDefault(_photoswipe);
 
-	var _photoswipeUiDefault = __webpack_require__(12);
+	var _photoswipeUiDefault = __webpack_require__(13);
 
 	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
 
-	var _domDelegate = __webpack_require__(13);
+	var _domDelegate = __webpack_require__(14);
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
@@ -500,7 +737,7 @@
 	exports.default = Gallery;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -528,7 +765,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(5);
+	var punycode = __webpack_require__(6);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -607,7 +844,7 @@
 	  'gopher:': true,
 	  'file:': true
 	},
-	    querystring = __webpack_require__(8);
+	    querystring = __webpack_require__(9);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1191,7 +1428,7 @@
 	}
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
@@ -1704,7 +1941,7 @@
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
-		if ("function" == 'function' && _typeof(__webpack_require__(7)) == 'object' && __webpack_require__(7)) {
+		if ("function" == 'function' && _typeof(__webpack_require__(8)) == 'object' && __webpack_require__(8)) {
 			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return punycode;
 			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -1723,10 +1960,10 @@
 			root.punycode = punycode;
 		}
 	})(undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module), (function() { return this; }())))
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1743,7 +1980,7 @@
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -1751,16 +1988,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(9);
-	exports.encode = exports.stringify = __webpack_require__(10);
+	exports.decode = exports.parse = __webpack_require__(10);
+	exports.encode = exports.stringify = __webpack_require__(11);
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1849,7 +2086,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1918,7 +2155,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -5458,7 +5695,7 @@
 	});
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6256,7 +6493,7 @@
 	});
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jshint browser:true, node:true*/
@@ -6272,7 +6509,7 @@
 	 * @license MIT License (see LICENSE.txt)
 	 */
 
-	var Delegate = __webpack_require__(14);
+	var Delegate = __webpack_require__(15);
 
 	module.exports = function (root) {
 	  return new Delegate(root);
@@ -6281,7 +6518,7 @@
 	module.exports.Delegate = Delegate;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	/*jshint browser:true, node:true*/
@@ -6726,7 +6963,7 @@
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6769,7 +7006,7 @@
 	exports.default = Notification;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6850,6 +7087,127 @@
 	}();
 
 	exports.default = CookieBar;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _domDelegate = __webpack_require__(14);
+
+	var _domDelegate2 = _interopRequireDefault(_domDelegate);
+
+	var _closest = __webpack_require__(19);
+
+	var _closest2 = _interopRequireDefault(_closest);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ArticlesGrid = function () {
+	    function ArticlesGrid(container) {
+	        _classCallCheck(this, ArticlesGrid);
+
+	        this.container = container;
+	        this.containerDelegate = (0, _domDelegate2.default)(this.container);
+
+	        this.initEvents();
+	    }
+
+	    _createClass(ArticlesGrid, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            if (window.feature.touch) {
+	                this.containerDelegate.on('click', '.js-articles-grid-item a', function (event) {
+	                    return event.stopPropagation();
+	                });
+	                this.containerDelegate.on('click', '.js-articles-grid-item', function (event) {
+	                    var item = (0, _closest2.default)(event.target, '.js-articles-grid-item', true);
+
+	                    _this.toggleDetails(item);
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'toggleDetails',
+	        value: function toggleDetails(item) {
+	            item.classList.toggle('hover');
+	        }
+	    }]);
+
+	    return ArticlesGrid;
+	}();
+
+	exports.default = ArticlesGrid;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var matches = __webpack_require__(20);
+
+	module.exports = function (element, selector, checkYoSelf) {
+	  var parent = checkYoSelf ? element : element.parentNode;
+
+	  while (parent && parent !== document) {
+	    if (matches(parent, selector)) return parent;
+	    parent = parent.parentNode;
+	  }
+	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Element prototype.
+	 */
+
+	var proto = Element.prototype;
+
+	/**
+	 * Vendor function.
+	 */
+
+	var vendor = proto.matchesSelector || proto.webkitMatchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector;
+
+	/**
+	 * Expose `match()`.
+	 */
+
+	module.exports = match;
+
+	/**
+	 * Match `el` to `selector`.
+	 *
+	 * @param {Element} el
+	 * @param {String} selector
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function match(el, selector) {
+	  if (vendor) return vendor.call(el, selector);
+	  var nodes = el.parentNode.querySelectorAll(selector);
+	  for (var i = 0; i < nodes.length; ++i) {
+	    if (nodes[i] == el) return true;
+	  }
+	  return false;
+	}
 
 /***/ }
 /******/ ]);

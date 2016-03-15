@@ -1,15 +1,15 @@
-<ul class="bab-Grid bab-Grid--inlineBlock list-unstyled">
+<ul class="bab-Grid bab-Grid--inlineBlock list-unstyled js-articles-grid">
     {% for article in listeArticles %}
         {% set nbCommentaires = article.getNbCommentaires(true) %}
         <li class="bab-Grid-cell bab-Grid-cell--1-2 bab-Grid-cell--1-1@small">
-            <figure class="bab-Article--grid" itemscope itemtype="http://schema.org/BlogPosting">
+            <figure class="bab-Article--grid js-articles-grid-item" itemscope itemtype="http://schema.org/BlogPosting">
                 <img class="bab-Article-image" src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}">
                 <figcaption class="bab-Article-infos">
                     <h2 class="bab-Article-title" itemprop="name">
                         <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre|truncate(30,true)}}</a>
                     </h2>
 
-                    <a class="grid-item-article-comments" href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires">
+                    <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires">
                     {{nbCommentaires}}
                     {% if nbCommentaires <= 1 %}
                       commentaire

@@ -42,9 +42,10 @@
     "webpack": "^1.12.14"
   },
   "dependencies": {
-    "browsernizr": "^2.1.0",
     "classlist-polyfill": "^1.0.2",
+    "closest": "0.0.1",
     "dom-delegate": "^2.0.3",
+    "feature.js": "^1.0.0",
     "font-awesome": "^4.4.0",
     "jquery": "^2.2.1",
     "normalize.css": "^3.0.3",
