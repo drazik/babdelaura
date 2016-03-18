@@ -17,13 +17,7 @@
 
         <div class="row">
             <div class="form-group six columns">
-                {#<div>
-                    <input type="file" id="main-image-file" name="mainImageFile" data-action="{{url('babdelaurablog_admin_uploaderImage', {'addWatermark': 'false'})}}" />
-                    <button class="button" id="button-upload-main-image" type="submit">
-                        <i class="fa fa-upload"></i> Ajouter une image principale
-                    </button>
-                </div>#}
-                <button class="bab-Button" id="button-choose-image" type="button">
+                <button class="bab-Button js-modal-opener" data-target="choose-image" type="button">
                     <i class="fa fa-camera"></i> Choisir une image principale
                 </button>
 
@@ -61,7 +55,16 @@
         <button class="bab-Button" id="submit-btn" type="submit">Enregistrer l'article</button>
     </form>
 
-    <div class="bab-Modal" id="modal-choose-image">
+    <div class="bab-Modal js-modal" id="choose-image">
+        <div class="bab-Modal-shadow"></div>
+        <div class="bab-Modal-container">
+            <button class="bab-Modal-close js-modal-closer" type="button">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    <div>
+
+    <!-- <div class="bab-Modal" id="modal-choose-image">
         <div class="bab-Modal-shadow"></div>
         <div class="bab-Modal-container">
             <button class="bab-Modal-close"><i class="fa fa-times"></i>
@@ -76,7 +79,7 @@
                 <div id="gallery"></div>
             </div>
         </div>
-    </div>
+    </div> -->
 {% endblock %}
 
 
@@ -88,111 +91,111 @@
         CKEDITOR.config.entities_latin = false;
 
         CKEDITOR.replace('babdelaura_blogbundle_article_contenu', {
-            filebrowserBrowseUrl: '{{path('babdelaurablog_admin_listerImages')}}',
-            filebrowserUploadUrl: '{{path('babdelaurablog_admin_uploaderImage')}}',
-            contentsCss: '{{asset('css/contents.css')}}'
+            filebrowserBrowseUrl: '{{ path('babdelaurablog_admin_listerImages') }}',
+            filebrowserUploadUrl: '{{ path('babdelaurablog_admin_uploaderImage') }}',
+            contentsCss: '{{ asset('css/contents.css') }}'
         });
 
-        (function($) {
-            var $chooseImageButton = $('#button-choose-image');
-            var $chooseImageModal = $('#modal-choose-image');
-            var $chooseImageCloseButton = $chooseImageModal.find('.bab-Modal-close');
-            var $chooseImageInput = $('#babdelaura_blogbundle_article_imageTemp');
-            var $chooseImagePreview = $('#image-preview');
-            var modalContentAlreadyFilled = false;
-            var clickedSave = false;
-
-            function openModal() {
-                $chooseImageModal.addClass('bab-Modal--open');
-                getGallery();
-            }
-
-            function closeModal() {
-                $chooseImageModal.removeClass('bab-Modal--open');
-            }
-
-            function getGallery(url) {
-                var ajaxUrl = url || '{{path('babdelaurablog_admin_listerImages')}}?CKEditor=true';
-                $.ajax({
-                    url: ajaxUrl,
-                    type: 'get',
-                    beforeSend: showLoader,
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error(textStatus, errorThrown);
-                    },
-                    success: fillGallery
-                });
-            }
-
-            function showLoader() {
-                $chooseImageModal.find('#gallery').html('<p>Chargement</p>');
-            }
-
-            function fillGallery(data) {
-                $chooseImageModal.find('#gallery').html(data);
-                modalContentAlreadyFilled = true;
-            }
-
-            function selectImage(event) {
-                var $image = $(event.target);
-
-                $chooseImageInput.val($image.attr('id'));
-                previewImage($image.attr('src'));
-
-                closeModal();
-            }
-
-            function previewImage(src) {
-                $chooseImagePreview.attr('src', src);
-            }
-
-            $chooseImageButton.on('click', openModal);
-            $chooseImageCloseButton.on('click', closeModal);
-            $chooseImageModal.on('click', '.bab-ImageGallery-item', selectImage);
-            $chooseImageModal.on('click', '.bab-Pagination-page:not(.bab-Pagination-page--current)', function(event) {
-                event.preventDefault();
-                var url = $(event.target).attr('href');
-
-                getGallery(url);
-            });
-
-            $('#upload-main-image').on('submit', function(event) {
-                event.preventDefault();
-
-                var data = new FormData($(this)[0]);
-
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: data,
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                }).done(function(data) {
-                    console.log(data);
-                    $chooseImageInput.val(data.image.id);
-                    previewImage(data.image.url);
-                    closeModal();
-                }).fail(function(jqXHR, status, errorThrown) {
-                    console.log(errorThrown);
-                    console.log(jqXHR.responseText);
-                    console.log(jqXHR.status);
-                });
-            });
-
-            $('#submit-btn').on('click', function() {
-                clickedSave = true;
-                console.log('clicked');
-            });
-
-            window.addEventListener('beforeunload', function(event) {
-                if (!clickedSave) {
-                    var confirmationMessage = "T'es sûre et certaine de vouloir quitter la page ?";
-
-                    event.returnValue = confirmationMessage;
-                }
-            });
-        })(jQuery);
+        // (function($) {
+        //     var $chooseImageButton = $('#button-choose-image');
+        //     var $chooseImageModal = $('#modal-choose-image');
+        //     var $chooseImageCloseButton = $chooseImageModal.find('.bab-Modal-close');
+        //     var $chooseImageInput = $('#babdelaura_blogbundle_article_imageTemp');
+        //     var $chooseImagePreview = $('#image-preview');
+        //     var modalContentAlreadyFilled = false;
+        //     var clickedSave = false;
+        //
+        //     function openModal() {
+        //         $chooseImageModal.addClass('bab-Modal--open');
+        //         getGallery();
+        //     }
+        //
+        //     function closeModal() {
+        //         $chooseImageModal.removeClass('bab-Modal--open');
+        //     }
+        //
+        //     function getGallery(url) {
+        //         var ajaxUrl = url || '{{path('babdelaurablog_admin_listerImages')}}?CKEditor=true';
+        //         $.ajax({
+        //             url: ajaxUrl,
+        //             type: 'get',
+        //             beforeSend: showLoader,
+        //             error: function(jqXHR, textStatus, errorThrown) {
+        //                 console.error(textStatus, errorThrown);
+        //             },
+        //             success: fillGallery
+        //         });
+        //     }
+        //
+        //     function showLoader() {
+        //         $chooseImageModal.find('#gallery').html('<p>Chargement</p>');
+        //     }
+        //
+        //     function fillGallery(data) {
+        //         $chooseImageModal.find('#gallery').html(data);
+        //         modalContentAlreadyFilled = true;
+        //     }
+        //
+        //     function selectImage(event) {
+        //         var $image = $(event.target);
+        //
+        //         $chooseImageInput.val($image.attr('id'));
+        //         previewImage($image.attr('src'));
+        //
+        //         closeModal();
+        //     }
+        //
+        //     function previewImage(src) {
+        //         $chooseImagePreview.attr('src', src);
+        //     }
+        //
+        //     $chooseImageButton.on('click', openModal);
+        //     $chooseImageCloseButton.on('click', closeModal);
+        //     $chooseImageModal.on('click', '.bab-ImageGallery-item', selectImage);
+        //     $chooseImageModal.on('click', '.bab-Pagination-page:not(.bab-Pagination-page--current)', function(event) {
+        //         event.preventDefault();
+        //         var url = $(event.target).attr('href');
+        //
+        //         getGallery(url);
+        //     });
+        //
+        //     $('#upload-main-image').on('submit', function(event) {
+        //         event.preventDefault();
+        //
+        //         var data = new FormData($(this)[0]);
+        //
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: $(this).attr('action'),
+        //             data: data,
+        //             cache: false,
+        //             contentType: false,
+        //             processData: false
+        //         }).done(function(data) {
+        //             console.log(data);
+        //             $chooseImageInput.val(data.image.id);
+        //             previewImage(data.image.url);
+        //             closeModal();
+        //         }).fail(function(jqXHR, status, errorThrown) {
+        //             console.log(errorThrown);
+        //             console.log(jqXHR.responseText);
+        //             console.log(jqXHR.status);
+        //         });
+        //     });
+        //
+        //     $('#submit-btn').on('click', function() {
+        //         clickedSave = true;
+        //         console.log('clicked');
+        //     });
+        //
+        //     window.addEventListener('beforeunload', function(event) {
+        //         if (!clickedSave) {
+        //             var confirmationMessage = "T'es sûre et certaine de vouloir quitter la page ?";
+        //
+        //             event.returnValue = confirmationMessage;
+        //         }
+        //     });
+        // })(jQuery);
 
     </script>
 {% endblock %}
