@@ -48,9 +48,9 @@
 
 	__webpack_require__(1);
 
-	__webpack_require__(2);
+	__webpack_require__(3);
 
-	var _nav = __webpack_require__(3);
+	var _nav = __webpack_require__(2);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
@@ -72,21 +72,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // 'use strict';
-	//
-	// var jQuery = require('jquery');
-	//
-	// window.jQuery = jQuery;
-	// window.$ = jQuery;
-
-	// var Gallery = require('./modules/gallery');
-	// require('./modules/jquery.cookiebar');
-
-	// var touchEffect = new TouchEffect();
-	// touchEffect.run();
-	//
-	// var gallery = new Gallery();
-	// gallery.initialize();
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	var cookieBarContainer = document.querySelector('.js-cookie-bar');
 	new _cookieBar2.default(cookieBarContainer);
@@ -336,6 +322,61 @@
 /* 2 */
 /***/ function(module, exports) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Nav = function () {
+	    function Nav(container) {
+	        _classCallCheck(this, Nav);
+
+	        this.options = {
+	            itemsContainerOpenClass: 'bab-MainNav--open',
+	            toggleIconOpenClass: 'fa-bars',
+	            toggleIconCloseClass: 'fa-times'
+	        };
+
+	        this.container = container;
+	        this.toggleButton = this.container.querySelector('.js-nav-toggle');
+	        this.toggleIcon = this.toggleButton.querySelector('.js-nav-toggle-icon');
+	        this.itemsContainer = this.container.querySelector('.js-nav-items');
+
+	        this.initEvents();
+	    }
+
+	    _createClass(Nav, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            this.toggleButton.addEventListener('click', function () {
+	                return _this.toggle();
+	            });
+	        }
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            this.container.classList.toggle(this.options.itemsContainerOpenClass);
+	            this.toggleIcon.classList.toggle(this.options.toggleIconOpenClass);
+	            this.toggleIcon.classList.toggle(this.options.toggleIconCloseClass);
+	        }
+	    }]);
+
+	    return Nav;
+	}();
+
+	exports.default = Nav;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
 	"use strict";
 
 	/*!
@@ -557,61 +598,6 @@
 	   */
 	  window.feature = Feature;
 	})(window, document);
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Nav = function () {
-	    function Nav(container) {
-	        _classCallCheck(this, Nav);
-
-	        this.options = {
-	            itemsContainerOpenClass: 'bab-MainNav--open',
-	            toggleIconOpenClass: 'fa-bars',
-	            toggleIconCloseClass: 'fa-times'
-	        };
-
-	        this.container = container;
-	        this.toggleButton = this.container.querySelector('.js-nav-toggle');
-	        this.toggleIcon = this.toggleButton.querySelector('.js-nav-toggle-icon');
-	        this.itemsContainer = this.container.querySelector('.js-nav-items');
-
-	        this.initEvents();
-	    }
-
-	    _createClass(Nav, [{
-	        key: 'initEvents',
-	        value: function initEvents() {
-	            var _this = this;
-
-	            this.toggleButton.addEventListener('click', function () {
-	                return _this.toggle();
-	            });
-	        }
-	    }, {
-	        key: 'toggle',
-	        value: function toggle() {
-	            this.container.classList.toggle(this.options.itemsContainerOpenClass);
-	            this.toggleIcon.classList.toggle(this.options.toggleIconOpenClass);
-	            this.toggleIcon.classList.toggle(this.options.toggleIconCloseClass);
-	        }
-	    }]);
-
-	    return Nav;
-	}();
-
-	exports.default = Nav;
 
 /***/ },
 /* 4 */

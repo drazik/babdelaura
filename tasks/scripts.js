@@ -4,10 +4,13 @@ var webpack = require('webpack');
 
 module.exports = function(callback) {
     webpack({
-        entry: './assets/js/app.js',
+        entry: {
+            app: './assets/js/app.js',
+            admin: './assets/js/admin.js'
+        },
         output: {
             path: './web/js',
-            filename: 'app.js'
+            filename: '[name].js'
         },
         module: {
             loaders: [
