@@ -51,6 +51,13 @@ class Image
      */
     private $height;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="watermark", type="boolean")
+     */
+    private $watermark;
+
     private $file;
 
     private $tempFilename;
@@ -302,5 +309,29 @@ class Image
     public function getHeight()
     {
         return $this->height;
+    }
+
+    /**
+     * Set watermark
+     *
+     * @param boolean $watermark
+     *
+     * @return Image
+     */
+    public function setWatermark($watermark)
+    {
+        $this->watermark = $watermark;
+
+        return $this;
+    }
+
+    /**
+     * Get watermark
+     *
+     * @return boolean
+     */
+    public function getWatermark()
+    {
+        return $this->watermark;
     }
 }

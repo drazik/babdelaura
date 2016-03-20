@@ -4183,6 +4183,18 @@ body {
     width: 100%;
 }
 
+.form-group input[type="checkbox"],
+.form-group input[type="radio"] {
+    display: inline-block;
+    width: auto;
+}
+
+.form-group input[type="checkbox"] + label,
+.form-group input[type="radio"] + label {
+    display: inline-block;
+    width: auto;
+}
+
 .form-group textarea {
     display: block;
     width: 100%;
