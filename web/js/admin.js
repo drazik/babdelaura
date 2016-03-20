@@ -381,8 +381,6 @@
 
 	        this.container = container;
 
-	        console.log(container);
-
 	        this.bodyDelegate = (0, _domDelegate2.default)(document.body);
 	        this.containerDelegate = (0, _domDelegate2.default)(this.container);
 

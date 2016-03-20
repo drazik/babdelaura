@@ -10,8 +10,6 @@ export default class Modal {
 
         this.container = container;
 
-        console.log(container);
-
         this.bodyDelegate = delegate(document.body);
         this.containerDelegate = delegate(this.container);
 
