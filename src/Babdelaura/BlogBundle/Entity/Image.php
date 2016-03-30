@@ -3,7 +3,11 @@
 namespace Babdelaura\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+use Imagine\Gd\Imagine;
+use Imagine\Image\Point;
 
 /**
  * Image
@@ -14,6 +18,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Image
 {
+    const WATERMARK_PATH = __DIR__.'/../../../../web/images/watermark.png';
+    const WATERMARK_OFFSET = 2;
     /**
      * @var integer
      *
@@ -218,16 +224,39 @@ class Image
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
-     public function getWebPath()
+    public function getWebPath()
     {
         return $this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
     }
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($file, $watermark = false)
     {
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->watermark = $watermark;
+
+        $this->setFile($file);
+
+        $imagine = new Imagine();
+        $imageSource = $imagine->open($this->file->getRealPath());
+        $imageSourceSize = $imageSource->getSize();
+
+        $this->setWidth($imageSourceSize->getWidth());
+        $this->setHeight($imageSourceSize->getHeight());
+
+        if ($watermark) {
+            $this->addWatermark($imageSource);
+        }
+    }
+
+    public function addWatermark($image) {
+        $watermark = $imagine->open(self::WATERMARK_PATH);
+        $watermarkSize = $watermark->getSize();
+        $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - self::WATERMARK_OFFSET, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - self::WATERMARK_OFFSET);
+
+        $image->paste($watermark, $bottomRight);
+        $image->save($this->file->getRealPath(), array('jpeg_quality' => 100));
     }
 
     /**

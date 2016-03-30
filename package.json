@@ -42,6 +42,7 @@
     "webpack": "^1.12.14"
   },
   "dependencies": {
+    "axios": "^0.9.1",
     "classlist-polyfill": "^1.0.2",
     "closest": "0.0.1",
     "dom-delegate": "^2.0.3",

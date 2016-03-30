@@ -12,17 +12,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Babdelaura\BlogBundle\Entity\Image;
 use Babdelaura\BlogBundle\Form\ImageType;
 
-use Imagine\Gd\Imagine;
-use Imagine\Image\Point;
-
 class ImageController extends Controller
 {
     public function listerImagesAction() {
         $request = $this->get('request');
         $query = $request->query;
 
-        $image = new Image();
-        $form = $this->createForm(new ImageType(), $image);
+        $form = $this->createForm(new ImageType());
 
         $repository = $this->getDoctrine()
                            ->getManager()
@@ -47,103 +43,48 @@ class ImageController extends Controller
     }
 
     public function uploadAction() {
-        return new JsonResponse(array('test' => 'hello world'));
+        $request = $this->get('request');
+        $file = $request->files->get('babdelaura_blogbundle_image')['file'];
+        $watermark = isset($request->request->get('babdelaura_blogbundle_image')['watermark']);
+
+        $response = array('success' => $file->isValid());
+
+        if ($response['success']) {
+            $image = new Image($file, $watermark);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($image);
+            $em->flush();
+
+            $response['image'] = array(
+                'id' => $image->getId(),
+                'path' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath(),
+                'width' => $image->getWidth(),
+                'height' => $image->getHeight()
+            );
+        } else {
+            $response['error'] = $this->getErrorMessage($file);
+        }
+
+        return new JsonResponse($response);
     }
 
-    // public function uploadAction($addWatermark) {
-    //     $imagine = new Imagine();
-    //     $addWatermark = $addWatermark === 'false' ? false : true;
-    //     $request = $this->get('request');
-    //     $formInputName = $request->isXmlHttpRequest() && !$addWatermark ? 'mainImageFile' : 'upload';
-    //     $file = $_FILES[$formInputName];
-    //     $error = $this->handleError($file);
-    //
-    //     if ($error) {
-    //         if ($request->isXmlHttpRequest()) {
-    //             return new JsonResponse(array(
-    //                 'success' => false,
-    //                 'message' => $error
-    //             ));
-    //         } else {
-    //             return new Response($error);
-    //         }
-    //     }
-    //
-    //     $uploaded = new UploadedFile(
-    //         $_FILES[$formInputName]['tmp_name'],
-    //         $_FILES[$formInputName]['name'],
-    //         $_FILES[$formInputName]['type'],
-    //         $_FILES[$formInputName]['size']
-    //     );
-    //
-    //     $imageSource = $imagine->open($_FILES[$formInputName]['tmp_name']);
-    //     $imageSourceSize = $imageSource->getSize();
-    //
-    //     if ($addWatermark) {
-    //         $watermark = $imagine->open(__DIR__.'/../../../../web/images/watermark.png');
-    //
-    //         $watermarkSize = $watermark->getSize();
-    //         $offset = 2;
-    //
-    //         $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - $offset, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - $offset);
-    //
-    //         $imageSource->paste($watermark, $bottomRight);
-    //         $imageSource->save($_FILES[$formInputName]['tmp_name'] . '.' . $uploaded->guessExtension(), array('jpeg_quality' => 100));
-    //     }
-    //
-    //     $image = new Image;
-    //     $image->setWidth($imageSourceSize->getWidth());
-    //     $image->setHeight($imageSourceSize->getHeight());
-    //     $image->setFile($uploaded);
-    //
-    //     $em = $this->getDoctrine()->getManager();
-    //
-    //     $em->persist($image);
-    //     $em->flush();
-    //
-    //     if ($request->isXmlHttpRequest()) {
-    //         return new JsonResponse(array(
-    //             'success' => true,
-    //             'image' => array(
-    //                 'id' => $image->getId(),
-    //                 'url' => $this->generateUrl('babdelaurablog_accueil', array(), true) . $image->getWebPath()
-    //             )
-    //         ));
-    //     } else {
-    //         return new Response('Image Chargée');
-    //     }
-    // }
-
-    private function handleError($file) {
-        $message = 'Error uploading file';
-
-        switch($file['error']) {
+    private function getErrorMessage($file) {
+        switch($file->getError()) {
             case UPLOAD_ERR_OK:
-                $message = false;
-                break;
+                return false;
 
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-                $message .= ' - file too large';
-                break;
+                return "Le fichier uploadé est trop gros (max. " . $file->getMaxFilesize() . " octets)";
 
             case UPLOAD_ERR_PARTIAL:
-                $message .= ' - file upload was not completed.';
-                break;
+                return "L'upload du fichier n'a pas été terminé";
 
             case UPLOAD_ERR_NO_FILE:
-                $message .= ' - zero-length file uploaded.';
-                break;
+                return "Tentative d'upload de fichier vide";
 
             default:
-                $message .= ' - internal error #'.$_FILES['newfile']['error'];
-                break;
+                return 'Erreur inconnue';
         }
-
-        if (!$message && !is_uploaded_file($file['tmp_name'])) {
-            $message = 'Error uploading file - unknown error.';
-        }
-
-        return $message;
     }
 }

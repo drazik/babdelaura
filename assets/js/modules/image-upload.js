@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default class ImageUpload {
     constructor(container) {
         this.container = container;
@@ -13,12 +15,12 @@ export default class ImageUpload {
     }
 
     submit() {
-        const data = new FormData(this.container);
         const url = this.container.getAttribute('action');
+        const data = new FormData(this.container);
+        const config = {};
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => console.log(data))
+        axios.post(url, data, config)
+            .then(response => console.log(response))
             .catch(error => console.log(error));
     }
 }
