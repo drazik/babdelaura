@@ -7,6 +7,6 @@ module.exports = function() {
     return gulp.src('assets/images/**/*.png')
         .pipe(plumber())
         .pipe(newer('web/images'))
-        .pipe(imageminPngquant({ quality: '65-80', speed: 4 })())
+        // .pipe(imageminPngquant({ quality: '65-80', speed: 4 })())
         .pipe(gulp.dest('web/images'));
 };

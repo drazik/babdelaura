@@ -46,6 +46,10 @@
     background-position: 0 -160px;
 }
 
+.bab-Social-icon--rss {
+    background-position: 0 -192px;
+}
+
 .social-share-item {
     display: inline-block;
     vertical-align: middle;
