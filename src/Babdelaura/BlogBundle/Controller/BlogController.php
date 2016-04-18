@@ -119,7 +119,7 @@ class BlogController extends Controller
                     ->setBody(
                         $this->renderView(
                             
-                            'BabdelauraBlogBundle:Blog:mailContactUser.html.twig',
+                            'BabdelauraBlogBundle:Contact:mailContactUser.html.twig',
                             array('data' => $data)
                         ),
                         'text/html'
