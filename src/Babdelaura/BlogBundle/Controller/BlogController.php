@@ -112,7 +112,7 @@ class BlogController extends Controller
                 );
                 $mailer->send($messageAdmin);
 
-                /*$messageUser = $mailer->createMessage()
+                $messageUser = $mailer->createMessage()
                     ->setSubject('Confirmation de l\'envoi de votre message')
                     ->setFrom('notifications@bricabrac-de-laura.fr')
                     ->setTo($data['email'])
@@ -124,7 +124,7 @@ class BlogController extends Controller
                         ),
                         'text/html'
                 );                    
-                $mailer->send($messageAdmin);*/
+                $mailer->send($messageAdmin);
 
                  $this->get('session')->getFlashBag()->add(
                             'notice',
