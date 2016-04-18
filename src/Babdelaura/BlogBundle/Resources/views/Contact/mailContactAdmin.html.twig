@@ -1,0 +1,9 @@
+{% extends "BabdelauraBlogBundle:Contact:layoutContact.html.twig" %}
+
+{% block content %}
+	<div>Une nouvelle demande de contact a été reçue</div>
+	<div>Nom : {{data.nom}}</div>
+	<div>Mail : {{data.email}} </div>
+	<div>Message : {{data.contenu}}</div>
+
+{% endblock %}

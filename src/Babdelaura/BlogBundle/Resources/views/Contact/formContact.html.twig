@@ -1,0 +1,40 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% block mainContent %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="bab-Notification bab-Notification--success">
+            <div class="bab-Notification-content">{{ flashMessage }}</div>
+        </div>
+    {% endfor %}
+
+	<h1>Contact</h1>
+
+	<form method="post" {{ form_enctype(form) }}>
+        <div class="form-group">
+            {{ form_label(form.nom, "Nom") }}
+            {{ form_errors(form.nom)}}
+            {{ form_widget(form.nom) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email, "Email") }}
+            {{ form_errors(form.email)}}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contenu, "Contenu") }}
+            {{ form_errors(form.contenu)}}
+            {{ form_widget(form.contenu) }}
+        </div>        
+        <div class="form-group">
+            {{ form_label(form.recaptcha, "Veuillez recopier le texte qui se trouve dans l'image ci-dessous") }}            
+            {{ form_errors(form.recaptcha)}}
+            {{ form_widget(form.recaptcha) }}
+        </div>
+        {{ form_widget(form._token) }}
+        {{ form_rest(form) }}
+
+        <button class="bab-Button" id="submit-btn" type="submit">Envoyer</button>
+    </form>
+    
+{% endblock %}
