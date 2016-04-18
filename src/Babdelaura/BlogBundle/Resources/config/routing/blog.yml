@@ -6,6 +6,10 @@ babdelaurablog_rss:
     path: /rss
     defaults: {_controller: BabdelauraBlogBundle:Blog:feedRss}
 
+babdelaurablog_contact:
+    path: /contact
+    defaults: {_controller: BabdelauraBlogBundle:Blog:contact}
+
 babdelaurablog_tousLesArticles:
     path: /articles/
     defaults: {_controller: BabdelauraBlogBundle:Article:listerTousArticlesBlog}

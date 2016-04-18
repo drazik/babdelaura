@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Babdelaura\BlogBundle\Entity\Recherche;
 use Babdelaura\BlogBundle\Form\RechercheType;
+use Babdelaura\BlogBundle\Form\ContactType;
 
 class BlogController extends Controller
 {
@@ -84,5 +85,55 @@ class BlogController extends Controller
 
         return $this->render('BabdelauraBlogBundle:Blog:feed.rss.twig', array('listeArticles' => $listeArticles));
 
+    }
+
+    public function contactAction(){
+        $form = $this->createForm(new ContactType);
+        $request = $this->get('request');
+
+        if($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if($form->isValid()) {
+
+               /* $data = $form->getData();
+                $mailer = $this->get('mailer');
+                $messageAdmin = $mailer->createMessage()
+                    ->setSubject('Nouveau message reçu de '.$data['nom'])
+                    ->setFrom(array($data['email'] => $data['nom']))
+                    ->setTo('contact@bricabrac-de-laura.fr')
+                    ->setBody(
+                        $this->renderView(
+                            
+                            'BabdelauraBlogBundle:Blog:mailContactAdmin.html.twig',
+                            array('data' => $data)
+                        ),
+                        'text/html'
+                );
+                $mailer->send($messageAdmin);
+
+                $messageUser = $mailer->createMessage()
+                    ->setSubject('Confirmation de l\'envoi de votre message')
+                    ->setFrom('notifications@bricabrac-de-laura.fr')
+                    ->setTo($data['email'])
+                    ->setBody(
+                        $this->renderView(
+                            
+                            'BabdelauraBlogBundle:Blog:mailContactUser.html.twig',
+                            array('data' => $data)
+                        ),
+                        'text/html'
+                );                    
+                $mailer->send($messageAdmin);*/
+
+                 $this->get('session')->getFlashBag()->add(
+                            'notice',
+                            'Votre message a été envoyé. Vous recevrez une confirmation par mail.'
+                );
+                $form = $this->createForm(new ContactType);
+            }
+
+        }
+        return $this->render('BabdelauraBlogBundle:Contact:formContact.html.twig', array('form' => $form->createView()));
     }
 }
