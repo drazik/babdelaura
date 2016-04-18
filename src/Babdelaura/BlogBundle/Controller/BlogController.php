@@ -124,7 +124,7 @@ class BlogController extends Controller
                         ),
                         'text/html'
                 );                    
-                $mailer->send($messageAdmin);
+                $mailer->send($messageUser);
 
                  $this->get('session')->getFlashBag()->add(
                             'notice',
