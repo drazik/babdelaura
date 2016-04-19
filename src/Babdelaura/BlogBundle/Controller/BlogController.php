@@ -105,7 +105,7 @@ class BlogController extends Controller
                     ->setBody(
                         $this->renderView(
                             
-                            'BabdelauraBlogBundle:Contact:mailContactAdmin.html.twig',
+                            'BabdelauraBlogBundle:Mail:mailContactAdmin.html.twig',
                             array('data' => $data)
                         ),
                         'text/html'
@@ -119,7 +119,7 @@ class BlogController extends Controller
                     ->setBody(
                         $this->renderView(
                             
-                            'BabdelauraBlogBundle:Contact:mailContactUser.html.twig',
+                            'BabdelauraBlogBundle:Mail:mailContactUser.html.twig',
                             array('data' => $data)
                         ),
                         'text/html'
@@ -134,6 +134,6 @@ class BlogController extends Controller
             }
 
         }
-        return $this->render('BabdelauraBlogBundle:Contact:formContact.html.twig', array('form' => $form->createView()));
+        return $this->render('BabdelauraBlogBundle:Blog:formContact.html.twig', array('form' => $form->createView()));
     }
 }
