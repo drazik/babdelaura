@@ -34,6 +34,19 @@ class CommentaireController extends Controller
 
                 $em->flush();
 
+                $message = $mailer->createMessage()
+                    ->setSubject('Un nouveau commentaire a été posté')
+                    ->setFrom('notifications@bricabrac-de-laura.fr')
+                    ->setTo('contact@bricabrac-de-laura.fr')
+                    ->setBody(
+                        $this->renderView(                            
+                            'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
+                            array('commentaire' => $commentaire, 'article' => $article)
+                        ),
+                        'text/html'
+                );                    
+                $mailer->send($message);
+
                 $this->get('session')->getFlashBag()->add(
                             'notice',
                             'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'

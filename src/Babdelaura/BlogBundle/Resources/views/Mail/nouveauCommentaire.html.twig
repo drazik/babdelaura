@@ -1,0 +1,10 @@
+{% extends "BabdelauraBlogBundle:Mail:layoutMail.html.twig" %}
+
+{% block content %}
+	<div>Un nouveau commentaire a été posté sous l'article {{article.titre}}</div>
+	<div>Auteur : {{commentaire.auteur}}</div>
+	<div>Mail : {{commentaire.email}} </div>
+	<div>Site : {{commentaire.site}} </div>
+	<div>Commentaire : {{commentaire.contenu}}</div>
+
+{% endblock %}
