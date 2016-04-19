@@ -34,6 +34,7 @@ class CommentaireController extends Controller
 
                 $em->flush();
 
+                $mailer = $this->get('mailer');
                 $message = $mailer->createMessage()
                     ->setSubject('Un nouveau commentaire a été posté')
                     ->setFrom('notifications@bricabrac-de-laura.fr')
