@@ -101,7 +101,7 @@ class BlogController extends Controller
                 $messageAdmin = $mailer->createMessage()
                     ->setSubject('Nouveau message reçu de '.$data['nom'])
                     ->setFrom(array($data['email'] => $data['nom']))
-                    ->setTo('contact@bricabrac-de-laura.fr')
+                    ->setTo($this->container->getParameter('mail_contact'))
                     ->setBody(
                         $this->renderView(
                             
@@ -114,7 +114,7 @@ class BlogController extends Controller
 
                 $messageUser = $mailer->createMessage()
                     ->setSubject('Confirmation de l\'envoi de votre message')
-                    ->setFrom('notifications@bricabrac-de-laura.fr')
+                    ->setFrom($this->container->getParameter('mail_notifications'))
                     ->setTo($data['email'])
                     ->setBody(
                         $this->renderView(

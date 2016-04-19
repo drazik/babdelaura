@@ -37,8 +37,8 @@ class CommentaireController extends Controller
                 $mailer = $this->get('mailer');
                 $message = $mailer->createMessage()
                     ->setSubject('Un nouveau commentaire a été posté')
-                    ->setFrom('notifications@bricabrac-de-laura.fr')
-                    ->setTo('contact@bricabrac-de-laura.fr')
+                    ->setFrom($this->container->getParameter('mail_notifications'))
+                    ->setTo($this->container->getParameter('mail_contact'))
                     ->setBody(
                         $this->renderView(                            
                             'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
