@@ -53,10 +53,13 @@
                 </div>
                 <div class="four columns">
                     {% block sidebar %}
-                    <section class="bab-Sidebar-section">                    
+                    <section class="bab-Sidebar-section">
                         <h1 class="bab-Sidebar-title">Rechercher</h1>
-                        <form method="get" action="{{ path('babdelaurablog_recherche') }}">
-                            <input name="motscles" id="search" placeholder="Tapez ici votre recherche" />
+                        <form class="bab-Searchbar" method="get" action="{{ path('babdelaurablog_recherche') }}">
+                            <input class="bab-Searchbar-input" name="motscles" id="search" placeholder="Tapez ici votre recherche" />
+                            <button class="bab-Searchbar-submit" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </form>
                     </section>
                     <section class="bab-Sidebar-section">
