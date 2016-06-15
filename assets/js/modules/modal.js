@@ -1,5 +1,4 @@
 import delegate from 'dom-delegate';
-import getClosestParent from 'closest';
 
 export default class Modal {
     constructor(container) {

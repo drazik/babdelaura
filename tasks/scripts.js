@@ -13,12 +13,26 @@ module.exports = function(callback) {
             filename: '[name].js'
         },
         module: {
+            preLoaders: [
+                {
+                    test: /\.js$/,
+                    loader: 'eslint-loader',
+                    exclude: /node_modules/
+                }
+            ],
             loaders: [
                 {
                     test: /\.js$/,
-                    loader: 'babel'
+                    loader: 'babel-loader',
+                    exclude: /nodes_modules/
                 }
             ]
+        },
+        eslint: {
+            emitWarning: true,
+            emitError: true,
+            failOnWarning: false,
+            failOnError: true
         }
     }, function(err, stats) {
         if (err) {
