@@ -3,7 +3,8 @@ module.exports = {
         "ecmaVersion": 6,
         "sourceType": "module",
         "ecmaFeatures": {
-            "impliedStrict": true
+            "impliedStrict": true,
+            "experimentalObjectRestSpread": true
         }
     },
     "env": {
