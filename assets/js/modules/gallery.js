@@ -37,11 +37,14 @@ export default class Gallery {
                 h: parseInt(srcParams.height, 10)
             };
 
+            // Si on a déjà les dimensions, on push
             if (item.w > 0 && item.h > 0) {
                 this.photoSwipeItems.push(item);
                 return;
             }
 
+            // Sinon, c'est une vieille image uploadée avant la mise en place
+            // de l'ajout automatique des dimensions, il faut les calculer...
             this.loadImage(image);
         });
     }
