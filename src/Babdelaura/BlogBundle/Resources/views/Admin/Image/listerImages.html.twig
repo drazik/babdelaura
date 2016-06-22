@@ -2,31 +2,35 @@
 
 {% block content %}
     <h1>Gallerie</h1>
-    <form class="js-image-upload" method="post" action="{{ path('babdelaurablog_admin_uploaderImage') }}" {{ form_enctype(form) }}>
-        <div class="form-group">
-            {{ form_label(form.file, "Image") }}
-            {{ form_errors(form.file)}}
-            {{ form_widget(form.file) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.watermark) }}
-            {{ form_errors(form.watermark)}}
-            {{ form_widget(form.watermark) }}
-        </div>
-        {{ form_rest(form) }}
+    <div class="js-image-upload">
+        <form class="js-image-upload-form" method="post" action="{{ path('babdelaurablog_admin_uploaderImage') }}" {{ form_enctype(form) }}>
+            <div class="form-group">
+                {{ form_label(form.file, "Image") }}
+                {{ form_errors(form.file)}}
+                {{ form_widget(form.file) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.watermark) }}
+                {{ form_errors(form.watermark)}}
+                {{ form_widget(form.watermark) }}
+            </div>
+            {{ form_rest(form) }}
 
-        <button class="bab-Button" type="submit">Ajouter l'image</button>
-    </form>
-    <div class="text-centered">
-            {{ knp_pagination_render(listeImages) }}
-    </div>
-    <div class="gallery">
-        {% for image in listeImages %}
-        <img class="bab-ImageGallery-item" src="{{ asset(image.webPath) }}" id="{{image.id}}"/>
-        {% endfor %}
-    </div>
-    <div class="text-centered">
-            {{ knp_pagination_render(listeImages) }}
+            <button class="bab-Button" type="submit">Ajouter l'image</button>
+        </form>
+        <div>
+            <div class="text-centered">
+                    {{ knp_pagination_render(listeImages) }}
+            </div>
+            <div class="gallery">
+                {% for image in listeImages %}
+                <img class="bab-ImageGallery-item" src="{{ asset(image.webPath) }}" id="{{image.id}}"/>
+                {% endfor %}
+            </div>
+            <div class="text-centered">
+                    {{ knp_pagination_render(listeImages) }}
+            </div>
+        </div>
     </div>
 
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">

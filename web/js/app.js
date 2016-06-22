@@ -48,25 +48,25 @@
 
 	__webpack_require__(1);
 
-	__webpack_require__(7);
+	__webpack_require__(27);
 
 	var _nav = __webpack_require__(3);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _gallery = __webpack_require__(8);
+	var _gallery = __webpack_require__(28);
 
 	var _gallery2 = _interopRequireDefault(_gallery);
 
-	var _notification = __webpack_require__(18);
+	var _notification = __webpack_require__(38);
 
 	var _notification2 = _interopRequireDefault(_notification);
 
-	var _cookieBar = __webpack_require__(19);
+	var _cookieBar = __webpack_require__(39);
 
 	var _cookieBar2 = _interopRequireDefault(_cookieBar);
 
-	var _articlesGrid = __webpack_require__(20);
+	var _articlesGrid = __webpack_require__(40);
 
 	var _articlesGrid2 = _interopRequireDefault(_articlesGrid);
 
@@ -847,7 +847,27 @@
 	};
 
 /***/ },
-/* 7 */
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1073,7 +1093,7 @@
 	})(window, document);
 
 /***/ },
-/* 8 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1084,13 +1104,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _url = __webpack_require__(9);
+	var _url = __webpack_require__(29);
 
-	var _photoswipe = __webpack_require__(16);
+	var _photoswipe = __webpack_require__(36);
 
 	var _photoswipe2 = _interopRequireDefault(_photoswipe);
 
-	var _photoswipeUiDefault = __webpack_require__(17);
+	var _photoswipeUiDefault = __webpack_require__(37);
 
 	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
 
@@ -1142,11 +1162,14 @@
 	                    h: parseInt(srcParams.height, 10)
 	                };
 
+	                // Si on a déjà les dimensions, on push
 	                if (item.w > 0 && item.h > 0) {
 	                    _this.photoSwipeItems.push(item);
 	                    return;
 	                }
 
+	                // Sinon, c'est une vieille image uploadée avant la mise en place
+	                // de l'ajout automatique des dimensions, il faut les calculer...
 	                _this.loadImage(image);
 	            });
 	        }
@@ -1196,7 +1219,7 @@
 	exports.default = Gallery;
 
 /***/ },
-/* 9 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1224,7 +1247,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(10);
+	var punycode = __webpack_require__(30);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1303,7 +1326,7 @@
 	  'gopher:': true,
 	  'file:': true
 	},
-	    querystring = __webpack_require__(13);
+	    querystring = __webpack_require__(33);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1887,7 +1910,7 @@
 	}
 
 /***/ },
-/* 10 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
@@ -2400,7 +2423,7 @@
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
-		if ("function" == 'function' && _typeof(__webpack_require__(12)) == 'object' && __webpack_require__(12)) {
+		if ("function" == 'function' && _typeof(__webpack_require__(32)) == 'object' && __webpack_require__(32)) {
 			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return punycode;
 			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2419,10 +2442,10 @@
 			root.punycode = punycode;
 		}
 	})(undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)(module), (function() { return this; }())))
 
 /***/ },
-/* 11 */
+/* 31 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2439,7 +2462,7 @@
 	};
 
 /***/ },
-/* 12 */
+/* 32 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -2447,16 +2470,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 13 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(14);
-	exports.encode = exports.stringify = __webpack_require__(15);
+	exports.decode = exports.parse = __webpack_require__(34);
+	exports.encode = exports.stringify = __webpack_require__(35);
 
 /***/ },
-/* 14 */
+/* 34 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2545,7 +2568,7 @@
 	};
 
 /***/ },
-/* 15 */
+/* 35 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2614,7 +2637,7 @@
 	};
 
 /***/ },
-/* 16 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6154,7 +6177,7 @@
 	});
 
 /***/ },
-/* 17 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6952,7 +6975,7 @@
 	});
 
 /***/ },
-/* 18 */
+/* 38 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6995,7 +7018,7 @@
 	exports.default = Notification;
 
 /***/ },
-/* 19 */
+/* 39 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7078,7 +7101,7 @@
 	exports.default = CookieBar;
 
 /***/ },
-/* 20 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7093,7 +7116,7 @@
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
-	var _closest = __webpack_require__(21);
+	var _closest = __webpack_require__(41);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
@@ -7140,12 +7163,12 @@
 	exports.default = ArticlesGrid;
 
 /***/ },
-/* 21 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(22);
+	var matches = __webpack_require__(42);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -7157,7 +7180,7 @@
 	};
 
 /***/ },
-/* 22 */
+/* 42 */
 /***/ function(module, exports) {
 
 	"use strict";

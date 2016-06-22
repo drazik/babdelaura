@@ -185,10 +185,16 @@ class Image
         }
 
         // On déplace le fichier envoyé dans le répertoire de notre choix
-        $this->file->move(
+        /*$this->file->move(
           $this->getUploadRootDir(), // Le répertoire de destination
           $this->id.'.'.$this->extension   // Le nom du fichier à créer, ici « id.extension »
         );
+
+        if ($this->watermark) {
+
+        }*/
+        $path = $this->getUploadRootDir() . '/' . $this->id . '.' . $this->extension;
+        $this->image->save($path, array('jpeg_quality' => 100));
     }
 
     /**
@@ -238,25 +244,25 @@ class Image
 
         $this->setFile($file);
 
-        $imagine = new Imagine();
-        $imageSource = $imagine->open($this->file->getRealPath());
-        $imageSourceSize = $imageSource->getSize();
+        $this->imagine = new Imagine();
+
+        $this->image = $this->imagine->open($this->file->getRealPath());
+        $imageSourceSize = $this->image->getSize();
 
         $this->setWidth($imageSourceSize->getWidth());
         $this->setHeight($imageSourceSize->getHeight());
 
         if ($watermark) {
-            $this->addWatermark($imageSource);
+            $this->addWatermark();
         }
     }
 
-    public function addWatermark($image) {
-        $watermark = $imagine->open(self::WATERMARK_PATH);
+    public function addWatermark() {
+        $watermark = $this->imagine->open(self::WATERMARK_PATH);
         $watermarkSize = $watermark->getSize();
-        $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - self::WATERMARK_OFFSET, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - self::WATERMARK_OFFSET);
+        $bottomRight = new Point($this->getWidth() - $watermarkSize->getWidth() - self::WATERMARK_OFFSET, $this->getHeight() - $watermarkSize->getHeight() - self::WATERMARK_OFFSET);
 
-        $image->paste($watermark, $bottomRight);
-        $image->save($this->file->getRealPath(), array('jpeg_quality' => 100));
+        $this->image->paste($watermark, $bottomRight);
     }
 
     /**

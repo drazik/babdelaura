@@ -27,7 +27,9 @@ export default class XHRForm {
         const {onSuccess, onError} = this.options;
 
         axios.post(this.url, data, config)
+            .then(response => response.data)
             .then(response => {
+
                 if (response.success) {
                     return response.data;
                 }
