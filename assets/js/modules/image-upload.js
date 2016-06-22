@@ -11,7 +11,7 @@ class ImageUpload {
     }
 
     handleUploadSuccess() {
-        window.location.reload();
+        window.location.reload(true);
     }
 
     handleUploadError(error) {

@@ -1335,7 +1335,7 @@
 	    _createClass(ImageUpload, [{
 	        key: 'handleUploadSuccess',
 	        value: function handleUploadSuccess() {
-	            window.location.reload();
+	            window.location.reload(true);
 	        }
 	    }, {
 	        key: 'handleUploadError',
