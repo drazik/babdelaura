@@ -46,6 +46,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "ContentTools": "^1.2.8",
     "axios": "^0.9.1",
     "classlist-polyfill": "^1.0.3",
     "closest": "0.0.1",

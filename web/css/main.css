@@ -3821,6 +3821,13 @@ td {
     right: 1em;
 }
 
+.bab-Article-preview {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px dashed #888;
+    border-bottom: 1px dashed #888;
+}
+
 @media (max-width: 550px) {
     .bab-Article-navigation .bab-Button {
         float: none;
