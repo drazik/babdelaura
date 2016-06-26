@@ -1,1 +1,5 @@
 @import 'ContentTools/build/content-tools.min.css';
+
+.ct-widget {
+    z-index: 99;
+}

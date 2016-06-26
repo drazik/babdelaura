@@ -54,9 +54,9 @@
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _gallery = __webpack_require__(29);
+	var _imagesSlideshow = __webpack_require__(29);
 
-	var _gallery2 = _interopRequireDefault(_gallery);
+	var _imagesSlideshow2 = _interopRequireDefault(_imagesSlideshow);
 
 	var _notification = __webpack_require__(39);
 
@@ -80,9 +80,9 @@
 	var navContainer = document.querySelector('.js-nav');
 	new _nav2.default(navContainer);
 
-	var galleryContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-gallery')));
-	galleryContainers.forEach(function (container) {
-	  return new _gallery2.default(container);
+	var imagesSlideshowContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-images-slideshow')));
+	imagesSlideshowContainers.forEach(function (container) {
+	  return new _imagesSlideshow2.default(container);
 	});
 
 	var notificationContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-notification')));
@@ -1125,9 +1125,9 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Gallery = function () {
-	    function Gallery(container) {
-	        _classCallCheck(this, Gallery);
+	var ImagesSlideshow = function () {
+	    function ImagesSlideshow(container) {
+	        _classCallCheck(this, ImagesSlideshow);
 
 	        this.options = {
 	            photoSwipe: {
@@ -1150,7 +1150,7 @@
 	        this.initEvents();
 	    }
 
-	    _createClass(Gallery, [{
+	    _createClass(ImagesSlideshow, [{
 	        key: 'initPhotoSwipeItems',
 	        value: function initPhotoSwipeItems() {
 	            var _this = this;
@@ -1214,10 +1214,10 @@
 	        }
 	    }]);
 
-	    return Gallery;
+	    return ImagesSlideshow;
 	}();
 
-	exports.default = Gallery;
+	exports.default = ImagesSlideshow;
 
 /***/ },
 /* 30 */

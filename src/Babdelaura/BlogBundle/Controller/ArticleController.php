@@ -10,6 +10,7 @@ use Babdelaura\BlogBundle\Entity\Article;
 use Babdelaura\BlogBundle\Form\ArticleType;
 use Babdelaura\BlogBundle\Entity\Commentaire;
 use Babdelaura\BlogBundle\Form\CommentaireType;
+use Babdelaura\BlogBundle\Form\ImageType;
 
 
 
@@ -139,7 +140,8 @@ class ArticleController extends Controller
             $article->setImageTemp($article->getImage()->getId());
         }
 
-        $form = $this->createForm(new ArticleType, $article);
+        $form = $this->createForm(new ArticleType(), $article);
+        $uploadImageForm = $this->createForm(new ImageType());
         $request = $this->get('request');
 
         if($request->getMethod() == 'POST') {
@@ -157,7 +159,11 @@ class ArticleController extends Controller
 
         }
 
-        return $this->render('BabdelauraBlogBundle:Admin/Article:enregistrerArticle.html.twig', array('form' => $form->createView(), 'article' => $article));
+        return $this->render('BabdelauraBlogBundle:Admin/Article:enregistrerArticle.html.twig', array(
+            'form' => $form->createView(),
+            'article' => $article,
+            'uploadImageForm' => $uploadImageForm->createView()
+        ));
     }
 
 

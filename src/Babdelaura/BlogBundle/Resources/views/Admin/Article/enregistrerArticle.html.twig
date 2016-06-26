@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="form-group visually-hidden">
+        <div class="form-group">
             {{ form_label(form.contenu, "Contenu de l'article") }}
             {{ form_errors(form.contenu)}}
             {{ form_widget(form.contenu) }}
@@ -68,6 +68,8 @@
             <button class="bab-Modal-close js-modal-closer" type="button">
                 <i class="fa fa-times"></i>
             </button>
+
+            {% include 'BabdelauraBlogBundle:Admin/Image:uploadImage.html.twig' with {'form': uploadImageForm} only %}
         </div>
     <div>
 

@@ -19,6 +19,7 @@
     z-index: 101;
     background-color: #fff;
     overflow-y: scroll;
+    padding: 20px;
 }
 
 .bab-Modal--open .bab-Modal-shadow,
@@ -32,6 +33,7 @@
     right: 1em;
     border-width: 0;
     background-color: transparent;
+    z-index: 2;
 }
 
 .bab-Modal-content {

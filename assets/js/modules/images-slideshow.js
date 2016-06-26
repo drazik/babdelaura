@@ -5,7 +5,7 @@ import PhotoSwipeUiDefault from 'photoswipe/dist/photoswipe-ui-default';
 
 import delegate from 'dom-delegate';
 
-export default class Gallery {
+export default class ImagesSlideshow {
     constructor(container) {
         this.options = {
             photoSwipe: {
