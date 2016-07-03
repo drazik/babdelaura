@@ -9,6 +9,8 @@
                 <th>Date</th>
                 <th>Edition</th>
                 <th class="text-centered">Publication</th>
+                <th class="text-centered">Menu</th>
+                <th class="text-centered">Footer</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,6 +29,20 @@
                 {% endif %}
 
                 </a></td>
+                <td class="text-centered">
+                    {% if page.inMenu %}
+                        <i class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-times"></i>
+                    {% endif %}
+                </td>
+                <td class="text-centered">
+                    {% if page.inFooter %}
+                        <i class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-times"></i>
+                    {% endif %}
+                </td>
                 <td>
                     <ul class="actions">
                         <li class="action">
