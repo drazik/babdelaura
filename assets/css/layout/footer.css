@@ -5,3 +5,40 @@
     color: #fff;
     margin-top: 2em;
 }
+
+.bab-Footer_links {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.bab-Footer_linkContainer {
+    display: inline-block;
+}
+
+.bab-Footer_linkContainer:not(:first-child) {
+    margin-left: 3px;
+}
+
+.bab-Footer_linkContainer:not(:first-child)::before {
+    content: '';
+
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-right: 3px;
+
+    vertical-align: middle;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.bab-Footer_link {
+    font-size: 14px;
+
+    color: #fff;
+}
+
+.bab-Footer_link:hover,
+.bab-Footer_link:focus {
+    color: #fff;
+}
