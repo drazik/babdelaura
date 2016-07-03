@@ -40,6 +40,7 @@
 }
 
 .bab-Footer_link:hover,
-.bab-Footer_link:focus {
+.bab-Footer_link:focus,
+.bab-Footer_link:visited {
     color: #fff;
 }
