@@ -70,6 +70,20 @@ class Page implements DescriptionEntite
      */
     private $publication;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="inMenu", type="boolean")
+     */
+    private $inMenu;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="inFooter", type="boolean")
+     */
+    private $inFooter;
+
 
     public function __construct(){
         $this->datePublication = new \DateTime;
@@ -247,5 +261,53 @@ class Page implements DescriptionEntite
 
     public function getPrefixeType() {
         return "la ";
+    }
+
+    /**
+     * Set inMenu
+     *
+     * @param boolean $inMenu
+     *
+     * @return Page
+     */
+    public function setInMenu($inMenu)
+    {
+        $this->inMenu = $inMenu;
+
+        return $this;
+    }
+
+    /**
+     * Get inMenu
+     *
+     * @return boolean
+     */
+    public function getInMenu()
+    {
+        return $this->inMenu;
+    }
+
+    /**
+     * Set inFooter
+     *
+     * @param boolean $inFooter
+     *
+     * @return Page
+     */
+    public function setInFooter($inFooter)
+    {
+        $this->inFooter = $inFooter;
+
+        return $this;
+    }
+
+    /**
+     * Get inFooter
+     *
+     * @return boolean
+     */
+    public function getInFooter()
+    {
+        return $this->inFooter;
     }
 }

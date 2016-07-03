@@ -110,10 +110,8 @@
                 {% endblock %}
             </div>
         </div>
-        <footer class="bab-Footer">
-            Site développé du bout de mes ongles.
-        </footer>
 
+        {{ render(controller('BabdelauraBlogBundle:Blog:footer')) }}
 
         {% block javascripts %}
             <script src="{{ asset('js/app.js') }}"></script>

@@ -18,6 +18,8 @@ class PageType extends AbstractType
             ->add('titre', 'text')
             ->add('contenu', 'textarea')
             ->add('publication', 'checkbox', array('required' => false))
+            ->add('inMenu', 'checkbox', array('required' => false))
+            ->add('inFooter', 'checkbox', array('required' => false))
         ;
     }
 
