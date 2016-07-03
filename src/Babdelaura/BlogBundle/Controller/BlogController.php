@@ -32,10 +32,20 @@ class BlogController extends Controller
         $listeCategories = $repositoryCategorie->findBy(array('visible' => true, 'parent' => null));
 
         $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-        $listePages = $repositoryPage->findBy(array('publication' => true));
+        $listePages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true));
 
         return $this->render('BabdelauraBlogBundle:Blog:mainMenu.html.twig', array('listeCategories' => $listeCategories, 'listePages' => $listePages));
 
+    }
+
+    public function footerAction() {
+        $em = $this->getDoctrine()
+                   ->getManager();
+
+       $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
+       $listePages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true));
+
+       return $this->render('BabdelauraBlogBundle:Blog:footer.html.twig', array('listePages' => $listePages));
     }
 
     public function formulaireRechercheAction() {
@@ -104,7 +114,7 @@ class BlogController extends Controller
                     ->setTo($this->container->getParameter('mail_contact'))
                     ->setBody(
                         $this->renderView(
-                            
+
                             'BabdelauraBlogBundle:Mail:mailContactAdmin.html.twig',
                             array('data' => $data)
                         ),
@@ -118,12 +128,12 @@ class BlogController extends Controller
                     ->setTo($data['email'])
                     ->setBody(
                         $this->renderView(
-                            
+
                             'BabdelauraBlogBundle:Mail:mailContactUser.html.twig',
                             array('data' => $data)
                         ),
                         'text/html'
-                );                    
+                );
                 $mailer->send($messageUser);
 
                  $this->get('session')->getFlashBag()->add(

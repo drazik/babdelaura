@@ -110,24 +110,8 @@
                 {% endblock %}
             </div>
         </div>
-        <footer class="bab-Footer">
-            <div class="bab-Wrapper">
-                <ul class="bab-Footer_links">
-                    <li class="bab-Footer_linkContainer">
-                        <a class="bab-Footer_link" href="#">
-                            Mentions légales
-                        </a>
-                    </li>
-                    <li class="bab-Footer_linkContainer">
-                        <a class="bab-Footer_link" href="#">
-                            Test page
-                        </a>
-                    </li>
-                </ul>
-                <p>Site développé du bout de mes ongles.</p>
-            </div>
-        </footer>
 
+        {{ render(controller('BabdelauraBlogBundle:Blog:footer')) }}
 
         {% block javascripts %}
             <script src="{{ asset('js/app.js') }}"></script>

@@ -1,0 +1,14 @@
+<footer class="bab-Footer">
+    <div class="bab-Wrapper">
+        <ul class="bab-Footer_links">
+            {% for page in listePages %}
+                <li class="bab-Footer_linkContainer">
+                    <a class="bab-Footer_link" href="{{ path('babdelaurablog_page', {'slug' : page.slug}) }}">
+                        {{page.titre}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Site développé du bout de mes ongles.</p>
+    </div>
+</footer>
