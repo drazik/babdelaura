@@ -5,7 +5,7 @@ import PhotoSwipeUiDefault from 'photoswipe/dist/photoswipe-ui-default';
 
 import delegate from 'dom-delegate';
 
-export default class ImagesSlideshow {
+class ImagesSlideshow {
     constructor(container) {
         this.options = {
             photoSwipe: {
@@ -80,3 +80,5 @@ export default class ImagesSlideshow {
         this.photoSwipe.init();
     }
 }
+
+export default ImagesSlideshow;

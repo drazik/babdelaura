@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class XHRForm {
+class XHRForm {
     constructor(container, options = {}) {
         this.options = {
             onSuccess: () => {},
@@ -40,3 +40,5 @@ export default class XHRForm {
             .catch(error => onError(error));
     }
 }
+
+export default XHRForm;

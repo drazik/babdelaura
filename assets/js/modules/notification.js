@@ -1,4 +1,4 @@
-export default class Notification {
+class Notification {
     constructor(container) {
         this.options = {
             timeBeforeClose: 10000
@@ -13,3 +13,5 @@ export default class Notification {
         this.container.parentNode.removeChild(this.container);
     }
 }
+
+export default Notification;

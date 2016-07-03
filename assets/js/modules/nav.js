@@ -1,4 +1,4 @@
-export default class Nav {
+class Nav {
     constructor(container) {
         this.options = {
             itemsContainerOpenClass: 'bab-MainNav--open',
@@ -24,3 +24,5 @@ export default class Nav {
         this.toggleIcon.classList.toggle(this.options.toggleIconCloseClass);
     }
 }
+
+export default Nav;

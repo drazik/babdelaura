@@ -1,7 +1,7 @@
 import delegate from 'dom-delegate';
 import getClosestParent from 'closest';
 
-export default class ArticlesGrid {
+class ArticlesGrid {
     constructor(container) {
         this.container = container;
         this.containerDelegate = delegate(this.container);
@@ -24,3 +24,5 @@ export default class ArticlesGrid {
         item.classList.toggle('hover');
     }
 }
+
+export default ArticlesGrid;

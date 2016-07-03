@@ -1,6 +1,6 @@
 import delegate from 'dom-delegate';
 
-export default class Modal {
+class Modal {
     constructor(container) {
         this.options = {
             openClass: 'bab-Modal--open',
@@ -40,3 +40,5 @@ export default class Modal {
         document.body.classList.add(this.options.noScrollClass);
     }
 }
+
+export default Modal;

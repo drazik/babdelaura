@@ -1,4 +1,4 @@
-export default class CookieBar {
+class CookieBar {
     constructor(container) {
         this.options = {
             containerOpenClass: 'bab-CookieBar--open',
@@ -48,3 +48,5 @@ export default class CookieBar {
         document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
 	}
 }
+
+export default CookieBar;
