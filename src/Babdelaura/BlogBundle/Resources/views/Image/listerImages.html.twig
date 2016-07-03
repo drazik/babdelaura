@@ -8,7 +8,7 @@
 
     <body>
         {% for image in listeImages %}
-            <img class="bab-ImageGallery-item" src="{{ asset(image.webPath) ~ '?width=' ~ image.width ~ '&height=' ~ image.height  }}" id="{{image.id}}"/>
+            <img class="bab-ImageGallery-item" src="{{ asset(image.webPath) ~ '?width=' ~ image.width ~ '&height=' ~ image.height }}" id="{{image.id}}"/>
         {% endfor %}
 
         <div class="text-centered">
