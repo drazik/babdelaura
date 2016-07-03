@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * Gestion d'un formulaire XHR
+ */
 class XHRForm {
     constructor(container, options = {}) {
         this.options = {
@@ -14,6 +17,9 @@ class XHRForm {
         this.initEvents();
     }
 
+    /**
+     *  Bloquage de l'événement submit par défaut
+     */
     initEvents() {
         this.container.addEventListener('submit', event => {
             event.preventDefault();
@@ -21,6 +27,9 @@ class XHRForm {
         });
     }
 
+    /**
+     * Gestion de la soumission du formulaire en XHR
+     */
     submit() {
         const data = new FormData(this.container);
         const config = {};

@@ -1,3 +1,6 @@
+/**
+ * Gestion de l'affichage du menu en mobile
+ */
 class Nav {
     constructor(container) {
         this.options = {
@@ -14,10 +17,16 @@ class Nav {
         this.initEvents();
     }
 
+    /**
+     * Au click sur le bouton, toggle le menu
+     */
     initEvents() {
         this.toggleButton.addEventListener('click', () => this.toggle());
     }
 
+    /**
+     * Ouvre ou ferme le menu selon son état actuel
+     */
     toggle() {
         this.container.classList.toggle(this.options.itemsContainerOpenClass);
         this.toggleIcon.classList.toggle(this.options.toggleIconOpenClass);

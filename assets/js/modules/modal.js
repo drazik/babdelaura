@@ -1,5 +1,8 @@
 import delegate from 'dom-delegate';
 
+/**
+ * Fenêtre modale
+ */
 class Modal {
     constructor(container) {
         this.options = {
@@ -15,6 +18,12 @@ class Modal {
         this.initEvents();
     }
 
+    /**
+     * Gestion des événements :
+     *  - Ouverture de la modale
+     *  - Fermeture de la modale (au click sur un bouton)
+     *  - Fermeture de la modale (à l'appui sur la touche ECHAP)
+     */
     initEvents() {
         this.bodyDelegate.on('click', `.js-modal-opener[data-target="${this.container.id}"]`, this.open.bind(this));
         this.containerDelegate.on('click', '.js-modal-closer', this.close.bind(this));
@@ -28,12 +37,18 @@ class Modal {
         });
     }
 
+    /**
+     * Ouverture de la modale
+     */
     open() {
         this.container.classList.add(this.options.openClass);
         document.documentElement.classList.add(this.options.noScrollClass);
         document.body.classList.add(this.options.noScrollClass);
     }
 
+    /**
+     * Fermeture de la modale
+     */
     close() {
         this.container.classList.remove(this.options.openClass);
         document.documentElement.classList.remove(this.options.noScrollClass);

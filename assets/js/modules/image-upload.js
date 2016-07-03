@@ -1,5 +1,8 @@
 import XHRForm from './xhr-form';
 
+/**
+ * Gère un formulaire d'upload d'image
+ */
 class ImageUpload {
     constructor(container) {
         this.container = container;
@@ -10,10 +13,16 @@ class ImageUpload {
         });
     }
 
+    /**
+     * Rafraichis la page lors du succès
+     */
     handleUploadSuccess() {
         window.location.reload(true);
     }
 
+    /**
+     * Lève une erreur en cas d'erreur
+     */
     handleUploadError(error) {
         throw new Error(error);
     }

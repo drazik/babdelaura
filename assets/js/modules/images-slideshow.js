@@ -5,6 +5,9 @@ import PhotoSwipeUiDefault from 'photoswipe/dist/photoswipe-ui-default';
 
 import delegate from 'dom-delegate';
 
+/**
+ * Slideshow d'images
+ */
 class ImagesSlideshow {
     constructor(container) {
         this.options = {
@@ -28,6 +31,10 @@ class ImagesSlideshow {
         this.initEvents();
     }
 
+    /**
+     * Initialise les objets à passer à PhotoSwipe
+     * PhotoSwipe a besoin de la src et des dimensions de chaque image
+     */
     initPhotoSwipeItems() {
         this.images.forEach(image => {
             const srcParams = parseUrl(image.src, true).query;
@@ -37,34 +44,13 @@ class ImagesSlideshow {
                 h: parseInt(srcParams.height, 10)
             };
 
-            // Si on a déjà les dimensions, on push
-            if (item.w > 0 && item.h > 0) {
-                this.photoSwipeItems.push(item);
-                return;
-            }
-
-            // Sinon, c'est une vieille image uploadée avant la mise en place
-            // de l'ajout automatique des dimensions, il faut les calculer...
-            this.loadImage(image);
+            this.photoSwipeItems.push(item);
         });
     }
 
-    loadImage(image) {
-        const tmpImage = new Image();
-
-        tmpImage.onload = () => {
-            const item = {
-                src: tmpImage.src,
-                w: tmpImage.width,
-                h: tmpImage.height
-            };
-
-            this.photoSwipeItems.push(item);
-        };
-
-        tmpImage.src = image.src;
-    }
-
+    /**
+     * Gestion du click sur une image
+     */
     initEvents() {
         this.containerDelegate.on('click', 'img', event => {
             const img = event.target;
@@ -74,6 +60,9 @@ class ImagesSlideshow {
         });
     }
 
+    /**
+     * Ouvre le slideshow directement à l'index donné
+     */
     show(index) {
         this.options.photoSwipe.index = index;
         this.photoSwipe = new PhotoSwipe(this.photoSwipeElement, PhotoSwipeUiDefault, this.photoSwipeItems, this.options.photoSwipe);
