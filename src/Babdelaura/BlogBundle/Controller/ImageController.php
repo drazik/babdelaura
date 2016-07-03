@@ -143,4 +143,36 @@ class ImageController extends Controller
 
         return $message;
     }
+
+    public function reparerTaillesAction() {
+        // récupérer toutes les images
+        // pour chaque image :
+        // - lire l'image avec Imagine
+        // - récupérer les dimensions de l'image
+        // - les stocker en base
+
+        $doctrine = $this->getDoctrine();
+        $em = $doctrine->getManager();
+        $repository = $em->getRepository('BabdelauraBlogBundle:Image');
+        $images = $repository->findAll();
+        $nbImagesTotal = count($images);
+        $nbImagesChanged = 0;
+        $imagine = new Imagine();
+
+        foreach ($images as $image) {
+            $img = $imagine->open($image->getWebPath());
+            $size = $img->getSize();
+
+            $image->setWidth($size->getWidth());
+            $image->setHeight($size->getHeight());
+
+            $em->persist($image);
+
+            ++$nbImagesChanged;
+        }
+
+        $em->flush();
+
+        return new Response("Images traitées : $nbImagesChanged / $nbImagesTotal");
+    }
 }
