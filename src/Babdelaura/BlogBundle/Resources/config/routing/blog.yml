@@ -65,7 +65,3 @@ babdelaurablog_ajouterCommentaire:
 babdelaurablog_page:
     path: /page/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Page:afficherPage}
-
-babdelaurablog_reparer_images:
-    path: /reparer-images
-    defaults: {_controller: BabdelauraBlogBundle:Image:reparerTailles}
