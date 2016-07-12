@@ -34,7 +34,11 @@ class ImageController extends Controller
         $images = $repository->findBy(array(), array('id' => 'desc'), $lastResult, $firstResult);
 
         $data = array(
-            'page' => $page,
+            'pagination' => array(
+                'currentPage' => $page,
+                'hasPreviousResults' => $page > 1,
+                'hasNextResults' => true
+            ),
             'images' => array()
         );
 

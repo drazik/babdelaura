@@ -1,9 +1,19 @@
 import Mustache from 'mustache';
 import axios from 'axios';
+import delegate from 'dom-delegate';
 
 class ImagesGallery {
-    constructor(container) {
+    constructor(container, options = {}) {
+        this.options = {
+            onItemSelect: () => {},
+            ...options
+        };
+
         this.container = container;
+        this.imagesList = this.container.querySelector('.js-images-gallery-images-list');
+        this.previousPageButtons = [...this.container.querySelectorAll('.js-images-gallery-previous')];
+        this.nextPageButtons = [...this.container.querySelectorAll('.js-images-gallery-next')];
+
         this.url = this.container.getAttribute('data-url');
 
         this.template = `<img class="bab-ImageGallery-item" src="{{ src }}" alt="" id="{{ id }}" />`;
@@ -12,10 +22,19 @@ class ImagesGallery {
         this.currentPage = 1;
         this.changeCurrentPage(this.currentPage);
 
+        this.containerDelegate = delegate(this.container);
+
         this.initEvents();
     }
 
-    initEvents() {}
+    initEvents() {
+        this.containerDelegate.on('click', 'img', (event) => {
+            const imageSelected = event.target;
+            const src = imageSelected.src;
+
+            this.options.onItemSelect(src);
+        });
+    }
 
     renderImagesList(images) {
         const fragment = document.createDocumentFragment();
@@ -46,30 +65,63 @@ class ImagesGallery {
     changeCurrentPage(page = this.currentPage) {
         this.loading()
             .then(() => this.getImages(page))
-            .then((data) => this.updateList(data))
+            .then((data) => {
+                const {images, pagination} = data;
+
+                this.updateList(images);
+                this.updatePagination(pagination);
+            });
     }
 
     loading() {
         return new Promise((resolve) => {
-            this.container.innerHTML = 'Chargement...';
+            this.disableAllButtons();
+            this.imagesList.innerHTML = 'Chargement...';
 
             resolve();
         });
     }
 
-    updateList(data) {
-        const {page, images} = data;
-
-        this.updatePagination(page);
-
+    updateList(images) {
         const fragment = this.renderImagesList(images);
 
-        this.container.innerHTML = '';
-        this.container.appendChild(fragment);
+        this.imagesList.innerHTML = '';
+        this.imagesList.appendChild(fragment);
     }
 
-    updatePagination() {
+    updatePagination(pagination) {
+        if (pagination.hasPreviousResults) {
+            this.enablePreviousPageButtons();
+        } else {
+            this.disablePreviousPageButtons();
+        }
 
+        if (pagination.hasNextResults) {
+            this.enableNextPageButtons();
+        } else {
+            this.disableNextPageButtons();
+        }
+    }
+
+    enablePreviousPageButtons() {
+        this.previousPageButtons.forEach(button => button.disabled = false);
+    }
+
+    disablePreviousPageButtons() {
+        this.previousPageButtons.forEach(button => button.disabled = true);
+    }
+
+    enableNextPageButtons() {
+        this.nextPageButtons.forEach(button => button.disabled = false);
+    }
+
+    disableNextPageButtons() {
+        this.nextPageButtons.forEach(button => button.disabled = true);
+    }
+
+    disableAllButtons() {
+        this.disablePreviousPageButtons();
+        this.disableNextPageButtons();
     }
 }
 
