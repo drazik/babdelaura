@@ -17,11 +17,8 @@ class ImageController extends Controller
     public function afficherGallerieAction() {
         $form = $this->createForm(new ImageType());
 
-        $getImagesActionUrl = $this->generateUrl('babdelaurablog_admin_getImages');
-
         return $this->render('BabdelauraBlogBundle:Admin/Image:listerImages.html.twig', array(
           'form' => $form->createView(),
-          'url' => $getImagesActionUrl
         ));
     }
 

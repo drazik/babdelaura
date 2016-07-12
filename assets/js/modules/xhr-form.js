@@ -13,6 +13,7 @@ class XHRForm {
 
         this.container = container;
         this.url = this.container.getAttribute('action');
+        this.submitButton = this.container.querySelector('[type="submit"]');
 
         this.initEvents();
     }
@@ -35,9 +36,14 @@ class XHRForm {
         const config = {};
         const {onSuccess, onError} = this.options;
 
+        this.submitButton.disabled = true;
+
         axios.post(this.url, data, config)
             .then(response => response.data)
             .then(response => {
+
+                this.submitButton.disabled = false;
+                this.container.reset();
 
                 if (response.success) {
                     return response.data;

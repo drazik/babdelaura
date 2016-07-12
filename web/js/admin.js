@@ -990,7 +990,7 @@
 	            onError: this.handleUploadError.bind(this)
 	        });
 
-	        this.gallery = new _imagesGallery2.default(this.container.querySelector('.js-images-gallery'));
+	        this.gallery = new _imagesGallery2.default(this.container.querySelector('.js-image-upload-gallery'));
 	    }
 
 	    /**
@@ -1001,7 +1001,7 @@
 	    _createClass(ImageUpload, [{
 	        key: 'handleUploadSuccess',
 	        value: function handleUploadSuccess() {
-	            window.location.reload(true);
+	            this.gallery.changeCurrentPage();
 	        }
 
 	        /**
@@ -1059,6 +1059,7 @@
 
 	        this.container = container;
 	        this.url = this.container.getAttribute('action');
+	        this.submitButton = this.container.querySelector('[type="submit"]');
 
 	        this.initEvents();
 	    }
@@ -1086,6 +1087,8 @@
 	    }, {
 	        key: 'submit',
 	        value: function submit() {
+	            var _this2 = this;
+
 	            var data = new FormData(this.container);
 	            var config = {};
 	            var _options = this.options;
@@ -1093,9 +1096,14 @@
 	            var onError = _options.onError;
 
 
+	            this.submitButton.disabled = true;
+
 	            _axios2.default.post(this.url, data, config).then(function (response) {
 	                return response.data;
 	            }).then(function (response) {
+
+	                _this2.submitButton.disabled = false;
+	                _this2.container.reset();
 
 	                if (response.success) {
 	                    return response.data;
@@ -2326,10 +2334,8 @@
 	        this.template = '<img class="bab-ImageGallery-item" src="{{ src }}" alt="" id="{{ id }}" />';
 	        _mustache2.default.parse(this.template);
 
-	        // récupérer en AJAX une liste d'images
-	        // boucler sur la liste pour afficher les images
-	        var currentPage = 1;
-	        this.changeCurrentPage(currentPage);
+	        this.currentPage = 1;
+	        this.changeCurrentPage(this.currentPage);
 
 	        this.initEvents();
 	    }
@@ -2372,8 +2378,10 @@
 	        }
 	    }, {
 	        key: 'changeCurrentPage',
-	        value: function changeCurrentPage(page) {
+	        value: function changeCurrentPage() {
 	            var _this2 = this;
+
+	            var page = arguments.length <= 0 || arguments[0] === undefined ? this.currentPage : arguments[0];
 
 	            this.loading().then(function () {
 	                return _this2.getImages(page);

@@ -9,10 +9,8 @@ class ImagesGallery {
         this.template = `<img class="bab-ImageGallery-item" src="{{ src }}" alt="" id="{{ id }}" />`;
         Mustache.parse(this.template);
 
-        // récupérer en AJAX une liste d'images
-        // boucler sur la liste pour afficher les images
-        const currentPage = 1;
-        this.changeCurrentPage(currentPage);
+        this.currentPage = 1;
+        this.changeCurrentPage(this.currentPage);
 
         this.initEvents();
     }
@@ -45,7 +43,7 @@ class ImagesGallery {
             .catch((error) => { throw new Error(error) });
     }
 
-    changeCurrentPage(page) {
+    changeCurrentPage(page = this.currentPage) {
         this.loading()
             .then(() => this.getImages(page))
             .then((data) => this.updateList(data))

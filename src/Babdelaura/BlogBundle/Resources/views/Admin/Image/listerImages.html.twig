@@ -4,18 +4,4 @@
     <h1>Gallerie</h1>
 
     {% include 'BabdelauraBlogBundle:Admin/Image:uploadImage.html.twig' %}
-
-    {#<div>
-        <div class="text-centered">
-                {{ knp_pagination_render(listeImages) }}
-        </div>
-        <div>
-            {% for image in listeImages %}
-                <img class="bab-ImageGallery-item" src="{{ asset(image.webPath) }}" id="{{image.id}}"/>
-            {% endfor %}
-        </div>
-        <div class="text-centered">
-                {{ knp_pagination_render(listeImages) }}
-        </div>
-    </div>#}
 {% endblock %}

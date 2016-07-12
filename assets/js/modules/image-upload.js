@@ -13,14 +13,14 @@ class ImageUpload {
             onError: this.handleUploadError.bind(this)
         });
 
-        this.gallery = new ImagesGallery(this.container.querySelector('.js-images-gallery'));
+        this.gallery = new ImagesGallery(this.container.querySelector('.js-image-upload-gallery'));
     }
 
     /**
      * Rafraichis la page lors du succès
      */
     handleUploadSuccess() {
-        window.location.reload(true);
+        this.gallery.changeCurrentPage();
     }
 
     /**
