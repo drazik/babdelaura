@@ -2384,7 +2384,11 @@
 	    }, {
 	        key: 'loading',
 	        value: function loading() {
+	            var _this3 = this;
+
 	            return new Promise(function (resolve) {
+	                _this3.container.innerHTML = 'Chargement...';
+
 	                resolve();
 	            });
 	        }

@@ -53,6 +53,8 @@ class ImagesGallery {
 
     loading() {
         return new Promise((resolve) => {
+            this.container.innerHTML = 'Chargement...';
+
             resolve();
         });
     }
