@@ -5,7 +5,7 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -14,32 +14,41 @@ use Babdelaura\BlogBundle\Form\ImageType;
 
 class ImageController extends Controller
 {
-    public function listerImagesAction() {
-        $request = $this->get('request');
-        $query = $request->query;
-
+    public function afficherGallerieAction() {
         $form = $this->createForm(new ImageType());
+
+        $getImagesActionUrl = $this->generateUrl('babdelaurablog_admin_getImages');
+
+        return $this->render('BabdelauraBlogBundle:Admin/Image:listerImages.html.twig', array(
+          'form' => $form->createView(),
+          'url' => $getImagesActionUrl
+        ));
+    }
+
+    public function getImagesAction(Request $request) {
+        $page = $request->query->getInt('page', 1);
+        $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
+        $firstResult = ($page - 1) * $nbImagesParPage;
+        $lastResult = $page * $nbImagesParPage;
 
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Image');
+        $images = $repository->findBy(array(), array('id' => 'desc'), $lastResult, $firstResult);
 
-
-        $items = $repository->findBy(array(), array('id' => 'desc'));
-        $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
-
-        $paginator  = $this->get('knp_paginator');
-        $listeImages = $paginator->paginate(
-            $items,
-            $query->get('page', 1),
-            $nbImagesParPage
+        $data = array(
+            'page' => $page,
+            'images' => array()
         );
-        $listeImages->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
 
-        return $this->render('BabdelauraBlogBundle:Admin/Image:listerImages.html.twig', array(
-          'listeImages' => $listeImages,
-          'form' => $form->createView()
-        ));
+        foreach ($images as $image) {
+            $data['images'][] = array(
+                'id' => $image->getId(),
+                'src' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath()
+            );
+        }
+
+        return new JsonResponse($data);
     }
 
     public function uploadAction() {

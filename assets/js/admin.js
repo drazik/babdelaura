@@ -1,5 +1,4 @@
 import 'classlist-polyfill';
-import 'whatwg-fetch';
 
 import Nav from './modules/nav';
 import Modal from './modules/modal';

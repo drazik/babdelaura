@@ -1,4 +1,5 @@
 import XHRForm from './xhr-form';
+import ImagesGallery from './images-gallery';
 
 /**
  * Gère un formulaire d'upload d'image
@@ -11,6 +12,8 @@ class ImageUpload {
             onSuccess: this.handleUploadSuccess.bind(this),
             onError: this.handleUploadError.bind(this)
         });
+
+        this.gallery = new ImagesGallery(this.container.querySelector('.js-images-gallery'));
     }
 
     /**

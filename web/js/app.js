@@ -48,25 +48,25 @@
 
 	__webpack_require__(1);
 
-	__webpack_require__(28);
+	__webpack_require__(29);
 
-	var _nav = __webpack_require__(3);
+	var _nav = __webpack_require__(2);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _imagesSlideshow = __webpack_require__(29);
+	var _imagesSlideshow = __webpack_require__(30);
 
 	var _imagesSlideshow2 = _interopRequireDefault(_imagesSlideshow);
 
-	var _notification = __webpack_require__(39);
+	var _notification = __webpack_require__(40);
 
 	var _notification2 = _interopRequireDefault(_notification);
 
-	var _cookieBar = __webpack_require__(40);
+	var _cookieBar = __webpack_require__(41);
 
 	var _cookieBar2 = _interopRequireDefault(_cookieBar);
 
-	var _articlesGrid = __webpack_require__(41);
+	var _articlesGrid = __webpack_require__(42);
 
 	var _articlesGrid2 = _interopRequireDefault(_articlesGrid);
 
@@ -320,8 +320,7 @@
 	}
 
 /***/ },
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -333,6 +332,10 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Gestion de l'affichage du menu en mobile
+	 */
 
 	var Nav = function () {
 	    function Nav(container) {
@@ -352,6 +355,11 @@
 	        this.initEvents();
 	    }
 
+	    /**
+	     * Au click sur le bouton, toggle le menu
+	     */
+
+
 	    _createClass(Nav, [{
 	        key: 'initEvents',
 	        value: function initEvents() {
@@ -361,6 +369,11 @@
 	                return _this.toggle();
 	            });
 	        }
+
+	        /**
+	         * Ouvre ou ferme le menu selon son état actuel
+	         */
+
 	    }, {
 	        key: 'toggle',
 	        value: function toggle() {
@@ -376,8 +389,8 @@
 	exports.default = Nav;
 
 /***/ },
-/* 4 */,
-/* 5 */
+/* 3 */,
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*jshint browser:true, node:true*/
@@ -393,7 +406,7 @@
 	 * @license MIT License (see LICENSE.txt)
 	 */
 
-	var Delegate = __webpack_require__(6);
+	var Delegate = __webpack_require__(5);
 
 	module.exports = function (root) {
 	  return new Delegate(root);
@@ -402,7 +415,7 @@
 	module.exports.Delegate = Delegate;
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	/*jshint browser:true, node:true*/
@@ -847,6 +860,7 @@
 	};
 
 /***/ },
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
@@ -868,7 +882,8 @@
 /* 25 */,
 /* 26 */,
 /* 27 */,
-/* 28 */
+/* 28 */,
+/* 29 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1094,7 +1109,7 @@
 	})(window, document);
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1105,17 +1120,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _url = __webpack_require__(30);
+	var _url = __webpack_require__(31);
 
-	var _photoswipe = __webpack_require__(37);
+	var _photoswipe = __webpack_require__(38);
 
 	var _photoswipe2 = _interopRequireDefault(_photoswipe);
 
-	var _photoswipeUiDefault = __webpack_require__(38);
+	var _photoswipeUiDefault = __webpack_require__(39);
 
 	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
 
-	var _domDelegate = __webpack_require__(5);
+	var _domDelegate = __webpack_require__(4);
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
@@ -1124,6 +1139,10 @@
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Slideshow d'images
+	 */
 
 	var ImagesSlideshow = function () {
 	    function ImagesSlideshow(container) {
@@ -1150,6 +1169,12 @@
 	        this.initEvents();
 	    }
 
+	    /**
+	     * Initialise les objets à passer à PhotoSwipe
+	     * PhotoSwipe a besoin de la src et des dimensions de chaque image
+	     */
+
+
 	    _createClass(ImagesSlideshow, [{
 	        key: 'initPhotoSwipeItems',
 	        value: function initPhotoSwipeItems() {
@@ -1163,48 +1188,31 @@
 	                    h: parseInt(srcParams.height, 10)
 	                };
 
-	                // Si on a déjà les dimensions, on push
-	                if (item.w > 0 && item.h > 0) {
-	                    _this.photoSwipeItems.push(item);
-	                    return;
-	                }
-
-	                // Sinon, c'est une vieille image uploadée avant la mise en place
-	                // de l'ajout automatique des dimensions, il faut les calculer...
-	                _this.loadImage(image);
+	                _this.photoSwipeItems.push(item);
 	            });
 	        }
-	    }, {
-	        key: 'loadImage',
-	        value: function loadImage(image) {
-	            var _this2 = this;
 
-	            var tmpImage = new Image();
+	        /**
+	         * Gestion du click sur une image
+	         */
 
-	            tmpImage.onload = function () {
-	                var item = {
-	                    src: tmpImage.src,
-	                    w: tmpImage.width,
-	                    h: tmpImage.height
-	                };
-
-	                _this2.photoSwipeItems.push(item);
-	            };
-
-	            tmpImage.src = image.src;
-	        }
 	    }, {
 	        key: 'initEvents',
 	        value: function initEvents() {
-	            var _this3 = this;
+	            var _this2 = this;
 
 	            this.containerDelegate.on('click', 'img', function (event) {
 	                var img = event.target;
-	                var imgIndex = _this3.images.indexOf(img);
+	                var imgIndex = _this2.images.indexOf(img);
 
-	                _this3.show(imgIndex);
+	                _this2.show(imgIndex);
 	            });
 	        }
+
+	        /**
+	         * Ouvre le slideshow directement à l'index donné
+	         */
+
 	    }, {
 	        key: 'show',
 	        value: function show(index) {
@@ -1220,7 +1228,7 @@
 	exports.default = ImagesSlideshow;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1248,7 +1256,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(31);
+	var punycode = __webpack_require__(32);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1327,7 +1335,7 @@
 	  'gopher:': true,
 	  'file:': true
 	},
-	    querystring = __webpack_require__(34);
+	    querystring = __webpack_require__(35);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1911,7 +1919,7 @@
 	}
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
@@ -2424,7 +2432,7 @@
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
-		if ("function" == 'function' && _typeof(__webpack_require__(33)) == 'object' && __webpack_require__(33)) {
+		if ("function" == 'function' && _typeof(__webpack_require__(34)) == 'object' && __webpack_require__(34)) {
 			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return punycode;
 			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2443,10 +2451,10 @@
 			root.punycode = punycode;
 		}
 	})(undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)(module), (function() { return this; }())))
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2463,7 +2471,7 @@
 	};
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -2471,16 +2479,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(35);
-	exports.encode = exports.stringify = __webpack_require__(36);
+	exports.decode = exports.parse = __webpack_require__(36);
+	exports.encode = exports.stringify = __webpack_require__(37);
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2569,7 +2577,7 @@
 	};
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2638,7 +2646,7 @@
 	};
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6178,7 +6186,7 @@
 	});
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6976,7 +6984,7 @@
 	});
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6988,6 +6996,10 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Gestion de l'affichage des notifications
+	 */
 
 	var Notification = function () {
 	    function Notification(container) {
@@ -7006,6 +7018,11 @@
 	        }, this.options.timeBeforeClose);
 	    }
 
+	    /**
+	     * Femerture de la notification
+	     */
+
+
 	    _createClass(Notification, [{
 	        key: "close",
 	        value: function close() {
@@ -7019,7 +7036,7 @@
 	exports.default = Notification;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7031,6 +7048,10 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Gère l'affichage de la cookiebar
+	 */
 
 	var CookieBar = function () {
 	    function CookieBar(container) {
@@ -7046,6 +7067,9 @@
 	        this.container = container;
 	        this.button = this.container.querySelector('.js-cookie-bar-button');
 
+	        // On récupère le cookie, et si il ne vaut pas la valeur attendue,
+	        // cela veut dire que les cookies n'ont pas été acceptés, donc
+	        // on affiche la cookiebar
 	        var cookie = this.getCookie(this.options.cookieName);
 
 	        if (cookie !== this.options.cookieValue) {
@@ -7064,6 +7088,11 @@
 	                return _this.accept();
 	            });
 	        }
+
+	        /**
+	         * Ajoute un cookie avec la valeur attendue et ferme la cookiebar
+	         */
+
 	    }, {
 	        key: 'accept',
 	        value: function accept() {
@@ -7071,22 +7100,42 @@
 
 	            this.setCookie(this.options.cookieName, this.options.cookieValue, this.options.cookieDuration);
 	        }
+
+	        /**
+	         * Affiche la cookiebar
+	         */
+
 	    }, {
 	        key: 'open',
 	        value: function open() {
 	            this.container.classList.add(this.options.containerOpenClass);
 	        }
+
+	        /**
+	         * Ferme la cookiebar
+	         */
+
 	    }, {
 	        key: 'close',
 	        value: function close() {
 	            this.container.classList.remove(this.options.containerOpenClass);
 	        }
+
+	        /**
+	         * Récupère la valeur d'un cookie
+	         */
+
 	    }, {
 	        key: 'getCookie',
 	        value: function getCookie(name) {
 	            var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
 	            return v ? v[2] : null;
 	        }
+
+	        /**
+	         * Attribue une valeur à un cookie pour un nombre de jours donné
+	         */
+
 	    }, {
 	        key: 'setCookie',
 	        value: function setCookie(name, value, days) {
@@ -7102,7 +7151,7 @@
 	exports.default = CookieBar;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7113,17 +7162,21 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _domDelegate = __webpack_require__(5);
+	var _domDelegate = __webpack_require__(4);
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
-	var _closest = __webpack_require__(42);
+	var _closest = __webpack_require__(43);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Gère le touch sur les grilles d'articles
+	 */
 
 	var ArticlesGrid = function () {
 	    function ArticlesGrid(container) {
@@ -7141,9 +7194,12 @@
 	            var _this = this;
 
 	            if (window.feature.touch) {
+	                // Au click sur un lien, on empêche la propagation de l'event aux parents
 	                this.containerDelegate.on('click', '.js-articles-grid-item a', function (event) {
 	                    return event.stopPropagation();
 	                });
+
+	                // Au click sur un item, on toggle le panneau de détail
 	                this.containerDelegate.on('click', '.js-articles-grid-item', function (event) {
 	                    var item = (0, _closest2.default)(event.target, '.js-articles-grid-item', true);
 
@@ -7151,6 +7207,11 @@
 	                });
 	            }
 	        }
+
+	        /**
+	         * Toggle la classe "hover" sur un item de la grille
+	         */
+
 	    }, {
 	        key: 'toggleDetails',
 	        value: function toggleDetails(item) {
@@ -7164,12 +7225,12 @@
 	exports.default = ArticlesGrid;
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(43);
+	var matches = __webpack_require__(44);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -7181,7 +7242,7 @@
 	};
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports) {
 
 	"use strict";

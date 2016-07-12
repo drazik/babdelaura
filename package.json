@@ -54,8 +54,8 @@
     "feature.js": "^1.0.0",
     "font-awesome": "^4.4.0",
     "jquery": "^2.2.1",
+    "mustache": "^2.2.1",
     "normalize.css": "^3.0.3",
-    "photoswipe": "^4.1.0",
-    "whatwg-fetch": "^0.11.1"
+    "photoswipe": "^4.1.0"
   }
 }

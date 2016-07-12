@@ -1,10 +1,10 @@
-babdelaurablog_admin_listerImages:
-    path: /admin/galleriepopup
-    defaults: {_controller: BabdelauraBlogBundle:Image:listerImages}
-
 babdelaurablog_admin_gallerieImages:
     path: /admin/gallerie
-    defaults: {_controller: BabdelauraBlogBundle:Image:listerImages}
+    defaults: {_controller: BabdelauraBlogBundle:Image:afficherGallerie}
+
+babdelaurablog_admin_getImages:
+    path: /admin/getImages
+    defaults: {_controller: BabdelauraBlogBundle:Image:getImages}
 
 babdelaurablog_admin_uploaderImage:
     path: /admin/uploadImage
