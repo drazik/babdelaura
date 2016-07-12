@@ -34,6 +34,9 @@ class ImagesGallery {
 
             this.options.onItemSelect(src);
         });
+
+        this.containerDelegate.on('click', '.js-images-gallery-previous', () => this.getPreviousPage());
+        this.containerDelegate.on('click', '.js-images-gallery-next', () => this.getNextPage());
     }
 
     renderImagesList(images) {
@@ -70,6 +73,8 @@ class ImagesGallery {
 
                 this.updateList(images);
                 this.updatePagination(pagination);
+
+                this.currentPage = page;
             });
     }
 
@@ -122,6 +127,22 @@ class ImagesGallery {
     disableAllButtons() {
         this.disablePreviousPageButtons();
         this.disableNextPageButtons();
+    }
+
+    getPreviousPage() {
+        const page = this.currentPage - 1;
+
+        if (page === 0) {
+            return;
+        }
+
+        this.changeCurrentPage(page);
+    }
+
+    getNextPage() {
+        const page = this.currentPage + 1;
+
+        this.changeCurrentPage(page);
     }
 }
 

@@ -28,16 +28,19 @@ class ImageController extends Controller
         $firstResult = ($page - 1) * $nbImagesParPage;
         $lastResult = $page * $nbImagesParPage;
 
+        // si $lastResult < count()
+
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Image');
+        $nbImagesTotal = count($repository->findAll());
         $images = $repository->findBy(array(), array('id' => 'desc'), $lastResult, $firstResult);
 
         $data = array(
             'pagination' => array(
                 'currentPage' => $page,
                 'hasPreviousResults' => $page > 1,
-                'hasNextResults' => true
+                'hasNextResults' => $lastResult < $nbImagesTotal
             ),
             'images' => array()
         );

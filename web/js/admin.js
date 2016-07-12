@@ -2378,6 +2378,13 @@
 
 	                _this.options.onItemSelect(src);
 	            });
+
+	            this.containerDelegate.on('click', '.js-images-gallery-previous', function () {
+	                return _this.getPreviousPage();
+	            });
+	            this.containerDelegate.on('click', '.js-images-gallery-next', function () {
+	                return _this.getNextPage();
+	            });
 	        }
 	    }, {
 	        key: 'renderImagesList',
@@ -2428,6 +2435,8 @@
 
 	                _this3.updateList(images);
 	                _this3.updatePagination(pagination);
+
+	                _this3.currentPage = page;
 	            });
 	        }
 	    }, {
@@ -2498,6 +2507,24 @@
 	        value: function disableAllButtons() {
 	            this.disablePreviousPageButtons();
 	            this.disableNextPageButtons();
+	        }
+	    }, {
+	        key: 'getPreviousPage',
+	        value: function getPreviousPage() {
+	            var page = this.currentPage - 1;
+
+	            if (page === 0) {
+	                return;
+	            }
+
+	            this.changeCurrentPage(page);
+	        }
+	    }, {
+	        key: 'getNextPage',
+	        value: function getNextPage() {
+	            var page = this.currentPage + 1;
+
+	            this.changeCurrentPage(page);
 	        }
 	    }]);
 
