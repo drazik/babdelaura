@@ -2,7 +2,7 @@ import Mustache from 'mustache';
 import axios from 'axios';
 import delegate from 'dom-delegate';
 
-class ImagesGallery {
+class ImagesList {
     constructor(container, options = {}) {
         this.options = {
             onItemSelect: () => {},
@@ -146,4 +146,4 @@ class ImagesGallery {
     }
 }
 
-export default ImagesGallery;
+export default ImagesList;
