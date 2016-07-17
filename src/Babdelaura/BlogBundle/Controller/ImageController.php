@@ -17,7 +17,7 @@ class ImageController extends Controller
     public function afficherGallerieAction() {
         $form = $this->createForm(new ImageType());
 
-        return $this->render('BabdelauraBlogBundle:Admin/Image:listerImages.html.twig', array(
+        return $this->render('BabdelauraBlogBundle:Admin/Image:gallerie.html.twig', array(
           'form' => $form->createView(),
         ));
     }
@@ -27,8 +27,6 @@ class ImageController extends Controller
         $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
         $firstResult = ($page - 1) * $nbImagesParPage;
         $lastResult = $page * $nbImagesParPage;
-
-        // si $lastResult < count()
 
         $repository = $this->getDoctrine()
                            ->getManager()
