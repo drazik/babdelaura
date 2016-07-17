@@ -144,6 +144,10 @@ class ImagesList {
 
         this.changeCurrentPage(page);
     }
+
+    refresh() {
+        this.changeCurrentPage();
+    }
 }
 
 export default ImagesList;
