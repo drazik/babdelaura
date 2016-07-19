@@ -50,7 +50,9 @@
 }
 
 .bab-Article-content table {
-    width: 100%;
+    width: calc(100% + 10px);
+    margin-left: -5px;
+    margin-right: -5px;
 
     table-layout: fixed;
 }
@@ -58,14 +60,6 @@
 .bab-Article-content table td {
     border: 0;
     padding: 5px;
-}
-
-.bab-Article-content table td:first-child {
-    padding-left: 0;
-}
-
-.bab-Article-content table td:last-child {
-    padding-right: 0;
 }
 
 .bab-Article-content--gallery img {
