@@ -64,6 +64,10 @@
 
 	var _imageUploadList2 = _interopRequireDefault(_imageUploadList);
 
+	var _modalImagePicker = __webpack_require__(29);
+
+	var _modalImagePicker2 = _interopRequireDefault(_modalImagePicker);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -79,6 +83,11 @@
 	var imageUploadListContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-image-upload-list')));
 	imageUploadListContainers.forEach(function (container) {
 	    return new _imageUploadList2.default(container);
+	});
+
+	var modalImagePickerContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-modal-image-picker')));
+	modalImagePickerContainers.forEach(function (container) {
+	    return new _modalImagePicker2.default(container);
 	});
 
 	var editor = _ContentTools2.default.EditorApp.get();
@@ -2343,7 +2352,7 @@
 
 	        this.url = this.container.getAttribute('data-url');
 
-	        this.template = '<img class="bab-ImageGallery-item" src="{{ src }}" alt="" id="{{ id }}" />';
+	        this.template = '<img class="bab-ImageGallery-item js-image-picker-item" src="{{ src }}" alt="" id="{{ id }}" />';
 	        _mustache2.default.parse(this.template);
 
 	        this.currentPage = 1;
@@ -3138,6 +3147,113 @@
 	  mustache.Context = Context;
 	  mustache.Writer = Writer;
 	});
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _modal = __webpack_require__(3);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
+	var _imagePicker = __webpack_require__(30);
+
+	var _imagePicker2 = _interopRequireDefault(_imagePicker);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ModalImagePicker = function ModalImagePicker(container) {
+	    var _this = this;
+
+	    _classCallCheck(this, ModalImagePicker);
+
+	    this.container = container;
+	    this.modal = new _modal2.default(this.container);
+	    this.imagePicker = new _imagePicker2.default(this.container.querySelector('.js-image-picker'), {
+	        onItemSelect: function onItemSelect() {
+	            return _this.modal.close();
+	        }
+	    });
+	};
+
+	exports.default = ModalImagePicker;
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _domDelegate = __webpack_require__(4);
+
+	var _domDelegate2 = _interopRequireDefault(_domDelegate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ImagePicker = function () {
+	    function ImagePicker(container) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        _classCallCheck(this, ImagePicker);
+
+	        this.options = _extends({
+	            onItemSelect: function onItemSelect() {}
+	        }, options);
+
+	        this.container = container;
+	        this.preview = document.querySelector(this.container.getAttribute('data-image-picker-preview'));
+	        this.input = document.querySelector(this.container.getAttribute('data-image-picker-input'));
+
+	        this.containerDelegate = (0, _domDelegate2.default)(this.container);
+
+	        this.initEvents();
+	    }
+
+	    _createClass(ImagePicker, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            this.containerDelegate.on('click', '.js-image-picker-item', this.handleItemSelect.bind(this));
+	        }
+	    }, {
+	        key: 'handleItemSelect',
+	        value: function handleItemSelect(event) {
+	            var src = event.target.src;
+
+
+	            this.setCurrentImage(src);
+
+	            this.options.onItemSelect();
+	        }
+	    }, {
+	        key: 'setCurrentImage',
+	        value: function setCurrentImage(src) {
+	            this.preview.src = src;
+	            this.input.value = src;
+	        }
+	    }]);
+
+	    return ImagePicker;
+	}();
+
+	exports.default = ImagePicker;
 
 /***/ }
 /******/ ]);

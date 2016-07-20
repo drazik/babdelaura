@@ -62,14 +62,16 @@
         <button class="bab-Button" id="submit-btn" type="submit">Enregistrer l'article</button>
     </form>
 
-    <div class="bab-Modal js-modal" id="choose-image">
+    <div class="bab-Modal js-modal-image-picker" id="choose-image">
         <div class="bab-Modal-shadow"></div>
         <div class="bab-Modal-container">
             <button class="bab-Modal-close js-modal-closer" type="button">
                 <i class="fa fa-times"></i>
             </button>
 
-            {% include 'BabdelauraBlogBundle:Admin/Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
+            <div class="js-image-picker" data-image-picker-preview="#image-preview" data-image-picker-input="#babdelaura_blogbundle_article_imageTemp">
+                {% include 'BabdelauraBlogBundle:Admin/Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
+            </div>
         </div>
     <div>
 {% endblock %}

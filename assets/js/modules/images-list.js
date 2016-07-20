@@ -16,7 +16,7 @@ class ImagesList {
 
         this.url = this.container.getAttribute('data-url');
 
-        this.template = `<img class="bab-ImageGallery-item" src="{{ src }}" alt="" id="{{ id }}" />`;
+        this.template = `<img class="bab-ImageGallery-item js-image-picker-item" src="{{ src }}" alt="" id="{{ id }}" />`;
         Mustache.parse(this.template);
 
         this.currentPage = 1;
