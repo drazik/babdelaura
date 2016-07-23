@@ -2,9 +2,9 @@ import 'classlist-polyfill';
 
 import Nav from './modules/nav';
 import Modal from './modules/modal';
-import ContentTools from 'ContentTools';
 import ImageUploadList from './modules/image-upload-list';
 import ModalImagePicker from './modules/modal-image-picker';
+import WYSIWYGEditor from './modules/wysiwyg-editor';
 
 const navContainer = document.querySelector('.js-nav');
 new Nav(navContainer);
@@ -18,13 +18,4 @@ imageUploadListContainers.forEach(container => new ImageUploadList(container));
 const modalImagePickerContainers = [...document.querySelectorAll('.js-modal-image-picker')];
 modalImagePickerContainers.forEach(container => new ModalImagePicker(container));
 
-const editor = ContentTools.EditorApp.get();
-editor.init('*[data-editable]', 'data-name');
-editor.addEventListener('saved', function (event) {
-    const regions = event.detail().regions;
-
-    for (let name in regions) {
-        const formElement = document.getElementById(name);
-        formElement.value = regions[name];
-    }
-});
+new WYSIWYGEditor('*[data-editable]', 'data-name');

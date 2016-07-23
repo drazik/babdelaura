@@ -48,25 +48,25 @@
 
 	__webpack_require__(1);
 
-	__webpack_require__(31);
+	__webpack_require__(32);
 
 	var _nav = __webpack_require__(2);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _imagesSlideshow = __webpack_require__(32);
+	var _imagesSlideshow = __webpack_require__(33);
 
 	var _imagesSlideshow2 = _interopRequireDefault(_imagesSlideshow);
 
-	var _notification = __webpack_require__(42);
+	var _notification = __webpack_require__(43);
 
 	var _notification2 = _interopRequireDefault(_notification);
 
-	var _cookieBar = __webpack_require__(43);
+	var _cookieBar = __webpack_require__(44);
 
 	var _cookieBar2 = _interopRequireDefault(_cookieBar);
 
-	var _articlesGrid = __webpack_require__(44);
+	var _articlesGrid = __webpack_require__(45);
 
 	var _articlesGrid2 = _interopRequireDefault(_articlesGrid);
 
@@ -885,7 +885,8 @@
 /* 28 */,
 /* 29 */,
 /* 30 */,
-/* 31 */
+/* 31 */,
+/* 32 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1111,7 +1112,7 @@
 	})(window, document);
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1122,13 +1123,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _url = __webpack_require__(33);
+	var _url = __webpack_require__(34);
 
-	var _photoswipe = __webpack_require__(40);
+	var _photoswipe = __webpack_require__(41);
 
 	var _photoswipe2 = _interopRequireDefault(_photoswipe);
 
-	var _photoswipeUiDefault = __webpack_require__(41);
+	var _photoswipeUiDefault = __webpack_require__(42);
 
 	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
 
@@ -1230,7 +1231,7 @@
 	exports.default = ImagesSlideshow;
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1258,7 +1259,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(34);
+	var punycode = __webpack_require__(35);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1337,7 +1338,7 @@
 	  'gopher:': true,
 	  'file:': true
 	},
-	    querystring = __webpack_require__(37);
+	    querystring = __webpack_require__(38);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1921,7 +1922,7 @@
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
@@ -2434,7 +2435,7 @@
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
-		if ("function" == 'function' && _typeof(__webpack_require__(36)) == 'object' && __webpack_require__(36)) {
+		if ("function" == 'function' && _typeof(__webpack_require__(37)) == 'object' && __webpack_require__(37)) {
 			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return punycode;
 			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2453,10 +2454,10 @@
 			root.punycode = punycode;
 		}
 	})(undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module), (function() { return this; }())))
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2473,7 +2474,7 @@
 	};
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -2481,16 +2482,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(38);
-	exports.encode = exports.stringify = __webpack_require__(39);
+	exports.decode = exports.parse = __webpack_require__(39);
+	exports.encode = exports.stringify = __webpack_require__(40);
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2579,7 +2580,7 @@
 	};
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2648,7 +2649,7 @@
 	};
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6188,7 +6189,7 @@
 	});
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6986,7 +6987,7 @@
 	});
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7038,7 +7039,7 @@
 	exports.default = Notification;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7153,7 +7154,7 @@
 	exports.default = CookieBar;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7168,7 +7169,7 @@
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
-	var _closest = __webpack_require__(45);
+	var _closest = __webpack_require__(46);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
@@ -7227,12 +7228,12 @@
 	exports.default = ArticlesGrid;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(46);
+	var matches = __webpack_require__(47);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -7244,7 +7245,7 @@
 	};
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
 	"use strict";
