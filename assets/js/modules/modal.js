@@ -11,6 +11,7 @@ class Modal {
         };
 
         this.container = container;
+        this.id = this.container.id;
 
         this.bodyDelegate = delegate(document.body);
         this.containerDelegate = delegate(this.container);
@@ -25,7 +26,7 @@ class Modal {
      *  - Fermeture de la modale (à l'appui sur la touche ECHAP)
      */
     initEvents() {
-        this.bodyDelegate.on('click', `.js-modal-opener[data-target="${this.container.id}"]`, this.open.bind(this));
+        this.bodyDelegate.on('click', `.js-modal-opener[data-target="${this.id}"]`, this.open.bind(this));
         this.containerDelegate.on('click', '.js-modal-closer', this.close.bind(this));
 
         window.addEventListener('keyup', event => {

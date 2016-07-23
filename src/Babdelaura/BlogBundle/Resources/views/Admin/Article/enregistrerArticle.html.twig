@@ -24,7 +24,7 @@
 
         <div class="bab-Grid">
             <div class="form-group bab-Grid-cell bab-Grid-cell--1-2">
-                <button class="bab-Button js-modal-opener" data-target="choose-image" type="button">
+                <button class="bab-Button js-modal-opener" data-target="choose-main-image" type="button">
                     <i class="fa fa-camera"></i> Choisir une image principale
                 </button>
 
@@ -62,16 +62,29 @@
         <button class="bab-Button" id="submit-btn" type="submit">Enregistrer l'article</button>
     </form>
 
-    <div class="bab-Modal js-modal-image-picker" id="choose-image">
+    <div class="bab-Modal js-preview-modal-image-picker" id="choose-main-image" data-preview-element="#image-preview" data-input="#babdelaura_blogbundle_article_imageTemp">
         <div class="bab-Modal-shadow"></div>
         <div class="bab-Modal-container">
             <button class="bab-Modal-close js-modal-closer" type="button">
                 <i class="fa fa-times"></i>
             </button>
 
-            <div class="js-image-picker" data-image-picker-preview="#image-preview" data-image-picker-input="#babdelaura_blogbundle_article_imageTemp">
+            <div class="js-image-picker">
                 {% include 'BabdelauraBlogBundle:Admin/Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
             </div>
         </div>
-    <div>
+    </div>
+
+    <div class="bab-Modal js-wysiwyg-image-picker" id="choose-wysiwyg-image">
+        <div class="bab-Modal-shadow"></div>
+        <div class="bab-Modal-container">
+            <button class="bab-Modal-close js-modal-closer" type="button">
+                <i class="fa fa-times"></i>
+            </button>
+
+            <div class="js-image-picker">
+                {% include 'BabdelauraBlogBundle:Admin/Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

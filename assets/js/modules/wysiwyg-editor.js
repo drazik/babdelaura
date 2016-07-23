@@ -1,4 +1,5 @@
 import ContentTools from 'ContentTools';
+import ModalImagePicker from './modal-image-picker';
 
 class WYSIWYGEditor {
     constructor(selector, name) {
@@ -11,6 +12,8 @@ class WYSIWYGEditor {
     }
 
     initTools() {
+        ContentTools.ToolShelf.stow(new ImagePickerTool(), 'image');
+
         ContentTools.DEFAULT_TOOLS = [
             [
                 'bold',
@@ -30,6 +33,8 @@ class WYSIWYGEditor {
                 'unindent',
                 'line-break'
             ], [
+                'image'
+            ], [
                 'undo',
                 'redo',
                 'remove'
@@ -48,6 +53,52 @@ class WYSIWYGEditor {
             const formElement = document.getElementById(name);
             formElement.value = regions[name];
         }
+    }
+}
+
+class ImagePickerTool extends ContentTools.Tool {
+    constructor() {
+        super();
+
+        this.label = 'Image';
+        this.icon = 'image';
+        this.imagePicker = new WYSIWYGImagePicker(document.querySelector('.js-wysiwyg-image-picker'));
+    }
+
+    canApply(element, selection) {
+        if (selection == null || element == null) {
+            return false;
+        }
+
+        const {_from: from, _to: to} = selection;
+
+        return from === to;
+    }
+
+    isApplied(/*element, selection*/) {
+        // TODO
+
+        return false;
+    }
+
+    apply(/*element, selection, callback*/) {
+        this.imagePicker.open();
+    }
+}
+
+class WYSIWYGImagePicker {
+    constructor(container) {
+        this.modalImagePicker = new ModalImagePicker(container, {
+            onItemSelect: () => {}
+        });
+    }
+
+    open() {
+        this.modalImagePicker.open();
+    }
+
+    close() {
+        this.modalImagePicker.close();
     }
 }
 

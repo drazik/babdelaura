@@ -8,8 +8,6 @@ class ImagePicker {
         };
 
         this.container = container;
-        this.preview = document.querySelector(this.container.getAttribute('data-image-picker-preview'));
-        this.input = document.querySelector(this.container.getAttribute('data-image-picker-input'));
 
         this.containerDelegate = delegate(this.container);
 
@@ -23,14 +21,7 @@ class ImagePicker {
     handleItemSelect(event) {
         const {src} = event.target;
 
-        this.setCurrentImage(src);
-
-        this.options.onItemSelect();
-    }
-
-    setCurrentImage(src) {
-        this.preview.src = src;
-        this.input.value = src;
+        this.options.onItemSelect(src);
     }
 }
 
