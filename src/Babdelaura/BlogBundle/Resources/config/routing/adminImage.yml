@@ -1,12 +1,11 @@
-babdelaurablog_admin_listerImages:
-    path: /admin/galleriepopup
-    defaults: {_controller: BabdelauraBlogBundle:Image:listerImages}
-
 babdelaurablog_admin_gallerieImages:
     path: /admin/gallerie
-    defaults: {_controller: BabdelauraBlogBundle:Image:listerImages}
+    defaults: {_controller: BabdelauraBlogBundle:Image:afficherGallerie}
+
+babdelaurablog_admin_getImages:
+    path: /admin/getImages
+    defaults: {_controller: BabdelauraBlogBundle:Image:getImages}
 
 babdelaurablog_admin_uploaderImage:
-    path: /admin/uploadImage/{addWatermark}
-    defaults: {_controller: BabdelauraBlogBundle:Image:upload, addWatermark: true}
-
+    path: /admin/uploadImage
+    defaults: {_controller: BabdelauraBlogBundle:Image:upload}

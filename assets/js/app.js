@@ -1,21 +1,23 @@
-'use strict';
+import 'classlist-polyfill';
+import 'feature.js';
 
-var jQuery = require('jquery');
+import Nav from './modules/nav';
+import ImagesSlideshow from './modules/images-slideshow';
+import Notification from './modules/notification';
+import CookieBar from './modules/cookie-bar';
+import ArticlesGrid from './modules/articles-grid';
 
-window.jQuery = jQuery;
-window.$ = jQuery;
+const cookieBarContainer = document.querySelector('.js-cookie-bar');
+new CookieBar(cookieBarContainer);
 
-var MainNav = require('./modules/main-nav');
-var TouchEffect = require('./modules/toucheffect');
-var Gallery = require('./modules/gallery');
-require('./modules/jquery.cookiebar');
-require('./modules/spoiler');
+const navContainer = document.querySelector('.js-nav');
+new Nav(navContainer);
 
-var mainNav = new MainNav();
-mainNav.run();
+const imagesSlideshowContainers = [...document.querySelectorAll('.js-images-slideshow')];
+imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container));
 
-var touchEffect = new TouchEffect();
-touchEffect.run();
+const notificationContainers = [...document.querySelectorAll('.js-notification')];
+notificationContainers.forEach(container => new Notification(container));
 
-var gallery = new Gallery();
-gallery.initialize();
+const articlesGridContainers = [...document.querySelectorAll('.js-articles-grid')];
+articlesGridContainers.forEach(container => new ArticlesGrid(container));

@@ -22,7 +22,8 @@
         "oh/instagram-bundle" : "dev-master",
         "knplabs/knp-paginator-bundle": "~2.4",
         "imagine/imagine": "0.6.*",
-        "excelwebzone/recaptcha-bundle": "2.3.*@dev"
+        "excelwebzone/recaptcha-bundle": "2.3.*@dev",
+        "jms/serializer-bundle": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

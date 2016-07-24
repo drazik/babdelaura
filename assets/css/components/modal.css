@@ -19,6 +19,7 @@
     z-index: 101;
     background-color: #fff;
     overflow-y: scroll;
+    padding: 20px;
 }
 
 .bab-Modal--open .bab-Modal-shadow,
@@ -32,13 +33,14 @@
     right: 1em;
     border-width: 0;
     background-color: transparent;
+    z-index: 2;
 }
 
 .bab-Modal-content {
     padding: 1em 3em 1em 1em;
 }
 
-@media screen and (max-width: 500px) {
+@media (--small-viewport){
     .bab-Modal-container {
         top: 1em;
         bottom: 1em;

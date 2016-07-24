@@ -19,9 +19,6 @@
 
         <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
 
-        <script>var ESPACE_ADMIN = false;</script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
     </head>
     <body>
@@ -38,85 +35,94 @@
             <a class="bab-Header-link" href="{{ path('babdelaurablog_accueil') }}">Revenir à l'accueil</a>
         </header>
 
-        <nav class="bab-MainNav" id="main-nav">
+        <nav class="bab-MainNav js-nav">
             <div class="bab-Wrapper">
                 {{ render(controller('BabdelauraBlogBundle:Blog:mainMenu')) }}
             </div>
         </nav>
 
         <div class="content">
-            <div class="content-inner bab-Wrapper row">
-                {% block content %}
-                <div class="eight columns">
-                    {% block mainContent %}
-                    {% endblock %}
-                </div>
-                <div class="four columns">
-                    {% block sidebar %}
-                    <section class="bab-Sidebar-section">
-                        <h1 class="bab-Sidebar-title">Rechercher</h1>
-                        <form class="bab-Searchbar" method="get" action="{{ path('babdelaurablog_recherche') }}">
-                            <input class="bab-Searchbar-input" name="motscles" id="search" placeholder="Tapez ici votre recherche" />
-                            <button class="bab-Searchbar-submit" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </form>
-                    </section>
-                    <section class="bab-Sidebar-section">
-                        <h1 class="bab-Sidebar-title">Où me trouver</h1>
-                        <ul class="bab-Social">
-                            <li class="bab-Social-link">
-                                <a href="https://www.facebook.com/BabDeLaura" target="_blank" title="Facebook">
-                                    <i class="bab-Social-icon bab-Social-icon--fb"></i>
-                                    Bric à Brac de Laura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="https://twitter.com/BabDeLaura" target="_blank" title="Twitter">
-                                    <i class="bab-Social-icon bab-Social-icon--twitter"></i>
-                                    @BabDeLaura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="http://www.pinterest.com/BabDeLaura/" target="_blank" title="Pinterest">
-                                    <i class="bab-Social-icon bab-Social-icon--pinterest"></i>
-                                    BabDeLaura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="http://instagram.com/BabDeLaura" target="_blank" title="Instagram">
-                                    <i class="bab-Social-icon bab-Social-icon--instagram"></i>
-                                    BabDeLaura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="http://www.hellocoton.fr/mapage/bricabrac-de-laura" target="_blank" title="Hellocoton">
-                                    <i class="bab-Social-icon bab-Social-icon--hellocoton"></i>
-                                    Bricabrac-de-laura
-                                </a>
-                            </li>
-                            <li class="bab-Social-link">
-                                <a href="{{ path('babdelaurablog_rss') }}" target="_blank" title="RSS">
-                                    <i class="bab-Social-icon bab-Social-icon--rss"></i>
-                                    Flux RSS
-                                </a>
-                            </li>
+            <div class="content-inner bab-Wrapper">
+                <div class="bab-Grid">
+                    {% block content %}
+                    <div class="bab-Grid-cell bab-Grid-cell--2-3 bab-Grid-cell--1-1@small">
+                        {% block mainContent %}
+                        {% endblock %}
+                    </div>
+                    <div class="bab-Grid-cell bab-Grid-cell--1-3 bab-Grid-cell--1-1@small">
+                        {% block sidebar %}
+                        <section class="bab-Sidebar-section">
+                            <form method="get" action="{{ path('babdelaurablog_recherche') }}">
+                                <input name="motscles" id="search" placeholder="Rechercher" />
+                            </form>
+                        </section>
+                        <section class="bab-Sidebar-section">
+                            <h1 class="bab-Sidebar-title">Où me trouver</h1>
+                            <ul class="bab-Social">
+                                <li class="bab-Social-link">
+                                    <a href="https://www.facebook.com/BabDeLaura" target="_blank" title="Facebook">
+                                        <i class="bab-Social-icon bab-Social-icon--fb"></i>
+                                        Bric à Brac de Laura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="https://twitter.com/BabDeLaura" target="_blank" title="Twitter">
+                                        <i class="bab-Social-icon bab-Social-icon--twitter"></i>
+                                        @BabDeLaura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="http://www.pinterest.com/BabDeLaura/" target="_blank" title="Pinterest">
+                                        <i class="bab-Social-icon bab-Social-icon--pinterest"></i>
+                                        BabDeLaura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="http://instagram.com/BabDeLaura" target="_blank" title="Instagram">
+                                        <i class="bab-Social-icon bab-Social-icon--instagram"></i>
+                                        BabDeLaura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="http://www.hellocoton.fr/mapage/bricabrac-de-laura" target="_blank" title="Hellocoton">
+                                        <i class="bab-Social-icon bab-Social-icon--hellocoton"></i>
+                                        Bricabrac-de-laura
+                                    </a>
+                                </li>
+                                <li class="bab-Social-link">
+                                    <a href="{{ path('babdelaurablog_rss') }}" target="_blank" title="RSS">
+                                        <i class="bab-Social-icon bab-Social-icon--rss"></i>
+                                        Flux RSS
+                                    </a>
+                                </li>
 
-                        </ul>
-                    </section>
-                    {#render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))#}
+                            </ul>
+                        </section>
+                        {% if app.environment == 'prod' %}
+                            {{render(controller('BabdelauraBlogBundle:Instagram:chargerFlux'))}}
+                        {% endif %}
+                        {% endblock %}
+                    </div>
                     {% endblock %}
                 </div>
-                {% endblock %}
             </div>
         </div>
-
         {{ render(controller('BabdelauraBlogBundle:Blog:footer')) }}
+
+        <div class="bab-CookieBar js-cookie-bar">
+            <p class="bab-CookieBar-content">
+                En poursuivant votre navigation sur ce site, vous acceptez l’utilisation de cookies.
+                <button class="bab-CookieBar-button js-cookie-bar-button" type="button">
+                    J'accepte
+                </button>
+            </p>
+        </div>
 
         {% block javascripts %}
             <script src="{{ asset('js/app.js') }}"></script>
+
             {% if app.environment == 'prod' %}
-                <script src="{{ asset('bundles/babdelaurablog/js/google-analytics.js') }}"></script>
+                <script src="{{ asset('js/google-analytics.js') }}" async></script>
             {% endif %}
 
             <script type="text/javascript" async defer data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>

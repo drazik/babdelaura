@@ -3,7 +3,11 @@
 namespace Babdelaura\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+use Imagine\Gd\Imagine;
+use Imagine\Image\Point;
 
 /**
  * Image
@@ -14,6 +18,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class Image
 {
+    const WATERMARK_PATH = __DIR__.'/../../../../web/images/watermark.png';
+    const WATERMARK_OFFSET = 2;
     /**
      * @var integer
      *
@@ -50,6 +56,13 @@ class Image
      * @ORM\Column(name="height", type="integer")
      */
     private $height;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="watermark", type="boolean")
+     */
+    private $watermark;
 
     private $file;
 
@@ -172,10 +185,16 @@ class Image
         }
 
         // On déplace le fichier envoyé dans le répertoire de notre choix
-        $this->file->move(
+        /*$this->file->move(
           $this->getUploadRootDir(), // Le répertoire de destination
           $this->id.'.'.$this->extension   // Le nom du fichier à créer, ici « id.extension »
         );
+
+        if ($this->watermark) {
+
+        }*/
+        $path = $this->getUploadRootDir() . '/' . $this->id . '.' . $this->extension;
+        $this->image->save($path, array('jpeg_quality' => 100));
     }
 
     /**
@@ -211,16 +230,39 @@ class Image
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
-     public function getWebPath()
+    public function getWebPath()
     {
         return $this->getUploadDir().'/'.$this->getId().'.'.$this->getExtension();
     }
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($file, $watermark = false)
     {
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->watermark = $watermark;
+
+        $this->setFile($file);
+
+        $this->imagine = new Imagine();
+
+        $this->image = $this->imagine->open($this->file->getRealPath());
+        $imageSourceSize = $this->image->getSize();
+
+        $this->setWidth($imageSourceSize->getWidth());
+        $this->setHeight($imageSourceSize->getHeight());
+
+        if ($watermark) {
+            $this->addWatermark();
+        }
+    }
+
+    public function addWatermark() {
+        $watermark = $this->imagine->open(self::WATERMARK_PATH);
+        $watermarkSize = $watermark->getSize();
+        $bottomRight = new Point($this->getWidth() - $watermarkSize->getWidth() - self::WATERMARK_OFFSET, $this->getHeight() - $watermarkSize->getHeight() - self::WATERMARK_OFFSET);
+
+        $this->image->paste($watermark, $bottomRight);
     }
 
     /**
@@ -302,5 +344,29 @@ class Image
     public function getHeight()
     {
         return $this->height;
+    }
+
+    /**
+     * Set watermark
+     *
+     * @param boolean $watermark
+     *
+     * @return Image
+     */
+    public function setWatermark($watermark)
+    {
+        $this->watermark = $watermark;
+
+        return $this;
+    }
+
+    /**
+     * Get watermark
+     *
+     * @return boolean
+     */
+    public function getWatermark()
+    {
+        return $this->watermark;
     }
 }

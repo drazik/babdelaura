@@ -15,11 +15,16 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file','file')
-            ->add('alt','text')
+            ->add('file', 'file')
+            ->add('watermark', 'choice', array(
+                'choices' => array('Ajouter le watermark'),
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true
+            ))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
