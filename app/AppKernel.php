@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Oh\InstagramBundle\OhInstagramBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
-            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

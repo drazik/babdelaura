@@ -18,8 +18,6 @@ use Imagine\Image\Point;
  */
 class Image
 {
-    const WATERMARK_PATH = __DIR__.'/../../../../web/images/watermark.png';
-    const WATERMARK_OFFSET = 2;
     /**
      * @var integer
      *
@@ -239,6 +237,8 @@ class Image
      */
     public function __construct($file, $watermark = false)
     {
+        $this->WATERMARK_PATH = dirname(__FILE__) . '/../../../../web/images/watermark.png';
+        $this->WATERMARK_OFFSET = 2;
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->watermark = $watermark;
 
@@ -258,9 +258,9 @@ class Image
     }
 
     public function addWatermark() {
-        $watermark = $this->imagine->open(self::WATERMARK_PATH);
+        $watermark = $this->imagine->open($this->WATERMARK_PATH);
         $watermarkSize = $watermark->getSize();
-        $bottomRight = new Point($this->getWidth() - $watermarkSize->getWidth() - self::WATERMARK_OFFSET, $this->getHeight() - $watermarkSize->getHeight() - self::WATERMARK_OFFSET);
+        $bottomRight = new Point($this->getWidth() - $watermarkSize->getWidth() - $this->WATERMARK_OFFSET, $this->getHeight() - $watermarkSize->getHeight() - $this->WATERMARK_OFFSET);
 
         $this->image->paste($watermark, $bottomRight);
     }
