@@ -3393,22 +3393,18 @@
 
 	        _this.label = 'Image';
 	        _this.icon = 'image';
-	        _this.imagePicker = new WYSIWYGImagePicker(document.querySelector('.js-wysiwyg-image-picker'));
+	        _this.imagePicker = new _modalImagePicker2.default(document.querySelector('.js-wysiwyg-image-picker'), {
+	            onItemSelect: _this.handleItemSelect.bind(_this)
+	        });
 	        return _this;
 	    }
 
 	    _createClass(ImagePickerTool, [{
 	        key: 'canApply',
-	        value: function canApply(element, selection) {
-	            if (selection == null || element == null) {
-	                return false;
-	            }
+	        value: function canApply() /*element, selection*/{
+	            // TODO
 
-	            var from = selection._from;
-	            var to = selection._to;
-
-
-	            return from === to;
+	            return true;
 	        }
 	    }, {
 	        key: 'isApplied',
@@ -3419,37 +3415,26 @@
 	        }
 	    }, {
 	        key: 'apply',
-	        value: function apply() /*element, selection, callback*/{
+	        value: function apply(element, selection) {
+	            this.element = element;
+	            this.from = selection._from;
+	            this.to = selection._to;
+
+	            this.element.storeState();
+
 	            this.imagePicker.open();
+	        }
+	    }, {
+	        key: 'handleItemSelect',
+	        value: function handleItemSelect(src) {
+	            console.log(src);
+
+	            this.element.restoreState();
 	        }
 	    }]);
 
 	    return ImagePickerTool;
 	}(_ContentTools2.default.Tool);
-
-	var WYSIWYGImagePicker = function () {
-	    function WYSIWYGImagePicker(container) {
-	        _classCallCheck(this, WYSIWYGImagePicker);
-
-	        this.modalImagePicker = new _modalImagePicker2.default(container, {
-	            onItemSelect: function onItemSelect() {}
-	        });
-	    }
-
-	    _createClass(WYSIWYGImagePicker, [{
-	        key: 'open',
-	        value: function open() {
-	            this.modalImagePicker.open();
-	        }
-	    }, {
-	        key: 'close',
-	        value: function close() {
-	            this.modalImagePicker.close();
-	        }
-	    }]);
-
-	    return WYSIWYGImagePicker;
-	}();
 
 	exports.default = WYSIWYGEditor;
 

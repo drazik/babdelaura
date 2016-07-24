@@ -62,17 +62,15 @@ class ImagePickerTool extends ContentTools.Tool {
 
         this.label = 'Image';
         this.icon = 'image';
-        this.imagePicker = new WYSIWYGImagePicker(document.querySelector('.js-wysiwyg-image-picker'));
+        this.imagePicker = new ModalImagePicker(document.querySelector('.js-wysiwyg-image-picker'), {
+            onItemSelect: this.handleItemSelect.bind(this)
+        });
     }
 
-    canApply(element, selection) {
-        if (selection == null || element == null) {
-            return false;
-        }
+    canApply(/*element, selection*/) {
+        // TODO
 
-        const {_from: from, _to: to} = selection;
-
-        return from === to;
+        return true;
     }
 
     isApplied(/*element, selection*/) {
@@ -81,24 +79,20 @@ class ImagePickerTool extends ContentTools.Tool {
         return false;
     }
 
-    apply(/*element, selection, callback*/) {
+    apply(element, selection) {
+        this.element = element;
+        this.from = selection._from;
+        this.to = selection._to;
+
+        this.element.storeState();
+
         this.imagePicker.open();
     }
-}
 
-class WYSIWYGImagePicker {
-    constructor(container) {
-        this.modalImagePicker = new ModalImagePicker(container, {
-            onItemSelect: () => {}
-        });
-    }
+    handleItemSelect(src) {
+        console.log(src);
 
-    open() {
-        this.modalImagePicker.open();
-    }
-
-    close() {
-        this.modalImagePicker.close();
+        this.element.restoreState();
     }
 }
 
