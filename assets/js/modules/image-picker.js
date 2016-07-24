@@ -1,4 +1,5 @@
 import delegate from 'dom-delegate';
+import getUrlParam from '../utils/get-url-param';
 
 class ImagePicker {
     constructor(container, options = {}) {
@@ -11,6 +12,8 @@ class ImagePicker {
 
         this.containerDelegate = delegate(this.container);
 
+        this.CKEditorFuncNum = getUrlParam('CKEditorFuncNum');
+
         this.initEvents();
     }
 
@@ -19,9 +22,16 @@ class ImagePicker {
     }
 
     handleItemSelect(event) {
-        const {src} = event.target;
+        const {id, src} = event.target;
 
-        this.options.onItemSelect(src);
+        if (this.CKEditorFuncNum) {
+            if (window.opener) {
+                window.opener.CKEDITOR.tools.callFunction(this.CKEditorFuncNum, src);
+                window.close();
+            }
+        } else {
+            this.options.onItemSelect({id, src});
+        }
     }
 }
 

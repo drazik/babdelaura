@@ -11,13 +11,13 @@ class ModalImagePicker {
         this.container = container;
 
         this.modal = new Modal(this.container);
-        this.imagePicker = new ImagePicker(this.container.querySelector('.js-image-picker'), {
+        this.imagePicker = new ImagePicker(this.container.querySelector('.js-preview-modal-image-picker-picker'), {
             onItemSelect: this.onItemSelect.bind(this)
         });
     }
 
-    onItemSelect(src) {
-        this.options.onItemSelect(src);
+    onItemSelect({id, src}) {
+        this.options.onItemSelect({id, src});
 
         this.close();
     }

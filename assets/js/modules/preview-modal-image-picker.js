@@ -10,17 +10,17 @@ class PreviewModalImagePicker {
         });
     }
 
-    onItemSelect(src) {
+    onItemSelect({id, src}) {
         this.setPreview(src);
-        this.setInputValue(src);
+        this.setInputValue(id);
     }
 
     setPreview(src) {
         this.previewElement.src = src;
     }
 
-    setInputValue(src) {
-        this.input.value = src;
+    setInputValue(id) {
+        this.input.value = id;
     }
 }
 

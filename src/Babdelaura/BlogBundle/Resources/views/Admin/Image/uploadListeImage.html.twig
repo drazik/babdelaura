@@ -1,6 +1,5 @@
 <div class="js-image-upload-list">
-    {#{% include 'BabdelauraBlogBundle:Admin/Image:uploadImage.html.twig' with {'form': form} only %}#}
-    <div class="js-image-upload-form"></div>
+    {% include 'BabdelauraBlogBundle:Admin/Image:uploadImage.html.twig' with {'form': form} only %}
 
     {% include 'BabdelauraBlogBundle:Admin/Image:listeImages.html.twig' %}
 </div>

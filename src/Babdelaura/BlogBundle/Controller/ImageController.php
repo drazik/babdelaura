@@ -46,7 +46,7 @@ class ImageController extends Controller
         foreach ($images as $image) {
             $data['images'][] = array(
                 'id' => $image->getId(),
-                'src' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath()
+                'src' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath() . '?width=' . $image->getWidth() . '&height=' . $image->getHeight()
             );
         }
 

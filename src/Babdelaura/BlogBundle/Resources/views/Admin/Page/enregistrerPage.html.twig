@@ -9,14 +9,10 @@
             {{ form_widget(form.titre) }}
         </div>
 
-        <div class="form-group">
-            <label>Contenu de la page</label>
-            <div class="bab-Page-preview">
-                <div class="bab-Page-content" data-editable data-name="babdelaura_blogbundle_page_contenu"></div>
-            </div>
-        </div>
-
-        <div class="form-group">
+        <div
+            class="form-group js-wysiwyg-editor"
+            data-browse-url="{{ path('babdelaurablog_admin_gallerieImages') }}"
+            data-css-url="{{ asset('css/contents.css') }}">
             {{ form_label(form.contenu, "Contenu de la page") }}
             {{ form_errors(form.contenu)}}
             {{ form_widget(form.contenu) }}
@@ -31,4 +27,10 @@
         {{ form_rest(form) }}
         <button class="bab-Button" type="submit">Enregistrer la page</button>
     </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+    {{ parent() }}
 {% endblock %}
