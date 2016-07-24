@@ -1,14 +1,13 @@
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var postcss = require('gulp-postcss');
-var cssnext = require('cssnext');
+var atImport = require('postcss-import');
+var customMedia = require('postcss-custom-media');
 
 module.exports = function() {
     var processors = [
-        cssnext({
-            url: false,
-            compress: true
-        })
+        atImport(),
+        customMedia()
     ];
 
     return gulp.src('assets/css/*.css')

@@ -1,34 +1,45 @@
 var gulp = require('gulp');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var globby = require('globby');
-var through = require('through2');
 var gutil = require('gulp-util');
-var uglify = require('gulp-uglify');
+var webpack = require('webpack');
 
-module.exports = function() {
-    var bundledStream = through();
-
-    bundledStream
-        .pipe(source('app.js'))
-        .pipe(buffer())
-        // .pipe(uglify())
-        .on('error', gutil.log)
-        .pipe(gulp.dest('web/js'));
-
-    globby(['./assets/js/*.js'], function(err, entries) {
+module.exports = function(callback) {
+    webpack({
+        entry: {
+            app: './assets/js/app.js',
+            admin: './assets/js/admin.js'
+        },
+        output: {
+            path: './web/js',
+            filename: '[name].js'
+        },
+        module: {
+            preLoaders: [
+                {
+                    test: /\.js$/,
+                    loader: 'eslint-loader',
+                    exclude: /node_modules/
+                }
+            ],
+            loaders: [
+                {
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    exclude: /nodes_modules/
+                }
+            ]
+        },
+        eslint: {
+            emitWarning: true,
+            emitError: true,
+            failOnWarning: false,
+            failOnError: true
+        }
+    }, function(err, stats) {
         if (err) {
-            bundledStream.emit('error', err);
-            return;
+            throw new gutil.PluginError('webpack', err);
         }
 
-        var b = browserify({
-            entries: entries
-        });
-
-        b.bundle().pipe(bundledStream);
+        gutil.log('[webpack]', stats.toString());
+        callback();
     });
-
-    return bundledStream;
 };

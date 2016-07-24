@@ -8,7 +8,7 @@
     background-size: 65%, auto;
 }
 
-@media screen and (max-width: 1050px) {
+@media (--medium-viewport) {
     .bab-Header {
         background-image: url('../images/header-brushes.png');
         background-position: center center;
@@ -16,13 +16,7 @@
     }
 }
 
-@media screen and (min-width: 501px) and (max-width: 920px) {
-    .bab-Header {
-        background-size: 100%;
-    }
-}
-
-@media screen and (max-width: 500px) {
+@media (--small-viewport) {
     .bab-Header {
         height: 125px;
     }

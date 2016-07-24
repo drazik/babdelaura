@@ -162,7 +162,14 @@
     right: 1em;
 }
 
-@media screen and (max-width: 350px) {
+.bab-Article-preview {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px dashed #888;
+    border-bottom: 1px dashed #888;
+}
+
+@media (--small-viewport) {
     .bab-Article-navigation .bab-Button {
         float: none;
         display: block;

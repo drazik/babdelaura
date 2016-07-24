@@ -5,143 +5,98 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use Babdelaura\BlogBundle\Entity\Image;
-use Imagine\Gd\Imagine;
-use Imagine\Image\Point;
+use Babdelaura\BlogBundle\Form\ImageType;
 
 class ImageController extends Controller
 {
-    public function listerImagesAction() {
-        $request = $this->get('request');
+    public function afficherGallerieAction() {
+        $form = $this->createForm(new ImageType());
+
+        return $this->render('BabdelauraBlogBundle:Admin/Image:gallerie.html.twig', array(
+          'form' => $form->createView(),
+        ));
+    }
+
+    public function getImagesAction(Request $request) {
+        $page = $request->query->getInt('page', 1);
+        $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
+        $firstResult = ($page - 1) * $nbImagesParPage;
+        $lastResult = $page * $nbImagesParPage;
 
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Image');
+        $nbImagesTotal = count($repository->findAll());
+        $images = $repository->findBy(array(), array('id' => 'desc'), $lastResult, $firstResult);
 
-
-        $items = $repository->findBy(array(),array('id'=>'desc'));
-        $query = $request->query;
-
-        if ($query->get('CKEditor') !== null) {
-            $templateName = 'BabdelauraBlogBundle:Image:listerImages.html.twig';
-            $nbImagesParPage = $this->container->getParameter('nbImagesParPage');
-        }
-        else {
-            $templateName = 'BabdelauraBlogBundle:Admin/Image:listerImages.html.twig';
-            $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
-        }
-
-        $paginator  = $this->get('knp_paginator');
-        $listeImages = $paginator->paginate(
-            $items,
-            $query->get('page', 1),
-            $nbImagesParPage
+        $data = array(
+            'pagination' => array(
+                'currentPage' => $page,
+                'hasPreviousResults' => $page > 1,
+                'hasNextResults' => $lastResult < $nbImagesTotal
+            ),
+            'images' => array()
         );
-        $listeImages->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
 
-        return $this->render($templateName, array(
-          'listeImages' => $listeImages));
+        foreach ($images as $image) {
+            $data['images'][] = array(
+                'id' => $image->getId(),
+                'src' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath() . '?width=' . $image->getWidth() . '&height=' . $image->getHeight()
+            );
+        }
+
+        return new JsonResponse($data);
     }
 
-
-    public function uploadAction($addWatermark) {
-        $imagine = new Imagine();
-        $addWatermark = $addWatermark === 'false' ? false : true;
+    public function uploadAction() {
         $request = $this->get('request');
-        $formInputName = $request->isXmlHttpRequest() && !$addWatermark ? 'mainImageFile' : 'upload';
-        $file = $_FILES[$formInputName];
-        $error = $this->handleError($file);
+        $file = $request->files->get('babdelaura_blogbundle_image')['file'];
+        $watermark = isset($request->request->get('babdelaura_blogbundle_image')['watermark']);
 
-        if ($error) {
-            if ($request->isXmlHttpRequest()) {
-                return new JsonResponse(array(
-                    'success' => false,
-                    'message' => $error
-                ));
-            } else {
-                return new Response($error);
-            }
-        }
+        $response = array('success' => $file->isValid());
 
-        $uploaded = new UploadedFile(
-            $_FILES[$formInputName]['tmp_name'],
-            $_FILES[$formInputName]['name'],
-            $_FILES[$formInputName]['type'],
-            $_FILES[$formInputName]['size']
-        );
+        if ($response['success']) {
+            $image = new Image($file, $watermark);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($image);
+            $em->flush();
 
-        $imageSource = $imagine->open($_FILES[$formInputName]['tmp_name']);
-        $imageSourceSize = $imageSource->getSize();
-
-        if ($addWatermark) {
-            $watermark = $imagine->open(__DIR__.'/../../../../web/images/watermark.png');
-
-            $watermarkSize = $watermark->getSize();
-            $offset = 2;
-
-            $bottomRight = new Point($imageSourceSize->getWidth() - $watermarkSize->getWidth() - $offset, $imageSourceSize->getHeight() - $watermarkSize->getHeight() - $offset);
-
-            $imageSource->paste($watermark, $bottomRight);
-            $imageSource->save($_FILES[$formInputName]['tmp_name'] . '.' . $uploaded->guessExtension(), array('jpeg_quality' => 100));
-        }
-
-        $image = new Image;
-        $image->setWidth($imageSourceSize->getWidth());
-        $image->setHeight($imageSourceSize->getHeight());
-        $image->setFile($uploaded);
-
-        $em = $this->getDoctrine()->getManager();
-
-        $em->persist($image);
-        $em->flush();
-
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(array(
-                'success' => true,
-                'image' => array(
-                    'id' => $image->getId(),
-                    'url' => $this->generateUrl('babdelaurablog_accueil', array(), true) . $image->getWebPath()
-                )
-            ));
+            $response['image'] = array(
+                'id' => $image->getId(),
+                'path' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath(),
+                'width' => $image->getWidth(),
+                'height' => $image->getHeight()
+            );
         } else {
-            return new Response('Image Chargée');
+            $response['error'] = $this->getErrorMessage($file);
         }
+
+        return new JsonResponse($response);
     }
 
-    private function handleError($file) {
-        $message = 'Error uploading file';
-
-        switch($file['error']) {
+    private function getErrorMessage($file) {
+        switch($file->getError()) {
             case UPLOAD_ERR_OK:
-                $message = false;
-                break;
+                return false;
 
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-                $message .= ' - file too large';
-                break;
+                return "Le fichier uploadé est trop gros (max. " . $file->getMaxFilesize() . " octets)";
 
             case UPLOAD_ERR_PARTIAL:
-                $message .= ' - file upload was not completed.';
-                break;
+                return "L'upload du fichier n'a pas été terminé";
 
             case UPLOAD_ERR_NO_FILE:
-                $message .= ' - zero-length file uploaded.';
-                break;
+                return "Tentative d'upload de fichier vide";
 
             default:
-                $message .= ' - internal error #'.$_FILES['newfile']['error'];
-                break;
+                return 'Erreur inconnue';
         }
-
-        if (!$message && !is_uploaded_file($file['tmp_name'])) {
-            $message = 'Error uploading file - unknown error.';
-        }
-
-        return $message;
     }
 
     public function reparerTaillesAction() {

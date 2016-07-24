@@ -4,6 +4,7 @@
 @import 'photoswipe/dist/default-skin/default-skin.css';
 
 @import 'helpers/utils';
+@import 'helpers/variables';
 
 @import 'base/fonts';
 @import 'base/typography';
@@ -17,7 +18,6 @@
 @import 'layout/tables';
 
 @import 'components/article';
-@import 'components/articles-grid';
 @import 'components/buttons';
 @import 'components/comments';
 @import 'components/instagram';
@@ -29,6 +29,6 @@
 @import 'components/pagination';
 @import 'components/modal';
 @import 'components/notification';
-@import 'components/cookiebar';
+@import 'components/cookie-bar';
 @import 'components/spoiler';
 @import 'components/searchbar';

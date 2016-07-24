@@ -1,16608 +1,7291 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
 
-var jQuery = require('jquery');
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
 
-window.jQuery = jQuery;
-window.$ = jQuery;
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
 
-var MainNav = require('./modules/main-nav');
-var TouchEffect = require('./modules/toucheffect');
-var Gallery = require('./modules/gallery');
-require('./modules/jquery.cookiebar');
-require('./modules/spoiler');
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
 
-var mainNav = new MainNav();
-mainNav.run();
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 
-var touchEffect = new TouchEffect();
-touchEffect.run();
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
 
-var gallery = new Gallery();
-gallery.initialize();
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 
-},{"./modules/gallery":2,"./modules/jquery.cookiebar":3,"./modules/main-nav":4,"./modules/spoiler":5,"./modules/toucheffect":6,"jquery":22}],2:[function(require,module,exports){
-'use strict';
 
-var url = require('url');
-var PhotoSwipe = require('photoswipe');
-var PhotoSwipeUiDefault = require('photoswipe/dist/photoswipe-ui-default');
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
 
-function Gallery() {
-    this.pswpElement = document.querySelector('.pswp');
-    this.itemsContainer = document.querySelector('.gallery');
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
 
-    if (this.pswpElement == null || this.itemsContainer == null) {
-        return;
-    }
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
 
-    this.images = this.itemsContainer.querySelectorAll('img');
-    this.images = Array.apply(null, this.images);
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
 
-    this.photoSwipeItems = [];
-    this.gallery = null;
-    this.options = {
-        bgOpacity: 0.85,
-        closeOnScroll: false,
-        history: false
-    };
-}
+	'use strict';
 
-Gallery.prototype.initialize = function () {
-    if (this.pswpElement == null || this.itemsContainer == null) {
-        return;
-    }
+	__webpack_require__(1);
 
-    this.images.forEach(function(image) {
-        var params = url.parse(image.src, true).query;
-        var item = {
-            src: image.src,
-            w: parseInt(params.width, 10),
-            h: parseInt(params.height, 10)
-        };
+	__webpack_require__(33);
 
-        if (item.w > 0 && item.h > 0) {
-            this.photoSwipeItems.push(item);
-            return;
-        }
+	var _nav = __webpack_require__(2);
 
-        this.loadImage(image);
-    }.bind(this))
+	var _nav2 = _interopRequireDefault(_nav);
 
-    this.initEvents();
-};
+	var _imagesSlideshow = __webpack_require__(34);
 
-Gallery.prototype.initEvents = function () {
-    this.images.forEach(function(image, index) {
-        image.addEventListener('click', this.show.bind(this, index));
-    }.bind(this));
-};
+	var _imagesSlideshow2 = _interopRequireDefault(_imagesSlideshow);
 
-Gallery.prototype.show = function (index) {
-    this.options.index = index || 0;
-    this.gallery = new PhotoSwipe(this.pswpElement, PhotoSwipeUiDefault, this.photoSwipeItems, this.options);
-    this.gallery.init();
-};
+	var _notification = __webpack_require__(44);
 
-Gallery.prototype.loadImage = function (image) {
-    var tmpImage = new Image();
+	var _notification2 = _interopRequireDefault(_notification);
 
-    tmpImage.onload = function() {
-        var item = {
-            src: image.src,
-            w: tmpImage.width,
-            h: tmpImage.height
-        };
+	var _cookieBar = __webpack_require__(45);
 
-        this.photoSwipeItems.push(item);
-    }.bind(this);
+	var _cookieBar2 = _interopRequireDefault(_cookieBar);
 
-    tmpImage.src = image.src;
-};
+	var _articlesGrid = __webpack_require__(46);
 
-module.exports = Gallery;
+	var _articlesGrid2 = _interopRequireDefault(_articlesGrid);
 
-},{"photoswipe":24,"photoswipe/dist/photoswipe-ui-default":23,"url":29}],3:[function(require,module,exports){
-var jQuery = require('jquery');
-/*
- * Copyright (C) 2012 PrimeBox (info@primebox.co.uk)
- *
- * This work is licensed under the Creative Commons
- * Attribution 3.0 Unported License. To view a copy
- * of this license, visit
- * http://creativecommons.org/licenses/by/3.0/.
- *
- * Documentation available at:
- * http://www.primebox.co.uk/projects/cookie-bar/
- *
- * When using this software you use it at your own risk. We hold
- * no responsibility for any damage caused by using this plugin
- * or the documentation provided.
- */
-(function($){
-	$.cookieBar = function(options,val){
-		if(options=='cookies'){
-			var doReturn = 'cookies';
-		}else if(options=='set'){
-			var doReturn = 'set';
-		}else{
-			var doReturn = false;
-		}
-		var defaults = {
-			message: 'We use cookies to track usage and preferences.', //Message displayed on bar
-			acceptButton: true, //Set to true to show accept/enable button
-			acceptText: 'I Understand', //Text on accept/enable button
-			declineButton: false, //Set to true to show decline/disable button
-			declineText: 'Disable Cookies', //Text on decline/disable button
-			policyButton: false, //Set to true to show Privacy Policy button
-			policyText: 'Privacy Policy', //Text on Privacy Policy button
-			policyURL: '/privacy-policy/', //URL of Privacy Policy
-			autoEnable: true, //Set to true for cookies to be accepted automatically. Banner still shows
-			acceptOnContinue: false, //Set to true to silently accept cookies when visitor moves to another page
-			expireDays: 365, //Number of days for cookieBar cookie to be stored for
-			forceShow: false, //Force cookieBar to show regardless of user cookie preference
-			effect: 'slide', //Options: slide, fade, hide
-			element: 'body', //Element to append/prepend cookieBar to. Remember "." for class or "#" for id.
-			append: false, //Set to true for cookieBar HTML to be placed at base of website. Actual position may change according to CSS
-			fixed: false, //Set to true to add the class "fixed" to the cookie bar. Default CSS should fix the position
-			bottom: false, //Force CSS when fixed, so bar appears at bottom of website
-			zindex: '', //Can be set in CSS, although some may prefer to set here
-			redirect: String(window.location.href), //Current location
-			domain: String(window.location.hostname), //Location of privacy policy
-			referrer: String(document.referrer) //Where visitor has come from
-		};
-		var options = $.extend(defaults,options);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-		//Sets expiration date for cookie
-		var expireDate = new Date();
-		expireDate.setTime(expireDate.getTime()+(options.expireDays*24*60*60*1000));
-		expireDate = expireDate.toGMTString();
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-		var cookieEntry = 'cb-enabled={value}; expires='+expireDate+'; path=/';
+	var cookieBarContainer = document.querySelector('.js-cookie-bar');
+	new _cookieBar2.default(cookieBarContainer);
 
-		//Retrieves current cookie preference
-		var i,cookieValue='',aCookie,aCookies=document.cookie.split('; ');
-		for (i=0;i<aCookies.length;i++){
-			aCookie = aCookies[i].split('=');
-			if(aCookie[0]=='cb-enabled'){
-    			cookieValue = aCookie[1];
-			}
-		}
-		//Sets up default cookie preference if not already set
-		if(cookieValue=='' && options.autoEnable){
-			cookieValue = 'enabled';
-			document.cookie = cookieEntry.replace('{value}','enabled');
-		}
-		if(options.acceptOnContinue){
-			if(options.referrer.indexOf(options.domain)>=0 && String(window.location.href).indexOf(options.policyURL)==-1 && doReturn!='cookies' && doReturn!='set' && cookieValue!='accepted' && cookieValue!='declined'){
-				doReturn = 'set';
-				val = 'accepted';
-			}
-		}
-		if(doReturn=='cookies'){
-			//Returns true if cookies are enabled, false otherwise
-			if(cookieValue=='enabled' || cookieValue=='accepted'){
-				return true;
-			}else{
-				return false;
-			}
-		}else if(doReturn=='set' && (val=='accepted' || val=='declined')){
-			//Sets value of cookie to 'accepted' or 'declined'
-			document.cookie = cookieEntry.replace('{value}',val);
-			if(val=='accepted'){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			//Sets up enable/accept button if required
-			var message = options.message.replace('{policy_url}',options.policyURL);
+	var navContainer = document.querySelector('.js-nav');
+	new _nav2.default(navContainer);
 
-			if(options.acceptButton){
-				var acceptButton = '<a href="" class="cb-enable">'+options.acceptText+'</a>';
-			}else{
-				var acceptButton = '';
-			}
-			//Sets up disable/decline button if required
-			if(options.declineButton){
-				var declineButton = '<a href="" class="cb-disable">'+options.declineText+'</a>';
-			}else{
-				var declineButton = '';
-			}
-			//Sets up privacy policy button if required
-			if(options.policyButton){
-				var policyButton = '<a href="'+options.policyURL+'" class="cb-policy">'+options.policyText+'</a>';
-			}else{
-				var policyButton = '';
-			}
-			//Whether to add "fixed" class to cookie bar
-			if(options.fixed){
-				if(options.bottom){
-					var fixed = ' class="fixed bottom"';
-				}else{
-					var fixed = ' class="fixed"';
-				}
-			}else{
-				var fixed = '';
-			}
-			if(options.zindex!=''){
-				var zindex = ' style="z-index:'+options.zindex+';"';
-			}else{
-				var zindex = '';
-			}
-
-			//Displays the cookie bar if arguments met
-			if(options.forceShow || cookieValue=='enabled' || cookieValue==''){
-				if(options.append){
-					$(options.element).append('<div id="cookie-bar"'+fixed+zindex+'><p>'+message+acceptButton+declineButton+policyButton+'</p></div>');
-				}else{
-					$(options.element).prepend('<div id="cookie-bar"'+fixed+zindex+'><p>'+message+acceptButton+declineButton+policyButton+'</p></div>');
-				}
-			}
-
-			//Sets the cookie preference to accepted if enable/accept button pressed
-			$('#cookie-bar .cb-enable').click(function(){
-				document.cookie = cookieEntry.replace('{value}','accepted');
-				if(cookieValue!='enabled' && cookieValue!='accepted'){
-					window.location = options.currentLocation;
-				}else{
-					if(options.effect=='slide'){
-						$('#cookie-bar').slideUp(300,function(){$('#cookie-bar').remove();});
-					}else if(options.effect=='fade'){
-						$('#cookie-bar').fadeOut(300,function(){$('#cookie-bar').remove();});
-					}else{
-						$('#cookie-bar').hide(0,function(){$('#cookie-bar').remove();});
-					}
-					return false;
-				}
-			});
-			//Sets the cookie preference to declined if disable/decline button pressed
-			$('#cookie-bar .cb-disable').click(function(){
-				var deleteDate = new Date();
-				deleteDate.setTime(deleteDate.getTime()-(864000000));
-				deleteDate = deleteDate.toGMTString();
-				aCookies=document.cookie.split('; ');
-				for (i=0;i<aCookies.length;i++){
-					aCookie = aCookies[i].split('=');
-					if(aCookie[0].indexOf('_')>=0){
-						document.cookie = aCookie[0]+'=0; expires='+deleteDate+'; domain='+options.domain.replace('www','')+'; path=/';
-					}else{
-						document.cookie = aCookie[0]+'=0; expires='+deleteDate+'; path=/';
-					}
-				}
-				document.cookie = cookieEntry.replace('{value}','declined');
-				if(cookieValue=='enabled' && cookieValue!='accepted'){
-					window.location = options.currentLocation;
-				}else{
-					if(options.effect=='slide'){
-						$('#cookie-bar').slideUp(300,function(){$('#cookie-bar').remove();});
-					}else if(options.effect=='fade'){
-						$('#cookie-bar').fadeOut(300,function(){$('#cookie-bar').remove();});
-					}else{
-						$('#cookie-bar').hide(0,function(){$('#cookie-bar').remove();});
-					}
-					return false;
-				}
-			});
-		}
-	};
-
-	if (!ESPACE_ADMIN) {
-		$.cookieBar({
-			message: 'En poursuivant votre navigation sur ce site, vous acceptez l’utilisation de cookies.',
-			policyButton: false,
-			acceptButton: true,
-			acceptText: "J'accepte",
-		});
-	}
-})(jQuery);
-},{"jquery":22}],4:[function(require,module,exports){
-'use strict';
-
-var $ = require('jquery');
-
-function MainNav() {
-    this.$mainNav = $('#main-nav');
-    this.$mainNavToggleButton = this.$mainNav.find('#main-nav-toggle');
-    this.$mainNavToggleIcon = this.$mainNavToggleButton.find('.fa');
-    this.$mainNavContainer = this.$mainNav.find('#main-nav-container');
-}
-
-MainNav.prototype.initEvents = function() {
-    this.$mainNavToggleButton.on('click', this.toggleNavigation.bind(this));
-};
-
-MainNav.prototype.toggleNavigation = function() {
-    this.$mainNav.toggleClass('bab-MainNav--open');
-    this.$mainNavToggleIcon.toggleClass('fa-bars');
-    this.$mainNavToggleIcon.toggleClass('fa-times');
-};
-
-MainNav.prototype.run = function() {
-    this.initEvents();
-};
-
-module.exports = MainNav;
-
-},{"jquery":22}],5:[function(require,module,exports){
-'use strict';
-
-var $ = require('jquery');
-
-$(function() {
-	$('div.spoiler-title').click(function() {
-		$(this)
-			.children()
-			.first()
-			.toggleClass('show-icon')
-			.toggleClass('hide-icon');
-		$(this)
-			.parent().children().last().toggle();
-	});
-});
-
-},{"jquery":22}],6:[function(require,module,exports){
-'use strict';
-
-var $ = require('jquery');
-require('browsernizr/test/touchevents');
-var modernizr = require('browsernizr');
-
-function TouchEffect() {
-    this.$articles = $('.grid-item-article');
-}
-
-TouchEffect.prototype.initEvents = function() {
-    this.$articles.on('click', '.grid-item-article-read', function(event) {
-        event.stopPropagation();
-    });
-
-    this.$articles.on('click', this.toggleArticle);
-};
-
-TouchEffect.prototype.toggleArticle = function() {
-    $(this).toggleClass('hover');
-};
-
-TouchEffect.prototype.run = function() {
-    if (this.$articles.length > 0 && modernizr.touchevents) {
-        this.initEvents();
-    }
-};
-
-module.exports = TouchEffect;
-
-},{"browsernizr":7,"browsernizr/test/touchevents":21,"jquery":22}],7:[function(require,module,exports){
-var Modernizr = require('./lib/Modernizr'),
-    ModernizrProto = require('./lib/ModernizrProto'),
-    classes = require('./lib/classes'),
-    testRunner = require('./lib/testRunner'),
-    setClasses = require('./lib/setClasses');
-
-// Run each test
-testRunner();
-
-// Remove the "no-js" class if it exists
-setClasses(classes);
-
-delete ModernizrProto.addTest;
-delete ModernizrProto.addAsyncTest;
-
-// Run the things that are supposed to run after the tests
-for (var i = 0; i < Modernizr._q.length; i++) {
-  Modernizr._q[i]();
-}
-
-module.exports = Modernizr;
-
-},{"./lib/Modernizr":8,"./lib/ModernizrProto":9,"./lib/classes":10,"./lib/setClasses":17,"./lib/testRunner":18}],8:[function(require,module,exports){
-var ModernizrProto = require('./ModernizrProto');
-
-
-  // Fake some of Object.create
-  // so we can force non test results
-  // to be non "own" properties.
-  var Modernizr = function(){};
-  Modernizr.prototype = ModernizrProto;
-
-  // Leak modernizr globally when you `require` it
-  // rather than force it here.
-  // Overwrite name so constructor name is nicer :D
-  Modernizr = new Modernizr();
-
-  
-
-module.exports = Modernizr;
-},{"./ModernizrProto":9}],9:[function(require,module,exports){
-var tests = require('./tests');
-
-
-  var ModernizrProto = {
-    // The current version, dummy
-    _version: 'v3.0.0pre',
-
-    // Any settings that don't work as separate modules
-    // can go in here as configuration.
-    _config: {
-      classPrefix : '',
-      enableClasses : true
-    },
-
-    // Queue of tests
-    _q: [],
-
-    // Stub these for people who are listening
-    on: function( test, cb ) {
-      // I don't really think people should do this, but we can
-      // safe guard it a bit.
-      // -- NOTE:: this gets WAY overridden in src/addTest for
-      // actual async tests. This is in case people listen to
-      // synchronous tests. I would leave it out, but the code
-      // to *disallow* sync tests in the real version of this
-      // function is actually larger than this.
-      setTimeout(function() {
-        cb(this[test]);
-      }, 0);
-    },
-
-    addTest: function( name, fn, options ) {
-      tests.push({name : name, fn : fn, options : options });
-    },
-
-    addAsyncTest: function (fn) {
-      tests.push({name : null, fn : fn});
-    }
-  };
-
-  
-
-module.exports = ModernizrProto;
-},{"./tests":20}],10:[function(require,module,exports){
-
-  var classes = [];
-  
-module.exports = classes;
-},{}],11:[function(require,module,exports){
-
-  var createElement = function() {
-    return document.createElement.apply(document, arguments);
-  };
-  
-module.exports = createElement;
-},{}],12:[function(require,module,exports){
-
-  var docElement = document.documentElement;
-  
-module.exports = docElement;
-},{}],13:[function(require,module,exports){
-var createElement = require('./createElement');
-
-
-  function getBody() {
-    // After page load injecting a fake body doesn't work so check if body exists
-    var body = document.body;
-
-    if(!body) {
-      // Can't use the real body create a fake one.
-      body = createElement('body');
-      body.fake = true;
-    }
-
-    return body;
-  }
-
-  
-
-module.exports = getBody;
-},{"./createElement":11}],14:[function(require,module,exports){
-var ModernizrProto = require('./ModernizrProto');
-var docElement = require('./docElement');
-var createElement = require('./createElement');
-var getBody = require('./getBody');
-
-
-  // Inject element with style element and some CSS rules
-  function injectElementWithStyles( rule, callback, nodes, testnames ) {
-    var mod = 'modernizr';
-    var style;
-    var ret;
-    var node;
-    var docOverflow;
-    var div = createElement('div');
-    var body = getBody();
-
-    if ( parseInt(nodes, 10) ) {
-      // In order not to give false positives we create a node for each test
-      // This also allows the method to scale for unspecified uses
-      while ( nodes-- ) {
-        node = createElement('div');
-        node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-        div.appendChild(node);
-      }
-    }
-
-    // <style> elements in IE6-9 are considered 'NoScope' elements and therefore will be removed
-    // when injected with innerHTML. To get around this you need to prepend the 'NoScope' element
-    // with a 'scoped' element, in our case the soft-hyphen entity as it won't mess with our measurements.
-    // msdn.microsoft.com/en-us/library/ms533897%28VS.85%29.aspx
-    // Documents served as xml will throw if using &shy; so use xml friendly encoded version. See issue #277
-    style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
-    div.id = mod;
-    // IE6 will false positive on some tests due to the style element inside the test div somehow interfering offsetHeight, so insert it into body or fakebody.
-    // Opera will act all quirky when injecting elements in documentElement when page is served as xml, needs fakebody too. #270
-    (!body.fake ? div : body).innerHTML += style;
-    body.appendChild(div);
-    if ( body.fake ) {
-      //avoid crashing IE8, if background image is used
-      body.style.background = '';
-      //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-      body.style.overflow = 'hidden';
-      docOverflow = docElement.style.overflow;
-      docElement.style.overflow = 'hidden';
-      docElement.appendChild(body);
-    }
-
-    ret = callback(div, rule);
-    // If this is done after page load we don't want to remove the body so check if body exists
-    if ( body.fake ) {
-      body.parentNode.removeChild(body);
-      docElement.style.overflow = docOverflow;
-      // Trigger layout so kinetic scrolling isn't disabled in iOS6+
-      docElement.offsetHeight;
-    } else {
-      div.parentNode.removeChild(div);
-    }
-
-    return !!ret;
-
-  }
-
-  
-
-module.exports = injectElementWithStyles;
-},{"./ModernizrProto":9,"./createElement":11,"./docElement":12,"./getBody":13}],15:[function(require,module,exports){
-
-  /**
-   * is returns a boolean for if typeof obj is exactly type.
-   */
-  function is( obj, type ) {
-    return typeof obj === type;
-  }
-  
-module.exports = is;
-},{}],16:[function(require,module,exports){
-var ModernizrProto = require('./ModernizrProto');
-
-
-  // List of property values to set for css tests. See ticket #21
-  var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
-
-  // expose these for the plugin API. Look in the source for how to join() them against your input
-  ModernizrProto._prefixes = prefixes;
-
-  
-
-module.exports = prefixes;
-},{"./ModernizrProto":9}],17:[function(require,module,exports){
-var Modernizr = require('./Modernizr');
-var docElement = require('./docElement');
-
-
-  // Pass in an and array of class names, e.g.:
-  //  ['no-webp', 'borderradius', ...]
-  function setClasses( classes ) {
-    var className = docElement.className;
-    var regex;
-    var classPrefix = Modernizr._config.classPrefix || '';
-
-    // Change `no-js` to `js` (we do this regardles of the `enableClasses`
-    // option)
-    // Handle classPrefix on this too
-    var reJS = new RegExp('(^|\\s)'+classPrefix+'no-js(\\s|$)');
-    className = className.replace(reJS, '$1'+classPrefix+'js$2');
-
-    if(Modernizr._config.enableClasses) {
-      // Add the new classes
-      className += ' ' + classPrefix + classes.join(' ' + classPrefix);
-      docElement.className = className;
-    }
-
-  }
-
-  
-
-module.exports = setClasses;
-},{"./Modernizr":8,"./docElement":12}],18:[function(require,module,exports){
-var tests = require('./tests');
-var Modernizr = require('./Modernizr');
-var classes = require('./classes');
-var is = require('./is');
-
-
-  // Run through all tests and detect their support in the current UA.
-  function testRunner() {
-    var featureNames;
-    var feature;
-    var aliasIdx;
-    var result;
-    var nameIdx;
-    var featureName;
-    var featureNameSplit;
-    var modernizrProp;
-    var mPropCount;
-
-    for ( var featureIdx in tests ) {
-      featureNames = [];
-      feature = tests[featureIdx];
-      // run the test, throw the return value into the Modernizr,
-      //   then based on that boolean, define an appropriate className
-      //   and push it into an array of classes we'll join later.
-      //
-      //   If there is no name, it's an 'async' test that is run,
-      //   but not directly added to the object. That should
-      //   be done with a post-run addTest call.
-      if ( feature.name ) {
-        featureNames.push(feature.name.toLowerCase());
-
-        if (feature.options && feature.options.aliases && feature.options.aliases.length) {
-          // Add all the aliases into the names list
-          for (aliasIdx = 0; aliasIdx < feature.options.aliases.length; aliasIdx++) {
-            featureNames.push(feature.options.aliases[aliasIdx].toLowerCase());
-          }
-        }
-      }
-
-      // Run the test, or use the raw value if it's not a function
-      result = is(feature.fn, 'function') ? feature.fn() : feature.fn;
-
-
-      // Set each of the names on the Modernizr object
-      for (nameIdx = 0; nameIdx < featureNames.length; nameIdx++) {
-        featureName = featureNames[nameIdx];
-        // Support dot properties as sub tests. We don't do checking to make sure
-        // that the implied parent tests have been added. You must call them in
-        // order (either in the test, or make the parent test a dependency).
-        //
-        // Cap it to TWO to make the logic simple and because who needs that kind of subtesting
-        // hashtag famous last words
-        featureNameSplit = featureName.split('.');
-
-        if (featureNameSplit.length === 1) {
-          Modernizr[featureNameSplit[0]] = result;
-        }
-        else if (featureNameSplit.length === 2) {
-          Modernizr[featureNameSplit[0]][featureNameSplit[1]] = result;
-        }
-
-        classes.push((result ? '' : 'no-') + featureNameSplit.join('-'));
-      }
-    }
-  }
-
-  
-
-module.exports = testRunner;
-},{"./Modernizr":8,"./classes":10,"./is":15,"./tests":20}],19:[function(require,module,exports){
-var ModernizrProto = require('./ModernizrProto');
-var injectElementWithStyles = require('./injectElementWithStyles');
-
-
-  var testStyles = ModernizrProto.testStyles = injectElementWithStyles;
-  
-
-module.exports = testStyles;
-},{"./ModernizrProto":9,"./injectElementWithStyles":14}],20:[function(require,module,exports){
-
-  var tests = [];
-  
-module.exports = tests;
-},{}],21:[function(require,module,exports){
-var Modernizr = require('./../lib/Modernizr');
-var prefixes = require('./../lib/prefixes');
-var testStyles = require('./../lib/testStyles');
-
-/*!
-{
-  "name": "Touch Events",
-  "property": "touchevents",
-  "caniuse" : "touch",
-  "tags": ["media", "attribute"],
-  "notes": [{
-    "name": "Touch Events spec",
-    "href": "http://www.w3.org/TR/2013/WD-touch-events-20130124/"
-  }],
-  "warnings": [
-    "Indicates if the browser supports the Touch Events spec, and does not necessarily reflect a touchscreen device"
-  ],
-  "knownBugs": [
-    "False-positive on some configurations of Nokia N900",
-    "False-positive on some BlackBerry 6.0 builds – https://github.com/Modernizr/Modernizr/issues/372#issuecomment-3112695"
-  ]
-}
-!*/
-/* DOC
-
-Indicates if the browser supports the W3C Touch Events API.
-
-This *does not* necessarily reflect a touchscreen device:
-
-* Older touchscreen devices only emulate mouse events
-* Modern IE touch devices implement the Pointer Events API instead: use `Modernizr.pointerevents` to detect support for that
-* Some browsers & OS setups may enable touch APIs when no touchscreen is connected
-* Future browsers may implement other event models for touch interactions
-
-See this article: [You Can't Detect A Touchscreen](http://www.stucox.com/blog/you-cant-detect-a-touchscreen/).
-
-It's recommended to bind both mouse and touch/pointer events simultaneously – see [this HTML5 Rocks tutorial](http://www.html5rocks.com/en/mobile/touchandmouse/).
-
-This test will also return `true` for Firefox 4 Multitouch support.
-
-*/
-
-  // Chrome (desktop) used to lie about its support on this, but that has since been rectified: http://crbug.com/36415
-  Modernizr.addTest('touchevents', function() {
-    var bool;
-    if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-      bool = true;
-    } else {
-      var query = ['@media (',prefixes.join('touch-enabled),('),'heartz',')','{#modernizr{top:9px;position:absolute}}'].join('');
-      testStyles(query, function( node ) {
-        bool = node.offsetTop === 9;
-      });
-    }
-    return bool;
-  });
-
-
-},{"./../lib/Modernizr":8,"./../lib/prefixes":16,"./../lib/testStyles":19}],22:[function(require,module,exports){
-/*!
- * jQuery JavaScript Library v2.2.3
- * http://jquery.com/
- *
- * Includes Sizzle.js
- * http://sizzlejs.com/
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
- *
- * Date: 2016-04-05T19:26Z
- */
-
-(function( global, factory ) {
-
-	if ( typeof module === "object" && typeof module.exports === "object" ) {
-		// For CommonJS and CommonJS-like environments where a proper `window`
-		// is present, execute the factory and get jQuery.
-		// For environments that do not have a `window` with a `document`
-		// (such as Node.js), expose a factory as module.exports.
-		// This accentuates the need for the creation of a real `window`.
-		// e.g. var jQuery = require("jquery")(window);
-		// See ticket #14549 for more info.
-		module.exports = global.document ?
-			factory( global, true ) :
-			function( w ) {
-				if ( !w.document ) {
-					throw new Error( "jQuery requires a window with a document" );
-				}
-				return factory( w );
-			};
-	} else {
-		factory( global );
-	}
-
-// Pass this if window is not defined yet
-}(typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
-
-// Support: Firefox 18+
-// Can't be in strict mode, several libs including ASP.NET trace
-// the stack via arguments.caller.callee and Firefox dies if
-// you try to trace through "use strict" call chains. (#13335)
-//"use strict";
-var arr = [];
-
-var document = window.document;
-
-var slice = arr.slice;
-
-var concat = arr.concat;
-
-var push = arr.push;
-
-var indexOf = arr.indexOf;
-
-var class2type = {};
-
-var toString = class2type.toString;
-
-var hasOwn = class2type.hasOwnProperty;
-
-var support = {};
-
-
-
-var
-	version = "2.2.3",
-
-	// Define a local copy of jQuery
-	jQuery = function( selector, context ) {
-
-		// The jQuery object is actually just the init constructor 'enhanced'
-		// Need init if jQuery is called (just allow error to be thrown if not included)
-		return new jQuery.fn.init( selector, context );
-	},
-
-	// Support: Android<4.1
-	// Make sure we trim BOM and NBSP
-	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
-
-	// Matches dashed string for camelizing
-	rmsPrefix = /^-ms-/,
-	rdashAlpha = /-([\da-z])/gi,
-
-	// Used by jQuery.camelCase as callback to replace()
-	fcamelCase = function( all, letter ) {
-		return letter.toUpperCase();
-	};
-
-jQuery.fn = jQuery.prototype = {
-
-	// The current version of jQuery being used
-	jquery: version,
-
-	constructor: jQuery,
-
-	// Start with an empty selector
-	selector: "",
-
-	// The default length of a jQuery object is 0
-	length: 0,
-
-	toArray: function() {
-		return slice.call( this );
-	},
-
-	// Get the Nth element in the matched element set OR
-	// Get the whole matched element set as a clean array
-	get: function( num ) {
-		return num != null ?
-
-			// Return just the one element from the set
-			( num < 0 ? this[ num + this.length ] : this[ num ] ) :
-
-			// Return all the elements in a clean array
-			slice.call( this );
-	},
-
-	// Take an array of elements and push it onto the stack
-	// (returning the new matched element set)
-	pushStack: function( elems ) {
-
-		// Build a new jQuery matched element set
-		var ret = jQuery.merge( this.constructor(), elems );
-
-		// Add the old object onto the stack (as a reference)
-		ret.prevObject = this;
-		ret.context = this.context;
-
-		// Return the newly-formed element set
-		return ret;
-	},
-
-	// Execute a callback for every element in the matched set.
-	each: function( callback ) {
-		return jQuery.each( this, callback );
-	},
-
-	map: function( callback ) {
-		return this.pushStack( jQuery.map( this, function( elem, i ) {
-			return callback.call( elem, i, elem );
-		} ) );
-	},
-
-	slice: function() {
-		return this.pushStack( slice.apply( this, arguments ) );
-	},
-
-	first: function() {
-		return this.eq( 0 );
-	},
-
-	last: function() {
-		return this.eq( -1 );
-	},
-
-	eq: function( i ) {
-		var len = this.length,
-			j = +i + ( i < 0 ? len : 0 );
-		return this.pushStack( j >= 0 && j < len ? [ this[ j ] ] : [] );
-	},
-
-	end: function() {
-		return this.prevObject || this.constructor();
-	},
-
-	// For internal use only.
-	// Behaves like an Array's method, not like a jQuery method.
-	push: push,
-	sort: arr.sort,
-	splice: arr.splice
-};
-
-jQuery.extend = jQuery.fn.extend = function() {
-	var options, name, src, copy, copyIsArray, clone,
-		target = arguments[ 0 ] || {},
-		i = 1,
-		length = arguments.length,
-		deep = false;
-
-	// Handle a deep copy situation
-	if ( typeof target === "boolean" ) {
-		deep = target;
-
-		// Skip the boolean and the target
-		target = arguments[ i ] || {};
-		i++;
-	}
-
-	// Handle case when target is a string or something (possible in deep copy)
-	if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
-		target = {};
-	}
-
-	// Extend jQuery itself if only one argument is passed
-	if ( i === length ) {
-		target = this;
-		i--;
-	}
-
-	for ( ; i < length; i++ ) {
-
-		// Only deal with non-null/undefined values
-		if ( ( options = arguments[ i ] ) != null ) {
-
-			// Extend the base object
-			for ( name in options ) {
-				src = target[ name ];
-				copy = options[ name ];
-
-				// Prevent never-ending loop
-				if ( target === copy ) {
-					continue;
-				}
-
-				// Recurse if we're merging plain objects or arrays
-				if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
-					( copyIsArray = jQuery.isArray( copy ) ) ) ) {
-
-					if ( copyIsArray ) {
-						copyIsArray = false;
-						clone = src && jQuery.isArray( src ) ? src : [];
-
-					} else {
-						clone = src && jQuery.isPlainObject( src ) ? src : {};
-					}
-
-					// Never move original objects, clone them
-					target[ name ] = jQuery.extend( deep, clone, copy );
-
-				// Don't bring in undefined values
-				} else if ( copy !== undefined ) {
-					target[ name ] = copy;
-				}
-			}
-		}
-	}
-
-	// Return the modified object
-	return target;
-};
-
-jQuery.extend( {
-
-	// Unique for each copy of jQuery on the page
-	expando: "jQuery" + ( version + Math.random() ).replace( /\D/g, "" ),
-
-	// Assume jQuery is ready without the ready module
-	isReady: true,
-
-	error: function( msg ) {
-		throw new Error( msg );
-	},
-
-	noop: function() {},
-
-	isFunction: function( obj ) {
-		return jQuery.type( obj ) === "function";
-	},
-
-	isArray: Array.isArray,
-
-	isWindow: function( obj ) {
-		return obj != null && obj === obj.window;
-	},
-
-	isNumeric: function( obj ) {
-
-		// parseFloat NaNs numeric-cast false positives (null|true|false|"")
-		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
-		// subtraction forces infinities to NaN
-		// adding 1 corrects loss of precision from parseFloat (#15100)
-		var realStringObj = obj && obj.toString();
-		return !jQuery.isArray( obj ) && ( realStringObj - parseFloat( realStringObj ) + 1 ) >= 0;
-	},
-
-	isPlainObject: function( obj ) {
-		var key;
-
-		// Not plain objects:
-		// - Any object or value whose internal [[Class]] property is not "[object Object]"
-		// - DOM nodes
-		// - window
-		if ( jQuery.type( obj ) !== "object" || obj.nodeType || jQuery.isWindow( obj ) ) {
-			return false;
-		}
-
-		// Not own constructor property must be Object
-		if ( obj.constructor &&
-				!hasOwn.call( obj, "constructor" ) &&
-				!hasOwn.call( obj.constructor.prototype || {}, "isPrototypeOf" ) ) {
-			return false;
-		}
-
-		// Own properties are enumerated firstly, so to speed up,
-		// if last one is own, then all properties are own
-		for ( key in obj ) {}
-
-		return key === undefined || hasOwn.call( obj, key );
-	},
-
-	isEmptyObject: function( obj ) {
-		var name;
-		for ( name in obj ) {
-			return false;
-		}
-		return true;
-	},
-
-	type: function( obj ) {
-		if ( obj == null ) {
-			return obj + "";
-		}
-
-		// Support: Android<4.0, iOS<6 (functionish RegExp)
-		return typeof obj === "object" || typeof obj === "function" ?
-			class2type[ toString.call( obj ) ] || "object" :
-			typeof obj;
-	},
-
-	// Evaluates a script in a global context
-	globalEval: function( code ) {
-		var script,
-			indirect = eval;
-
-		code = jQuery.trim( code );
-
-		if ( code ) {
-
-			// If the code includes a valid, prologue position
-			// strict mode pragma, execute code by injecting a
-			// script tag into the document.
-			if ( code.indexOf( "use strict" ) === 1 ) {
-				script = document.createElement( "script" );
-				script.text = code;
-				document.head.appendChild( script ).parentNode.removeChild( script );
-			} else {
-
-				// Otherwise, avoid the DOM node creation, insertion
-				// and removal by using an indirect global eval
-
-				indirect( code );
-			}
-		}
-	},
-
-	// Convert dashed to camelCase; used by the css and data modules
-	// Support: IE9-11+
-	// Microsoft forgot to hump their vendor prefix (#9572)
-	camelCase: function( string ) {
-		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
-	},
-
-	nodeName: function( elem, name ) {
-		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
-	},
-
-	each: function( obj, callback ) {
-		var length, i = 0;
-
-		if ( isArrayLike( obj ) ) {
-			length = obj.length;
-			for ( ; i < length; i++ ) {
-				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
-					break;
-				}
-			}
-		} else {
-			for ( i in obj ) {
-				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
-					break;
-				}
-			}
-		}
-
-		return obj;
-	},
-
-	// Support: Android<4.1
-	trim: function( text ) {
-		return text == null ?
-			"" :
-			( text + "" ).replace( rtrim, "" );
-	},
-
-	// results is for internal usage only
-	makeArray: function( arr, results ) {
-		var ret = results || [];
-
-		if ( arr != null ) {
-			if ( isArrayLike( Object( arr ) ) ) {
-				jQuery.merge( ret,
-					typeof arr === "string" ?
-					[ arr ] : arr
-				);
-			} else {
-				push.call( ret, arr );
-			}
-		}
-
-		return ret;
-	},
-
-	inArray: function( elem, arr, i ) {
-		return arr == null ? -1 : indexOf.call( arr, elem, i );
-	},
-
-	merge: function( first, second ) {
-		var len = +second.length,
-			j = 0,
-			i = first.length;
-
-		for ( ; j < len; j++ ) {
-			first[ i++ ] = second[ j ];
-		}
-
-		first.length = i;
-
-		return first;
-	},
-
-	grep: function( elems, callback, invert ) {
-		var callbackInverse,
-			matches = [],
-			i = 0,
-			length = elems.length,
-			callbackExpect = !invert;
-
-		// Go through the array, only saving the items
-		// that pass the validator function
-		for ( ; i < length; i++ ) {
-			callbackInverse = !callback( elems[ i ], i );
-			if ( callbackInverse !== callbackExpect ) {
-				matches.push( elems[ i ] );
-			}
-		}
-
-		return matches;
-	},
-
-	// arg is for internal usage only
-	map: function( elems, callback, arg ) {
-		var length, value,
-			i = 0,
-			ret = [];
-
-		// Go through the array, translating each of the items to their new values
-		if ( isArrayLike( elems ) ) {
-			length = elems.length;
-			for ( ; i < length; i++ ) {
-				value = callback( elems[ i ], i, arg );
-
-				if ( value != null ) {
-					ret.push( value );
-				}
-			}
-
-		// Go through every key on the object,
-		} else {
-			for ( i in elems ) {
-				value = callback( elems[ i ], i, arg );
-
-				if ( value != null ) {
-					ret.push( value );
-				}
-			}
-		}
-
-		// Flatten any nested arrays
-		return concat.apply( [], ret );
-	},
-
-	// A global GUID counter for objects
-	guid: 1,
-
-	// Bind a function to a context, optionally partially applying any
-	// arguments.
-	proxy: function( fn, context ) {
-		var tmp, args, proxy;
-
-		if ( typeof context === "string" ) {
-			tmp = fn[ context ];
-			context = fn;
-			fn = tmp;
-		}
-
-		// Quick check to determine if target is callable, in the spec
-		// this throws a TypeError, but we will just return undefined.
-		if ( !jQuery.isFunction( fn ) ) {
-			return undefined;
-		}
-
-		// Simulated bind
-		args = slice.call( arguments, 2 );
-		proxy = function() {
-			return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
-		};
-
-		// Set the guid of unique handler to the same of original handler, so it can be removed
-		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
-
-		return proxy;
-	},
-
-	now: Date.now,
-
-	// jQuery.support is not used in Core but other projects attach their
-	// properties to it so it needs to exist.
-	support: support
-} );
-
-// JSHint would error on this code due to the Symbol not being defined in ES5.
-// Defining this global in .jshintrc would create a danger of using the global
-// unguarded in another place, it seems safer to just disable JSHint for these
-// three lines.
-/* jshint ignore: start */
-if ( typeof Symbol === "function" ) {
-	jQuery.fn[ Symbol.iterator ] = arr[ Symbol.iterator ];
-}
-/* jshint ignore: end */
-
-// Populate the class2type map
-jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
-function( i, name ) {
-	class2type[ "[object " + name + "]" ] = name.toLowerCase();
-} );
-
-function isArrayLike( obj ) {
-
-	// Support: iOS 8.2 (not reproducible in simulator)
-	// `in` check used to prevent JIT error (gh-2145)
-	// hasOwn isn't used here due to false negatives
-	// regarding Nodelist length in IE
-	var length = !!obj && "length" in obj && obj.length,
-		type = jQuery.type( obj );
-
-	if ( type === "function" || jQuery.isWindow( obj ) ) {
-		return false;
-	}
-
-	return type === "array" || length === 0 ||
-		typeof length === "number" && length > 0 && ( length - 1 ) in obj;
-}
-var Sizzle =
-/*!
- * Sizzle CSS Selector Engine v2.2.1
- * http://sizzlejs.com/
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
- *
- * Date: 2015-10-17
- */
-(function( window ) {
-
-var i,
-	support,
-	Expr,
-	getText,
-	isXML,
-	tokenize,
-	compile,
-	select,
-	outermostContext,
-	sortInput,
-	hasDuplicate,
-
-	// Local document vars
-	setDocument,
-	document,
-	docElem,
-	documentIsHTML,
-	rbuggyQSA,
-	rbuggyMatches,
-	matches,
-	contains,
-
-	// Instance-specific data
-	expando = "sizzle" + 1 * new Date(),
-	preferredDoc = window.document,
-	dirruns = 0,
-	done = 0,
-	classCache = createCache(),
-	tokenCache = createCache(),
-	compilerCache = createCache(),
-	sortOrder = function( a, b ) {
-		if ( a === b ) {
-			hasDuplicate = true;
-		}
-		return 0;
-	},
-
-	// General-purpose constants
-	MAX_NEGATIVE = 1 << 31,
-
-	// Instance methods
-	hasOwn = ({}).hasOwnProperty,
-	arr = [],
-	pop = arr.pop,
-	push_native = arr.push,
-	push = arr.push,
-	slice = arr.slice,
-	// Use a stripped-down indexOf as it's faster than native
-	// http://jsperf.com/thor-indexof-vs-for/5
-	indexOf = function( list, elem ) {
-		var i = 0,
-			len = list.length;
-		for ( ; i < len; i++ ) {
-			if ( list[i] === elem ) {
-				return i;
-			}
-		}
-		return -1;
-	},
-
-	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
-
-	// Regular expressions
-
-	// http://www.w3.org/TR/css3-selectors/#whitespace
-	whitespace = "[\\x20\\t\\r\\n\\f]",
-
-	// http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
-	identifier = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
-
-	// Attribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
-	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
-		// Operator (capture 2)
-		"*([*^$|!~]?=)" + whitespace +
-		// "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
-		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
-		"*\\]",
-
-	pseudos = ":(" + identifier + ")(?:\\((" +
-		// To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
-		// 1. quoted (capture 3; capture 4 or capture 5)
-		"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
-		// 2. simple (capture 6)
-		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
-		// 3. anything else (capture 2)
-		".*" +
-		")\\)|)",
-
-	// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
-	rwhitespace = new RegExp( whitespace + "+", "g" ),
-	rtrim = new RegExp( "^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g" ),
-
-	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
-	rcombinators = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*" ),
-
-	rattributeQuotes = new RegExp( "=" + whitespace + "*([^\\]'\"]*?)" + whitespace + "*\\]", "g" ),
-
-	rpseudo = new RegExp( pseudos ),
-	ridentifier = new RegExp( "^" + identifier + "$" ),
-
-	matchExpr = {
-		"ID": new RegExp( "^#(" + identifier + ")" ),
-		"CLASS": new RegExp( "^\\.(" + identifier + ")" ),
-		"TAG": new RegExp( "^(" + identifier + "|[*])" ),
-		"ATTR": new RegExp( "^" + attributes ),
-		"PSEUDO": new RegExp( "^" + pseudos ),
-		"CHILD": new RegExp( "^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + whitespace +
-			"*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" + whitespace +
-			"*(\\d+)|))" + whitespace + "*\\)|)", "i" ),
-		"bool": new RegExp( "^(?:" + booleans + ")$", "i" ),
-		// For use in libraries implementing .is()
-		// We use this for POS matching in `select`
-		"needsContext": new RegExp( "^" + whitespace + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" +
-			whitespace + "*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i" )
-	},
-
-	rinputs = /^(?:input|select|textarea|button)$/i,
-	rheader = /^h\d$/i,
-
-	rnative = /^[^{]+\{\s*\[native \w/,
-
-	// Easily-parseable/retrievable ID or TAG or CLASS selectors
-	rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
-
-	rsibling = /[+~]/,
-	rescape = /'|\\/g,
-
-	// CSS escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
-	runescape = new RegExp( "\\\\([\\da-f]{1,6}" + whitespace + "?|(" + whitespace + ")|.)", "ig" ),
-	funescape = function( _, escaped, escapedWhitespace ) {
-		var high = "0x" + escaped - 0x10000;
-		// NaN means non-codepoint
-		// Support: Firefox<24
-		// Workaround erroneous numeric interpretation of +"0x"
-		return high !== high || escapedWhitespace ?
-			escaped :
-			high < 0 ?
-				// BMP codepoint
-				String.fromCharCode( high + 0x10000 ) :
-				// Supplemental Plane codepoint (surrogate pair)
-				String.fromCharCode( high >> 10 | 0xD800, high & 0x3FF | 0xDC00 );
-	},
-
-	// Used for iframes
-	// See setDocument()
-	// Removing the function wrapper causes a "Permission Denied"
-	// error in IE
-	unloadHandler = function() {
-		setDocument();
-	};
-
-// Optimize for push.apply( _, NodeList )
-try {
-	push.apply(
-		(arr = slice.call( preferredDoc.childNodes )),
-		preferredDoc.childNodes
-	);
-	// Support: Android<4.0
-	// Detect silently failing push.apply
-	arr[ preferredDoc.childNodes.length ].nodeType;
-} catch ( e ) {
-	push = { apply: arr.length ?
-
-		// Leverage slice if possible
-		function( target, els ) {
-			push_native.apply( target, slice.call(els) );
-		} :
-
-		// Support: IE<9
-		// Otherwise append directly
-		function( target, els ) {
-			var j = target.length,
-				i = 0;
-			// Can't trust NodeList.length
-			while ( (target[j++] = els[i++]) ) {}
-			target.length = j - 1;
-		}
-	};
-}
-
-function Sizzle( selector, context, results, seed ) {
-	var m, i, elem, nid, nidselect, match, groups, newSelector,
-		newContext = context && context.ownerDocument,
-
-		// nodeType defaults to 9, since context defaults to document
-		nodeType = context ? context.nodeType : 9;
-
-	results = results || [];
-
-	// Return early from calls with invalid selector or context
-	if ( typeof selector !== "string" || !selector ||
-		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
-
-		return results;
-	}
-
-	// Try to shortcut find operations (as opposed to filters) in HTML documents
-	if ( !seed ) {
-
-		if ( ( context ? context.ownerDocument || context : preferredDoc ) !== document ) {
-			setDocument( context );
-		}
-		context = context || document;
-
-		if ( documentIsHTML ) {
-
-			// If the selector is sufficiently simple, try using a "get*By*" DOM method
-			// (excepting DocumentFragment context, where the methods don't exist)
-			if ( nodeType !== 11 && (match = rquickExpr.exec( selector )) ) {
-
-				// ID selector
-				if ( (m = match[1]) ) {
-
-					// Document context
-					if ( nodeType === 9 ) {
-						if ( (elem = context.getElementById( m )) ) {
-
-							// Support: IE, Opera, Webkit
-							// TODO: identify versions
-							// getElementById can match elements by name instead of ID
-							if ( elem.id === m ) {
-								results.push( elem );
-								return results;
-							}
-						} else {
-							return results;
-						}
-
-					// Element context
-					} else {
-
-						// Support: IE, Opera, Webkit
-						// TODO: identify versions
-						// getElementById can match elements by name instead of ID
-						if ( newContext && (elem = newContext.getElementById( m )) &&
-							contains( context, elem ) &&
-							elem.id === m ) {
-
-							results.push( elem );
-							return results;
-						}
-					}
-
-				// Type selector
-				} else if ( match[2] ) {
-					push.apply( results, context.getElementsByTagName( selector ) );
-					return results;
-
-				// Class selector
-				} else if ( (m = match[3]) && support.getElementsByClassName &&
-					context.getElementsByClassName ) {
-
-					push.apply( results, context.getElementsByClassName( m ) );
-					return results;
-				}
-			}
-
-			// Take advantage of querySelectorAll
-			if ( support.qsa &&
-				!compilerCache[ selector + " " ] &&
-				(!rbuggyQSA || !rbuggyQSA.test( selector )) ) {
-
-				if ( nodeType !== 1 ) {
-					newContext = context;
-					newSelector = selector;
-
-				// qSA looks outside Element context, which is not what we want
-				// Thanks to Andrew Dupont for this workaround technique
-				// Support: IE <=8
-				// Exclude object elements
-				} else if ( context.nodeName.toLowerCase() !== "object" ) {
-
-					// Capture the context ID, setting it first if necessary
-					if ( (nid = context.getAttribute( "id" )) ) {
-						nid = nid.replace( rescape, "\\$&" );
-					} else {
-						context.setAttribute( "id", (nid = expando) );
-					}
-
-					// Prefix every selector in the list
-					groups = tokenize( selector );
-					i = groups.length;
-					nidselect = ridentifier.test( nid ) ? "#" + nid : "[id='" + nid + "']";
-					while ( i-- ) {
-						groups[i] = nidselect + " " + toSelector( groups[i] );
-					}
-					newSelector = groups.join( "," );
-
-					// Expand context for sibling selectors
-					newContext = rsibling.test( selector ) && testContext( context.parentNode ) ||
-						context;
-				}
-
-				if ( newSelector ) {
-					try {
-						push.apply( results,
-							newContext.querySelectorAll( newSelector )
-						);
-						return results;
-					} catch ( qsaError ) {
-					} finally {
-						if ( nid === expando ) {
-							context.removeAttribute( "id" );
-						}
-					}
-				}
-			}
-		}
-	}
-
-	// All others
-	return select( selector.replace( rtrim, "$1" ), context, results, seed );
-}
-
-/**
- * Create key-value caches of limited size
- * @returns {function(string, object)} Returns the Object data after storing it on itself with
- *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
- *	deleting the oldest entry
- */
-function createCache() {
-	var keys = [];
-
-	function cache( key, value ) {
-		// Use (key + " ") to avoid collision with native prototype properties (see Issue #157)
-		if ( keys.push( key + " " ) > Expr.cacheLength ) {
-			// Only keep the most recent entries
-			delete cache[ keys.shift() ];
-		}
-		return (cache[ key + " " ] = value);
-	}
-	return cache;
-}
-
-/**
- * Mark a function for special use by Sizzle
- * @param {Function} fn The function to mark
- */
-function markFunction( fn ) {
-	fn[ expando ] = true;
-	return fn;
-}
-
-/**
- * Support testing using an element
- * @param {Function} fn Passed the created div and expects a boolean result
- */
-function assert( fn ) {
-	var div = document.createElement("div");
-
-	try {
-		return !!fn( div );
-	} catch (e) {
-		return false;
-	} finally {
-		// Remove from its parent by default
-		if ( div.parentNode ) {
-			div.parentNode.removeChild( div );
-		}
-		// release memory in IE
-		div = null;
-	}
-}
-
-/**
- * Adds the same handler for all of the specified attrs
- * @param {String} attrs Pipe-separated list of attributes
- * @param {Function} handler The method that will be applied
- */
-function addHandle( attrs, handler ) {
-	var arr = attrs.split("|"),
-		i = arr.length;
-
-	while ( i-- ) {
-		Expr.attrHandle[ arr[i] ] = handler;
-	}
-}
-
-/**
- * Checks document order of two siblings
- * @param {Element} a
- * @param {Element} b
- * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
- */
-function siblingCheck( a, b ) {
-	var cur = b && a,
-		diff = cur && a.nodeType === 1 && b.nodeType === 1 &&
-			( ~b.sourceIndex || MAX_NEGATIVE ) -
-			( ~a.sourceIndex || MAX_NEGATIVE );
-
-	// Use IE sourceIndex if available on both nodes
-	if ( diff ) {
-		return diff;
-	}
-
-	// Check if b follows a
-	if ( cur ) {
-		while ( (cur = cur.nextSibling) ) {
-			if ( cur === b ) {
-				return -1;
-			}
-		}
-	}
-
-	return a ? 1 : -1;
-}
-
-/**
- * Returns a function to use in pseudos for input types
- * @param {String} type
- */
-function createInputPseudo( type ) {
-	return function( elem ) {
-		var name = elem.nodeName.toLowerCase();
-		return name === "input" && elem.type === type;
-	};
-}
-
-/**
- * Returns a function to use in pseudos for buttons
- * @param {String} type
- */
-function createButtonPseudo( type ) {
-	return function( elem ) {
-		var name = elem.nodeName.toLowerCase();
-		return (name === "input" || name === "button") && elem.type === type;
-	};
-}
-
-/**
- * Returns a function to use in pseudos for positionals
- * @param {Function} fn
- */
-function createPositionalPseudo( fn ) {
-	return markFunction(function( argument ) {
-		argument = +argument;
-		return markFunction(function( seed, matches ) {
-			var j,
-				matchIndexes = fn( [], seed.length, argument ),
-				i = matchIndexes.length;
-
-			// Match elements found at the specified indexes
-			while ( i-- ) {
-				if ( seed[ (j = matchIndexes[i]) ] ) {
-					seed[j] = !(matches[j] = seed[j]);
-				}
-			}
-		});
-	});
-}
-
-/**
- * Checks a node for validity as a Sizzle context
- * @param {Element|Object=} context
- * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
- */
-function testContext( context ) {
-	return context && typeof context.getElementsByTagName !== "undefined" && context;
-}
-
-// Expose support vars for convenience
-support = Sizzle.support = {};
-
-/**
- * Detects XML nodes
- * @param {Element|Object} elem An element or a document
- * @returns {Boolean} True iff elem is a non-HTML XML node
- */
-isXML = Sizzle.isXML = function( elem ) {
-	// documentElement is verified for cases where it doesn't yet exist
-	// (such as loading iframes in IE - #4833)
-	var documentElement = elem && (elem.ownerDocument || elem).documentElement;
-	return documentElement ? documentElement.nodeName !== "HTML" : false;
-};
-
-/**
- * Sets document-related variables once based on the current document
- * @param {Element|Object} [doc] An element or document object to use to set the document
- * @returns {Object} Returns the current document
- */
-setDocument = Sizzle.setDocument = function( node ) {
-	var hasCompare, parent,
-		doc = node ? node.ownerDocument || node : preferredDoc;
-
-	// Return early if doc is invalid or already selected
-	if ( doc === document || doc.nodeType !== 9 || !doc.documentElement ) {
-		return document;
-	}
-
-	// Update global variables
-	document = doc;
-	docElem = document.documentElement;
-	documentIsHTML = !isXML( document );
-
-	// Support: IE 9-11, Edge
-	// Accessing iframe documents after unload throws "permission denied" errors (jQuery #13936)
-	if ( (parent = document.defaultView) && parent.top !== parent ) {
-		// Support: IE 11
-		if ( parent.addEventListener ) {
-			parent.addEventListener( "unload", unloadHandler, false );
-
-		// Support: IE 9 - 10 only
-		} else if ( parent.attachEvent ) {
-			parent.attachEvent( "onunload", unloadHandler );
-		}
-	}
-
-	/* Attributes
-	---------------------------------------------------------------------- */
-
-	// Support: IE<8
-	// Verify that getAttribute really returns attributes and not properties
-	// (excepting IE8 booleans)
-	support.attributes = assert(function( div ) {
-		div.className = "i";
-		return !div.getAttribute("className");
+	var imagesSlideshowContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-images-slideshow')));
+	imagesSlideshowContainers.forEach(function (container) {
+	  return new _imagesSlideshow2.default(container);
 	});
 
-	/* getElement(s)By*
-	---------------------------------------------------------------------- */
-
-	// Check if getElementsByTagName("*") returns only elements
-	support.getElementsByTagName = assert(function( div ) {
-		div.appendChild( document.createComment("") );
-		return !div.getElementsByTagName("*").length;
+	var notificationContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-notification')));
+	notificationContainers.forEach(function (container) {
+	  return new _notification2.default(container);
 	});
 
-	// Support: IE<9
-	support.getElementsByClassName = rnative.test( document.getElementsByClassName );
-
-	// Support: IE<10
-	// Check if getElementById returns elements by name
-	// The broken getElementById methods don't pick up programatically-set names,
-	// so use a roundabout getElementsByName test
-	support.getById = assert(function( div ) {
-		docElem.appendChild( div ).id = expando;
-		return !document.getElementsByName || !document.getElementsByName( expando ).length;
+	var articlesGridContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-articles-grid')));
+	articlesGridContainers.forEach(function (container) {
+	  return new _articlesGrid2.default(container);
 	});
 
-	// ID find and filter
-	if ( support.getById ) {
-		Expr.find["ID"] = function( id, context ) {
-			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
-				var m = context.getElementById( id );
-				return m ? [ m ] : [];
-			}
-		};
-		Expr.filter["ID"] = function( id ) {
-			var attrId = id.replace( runescape, funescape );
-			return function( elem ) {
-				return elem.getAttribute("id") === attrId;
-			};
-		};
-	} else {
-		// Support: IE6/7
-		// getElementById is not reliable as a find shortcut
-		delete Expr.find["ID"];
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
 
-		Expr.filter["ID"] =  function( id ) {
-			var attrId = id.replace( runescape, funescape );
-			return function( elem ) {
-				var node = typeof elem.getAttributeNode !== "undefined" &&
-					elem.getAttributeNode("id");
-				return node && node.value === attrId;
-			};
-		};
+	"use strict";
+
+	/*
+	 * classList.js: Cross-browser full element.classList implementation.
+	 * 2014-07-23
+	 *
+	 * By Eli Grey, http://eligrey.com
+	 * Public Domain.
+	 * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+	 */
+
+	/*global self, document, DOMException */
+
+	/*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js*/
+
+	/* Copied from MDN:
+	 * https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+	 */
+
+	if ("document" in window.self) {
+
+	  // Full polyfill for browsers with no classList support
+	  // Including IE < Edge missing SVGElement.classList
+	  if (!("classList" in document.createElement("_")) || document.createElementNS && !("classList" in document.createElementNS("http://www.w3.org/2000/svg", "g"))) {
+
+	    (function (view) {
+
+	      "use strict";
+
+	      if (!('Element' in view)) return;
+
+	      var classListProp = "classList",
+	          protoProp = "prototype",
+	          elemCtrProto = view.Element[protoProp],
+	          objCtr = Object,
+	          strTrim = String[protoProp].trim || function () {
+	        return this.replace(/^\s+|\s+$/g, "");
+	      },
+	          arrIndexOf = Array[protoProp].indexOf || function (item) {
+	        var i = 0,
+	            len = this.length;
+	        for (; i < len; i++) {
+	          if (i in this && this[i] === item) {
+	            return i;
+	          }
+	        }
+	        return -1;
+	      }
+	      // Vendors: please allow content code to instantiate DOMExceptions
+	      ,
+	          DOMEx = function DOMEx(type, message) {
+	        this.name = type;
+	        this.code = DOMException[type];
+	        this.message = message;
+	      },
+	          checkTokenAndGetIndex = function checkTokenAndGetIndex(classList, token) {
+	        if (token === "") {
+	          throw new DOMEx("SYNTAX_ERR", "An invalid or illegal string was specified");
+	        }
+	        if (/\s/.test(token)) {
+	          throw new DOMEx("INVALID_CHARACTER_ERR", "String contains an invalid character");
+	        }
+	        return arrIndexOf.call(classList, token);
+	      },
+	          ClassList = function ClassList(elem) {
+	        var trimmedClasses = strTrim.call(elem.getAttribute("class") || ""),
+	            classes = trimmedClasses ? trimmedClasses.split(/\s+/) : [],
+	            i = 0,
+	            len = classes.length;
+	        for (; i < len; i++) {
+	          this.push(classes[i]);
+	        }
+	        this._updateClassName = function () {
+	          elem.setAttribute("class", this.toString());
+	        };
+	      },
+	          classListProto = ClassList[protoProp] = [],
+	          classListGetter = function classListGetter() {
+	        return new ClassList(this);
+	      };
+	      // Most DOMException implementations don't allow calling DOMException's toString()
+	      // on non-DOMExceptions. Error's toString() is sufficient here.
+	      DOMEx[protoProp] = Error[protoProp];
+	      classListProto.item = function (i) {
+	        return this[i] || null;
+	      };
+	      classListProto.contains = function (token) {
+	        token += "";
+	        return checkTokenAndGetIndex(this, token) !== -1;
+	      };
+	      classListProto.add = function () {
+	        var tokens = arguments,
+	            i = 0,
+	            l = tokens.length,
+	            token,
+	            updated = false;
+	        do {
+	          token = tokens[i] + "";
+	          if (checkTokenAndGetIndex(this, token) === -1) {
+	            this.push(token);
+	            updated = true;
+	          }
+	        } while (++i < l);
+
+	        if (updated) {
+	          this._updateClassName();
+	        }
+	      };
+	      classListProto.remove = function () {
+	        var tokens = arguments,
+	            i = 0,
+	            l = tokens.length,
+	            token,
+	            updated = false,
+	            index;
+	        do {
+	          token = tokens[i] + "";
+	          index = checkTokenAndGetIndex(this, token);
+	          while (index !== -1) {
+	            this.splice(index, 1);
+	            updated = true;
+	            index = checkTokenAndGetIndex(this, token);
+	          }
+	        } while (++i < l);
+
+	        if (updated) {
+	          this._updateClassName();
+	        }
+	      };
+	      classListProto.toggle = function (token, force) {
+	        token += "";
+
+	        var result = this.contains(token),
+	            method = result ? force !== true && "remove" : force !== false && "add";
+
+	        if (method) {
+	          this[method](token);
+	        }
+
+	        if (force === true || force === false) {
+	          return force;
+	        } else {
+	          return !result;
+	        }
+	      };
+	      classListProto.toString = function () {
+	        return this.join(" ");
+	      };
+
+	      if (objCtr.defineProperty) {
+	        var classListPropDesc = {
+	          get: classListGetter,
+	          enumerable: true,
+	          configurable: true
+	        };
+	        try {
+	          objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+	        } catch (ex) {
+	          // IE 8 doesn't support enumerable:true
+	          if (ex.number === -0x7FF5EC54) {
+	            classListPropDesc.enumerable = false;
+	            objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+	          }
+	        }
+	      } else if (objCtr[protoProp].__defineGetter__) {
+	        elemCtrProto.__defineGetter__(classListProp, classListGetter);
+	      }
+	    })(window.self);
+	  } else {
+	    // There is full or partial native classList support, so just check if we need
+	    // to normalize the add/remove and toggle APIs.
+
+	    (function () {
+	      "use strict";
+
+	      var testElement = document.createElement("_");
+
+	      testElement.classList.add("c1", "c2");
+
+	      // Polyfill for IE 10/11 and Firefox <26, where classList.add and
+	      // classList.remove exist but support only one argument at a time.
+	      if (!testElement.classList.contains("c2")) {
+	        var createMethod = function createMethod(method) {
+	          var original = DOMTokenList.prototype[method];
+
+	          DOMTokenList.prototype[method] = function (token) {
+	            var i,
+	                len = arguments.length;
+
+	            for (i = 0; i < len; i++) {
+	              token = arguments[i];
+	              original.call(this, token);
+	            }
+	          };
+	        };
+	        createMethod('add');
+	        createMethod('remove');
+	      }
+
+	      testElement.classList.toggle("c3", false);
+
+	      // Polyfill for IE 10 and Firefox <24, where classList.toggle does not
+	      // support the second argument.
+	      if (testElement.classList.contains("c3")) {
+	        var _toggle = DOMTokenList.prototype.toggle;
+
+	        DOMTokenList.prototype.toggle = function (token, force) {
+	          if (1 in arguments && !this.contains(token) === !force) {
+	            return force;
+	          } else {
+	            return _toggle.call(this, token);
+	          }
+	        };
+	      }
+
+	      testElement = null;
+	    })();
+	  }
 	}
 
-	// Tag
-	Expr.find["TAG"] = support.getElementsByTagName ?
-		function( tag, context ) {
-			if ( typeof context.getElementsByTagName !== "undefined" ) {
-				return context.getElementsByTagName( tag );
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
 
-			// DocumentFragment nodes don't have gEBTN
-			} else if ( support.qsa ) {
-				return context.querySelectorAll( tag );
-			}
-		} :
+	'use strict';
 
-		function( tag, context ) {
-			var elem,
-				tmp = [],
-				i = 0,
-				// By happy coincidence, a (broken) gEBTN appears on DocumentFragment nodes too
-				results = context.getElementsByTagName( tag );
-
-			// Filter out possible comments
-			if ( tag === "*" ) {
-				while ( (elem = results[i++]) ) {
-					if ( elem.nodeType === 1 ) {
-						tmp.push( elem );
-					}
-				}
-
-				return tmp;
-			}
-			return results;
-		};
-
-	// Class
-	Expr.find["CLASS"] = support.getElementsByClassName && function( className, context ) {
-		if ( typeof context.getElementsByClassName !== "undefined" && documentIsHTML ) {
-			return context.getElementsByClassName( className );
-		}
-	};
-
-	/* QSA/matchesSelector
-	---------------------------------------------------------------------- */
-
-	// QSA and matchesSelector support
-
-	// matchesSelector(:active) reports false when true (IE9/Opera 11.5)
-	rbuggyMatches = [];
-
-	// qSa(:focus) reports false when true (Chrome 21)
-	// We allow this because of a bug in IE8/9 that throws an error
-	// whenever `document.activeElement` is accessed on an iframe
-	// So, we allow :focus to pass through QSA all the time to avoid the IE error
-	// See http://bugs.jquery.com/ticket/13378
-	rbuggyQSA = [];
-
-	if ( (support.qsa = rnative.test( document.querySelectorAll )) ) {
-		// Build QSA regex
-		// Regex strategy adopted from Diego Perini
-		assert(function( div ) {
-			// Select is set to empty string on purpose
-			// This is to test IE's treatment of not explicitly
-			// setting a boolean content attribute,
-			// since its presence should be enough
-			// http://bugs.jquery.com/ticket/12359
-			docElem.appendChild( div ).innerHTML = "<a id='" + expando + "'></a>" +
-				"<select id='" + expando + "-\r\\' msallowcapture=''>" +
-				"<option selected=''></option></select>";
-
-			// Support: IE8, Opera 11-12.16
-			// Nothing should be selected when empty strings follow ^= or $= or *=
-			// The test attribute must be unknown in Opera but "safe" for WinRT
-			// http://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
-			if ( div.querySelectorAll("[msallowcapture^='']").length ) {
-				rbuggyQSA.push( "[*^$]=" + whitespace + "*(?:''|\"\")" );
-			}
-
-			// Support: IE8
-			// Boolean attributes and "value" are not treated correctly
-			if ( !div.querySelectorAll("[selected]").length ) {
-				rbuggyQSA.push( "\\[" + whitespace + "*(?:value|" + booleans + ")" );
-			}
-
-			// Support: Chrome<29, Android<4.4, Safari<7.0+, iOS<7.0+, PhantomJS<1.9.8+
-			if ( !div.querySelectorAll( "[id~=" + expando + "-]" ).length ) {
-				rbuggyQSA.push("~=");
-			}
-
-			// Webkit/Opera - :checked should return selected option elements
-			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
-			// IE8 throws error here and will not see later tests
-			if ( !div.querySelectorAll(":checked").length ) {
-				rbuggyQSA.push(":checked");
-			}
-
-			// Support: Safari 8+, iOS 8+
-			// https://bugs.webkit.org/show_bug.cgi?id=136851
-			// In-page `selector#id sibing-combinator selector` fails
-			if ( !div.querySelectorAll( "a#" + expando + "+*" ).length ) {
-				rbuggyQSA.push(".#.+[+~]");
-			}
-		});
-
-		assert(function( div ) {
-			// Support: Windows 8 Native Apps
-			// The type and name attributes are restricted during .innerHTML assignment
-			var input = document.createElement("input");
-			input.setAttribute( "type", "hidden" );
-			div.appendChild( input ).setAttribute( "name", "D" );
-
-			// Support: IE8
-			// Enforce case-sensitivity of name attribute
-			if ( div.querySelectorAll("[name=d]").length ) {
-				rbuggyQSA.push( "name" + whitespace + "*[*^$|!~]?=" );
-			}
-
-			// FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
-			// IE8 throws error here and will not see later tests
-			if ( !div.querySelectorAll(":enabled").length ) {
-				rbuggyQSA.push( ":enabled", ":disabled" );
-			}
-
-			// Opera 10-11 does not throw on post-comma invalid pseudos
-			div.querySelectorAll("*,:x");
-			rbuggyQSA.push(",.*:");
-		});
-	}
-
-	if ( (support.matchesSelector = rnative.test( (matches = docElem.matches ||
-		docElem.webkitMatchesSelector ||
-		docElem.mozMatchesSelector ||
-		docElem.oMatchesSelector ||
-		docElem.msMatchesSelector) )) ) {
-
-		assert(function( div ) {
-			// Check to see if it's possible to do matchesSelector
-			// on a disconnected node (IE 9)
-			support.disconnectedMatch = matches.call( div, "div" );
-
-			// This should fail with an exception
-			// Gecko does not error, returns false instead
-			matches.call( div, "[s!='']:x" );
-			rbuggyMatches.push( "!=", pseudos );
-		});
-	}
-
-	rbuggyQSA = rbuggyQSA.length && new RegExp( rbuggyQSA.join("|") );
-	rbuggyMatches = rbuggyMatches.length && new RegExp( rbuggyMatches.join("|") );
-
-	/* Contains
-	---------------------------------------------------------------------- */
-	hasCompare = rnative.test( docElem.compareDocumentPosition );
-
-	// Element contains another
-	// Purposefully self-exclusive
-	// As in, an element does not contain itself
-	contains = hasCompare || rnative.test( docElem.contains ) ?
-		function( a, b ) {
-			var adown = a.nodeType === 9 ? a.documentElement : a,
-				bup = b && b.parentNode;
-			return a === bup || !!( bup && bup.nodeType === 1 && (
-				adown.contains ?
-					adown.contains( bup ) :
-					a.compareDocumentPosition && a.compareDocumentPosition( bup ) & 16
-			));
-		} :
-		function( a, b ) {
-			if ( b ) {
-				while ( (b = b.parentNode) ) {
-					if ( b === a ) {
-						return true;
-					}
-				}
-			}
-			return false;
-		};
-
-	/* Sorting
-	---------------------------------------------------------------------- */
-
-	// Document order sorting
-	sortOrder = hasCompare ?
-	function( a, b ) {
-
-		// Flag for duplicate removal
-		if ( a === b ) {
-			hasDuplicate = true;
-			return 0;
-		}
-
-		// Sort on method existence if only one input has compareDocumentPosition
-		var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
-		if ( compare ) {
-			return compare;
-		}
-
-		// Calculate position if both inputs belong to the same document
-		compare = ( a.ownerDocument || a ) === ( b.ownerDocument || b ) ?
-			a.compareDocumentPosition( b ) :
-
-			// Otherwise we know they are disconnected
-			1;
-
-		// Disconnected nodes
-		if ( compare & 1 ||
-			(!support.sortDetached && b.compareDocumentPosition( a ) === compare) ) {
-
-			// Choose the first element that is related to our preferred document
-			if ( a === document || a.ownerDocument === preferredDoc && contains(preferredDoc, a) ) {
-				return -1;
-			}
-			if ( b === document || b.ownerDocument === preferredDoc && contains(preferredDoc, b) ) {
-				return 1;
-			}
-
-			// Maintain original order
-			return sortInput ?
-				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
-				0;
-		}
-
-		return compare & 4 ? -1 : 1;
-	} :
-	function( a, b ) {
-		// Exit early if the nodes are identical
-		if ( a === b ) {
-			hasDuplicate = true;
-			return 0;
-		}
-
-		var cur,
-			i = 0,
-			aup = a.parentNode,
-			bup = b.parentNode,
-			ap = [ a ],
-			bp = [ b ];
-
-		// Parentless nodes are either documents or disconnected
-		if ( !aup || !bup ) {
-			return a === document ? -1 :
-				b === document ? 1 :
-				aup ? -1 :
-				bup ? 1 :
-				sortInput ?
-				( indexOf( sortInput, a ) - indexOf( sortInput, b ) ) :
-				0;
-
-		// If the nodes are siblings, we can do a quick check
-		} else if ( aup === bup ) {
-			return siblingCheck( a, b );
-		}
-
-		// Otherwise we need full lists of their ancestors for comparison
-		cur = a;
-		while ( (cur = cur.parentNode) ) {
-			ap.unshift( cur );
-		}
-		cur = b;
-		while ( (cur = cur.parentNode) ) {
-			bp.unshift( cur );
-		}
-
-		// Walk down the tree looking for a discrepancy
-		while ( ap[i] === bp[i] ) {
-			i++;
-		}
-
-		return i ?
-			// Do a sibling check if the nodes have a common ancestor
-			siblingCheck( ap[i], bp[i] ) :
-
-			// Otherwise nodes in our document sort first
-			ap[i] === preferredDoc ? -1 :
-			bp[i] === preferredDoc ? 1 :
-			0;
-	};
-
-	return document;
-};
-
-Sizzle.matches = function( expr, elements ) {
-	return Sizzle( expr, null, null, elements );
-};
-
-Sizzle.matchesSelector = function( elem, expr ) {
-	// Set document vars if needed
-	if ( ( elem.ownerDocument || elem ) !== document ) {
-		setDocument( elem );
-	}
-
-	// Make sure that attribute selectors are quoted
-	expr = expr.replace( rattributeQuotes, "='$1']" );
-
-	if ( support.matchesSelector && documentIsHTML &&
-		!compilerCache[ expr + " " ] &&
-		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
-		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
-
-		try {
-			var ret = matches.call( elem, expr );
-
-			// IE 9's matchesSelector returns false on disconnected nodes
-			if ( ret || support.disconnectedMatch ||
-					// As well, disconnected nodes are said to be in a document
-					// fragment in IE 9
-					elem.document && elem.document.nodeType !== 11 ) {
-				return ret;
-			}
-		} catch (e) {}
-	}
-
-	return Sizzle( expr, document, null, [ elem ] ).length > 0;
-};
-
-Sizzle.contains = function( context, elem ) {
-	// Set document vars if needed
-	if ( ( context.ownerDocument || context ) !== document ) {
-		setDocument( context );
-	}
-	return contains( context, elem );
-};
-
-Sizzle.attr = function( elem, name ) {
-	// Set document vars if needed
-	if ( ( elem.ownerDocument || elem ) !== document ) {
-		setDocument( elem );
-	}
-
-	var fn = Expr.attrHandle[ name.toLowerCase() ],
-		// Don't get fooled by Object.prototype properties (jQuery #13807)
-		val = fn && hasOwn.call( Expr.attrHandle, name.toLowerCase() ) ?
-			fn( elem, name, !documentIsHTML ) :
-			undefined;
-
-	return val !== undefined ?
-		val :
-		support.attributes || !documentIsHTML ?
-			elem.getAttribute( name ) :
-			(val = elem.getAttributeNode(name)) && val.specified ?
-				val.value :
-				null;
-};
-
-Sizzle.error = function( msg ) {
-	throw new Error( "Syntax error, unrecognized expression: " + msg );
-};
-
-/**
- * Document sorting and removing duplicates
- * @param {ArrayLike} results
- */
-Sizzle.uniqueSort = function( results ) {
-	var elem,
-		duplicates = [],
-		j = 0,
-		i = 0;
-
-	// Unless we *know* we can detect duplicates, assume their presence
-	hasDuplicate = !support.detectDuplicates;
-	sortInput = !support.sortStable && results.slice( 0 );
-	results.sort( sortOrder );
-
-	if ( hasDuplicate ) {
-		while ( (elem = results[i++]) ) {
-			if ( elem === results[ i ] ) {
-				j = duplicates.push( i );
-			}
-		}
-		while ( j-- ) {
-			results.splice( duplicates[ j ], 1 );
-		}
-	}
-
-	// Clear input after sorting to release objects
-	// See https://github.com/jquery/sizzle/pull/225
-	sortInput = null;
-
-	return results;
-};
-
-/**
- * Utility function for retrieving the text value of an array of DOM nodes
- * @param {Array|Element} elem
- */
-getText = Sizzle.getText = function( elem ) {
-	var node,
-		ret = "",
-		i = 0,
-		nodeType = elem.nodeType;
-
-	if ( !nodeType ) {
-		// If no nodeType, this is expected to be an array
-		while ( (node = elem[i++]) ) {
-			// Do not traverse comment nodes
-			ret += getText( node );
-		}
-	} else if ( nodeType === 1 || nodeType === 9 || nodeType === 11 ) {
-		// Use textContent for elements
-		// innerText usage removed for consistency of new lines (jQuery #11153)
-		if ( typeof elem.textContent === "string" ) {
-			return elem.textContent;
-		} else {
-			// Traverse its children
-			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
-				ret += getText( elem );
-			}
-		}
-	} else if ( nodeType === 3 || nodeType === 4 ) {
-		return elem.nodeValue;
-	}
-	// Do not include comment or processing instruction nodes
-
-	return ret;
-};
-
-Expr = Sizzle.selectors = {
-
-	// Can be adjusted by the user
-	cacheLength: 50,
-
-	createPseudo: markFunction,
-
-	match: matchExpr,
-
-	attrHandle: {},
-
-	find: {},
-
-	relative: {
-		">": { dir: "parentNode", first: true },
-		" ": { dir: "parentNode" },
-		"+": { dir: "previousSibling", first: true },
-		"~": { dir: "previousSibling" }
-	},
-
-	preFilter: {
-		"ATTR": function( match ) {
-			match[1] = match[1].replace( runescape, funescape );
-
-			// Move the given value to match[3] whether quoted or unquoted
-			match[3] = ( match[3] || match[4] || match[5] || "" ).replace( runescape, funescape );
-
-			if ( match[2] === "~=" ) {
-				match[3] = " " + match[3] + " ";
-			}
-
-			return match.slice( 0, 4 );
-		},
-
-		"CHILD": function( match ) {
-			/* matches from matchExpr["CHILD"]
-				1 type (only|nth|...)
-				2 what (child|of-type)
-				3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
-				4 xn-component of xn+y argument ([+-]?\d*n|)
-				5 sign of xn-component
-				6 x of xn-component
-				7 sign of y-component
-				8 y of y-component
-			*/
-			match[1] = match[1].toLowerCase();
-
-			if ( match[1].slice( 0, 3 ) === "nth" ) {
-				// nth-* requires argument
-				if ( !match[3] ) {
-					Sizzle.error( match[0] );
-				}
-
-				// numeric x and y parameters for Expr.filter.CHILD
-				// remember that false/true cast respectively to 0/1
-				match[4] = +( match[4] ? match[5] + (match[6] || 1) : 2 * ( match[3] === "even" || match[3] === "odd" ) );
-				match[5] = +( ( match[7] + match[8] ) || match[3] === "odd" );
-
-			// other types prohibit arguments
-			} else if ( match[3] ) {
-				Sizzle.error( match[0] );
-			}
-
-			return match;
-		},
-
-		"PSEUDO": function( match ) {
-			var excess,
-				unquoted = !match[6] && match[2];
-
-			if ( matchExpr["CHILD"].test( match[0] ) ) {
-				return null;
-			}
-
-			// Accept quoted arguments as-is
-			if ( match[3] ) {
-				match[2] = match[4] || match[5] || "";
-
-			// Strip excess characters from unquoted arguments
-			} else if ( unquoted && rpseudo.test( unquoted ) &&
-				// Get excess from tokenize (recursively)
-				(excess = tokenize( unquoted, true )) &&
-				// advance to the next closing parenthesis
-				(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
-
-				// excess is a negative index
-				match[0] = match[0].slice( 0, excess );
-				match[2] = unquoted.slice( 0, excess );
-			}
-
-			// Return only captures needed by the pseudo filter method (type and argument)
-			return match.slice( 0, 3 );
-		}
-	},
-
-	filter: {
-
-		"TAG": function( nodeNameSelector ) {
-			var nodeName = nodeNameSelector.replace( runescape, funescape ).toLowerCase();
-			return nodeNameSelector === "*" ?
-				function() { return true; } :
-				function( elem ) {
-					return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
-				};
-		},
-
-		"CLASS": function( className ) {
-			var pattern = classCache[ className + " " ];
-
-			return pattern ||
-				(pattern = new RegExp( "(^|" + whitespace + ")" + className + "(" + whitespace + "|$)" )) &&
-				classCache( className, function( elem ) {
-					return pattern.test( typeof elem.className === "string" && elem.className || typeof elem.getAttribute !== "undefined" && elem.getAttribute("class") || "" );
-				});
-		},
-
-		"ATTR": function( name, operator, check ) {
-			return function( elem ) {
-				var result = Sizzle.attr( elem, name );
-
-				if ( result == null ) {
-					return operator === "!=";
-				}
-				if ( !operator ) {
-					return true;
-				}
-
-				result += "";
-
-				return operator === "=" ? result === check :
-					operator === "!=" ? result !== check :
-					operator === "^=" ? check && result.indexOf( check ) === 0 :
-					operator === "*=" ? check && result.indexOf( check ) > -1 :
-					operator === "$=" ? check && result.slice( -check.length ) === check :
-					operator === "~=" ? ( " " + result.replace( rwhitespace, " " ) + " " ).indexOf( check ) > -1 :
-					operator === "|=" ? result === check || result.slice( 0, check.length + 1 ) === check + "-" :
-					false;
-			};
-		},
-
-		"CHILD": function( type, what, argument, first, last ) {
-			var simple = type.slice( 0, 3 ) !== "nth",
-				forward = type.slice( -4 ) !== "last",
-				ofType = what === "of-type";
-
-			return first === 1 && last === 0 ?
-
-				// Shortcut for :nth-*(n)
-				function( elem ) {
-					return !!elem.parentNode;
-				} :
-
-				function( elem, context, xml ) {
-					var cache, uniqueCache, outerCache, node, nodeIndex, start,
-						dir = simple !== forward ? "nextSibling" : "previousSibling",
-						parent = elem.parentNode,
-						name = ofType && elem.nodeName.toLowerCase(),
-						useCache = !xml && !ofType,
-						diff = false;
-
-					if ( parent ) {
-
-						// :(first|last|only)-(child|of-type)
-						if ( simple ) {
-							while ( dir ) {
-								node = elem;
-								while ( (node = node[ dir ]) ) {
-									if ( ofType ?
-										node.nodeName.toLowerCase() === name :
-										node.nodeType === 1 ) {
-
-										return false;
-									}
-								}
-								// Reverse direction for :only-* (if we haven't yet done so)
-								start = dir = type === "only" && !start && "nextSibling";
-							}
-							return true;
-						}
-
-						start = [ forward ? parent.firstChild : parent.lastChild ];
-
-						// non-xml :nth-child(...) stores cache data on `parent`
-						if ( forward && useCache ) {
-
-							// Seek `elem` from a previously-cached index
-
-							// ...in a gzip-friendly way
-							node = parent;
-							outerCache = node[ expando ] || (node[ expando ] = {});
-
-							// Support: IE <9 only
-							// Defend against cloned attroperties (jQuery gh-1709)
-							uniqueCache = outerCache[ node.uniqueID ] ||
-								(outerCache[ node.uniqueID ] = {});
-
-							cache = uniqueCache[ type ] || [];
-							nodeIndex = cache[ 0 ] === dirruns && cache[ 1 ];
-							diff = nodeIndex && cache[ 2 ];
-							node = nodeIndex && parent.childNodes[ nodeIndex ];
-
-							while ( (node = ++nodeIndex && node && node[ dir ] ||
-
-								// Fallback to seeking `elem` from the start
-								(diff = nodeIndex = 0) || start.pop()) ) {
-
-								// When found, cache indexes on `parent` and break
-								if ( node.nodeType === 1 && ++diff && node === elem ) {
-									uniqueCache[ type ] = [ dirruns, nodeIndex, diff ];
-									break;
-								}
-							}
-
-						} else {
-							// Use previously-cached element index if available
-							if ( useCache ) {
-								// ...in a gzip-friendly way
-								node = elem;
-								outerCache = node[ expando ] || (node[ expando ] = {});
-
-								// Support: IE <9 only
-								// Defend against cloned attroperties (jQuery gh-1709)
-								uniqueCache = outerCache[ node.uniqueID ] ||
-									(outerCache[ node.uniqueID ] = {});
-
-								cache = uniqueCache[ type ] || [];
-								nodeIndex = cache[ 0 ] === dirruns && cache[ 1 ];
-								diff = nodeIndex;
-							}
-
-							// xml :nth-child(...)
-							// or :nth-last-child(...) or :nth(-last)?-of-type(...)
-							if ( diff === false ) {
-								// Use the same loop as above to seek `elem` from the start
-								while ( (node = ++nodeIndex && node && node[ dir ] ||
-									(diff = nodeIndex = 0) || start.pop()) ) {
-
-									if ( ( ofType ?
-										node.nodeName.toLowerCase() === name :
-										node.nodeType === 1 ) &&
-										++diff ) {
-
-										// Cache the index of each encountered element
-										if ( useCache ) {
-											outerCache = node[ expando ] || (node[ expando ] = {});
-
-											// Support: IE <9 only
-											// Defend against cloned attroperties (jQuery gh-1709)
-											uniqueCache = outerCache[ node.uniqueID ] ||
-												(outerCache[ node.uniqueID ] = {});
-
-											uniqueCache[ type ] = [ dirruns, diff ];
-										}
-
-										if ( node === elem ) {
-											break;
-										}
-									}
-								}
-							}
-						}
-
-						// Incorporate the offset, then check against cycle size
-						diff -= last;
-						return diff === first || ( diff % first === 0 && diff / first >= 0 );
-					}
-				};
-		},
-
-		"PSEUDO": function( pseudo, argument ) {
-			// pseudo-class names are case-insensitive
-			// http://www.w3.org/TR/selectors/#pseudo-classes
-			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
-			// Remember that setFilters inherits from pseudos
-			var args,
-				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
-					Sizzle.error( "unsupported pseudo: " + pseudo );
-
-			// The user may use createPseudo to indicate that
-			// arguments are needed to create the filter function
-			// just as Sizzle does
-			if ( fn[ expando ] ) {
-				return fn( argument );
-			}
-
-			// But maintain support for old signatures
-			if ( fn.length > 1 ) {
-				args = [ pseudo, pseudo, "", argument ];
-				return Expr.setFilters.hasOwnProperty( pseudo.toLowerCase() ) ?
-					markFunction(function( seed, matches ) {
-						var idx,
-							matched = fn( seed, argument ),
-							i = matched.length;
-						while ( i-- ) {
-							idx = indexOf( seed, matched[i] );
-							seed[ idx ] = !( matches[ idx ] = matched[i] );
-						}
-					}) :
-					function( elem ) {
-						return fn( elem, 0, args );
-					};
-			}
-
-			return fn;
-		}
-	},
-
-	pseudos: {
-		// Potentially complex pseudos
-		"not": markFunction(function( selector ) {
-			// Trim the selector passed to compile
-			// to avoid treating leading and trailing
-			// spaces as combinators
-			var input = [],
-				results = [],
-				matcher = compile( selector.replace( rtrim, "$1" ) );
-
-			return matcher[ expando ] ?
-				markFunction(function( seed, matches, context, xml ) {
-					var elem,
-						unmatched = matcher( seed, null, xml, [] ),
-						i = seed.length;
-
-					// Match elements unmatched by `matcher`
-					while ( i-- ) {
-						if ( (elem = unmatched[i]) ) {
-							seed[i] = !(matches[i] = elem);
-						}
-					}
-				}) :
-				function( elem, context, xml ) {
-					input[0] = elem;
-					matcher( input, null, xml, results );
-					// Don't keep the element (issue #299)
-					input[0] = null;
-					return !results.pop();
-				};
-		}),
-
-		"has": markFunction(function( selector ) {
-			return function( elem ) {
-				return Sizzle( selector, elem ).length > 0;
-			};
-		}),
-
-		"contains": markFunction(function( text ) {
-			text = text.replace( runescape, funescape );
-			return function( elem ) {
-				return ( elem.textContent || elem.innerText || getText( elem ) ).indexOf( text ) > -1;
-			};
-		}),
-
-		// "Whether an element is represented by a :lang() selector
-		// is based solely on the element's language value
-		// being equal to the identifier C,
-		// or beginning with the identifier C immediately followed by "-".
-		// The matching of C against the element's language value is performed case-insensitively.
-		// The identifier C does not have to be a valid language name."
-		// http://www.w3.org/TR/selectors/#lang-pseudo
-		"lang": markFunction( function( lang ) {
-			// lang value must be a valid identifier
-			if ( !ridentifier.test(lang || "") ) {
-				Sizzle.error( "unsupported lang: " + lang );
-			}
-			lang = lang.replace( runescape, funescape ).toLowerCase();
-			return function( elem ) {
-				var elemLang;
-				do {
-					if ( (elemLang = documentIsHTML ?
-						elem.lang :
-						elem.getAttribute("xml:lang") || elem.getAttribute("lang")) ) {
-
-						elemLang = elemLang.toLowerCase();
-						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
-					}
-				} while ( (elem = elem.parentNode) && elem.nodeType === 1 );
-				return false;
-			};
-		}),
-
-		// Miscellaneous
-		"target": function( elem ) {
-			var hash = window.location && window.location.hash;
-			return hash && hash.slice( 1 ) === elem.id;
-		},
-
-		"root": function( elem ) {
-			return elem === docElem;
-		},
-
-		"focus": function( elem ) {
-			return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
-		},
-
-		// Boolean properties
-		"enabled": function( elem ) {
-			return elem.disabled === false;
-		},
-
-		"disabled": function( elem ) {
-			return elem.disabled === true;
-		},
-
-		"checked": function( elem ) {
-			// In CSS3, :checked should return both checked and selected elements
-			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
-			var nodeName = elem.nodeName.toLowerCase();
-			return (nodeName === "input" && !!elem.checked) || (nodeName === "option" && !!elem.selected);
-		},
-
-		"selected": function( elem ) {
-			// Accessing this property makes selected-by-default
-			// options in Safari work properly
-			if ( elem.parentNode ) {
-				elem.parentNode.selectedIndex;
-			}
-
-			return elem.selected === true;
-		},
-
-		// Contents
-		"empty": function( elem ) {
-			// http://www.w3.org/TR/selectors/#empty-pseudo
-			// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
-			//   but not by others (comment: 8; processing instruction: 7; etc.)
-			// nodeType < 6 works because attributes (2) do not appear as children
-			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
-				if ( elem.nodeType < 6 ) {
-					return false;
-				}
-			}
-			return true;
-		},
-
-		"parent": function( elem ) {
-			return !Expr.pseudos["empty"]( elem );
-		},
-
-		// Element/input types
-		"header": function( elem ) {
-			return rheader.test( elem.nodeName );
-		},
-
-		"input": function( elem ) {
-			return rinputs.test( elem.nodeName );
-		},
-
-		"button": function( elem ) {
-			var name = elem.nodeName.toLowerCase();
-			return name === "input" && elem.type === "button" || name === "button";
-		},
-
-		"text": function( elem ) {
-			var attr;
-			return elem.nodeName.toLowerCase() === "input" &&
-				elem.type === "text" &&
-
-				// Support: IE<8
-				// New HTML5 attribute values (e.g., "search") appear with elem.type === "text"
-				( (attr = elem.getAttribute("type")) == null || attr.toLowerCase() === "text" );
-		},
-
-		// Position-in-collection
-		"first": createPositionalPseudo(function() {
-			return [ 0 ];
-		}),
-
-		"last": createPositionalPseudo(function( matchIndexes, length ) {
-			return [ length - 1 ];
-		}),
-
-		"eq": createPositionalPseudo(function( matchIndexes, length, argument ) {
-			return [ argument < 0 ? argument + length : argument ];
-		}),
-
-		"even": createPositionalPseudo(function( matchIndexes, length ) {
-			var i = 0;
-			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		}),
-
-		"odd": createPositionalPseudo(function( matchIndexes, length ) {
-			var i = 1;
-			for ( ; i < length; i += 2 ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		}),
-
-		"lt": createPositionalPseudo(function( matchIndexes, length, argument ) {
-			var i = argument < 0 ? argument + length : argument;
-			for ( ; --i >= 0; ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		}),
-
-		"gt": createPositionalPseudo(function( matchIndexes, length, argument ) {
-			var i = argument < 0 ? argument + length : argument;
-			for ( ; ++i < length; ) {
-				matchIndexes.push( i );
-			}
-			return matchIndexes;
-		})
-	}
-};
-
-Expr.pseudos["nth"] = Expr.pseudos["eq"];
-
-// Add button/input type pseudos
-for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
-	Expr.pseudos[ i ] = createInputPseudo( i );
-}
-for ( i in { submit: true, reset: true } ) {
-	Expr.pseudos[ i ] = createButtonPseudo( i );
-}
-
-// Easy API for creating new setFilters
-function setFilters() {}
-setFilters.prototype = Expr.filters = Expr.pseudos;
-Expr.setFilters = new setFilters();
-
-tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
-	var matched, match, tokens, type,
-		soFar, groups, preFilters,
-		cached = tokenCache[ selector + " " ];
-
-	if ( cached ) {
-		return parseOnly ? 0 : cached.slice( 0 );
-	}
-
-	soFar = selector;
-	groups = [];
-	preFilters = Expr.preFilter;
-
-	while ( soFar ) {
-
-		// Comma and first run
-		if ( !matched || (match = rcomma.exec( soFar )) ) {
-			if ( match ) {
-				// Don't consume trailing commas as valid
-				soFar = soFar.slice( match[0].length ) || soFar;
-			}
-			groups.push( (tokens = []) );
-		}
-
-		matched = false;
-
-		// Combinators
-		if ( (match = rcombinators.exec( soFar )) ) {
-			matched = match.shift();
-			tokens.push({
-				value: matched,
-				// Cast descendant combinators to space
-				type: match[0].replace( rtrim, " " )
-			});
-			soFar = soFar.slice( matched.length );
-		}
-
-		// Filters
-		for ( type in Expr.filter ) {
-			if ( (match = matchExpr[ type ].exec( soFar )) && (!preFilters[ type ] ||
-				(match = preFilters[ type ]( match ))) ) {
-				matched = match.shift();
-				tokens.push({
-					value: matched,
-					type: type,
-					matches: match
-				});
-				soFar = soFar.slice( matched.length );
-			}
-		}
-
-		if ( !matched ) {
-			break;
-		}
-	}
-
-	// Return the length of the invalid excess
-	// if we're just parsing
-	// Otherwise, throw an error or return tokens
-	return parseOnly ?
-		soFar.length :
-		soFar ?
-			Sizzle.error( selector ) :
-			// Cache the tokens
-			tokenCache( selector, groups ).slice( 0 );
-};
-
-function toSelector( tokens ) {
-	var i = 0,
-		len = tokens.length,
-		selector = "";
-	for ( ; i < len; i++ ) {
-		selector += tokens[i].value;
-	}
-	return selector;
-}
-
-function addCombinator( matcher, combinator, base ) {
-	var dir = combinator.dir,
-		checkNonElements = base && dir === "parentNode",
-		doneName = done++;
-
-	return combinator.first ?
-		// Check against closest ancestor/preceding element
-		function( elem, context, xml ) {
-			while ( (elem = elem[ dir ]) ) {
-				if ( elem.nodeType === 1 || checkNonElements ) {
-					return matcher( elem, context, xml );
-				}
-			}
-		} :
-
-		// Check against all ancestor/preceding elements
-		function( elem, context, xml ) {
-			var oldCache, uniqueCache, outerCache,
-				newCache = [ dirruns, doneName ];
-
-			// We can't set arbitrary data on XML nodes, so they don't benefit from combinator caching
-			if ( xml ) {
-				while ( (elem = elem[ dir ]) ) {
-					if ( elem.nodeType === 1 || checkNonElements ) {
-						if ( matcher( elem, context, xml ) ) {
-							return true;
-						}
-					}
-				}
-			} else {
-				while ( (elem = elem[ dir ]) ) {
-					if ( elem.nodeType === 1 || checkNonElements ) {
-						outerCache = elem[ expando ] || (elem[ expando ] = {});
-
-						// Support: IE <9 only
-						// Defend against cloned attroperties (jQuery gh-1709)
-						uniqueCache = outerCache[ elem.uniqueID ] || (outerCache[ elem.uniqueID ] = {});
-
-						if ( (oldCache = uniqueCache[ dir ]) &&
-							oldCache[ 0 ] === dirruns && oldCache[ 1 ] === doneName ) {
-
-							// Assign to newCache so results back-propagate to previous elements
-							return (newCache[ 2 ] = oldCache[ 2 ]);
-						} else {
-							// Reuse newcache so results back-propagate to previous elements
-							uniqueCache[ dir ] = newCache;
-
-							// A match means we're done; a fail means we have to keep checking
-							if ( (newCache[ 2 ] = matcher( elem, context, xml )) ) {
-								return true;
-							}
-						}
-					}
-				}
-			}
-		};
-}
-
-function elementMatcher( matchers ) {
-	return matchers.length > 1 ?
-		function( elem, context, xml ) {
-			var i = matchers.length;
-			while ( i-- ) {
-				if ( !matchers[i]( elem, context, xml ) ) {
-					return false;
-				}
-			}
-			return true;
-		} :
-		matchers[0];
-}
-
-function multipleContexts( selector, contexts, results ) {
-	var i = 0,
-		len = contexts.length;
-	for ( ; i < len; i++ ) {
-		Sizzle( selector, contexts[i], results );
-	}
-	return results;
-}
-
-function condense( unmatched, map, filter, context, xml ) {
-	var elem,
-		newUnmatched = [],
-		i = 0,
-		len = unmatched.length,
-		mapped = map != null;
-
-	for ( ; i < len; i++ ) {
-		if ( (elem = unmatched[i]) ) {
-			if ( !filter || filter( elem, context, xml ) ) {
-				newUnmatched.push( elem );
-				if ( mapped ) {
-					map.push( i );
-				}
-			}
-		}
-	}
-
-	return newUnmatched;
-}
-
-function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postSelector ) {
-	if ( postFilter && !postFilter[ expando ] ) {
-		postFilter = setMatcher( postFilter );
-	}
-	if ( postFinder && !postFinder[ expando ] ) {
-		postFinder = setMatcher( postFinder, postSelector );
-	}
-	return markFunction(function( seed, results, context, xml ) {
-		var temp, i, elem,
-			preMap = [],
-			postMap = [],
-			preexisting = results.length,
-
-			// Get initial elements from seed or context
-			elems = seed || multipleContexts( selector || "*", context.nodeType ? [ context ] : context, [] ),
-
-			// Prefilter to get matcher input, preserving a map for seed-results synchronization
-			matcherIn = preFilter && ( seed || !selector ) ?
-				condense( elems, preMap, preFilter, context, xml ) :
-				elems,
-
-			matcherOut = matcher ?
-				// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
-				postFinder || ( seed ? preFilter : preexisting || postFilter ) ?
-
-					// ...intermediate processing is necessary
-					[] :
-
-					// ...otherwise use results directly
-					results :
-				matcherIn;
-
-		// Find primary matches
-		if ( matcher ) {
-			matcher( matcherIn, matcherOut, context, xml );
-		}
-
-		// Apply postFilter
-		if ( postFilter ) {
-			temp = condense( matcherOut, postMap );
-			postFilter( temp, [], context, xml );
-
-			// Un-match failing elements by moving them back to matcherIn
-			i = temp.length;
-			while ( i-- ) {
-				if ( (elem = temp[i]) ) {
-					matcherOut[ postMap[i] ] = !(matcherIn[ postMap[i] ] = elem);
-				}
-			}
-		}
-
-		if ( seed ) {
-			if ( postFinder || preFilter ) {
-				if ( postFinder ) {
-					// Get the final matcherOut by condensing this intermediate into postFinder contexts
-					temp = [];
-					i = matcherOut.length;
-					while ( i-- ) {
-						if ( (elem = matcherOut[i]) ) {
-							// Restore matcherIn since elem is not yet a final match
-							temp.push( (matcherIn[i] = elem) );
-						}
-					}
-					postFinder( null, (matcherOut = []), temp, xml );
-				}
-
-				// Move matched elements from seed to results to keep them synchronized
-				i = matcherOut.length;
-				while ( i-- ) {
-					if ( (elem = matcherOut[i]) &&
-						(temp = postFinder ? indexOf( seed, elem ) : preMap[i]) > -1 ) {
-
-						seed[temp] = !(results[temp] = elem);
-					}
-				}
-			}
-
-		// Add elements to results, through postFinder if defined
-		} else {
-			matcherOut = condense(
-				matcherOut === results ?
-					matcherOut.splice( preexisting, matcherOut.length ) :
-					matcherOut
-			);
-			if ( postFinder ) {
-				postFinder( null, results, matcherOut, xml );
-			} else {
-				push.apply( results, matcherOut );
-			}
-		}
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
 	});
-}
 
-function matcherFromTokens( tokens ) {
-	var checkContext, matcher, j,
-		len = tokens.length,
-		leadingRelative = Expr.relative[ tokens[0].type ],
-		implicitRelative = leadingRelative || Expr.relative[" "],
-		i = leadingRelative ? 1 : 0,
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-		// The foundational matcher ensures that elements are reachable from top-level context(s)
-		matchContext = addCombinator( function( elem ) {
-			return elem === checkContext;
-		}, implicitRelative, true ),
-		matchAnyContext = addCombinator( function( elem ) {
-			return indexOf( checkContext, elem ) > -1;
-		}, implicitRelative, true ),
-		matchers = [ function( elem, context, xml ) {
-			var ret = ( !leadingRelative && ( xml || context !== outermostContext ) ) || (
-				(checkContext = context).nodeType ?
-					matchContext( elem, context, xml ) :
-					matchAnyContext( elem, context, xml ) );
-			// Avoid hanging onto element (issue #299)
-			checkContext = null;
-			return ret;
-		} ];
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	for ( ; i < len; i++ ) {
-		if ( (matcher = Expr.relative[ tokens[i].type ]) ) {
-			matchers = [ addCombinator(elementMatcher( matchers ), matcher) ];
-		} else {
-			matcher = Expr.filter[ tokens[i].type ].apply( null, tokens[i].matches );
+	/**
+	 * Gestion de l'affichage du menu en mobile
+	 */
 
-			// Return special upon seeing a positional matcher
-			if ( matcher[ expando ] ) {
-				// Find the next relative operator (if any) for proper handling
-				j = ++i;
-				for ( ; j < len; j++ ) {
-					if ( Expr.relative[ tokens[j].type ] ) {
-						break;
-					}
-				}
-				return setMatcher(
-					i > 1 && elementMatcher( matchers ),
-					i > 1 && toSelector(
-						// If the preceding token was a descendant combinator, insert an implicit any-element `*`
-						tokens.slice( 0, i - 1 ).concat({ value: tokens[ i - 2 ].type === " " ? "*" : "" })
-					).replace( rtrim, "$1" ),
-					matcher,
-					i < j && matcherFromTokens( tokens.slice( i, j ) ),
-					j < len && matcherFromTokens( (tokens = tokens.slice( j )) ),
-					j < len && toSelector( tokens )
-				);
-			}
-			matchers.push( matcher );
-		}
+	var Nav = function () {
+	    function Nav(container) {
+	        _classCallCheck(this, Nav);
+
+	        this.options = {
+	            itemsContainerOpenClass: 'bab-MainNav--open',
+	            toggleIconOpenClass: 'fa-bars',
+	            toggleIconCloseClass: 'fa-times'
+	        };
+
+	        this.container = container;
+	        this.toggleButton = this.container.querySelector('.js-nav-toggle');
+	        this.toggleIcon = this.toggleButton.querySelector('.js-nav-toggle-icon');
+	        this.itemsContainer = this.container.querySelector('.js-nav-items');
+
+	        this.initEvents();
+	    }
+
+	    /**
+	     * Au click sur le bouton, toggle le menu
+	     */
+
+
+	    _createClass(Nav, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            this.toggleButton.addEventListener('click', function () {
+	                return _this.toggle();
+	            });
+	        }
+
+	        /**
+	         * Ouvre ou ferme le menu selon son état actuel
+	         */
+
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            this.container.classList.toggle(this.options.itemsContainerOpenClass);
+	            this.toggleIcon.classList.toggle(this.options.toggleIconOpenClass);
+	            this.toggleIcon.classList.toggle(this.options.toggleIconCloseClass);
+	        }
+	    }]);
+
+	    return Nav;
+	}();
+
+	exports.default = Nav;
+
+/***/ },
+/* 3 */,
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*jshint browser:true, node:true*/
+
+	'use strict';
+
+	/**
+	 * @preserve Create and manage a DOM event delegator.
+	 *
+	 * @version 0.3.0
+	 * @codingstandard ftlabs-jsv2
+	 * @copyright The Financial Times Limited [All Rights Reserved]
+	 * @license MIT License (see LICENSE.txt)
+	 */
+
+	var Delegate = __webpack_require__(5);
+
+	module.exports = function (root) {
+	  return new Delegate(root);
+	};
+
+	module.exports.Delegate = Delegate;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	/*jshint browser:true, node:true*/
+
+	'use strict';
+
+	module.exports = Delegate;
+
+	/**
+	 * DOM event delegator
+	 *
+	 * The delegator will listen
+	 * for events that bubble up
+	 * to the root node.
+	 *
+	 * @constructor
+	 * @param {Node|string} [root] The root node or a selector string matching the root node
+	 */
+	function Delegate(root) {
+
+	  /**
+	   * Maintain a map of listener
+	   * lists, keyed by event name.
+	   *
+	   * @type Object
+	   */
+	  this.listenerMap = [{}, {}];
+	  if (root) {
+	    this.root(root);
+	  }
+
+	  /** @type function() */
+	  this.handle = Delegate.prototype.handle.bind(this);
 	}
 
-	return elementMatcher( matchers );
-}
+	/**
+	 * Start listening for events
+	 * on the provided DOM element
+	 *
+	 * @param  {Node|string} [root] The root node or a selector string matching the root node
+	 * @returns {Delegate} This method is chainable
+	 */
+	Delegate.prototype.root = function (root) {
+	  var listenerMap = this.listenerMap;
+	  var eventType;
 
-function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
-	var bySet = setMatchers.length > 0,
-		byElement = elementMatchers.length > 0,
-		superMatcher = function( seed, context, xml, results, outermost ) {
-			var elem, j, matcher,
-				matchedCount = 0,
-				i = "0",
-				unmatched = seed && [],
-				setMatched = [],
-				contextBackup = outermostContext,
-				// We must always have either seed elements or outermost context
-				elems = seed || byElement && Expr.find["TAG"]( "*", outermost ),
-				// Use integer dirruns iff this is the outermost matcher
-				dirrunsUnique = (dirruns += contextBackup == null ? 1 : Math.random() || 0.1),
-				len = elems.length;
+	  // Remove master event listeners
+	  if (this.rootElement) {
+	    for (eventType in listenerMap[1]) {
+	      if (listenerMap[1].hasOwnProperty(eventType)) {
+	        this.rootElement.removeEventListener(eventType, this.handle, true);
+	      }
+	    }
+	    for (eventType in listenerMap[0]) {
+	      if (listenerMap[0].hasOwnProperty(eventType)) {
+	        this.rootElement.removeEventListener(eventType, this.handle, false);
+	      }
+	    }
+	  }
 
-			if ( outermost ) {
-				outermostContext = context === document || context || outermost;
-			}
+	  // If no root or root is not
+	  // a dom node, then remove internal
+	  // root reference and exit here
+	  if (!root || !root.addEventListener) {
+	    if (this.rootElement) {
+	      delete this.rootElement;
+	    }
+	    return this;
+	  }
 
-			// Add elements passing elementMatchers directly to results
-			// Support: IE<9, Safari
-			// Tolerate NodeList properties (IE: "length"; Safari: <number>) matching elements by id
-			for ( ; i !== len && (elem = elems[i]) != null; i++ ) {
-				if ( byElement && elem ) {
-					j = 0;
-					if ( !context && elem.ownerDocument !== document ) {
-						setDocument( elem );
-						xml = !documentIsHTML;
-					}
-					while ( (matcher = elementMatchers[j++]) ) {
-						if ( matcher( elem, context || document, xml) ) {
-							results.push( elem );
-							break;
-						}
-					}
-					if ( outermost ) {
-						dirruns = dirrunsUnique;
-					}
-				}
+	  /**
+	   * The root node at which
+	   * listeners are attached.
+	   *
+	   * @type Node
+	   */
+	  this.rootElement = root;
 
-				// Track unmatched elements for set filters
-				if ( bySet ) {
-					// They will have gone through all possible matchers
-					if ( (elem = !matcher && elem) ) {
-						matchedCount--;
-					}
+	  // Set up master event listeners
+	  for (eventType in listenerMap[1]) {
+	    if (listenerMap[1].hasOwnProperty(eventType)) {
+	      this.rootElement.addEventListener(eventType, this.handle, true);
+	    }
+	  }
+	  for (eventType in listenerMap[0]) {
+	    if (listenerMap[0].hasOwnProperty(eventType)) {
+	      this.rootElement.addEventListener(eventType, this.handle, false);
+	    }
+	  }
 
-					// Lengthen the array for every element, matched or not
-					if ( seed ) {
-						unmatched.push( elem );
-					}
-				}
-			}
+	  return this;
+	};
 
-			// `i` is now the count of elements visited above, and adding it to `matchedCount`
-			// makes the latter nonnegative.
-			matchedCount += i;
+	/**
+	 * @param {string} eventType
+	 * @returns boolean
+	 */
+	Delegate.prototype.captureForType = function (eventType) {
+	  return ['blur', 'error', 'focus', 'load', 'resize', 'scroll'].indexOf(eventType) !== -1;
+	};
 
-			// Apply set filters to unmatched elements
-			// NOTE: This can be skipped if there are no unmatched elements (i.e., `matchedCount`
-			// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
-			// no element matchers and no seed.
-			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
-			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
-			// numerically zero.
-			if ( bySet && i !== matchedCount ) {
-				j = 0;
-				while ( (matcher = setMatchers[j++]) ) {
-					matcher( unmatched, setMatched, context, xml );
-				}
+	/**
+	 * Attach a handler to one
+	 * event for all elements
+	 * that match the selector,
+	 * now or in the future
+	 *
+	 * The handler function receives
+	 * three arguments: the DOM event
+	 * object, the node that matched
+	 * the selector while the event
+	 * was bubbling and a reference
+	 * to itself. Within the handler,
+	 * 'this' is equal to the second
+	 * argument.
+	 *
+	 * The node that actually received
+	 * the event can be accessed via
+	 * 'event.target'.
+	 *
+	 * @param {string} eventType Listen for these events
+	 * @param {string|undefined} selector Only handle events on elements matching this selector, if undefined match root element
+	 * @param {function()} handler Handler function - event data passed here will be in event.data
+	 * @param {Object} [eventData] Data to pass in event.data
+	 * @returns {Delegate} This method is chainable
+	 */
+	Delegate.prototype.on = function (eventType, selector, handler, useCapture) {
+	  var root, listenerMap, matcher, matcherParam;
 
-				if ( seed ) {
-					// Reintegrate element matches to eliminate the need for sorting
-					if ( matchedCount > 0 ) {
-						while ( i-- ) {
-							if ( !(unmatched[i] || setMatched[i]) ) {
-								setMatched[i] = pop.call( results );
-							}
-						}
-					}
+	  if (!eventType) {
+	    throw new TypeError('Invalid event type: ' + eventType);
+	  }
 
-					// Discard index placeholder values to get only actual matches
-					setMatched = condense( setMatched );
-				}
+	  // handler can be passed as
+	  // the second or third argument
+	  if (typeof selector === 'function') {
+	    useCapture = handler;
+	    handler = selector;
+	    selector = null;
+	  }
 
-				// Add matches to results
-				push.apply( results, setMatched );
+	  // Fallback to sensible defaults
+	  // if useCapture not set
+	  if (useCapture === undefined) {
+	    useCapture = this.captureForType(eventType);
+	  }
 
-				// Seedless set matches succeeding multiple successful matchers stipulate sorting
-				if ( outermost && !seed && setMatched.length > 0 &&
-					( matchedCount + setMatchers.length ) > 1 ) {
+	  if (typeof handler !== 'function') {
+	    throw new TypeError('Handler must be a type of Function');
+	  }
 
-					Sizzle.uniqueSort( results );
-				}
-			}
+	  root = this.rootElement;
+	  listenerMap = this.listenerMap[useCapture ? 1 : 0];
 
-			// Override manipulation of globals by nested matchers
-			if ( outermost ) {
-				dirruns = dirrunsUnique;
-				outermostContext = contextBackup;
-			}
+	  // Add master handler for type if not created yet
+	  if (!listenerMap[eventType]) {
+	    if (root) {
+	      root.addEventListener(eventType, this.handle, useCapture);
+	    }
+	    listenerMap[eventType] = [];
+	  }
 
-			return unmatched;
-		};
+	  if (!selector) {
+	    matcherParam = null;
 
-	return bySet ?
-		markFunction( superMatcher ) :
-		superMatcher;
-}
+	    // COMPLEX - matchesRoot needs to have access to
+	    // this.rootElement, so bind the function to this.
+	    matcher = matchesRoot.bind(this);
 
-compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
-	var i,
-		setMatchers = [],
-		elementMatchers = [],
-		cached = compilerCache[ selector + " " ];
+	    // Compile a matcher for the given selector
+	  } else if (/^[a-z]+$/i.test(selector)) {
+	      matcherParam = selector;
+	      matcher = matchesTag;
+	    } else if (/^#[a-z0-9\-_]+$/i.test(selector)) {
+	      matcherParam = selector.slice(1);
+	      matcher = matchesId;
+	    } else {
+	      matcherParam = selector;
+	      matcher = matches;
+	    }
 
-	if ( !cached ) {
-		// Generate a function of recursive functions that can be used to check each element
-		if ( !match ) {
-			match = tokenize( selector );
-		}
-		i = match.length;
-		while ( i-- ) {
-			cached = matcherFromTokens( match[i] );
-			if ( cached[ expando ] ) {
-				setMatchers.push( cached );
-			} else {
-				elementMatchers.push( cached );
-			}
-		}
+	  // Add to the list of listeners
+	  listenerMap[eventType].push({
+	    selector: selector,
+	    handler: handler,
+	    matcher: matcher,
+	    matcherParam: matcherParam
+	  });
 
-		// Cache the compiled function
-		cached = compilerCache( selector, matcherFromGroupMatchers( elementMatchers, setMatchers ) );
+	  return this;
+	};
 
-		// Save selector and tokenization
-		cached.selector = selector;
+	/**
+	 * Remove an event handler
+	 * for elements that match
+	 * the selector, forever
+	 *
+	 * @param {string} [eventType] Remove handlers for events matching this type, considering the other parameters
+	 * @param {string} [selector] If this parameter is omitted, only handlers which match the other two will be removed
+	 * @param {function()} [handler] If this parameter is omitted, only handlers which match the previous two will be removed
+	 * @returns {Delegate} This method is chainable
+	 */
+	Delegate.prototype.off = function (eventType, selector, handler, useCapture) {
+	  var i, listener, listenerMap, listenerList, singleEventType;
+
+	  // Handler can be passed as
+	  // the second or third argument
+	  if (typeof selector === 'function') {
+	    useCapture = handler;
+	    handler = selector;
+	    selector = null;
+	  }
+
+	  // If useCapture not set, remove
+	  // all event listeners
+	  if (useCapture === undefined) {
+	    this.off(eventType, selector, handler, true);
+	    this.off(eventType, selector, handler, false);
+	    return this;
+	  }
+
+	  listenerMap = this.listenerMap[useCapture ? 1 : 0];
+	  if (!eventType) {
+	    for (singleEventType in listenerMap) {
+	      if (listenerMap.hasOwnProperty(singleEventType)) {
+	        this.off(singleEventType, selector, handler);
+	      }
+	    }
+
+	    return this;
+	  }
+
+	  listenerList = listenerMap[eventType];
+	  if (!listenerList || !listenerList.length) {
+	    return this;
+	  }
+
+	  // Remove only parameter matches
+	  // if specified
+	  for (i = listenerList.length - 1; i >= 0; i--) {
+	    listener = listenerList[i];
+
+	    if ((!selector || selector === listener.selector) && (!handler || handler === listener.handler)) {
+	      listenerList.splice(i, 1);
+	    }
+	  }
+
+	  // All listeners removed
+	  if (!listenerList.length) {
+	    delete listenerMap[eventType];
+
+	    // Remove the main handler
+	    if (this.rootElement) {
+	      this.rootElement.removeEventListener(eventType, this.handle, useCapture);
+	    }
+	  }
+
+	  return this;
+	};
+
+	/**
+	 * Handle an arbitrary event.
+	 *
+	 * @param {Event} event
+	 */
+	Delegate.prototype.handle = function (event) {
+	  var i,
+	      l,
+	      type = event.type,
+	      root,
+	      phase,
+	      listener,
+	      returned,
+	      listenerList = [],
+	      target,
+	      /** @const */EVENTIGNORE = 'ftLabsDelegateIgnore';
+
+	  if (event[EVENTIGNORE] === true) {
+	    return;
+	  }
+
+	  target = event.target;
+
+	  // Hardcode value of Node.TEXT_NODE
+	  // as not defined in IE8
+	  if (target.nodeType === 3) {
+	    target = target.parentNode;
+	  }
+
+	  root = this.rootElement;
+
+	  phase = event.eventPhase || (event.target !== event.currentTarget ? 3 : 2);
+
+	  switch (phase) {
+	    case 1:
+	      //Event.CAPTURING_PHASE:
+	      listenerList = this.listenerMap[1][type];
+	      break;
+	    case 2:
+	      //Event.AT_TARGET:
+	      if (this.listenerMap[0] && this.listenerMap[0][type]) listenerList = listenerList.concat(this.listenerMap[0][type]);
+	      if (this.listenerMap[1] && this.listenerMap[1][type]) listenerList = listenerList.concat(this.listenerMap[1][type]);
+	      break;
+	    case 3:
+	      //Event.BUBBLING_PHASE:
+	      listenerList = this.listenerMap[0][type];
+	      break;
+	  }
+
+	  // Need to continuously check
+	  // that the specific list is
+	  // still populated in case one
+	  // of the callbacks actually
+	  // causes the list to be destroyed.
+	  l = listenerList.length;
+	  while (target && l) {
+	    for (i = 0; i < l; i++) {
+	      listener = listenerList[i];
+
+	      // Bail from this loop if
+	      // the length changed and
+	      // no more listeners are
+	      // defined between i and l.
+	      if (!listener) {
+	        break;
+	      }
+
+	      // Check for match and fire
+	      // the event if there's one
+	      //
+	      // TODO:MCG:20120117: Need a way
+	      // to check if event#stopImmediatePropagation
+	      // was called. If so, break both loops.
+	      if (listener.matcher.call(target, listener.matcherParam, target)) {
+	        returned = this.fire(event, target, listener);
+	      }
+
+	      // Stop propagation to subsequent
+	      // callbacks if the callback returned
+	      // false
+	      if (returned === false) {
+	        event[EVENTIGNORE] = true;
+	        event.preventDefault();
+	        return;
+	      }
+	    }
+
+	    // TODO:MCG:20120117: Need a way to
+	    // check if event#stopPropagation
+	    // was called. If so, break looping
+	    // through the DOM. Stop if the
+	    // delegation root has been reached
+	    if (target === root) {
+	      break;
+	    }
+
+	    l = listenerList.length;
+	    target = target.parentElement;
+	  }
+	};
+
+	/**
+	 * Fire a listener on a target.
+	 *
+	 * @param {Event} event
+	 * @param {Node} target
+	 * @param {Object} listener
+	 * @returns {boolean}
+	 */
+	Delegate.prototype.fire = function (event, target, listener) {
+	  return listener.handler.call(target, event, target);
+	};
+
+	/**
+	 * Check whether an element
+	 * matches a generic selector.
+	 *
+	 * @type function()
+	 * @param {string} selector A CSS selector
+	 */
+	var matches = function (el) {
+	  if (!el) return;
+	  var p = el.prototype;
+	  return p.matches || p.matchesSelector || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || p.oMatchesSelector;
+	}(Element);
+
+	/**
+	 * Check whether an element
+	 * matches a tag selector.
+	 *
+	 * Tags are NOT case-sensitive,
+	 * except in XML (and XML-based
+	 * languages such as XHTML).
+	 *
+	 * @param {string} tagName The tag name to test against
+	 * @param {Element} element The element to test with
+	 * @returns boolean
+	 */
+	function matchesTag(tagName, element) {
+	  return tagName.toLowerCase() === element.tagName.toLowerCase();
 	}
-	return cached;
-};
 
-/**
- * A low-level selection function that works with Sizzle's compiled
- *  selector functions
- * @param {String|Function} selector A selector or a pre-compiled
- *  selector function built with Sizzle.compile
- * @param {Element} context
- * @param {Array} [results]
- * @param {Array} [seed] A set of elements to match against
- */
-select = Sizzle.select = function( selector, context, results, seed ) {
-	var i, tokens, token, type, find,
-		compiled = typeof selector === "function" && selector,
-		match = !seed && tokenize( (selector = compiled.selector || selector) );
-
-	results = results || [];
-
-	// Try to minimize operations if there is only one selector in the list and no seed
-	// (the latter of which guarantees us context)
-	if ( match.length === 1 ) {
-
-		// Reduce context if the leading compound selector is an ID
-		tokens = match[0] = match[0].slice( 0 );
-		if ( tokens.length > 2 && (token = tokens[0]).type === "ID" &&
-				support.getById && context.nodeType === 9 && documentIsHTML &&
-				Expr.relative[ tokens[1].type ] ) {
-
-			context = ( Expr.find["ID"]( token.matches[0].replace(runescape, funescape), context ) || [] )[0];
-			if ( !context ) {
-				return results;
-
-			// Precompiled matchers will still verify ancestry, so step up a level
-			} else if ( compiled ) {
-				context = context.parentNode;
-			}
-
-			selector = selector.slice( tokens.shift().value.length );
-		}
-
-		// Fetch a seed set for right-to-left matching
-		i = matchExpr["needsContext"].test( selector ) ? 0 : tokens.length;
-		while ( i-- ) {
-			token = tokens[i];
-
-			// Abort if we hit a combinator
-			if ( Expr.relative[ (type = token.type) ] ) {
-				break;
-			}
-			if ( (find = Expr.find[ type ]) ) {
-				// Search, expanding context for leading sibling combinators
-				if ( (seed = find(
-					token.matches[0].replace( runescape, funescape ),
-					rsibling.test( tokens[0].type ) && testContext( context.parentNode ) || context
-				)) ) {
-
-					// If seed is empty or no tokens remain, we can return early
-					tokens.splice( i, 1 );
-					selector = seed.length && toSelector( tokens );
-					if ( !selector ) {
-						push.apply( results, seed );
-						return results;
-					}
-
-					break;
-				}
-			}
-		}
+	/**
+	 * Check whether an element
+	 * matches the root.
+	 *
+	 * @param {?String} selector In this case this is always passed through as null and not used
+	 * @param {Element} element The element to test with
+	 * @returns boolean
+	 */
+	function matchesRoot(selector, element) {
+	  /*jshint validthis:true*/
+	  if (this.rootElement === window) return element === document;
+	  return this.rootElement === element;
 	}
 
-	// Compile and execute a filtering function if one is not provided
-	// Provide `match` to avoid retokenization if we modified the selector above
-	( compiled || compile( selector, match ) )(
-		seed,
-		context,
-		!documentIsHTML,
-		results,
-		!context || rsibling.test( selector ) && testContext( context.parentNode ) || context
-	);
-	return results;
-};
+	/**
+	 * Check whether the ID of
+	 * the element in 'this'
+	 * matches the given ID.
+	 *
+	 * IDs are case-sensitive.
+	 *
+	 * @param {string} id The ID to test against
+	 * @param {Element} element The element to test with
+	 * @returns boolean
+	 */
+	function matchesId(id, element) {
+	  return id === element.id;
+	}
 
-// One-time assignments
+	/**
+	 * Short hand for off()
+	 * and root(), ie both
+	 * with no parameters
+	 *
+	 * @return void
+	 */
+	Delegate.prototype.destroy = function () {
+	  this.off();
+	  this.root();
+	};
 
-// Sort stability
-support.sortStable = expando.split("").sort( sortOrder ).join("") === expando;
+/***/ },
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
+/***/ function(module, exports) {
 
-// Support: Chrome 14-35+
-// Always assume duplicates if they aren't passed to the comparison function
-support.detectDuplicates = !!hasDuplicate;
+	"use strict";
 
-// Initialize against the default document
-setDocument();
+	/*!
+	 * FEATURE.JS 1.0.0, A Fast, simple and lightweight browser feature
+	 * detection library in just 1kb.
+	 *
+	 * http://featurejs.com
+	 *
+	 * CSS 3D Transform, CSS Transform, CSS Transition, Canvas, SVG,
+	 * addEventListener, querySelectorAll, matchMedia, classList API,
+	 * placeholder, localStorage, History API, Viewport Units, REM Units,
+	 * CORS, WebGL, Service Worker, Context Menu, Geolocation,
+	 * Device Motion, Device Orientation, Touch, Async, Defer,
+	 * Srcset, Sizes & Picture Element.
+	 *
+	 *
+	 * USAGE EXAMPLE:
+	 * if (feature.webGL) {
+	 *   console.log("webGL supported!");
+	 * }
+	 *
+	 * Author: @viljamis, https://viljamis.com
+	 */
 
-// Support: Webkit<537.32 - Safari 6.0.3/Chrome 25 (fixed in Chrome 27)
-// Detached nodes confoundingly follow *each other*
-support.sortDetached = assert(function( div1 ) {
-	// Should return 1, but returns 4 (following)
-	return div1.compareDocumentPosition( document.createElement("div") ) & 1;
-});
+	/* globals DocumentTouch */
+	;(function (window, document, undefined) {
+	  "use strict";
 
-// Support: IE<8
-// Prevent attribute/property "interpolation"
-// http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
-if ( !assert(function( div ) {
-	div.innerHTML = "<a href='#'></a>";
-	return div.firstChild.getAttribute("href") === "#" ;
-}) ) {
-	addHandle( "type|href|height|width", function( elem, name, isXML ) {
-		if ( !isXML ) {
-			return elem.getAttribute( name, name.toLowerCase() === "type" ? 1 : 2 );
-		}
+	  // For minification only
+
+	  var docEl = document.documentElement;
+
+	  /**
+	   * Utilities
+	   */
+	  var util = {
+
+	    /**
+	     * Simple create element method
+	     */
+	    create: function create(el) {
+	      return document.createElement(el);
+	    },
+
+	    /**
+	     * Test if it's an old device that we want to filter out
+	     */
+	    old: !!/(Android\s(1.|2.))|(Silk\/1.)/i.test(navigator.userAgent),
+
+	    /**
+	     * Function that takes a standard CSS property name as a parameter and
+	     * returns it's prefixed version valid for current browser it runs in
+	     */
+	    pfx: function () {
+	      var style = document.createElement("dummy").style;
+	      var prefixes = ["Webkit", "Moz", "O", "ms"];
+	      var memory = {};
+	      return function (prop) {
+	        if (typeof memory[prop] === "undefined") {
+	          var ucProp = prop.charAt(0).toUpperCase() + prop.substr(1),
+	              props = (prop + " " + prefixes.join(ucProp + " ") + ucProp).split(" ");
+	          memory[prop] = null;
+	          for (var i in props) {
+	            if (style[props[i]] !== undefined) {
+	              memory[prop] = props[i];
+	              break;
+	            }
+	          }
+	        }
+	        return memory[prop];
+	      };
+	    }()
+
+	  };
+
+	  /**
+	   * The Feature.js object
+	   */
+
+	  var Feature = {
+	    // Test if CSS 3D transforms are supported
+	    css3Dtransform: function () {
+	      var test = !util.old && util.pfx("perspective") !== null;
+	      return !!test;
+	    }(),
+
+	    // Test if CSS transforms are supported
+	    cssTransform: function () {
+	      var test = !util.old && util.pfx("transformOrigin") !== null;
+	      return !!test;
+	    }(),
+
+	    // Test if CSS transitions are supported
+	    cssTransition: function () {
+	      var test = util.pfx("transition") !== null;
+	      return !!test;
+	    }(),
+
+	    // Test if addEventListener is supported
+	    addEventListener: !!window.addEventListener,
+
+	    // Test if querySelectorAll is supported
+	    querySelectorAll: !!document.querySelectorAll,
+
+	    // Test if matchMedia is supported
+	    matchMedia: !!window.matchMedia,
+
+	    // Test if Device Motion is supported
+	    deviceMotion: "DeviceMotionEvent" in window,
+
+	    // Test if Device Orientation is supported
+	    deviceOrientation: "DeviceOrientationEvent" in window,
+
+	    // Test if Context Menu is supported
+	    contextMenu: "contextMenu" in docEl && "HTMLMenuItemElement" in window,
+
+	    // Test if classList API is supported
+	    classList: "classList" in docEl,
+
+	    // Test if placeholder attribute is supported
+	    placeholder: "placeholder" in util.create("input"),
+
+	    // Test if localStorage is supported
+	    localStorage: function () {
+	      var test = "x";
+	      try {
+	        localStorage.setItem(test, test);
+	        localStorage.removeItem(test);
+	        return true;
+	      } catch (err) {
+	        return false;
+	      }
+	    }(),
+
+	    // Test if History API is supported
+	    historyAPI: window.history && "pushState" in window.history,
+
+	    // Test if ServiceWorkers are supported
+	    serviceWorker: "serviceWorker" in navigator,
+
+	    // Test if viewport units are supported
+	    viewportUnit: function (el) {
+	      try {
+	        el.style.width = "1vw";
+	        var test = el.style.width !== "";
+	        return !!test;
+	      } catch (err) {
+	        return false;
+	      }
+	    }(util.create("dummy")),
+
+	    // Test if REM units are supported
+	    remUnit: function (el) {
+	      try {
+	        el.style.width = "1rem";
+	        var test = el.style.width !== "";
+	        return !!test;
+	      } catch (err) {
+	        return false;
+	      }
+	    }(util.create("dummy")),
+
+	    // Test if Canvas is supported
+	    canvas: function (el) {
+	      return !!(el.getContext && el.getContext("2d"));
+	    }(util.create("canvas")),
+
+	    // Test if SVG is supported
+	    svg: !!document.createElementNS && !!document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGRect,
+
+	    // Test if WebGL is supported
+	    webGL: function (el) {
+	      try {
+	        return !!(window.WebGLRenderingContext && (el.getContext("webgl") || el.getContext("experimental-webgl")));
+	      } catch (err) {
+	        return false;
+	      }
+	    }(util.create("canvas")),
+
+	    // Test if cors is supported
+	    cors: "XMLHttpRequest" in window && "withCredentials" in new XMLHttpRequest(),
+
+	    // Tests if touch events are supported, but doesn't necessarily reflect a touchscreen device
+	    touch: !!("ontouchstart" in window || window.navigator && window.navigator.msPointerEnabled && window.MSGesture || window.DocumentTouch && document instanceof DocumentTouch),
+
+	    // Test if async attribute is supported
+	    async: "async" in util.create("script"),
+
+	    // Test if defer attribute is supported
+	    defer: "defer" in util.create("script"),
+
+	    // Test if Geolocation is supported
+	    geolocation: "geolocation" in navigator,
+
+	    // Test if img srcset attribute is supported
+	    srcset: "srcset" in util.create("img"),
+
+	    // Test if img sizes attribute is supported
+	    sizes: "sizes" in util.create("img"),
+
+	    // Test if Picture element is supported
+	    pictureElement: "HTMLPictureElement" in window,
+
+	    // Run all the tests and add supported classes
+	    testAll: function testAll() {
+	      var classes = " js";
+	      for (var test in this) {
+	        if (test !== "testAll" && test !== "constructor" && this[test]) {
+	          classes += " " + test;
+	        }
+	      }
+	      docEl.className += classes.toLowerCase();
+	    }
+
+	  };
+
+	  /**
+	   * Expose a public-facing API
+	   */
+	  window.feature = Feature;
+	})(window, document);
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
 	});
-}
 
-// Support: IE<9
-// Use defaultValue in place of getAttribute("value")
-if ( !support.attributes || !assert(function( div ) {
-	div.innerHTML = "<input/>";
-	div.firstChild.setAttribute( "value", "" );
-	return div.firstChild.getAttribute( "value" ) === "";
-}) ) {
-	addHandle( "value", function( elem, name, isXML ) {
-		if ( !isXML && elem.nodeName.toLowerCase() === "input" ) {
-			return elem.defaultValue;
-		}
-	});
-}
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// Support: IE<9
-// Use getAttributeNode to fetch booleans when getAttribute lies
-if ( !assert(function( div ) {
-	return div.getAttribute("disabled") == null;
-}) ) {
-	addHandle( booleans, function( elem, name, isXML ) {
-		var val;
-		if ( !isXML ) {
-			return elem[ name ] === true ? name.toLowerCase() :
-					(val = elem.getAttributeNode( name )) && val.specified ?
-					val.value :
-				null;
-		}
-	});
-}
+	var _url = __webpack_require__(35);
 
-return Sizzle;
+	var _photoswipe = __webpack_require__(42);
 
-})( window );
+	var _photoswipe2 = _interopRequireDefault(_photoswipe);
+
+	var _photoswipeUiDefault = __webpack_require__(43);
+
+	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
+
+	var _domDelegate = __webpack_require__(4);
+
+	var _domDelegate2 = _interopRequireDefault(_domDelegate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Slideshow d'images
+	 */
+
+	var ImagesSlideshow = function () {
+	    function ImagesSlideshow(container) {
+	        _classCallCheck(this, ImagesSlideshow);
+
+	        this.options = {
+	            photoSwipe: {
+	                bgOpacity: 0.85,
+	                closeOnScroll: false,
+	                history: false
+	            }
+	        };
+
+	        this.container = container;
+	        this.photoSwipeElement = document.querySelector(this.container.getAttribute('data-gallery-pswp-element'));
+	        this.images = [].concat(_toConsumableArray(this.container.querySelectorAll('img')));
+
+	        this.photoSwipeItems = [];
+	        this.photoSwipe = null;
+
+	        this.containerDelegate = (0, _domDelegate2.default)(this.container);
+
+	        this.initPhotoSwipeItems();
+	        this.initEvents();
+	    }
+
+	    /**
+	     * Initialise les objets à passer à PhotoSwipe
+	     * PhotoSwipe a besoin de la src et des dimensions de chaque image
+	     */
 
 
+	    _createClass(ImagesSlideshow, [{
+	        key: 'initPhotoSwipeItems',
+	        value: function initPhotoSwipeItems() {
+	            var _this = this;
 
-jQuery.find = Sizzle;
-jQuery.expr = Sizzle.selectors;
-jQuery.expr[ ":" ] = jQuery.expr.pseudos;
-jQuery.uniqueSort = jQuery.unique = Sizzle.uniqueSort;
-jQuery.text = Sizzle.getText;
-jQuery.isXMLDoc = Sizzle.isXML;
-jQuery.contains = Sizzle.contains;
+	            this.images.forEach(function (image) {
+	                var srcParams = (0, _url.parse)(image.src, true).query;
+	                var item = {
+	                    src: image.src,
+	                    w: parseInt(srcParams.width, 10),
+	                    h: parseInt(srcParams.height, 10)
+	                };
 
+	                _this.photoSwipeItems.push(item);
+	            });
+	        }
 
+	        /**
+	         * Gestion du click sur une image
+	         */
 
-var dir = function( elem, dir, until ) {
-	var matched = [],
-		truncate = until !== undefined;
+	    }, {
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this2 = this;
 
-	while ( ( elem = elem[ dir ] ) && elem.nodeType !== 9 ) {
-		if ( elem.nodeType === 1 ) {
-			if ( truncate && jQuery( elem ).is( until ) ) {
-				break;
-			}
-			matched.push( elem );
-		}
+	            this.containerDelegate.on('click', 'img', function (event) {
+	                var img = event.target;
+	                var imgIndex = _this2.images.indexOf(img);
+
+	                _this2.show(imgIndex);
+	            });
+	        }
+
+	        /**
+	         * Ouvre le slideshow directement à l'index donné
+	         */
+
+	    }, {
+	        key: 'show',
+	        value: function show(index) {
+	            this.options.photoSwipe.index = index;
+	            this.photoSwipe = new _photoswipe2.default(this.photoSwipeElement, _photoswipeUiDefault2.default, this.photoSwipeItems, this.options.photoSwipe);
+	            this.photoSwipe.init();
+	        }
+	    }]);
+
+	    return ImagesSlideshow;
+	}();
+
+	exports.default = ImagesSlideshow;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	var punycode = __webpack_require__(36);
+
+	exports.parse = urlParse;
+	exports.resolve = urlResolve;
+	exports.resolveObject = urlResolveObject;
+	exports.format = urlFormat;
+
+	exports.Url = Url;
+
+	function Url() {
+	  this.protocol = null;
+	  this.slashes = null;
+	  this.auth = null;
+	  this.host = null;
+	  this.port = null;
+	  this.hostname = null;
+	  this.hash = null;
+	  this.search = null;
+	  this.query = null;
+	  this.pathname = null;
+	  this.path = null;
+	  this.href = null;
 	}
-	return matched;
-};
+
+	// Reference: RFC 3986, RFC 1808, RFC 2396
+
+	// define these here so at least they only have to be
+	// compiled once on the first module load.
+	var protocolPattern = /^([a-z0-9.+-]+:)/i,
+	    portPattern = /:[0-9]*$/,
 
 
-var siblings = function( n, elem ) {
-	var matched = [];
-
-	for ( ; n; n = n.nextSibling ) {
-		if ( n.nodeType === 1 && n !== elem ) {
-			matched.push( n );
-		}
-	}
-
-	return matched;
-};
+	// RFC 2396: characters reserved for delimiting URLs.
+	// We actually just auto-escape these.
+	delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
 
 
-var rneedsContext = jQuery.expr.match.needsContext;
-
-var rsingleTag = ( /^<([\w-]+)\s*\/?>(?:<\/\1>|)$/ );
-
+	// RFC 2396: characters not allowed for various reasons.
+	unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
 
 
-var risSimple = /^.[^:#\[\.,]*$/;
+	// Allowed by RFCs, but cause of XSS attacks.  Always escape these.
+	autoEscape = ['\''].concat(unwise),
 
-// Implement the identical functionality for filter and not
-function winnow( elements, qualifier, not ) {
-	if ( jQuery.isFunction( qualifier ) ) {
-		return jQuery.grep( elements, function( elem, i ) {
-			/* jshint -W018 */
-			return !!qualifier.call( elem, i, elem ) !== not;
-		} );
+	// Characters that are never ever allowed in a hostname.
+	// Note that any invalid chars are also handled, but these
+	// are the ones that are *expected* to be seen, so we fast-path
+	// them.
+	nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
+	    hostEndingChars = ['/', '?', '#'],
+	    hostnameMaxLen = 255,
+	    hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/,
+	    hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/,
 
-	}
-
-	if ( qualifier.nodeType ) {
-		return jQuery.grep( elements, function( elem ) {
-			return ( elem === qualifier ) !== not;
-		} );
-
-	}
-
-	if ( typeof qualifier === "string" ) {
-		if ( risSimple.test( qualifier ) ) {
-			return jQuery.filter( qualifier, elements, not );
-		}
-
-		qualifier = jQuery.filter( qualifier, elements );
-	}
-
-	return jQuery.grep( elements, function( elem ) {
-		return ( indexOf.call( qualifier, elem ) > -1 ) !== not;
-	} );
-}
-
-jQuery.filter = function( expr, elems, not ) {
-	var elem = elems[ 0 ];
-
-	if ( not ) {
-		expr = ":not(" + expr + ")";
-	}
-
-	return elems.length === 1 && elem.nodeType === 1 ?
-		jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [] :
-		jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {
-			return elem.nodeType === 1;
-		} ) );
-};
-
-jQuery.fn.extend( {
-	find: function( selector ) {
-		var i,
-			len = this.length,
-			ret = [],
-			self = this;
-
-		if ( typeof selector !== "string" ) {
-			return this.pushStack( jQuery( selector ).filter( function() {
-				for ( i = 0; i < len; i++ ) {
-					if ( jQuery.contains( self[ i ], this ) ) {
-						return true;
-					}
-				}
-			} ) );
-		}
-
-		for ( i = 0; i < len; i++ ) {
-			jQuery.find( selector, self[ i ], ret );
-		}
-
-		// Needed because $( selector, context ) becomes $( context ).find( selector )
-		ret = this.pushStack( len > 1 ? jQuery.unique( ret ) : ret );
-		ret.selector = this.selector ? this.selector + " " + selector : selector;
-		return ret;
+	// protocols that can allow "unsafe" and "unwise" chars.
+	unsafeProtocol = {
+	  'javascript': true,
+	  'javascript:': true
 	},
-	filter: function( selector ) {
-		return this.pushStack( winnow( this, selector || [], false ) );
-	},
-	not: function( selector ) {
-		return this.pushStack( winnow( this, selector || [], true ) );
-	},
-	is: function( selector ) {
-		return !!winnow(
-			this,
 
-			// If this is a positional/relative selector, check membership in the returned set
-			// so $("p:first").is("p:last") won't return true for a doc with two "p".
-			typeof selector === "string" && rneedsContext.test( selector ) ?
-				jQuery( selector ) :
-				selector || [],
-			false
-		).length;
+	// protocols that never have a hostname.
+	hostlessProtocol = {
+	  'javascript': true,
+	  'javascript:': true
+	},
+
+	// protocols that always contain a // bit.
+	slashedProtocol = {
+	  'http': true,
+	  'https': true,
+	  'ftp': true,
+	  'gopher': true,
+	  'file': true,
+	  'http:': true,
+	  'https:': true,
+	  'ftp:': true,
+	  'gopher:': true,
+	  'file:': true
+	},
+	    querystring = __webpack_require__(39);
+
+	function urlParse(url, parseQueryString, slashesDenoteHost) {
+	  if (url && isObject(url) && url instanceof Url) return url;
+
+	  var u = new Url();
+	  u.parse(url, parseQueryString, slashesDenoteHost);
+	  return u;
 	}
-} );
 
+	Url.prototype.parse = function (url, parseQueryString, slashesDenoteHost) {
+	  if (!isString(url)) {
+	    throw new TypeError("Parameter 'url' must be a string, not " + (typeof url === 'undefined' ? 'undefined' : _typeof(url)));
+	  }
 
-// Initialize a jQuery object
+	  var rest = url;
 
+	  // trim before proceeding.
+	  // This is to support parse stuff like "  http://foo.com  \n"
+	  rest = rest.trim();
 
-// A central reference to the root jQuery(document)
-var rootjQuery,
+	  var proto = protocolPattern.exec(rest);
+	  if (proto) {
+	    proto = proto[0];
+	    var lowerProto = proto.toLowerCase();
+	    this.protocol = lowerProto;
+	    rest = rest.substr(proto.length);
+	  }
 
-	// A simple way to check for HTML strings
-	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
-	// Strict HTML recognition (#11290: must start with <)
-	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
+	  // figure out if it's got a host
+	  // user@server is *always* interpreted as a hostname, and url
+	  // resolution will treat //foo/bar as host=foo,path=bar because that's
+	  // how the browser resolves relative URLs.
+	  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+	    var slashes = rest.substr(0, 2) === '//';
+	    if (slashes && !(proto && hostlessProtocol[proto])) {
+	      rest = rest.substr(2);
+	      this.slashes = true;
+	    }
+	  }
 
-	init = jQuery.fn.init = function( selector, context, root ) {
-		var match, elem;
+	  if (!hostlessProtocol[proto] && (slashes || proto && !slashedProtocol[proto])) {
 
-		// HANDLE: $(""), $(null), $(undefined), $(false)
-		if ( !selector ) {
-			return this;
-		}
+	    // there's a hostname.
+	    // the first instance of /, ?, ;, or # ends the host.
+	    //
+	    // If there is an @ in the hostname, then non-host chars *are* allowed
+	    // to the left of the last @ sign, unless some host-ending character
+	    // comes *before* the @-sign.
+	    // URLs are obnoxious.
+	    //
+	    // ex:
+	    // http://a@b@c/ => user:a@b host:c
+	    // http://a@b?@c => user:a host:c path:/?@c
 
-		// Method init() accepts an alternate rootjQuery
-		// so migrate can support jQuery.sub (gh-2101)
-		root = root || rootjQuery;
+	    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
+	    // Review our test case against browsers more comprehensively.
 
-		// Handle HTML strings
-		if ( typeof selector === "string" ) {
-			if ( selector[ 0 ] === "<" &&
-				selector[ selector.length - 1 ] === ">" &&
-				selector.length >= 3 ) {
+	    // find the first instance of any hostEndingChars
+	    var hostEnd = -1;
+	    for (var i = 0; i < hostEndingChars.length; i++) {
+	      var hec = rest.indexOf(hostEndingChars[i]);
+	      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd)) hostEnd = hec;
+	    }
 
-				// Assume that strings that start and end with <> are HTML and skip the regex check
-				match = [ null, selector, null ];
+	    // at this point, either we have an explicit point where the
+	    // auth portion cannot go past, or the last @ char is the decider.
+	    var auth, atSign;
+	    if (hostEnd === -1) {
+	      // atSign can be anywhere.
+	      atSign = rest.lastIndexOf('@');
+	    } else {
+	      // atSign must be in auth portion.
+	      // http://a@b/c@d => host:b auth:a path:/c@d
+	      atSign = rest.lastIndexOf('@', hostEnd);
+	    }
 
-			} else {
-				match = rquickExpr.exec( selector );
-			}
+	    // Now we have a portion which is definitely the auth.
+	    // Pull that off.
+	    if (atSign !== -1) {
+	      auth = rest.slice(0, atSign);
+	      rest = rest.slice(atSign + 1);
+	      this.auth = decodeURIComponent(auth);
+	    }
 
-			// Match html or make sure no context is specified for #id
-			if ( match && ( match[ 1 ] || !context ) ) {
+	    // the host is the remaining to the left of the first non-host char
+	    hostEnd = -1;
+	    for (var i = 0; i < nonHostChars.length; i++) {
+	      var hec = rest.indexOf(nonHostChars[i]);
+	      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd)) hostEnd = hec;
+	    }
+	    // if we still have not hit it, then the entire thing is a host.
+	    if (hostEnd === -1) hostEnd = rest.length;
 
-				// HANDLE: $(html) -> $(array)
-				if ( match[ 1 ] ) {
-					context = context instanceof jQuery ? context[ 0 ] : context;
+	    this.host = rest.slice(0, hostEnd);
+	    rest = rest.slice(hostEnd);
 
-					// Option to run scripts is true for back-compat
-					// Intentionally let the error be thrown if parseHTML is not present
-					jQuery.merge( this, jQuery.parseHTML(
-						match[ 1 ],
-						context && context.nodeType ? context.ownerDocument || context : document,
-						true
-					) );
+	    // pull out port.
+	    this.parseHost();
 
-					// HANDLE: $(html, props)
-					if ( rsingleTag.test( match[ 1 ] ) && jQuery.isPlainObject( context ) ) {
-						for ( match in context ) {
+	    // we've indicated that there is a hostname,
+	    // so even if it's empty, it has to be present.
+	    this.hostname = this.hostname || '';
 
-							// Properties of context are called as methods if possible
-							if ( jQuery.isFunction( this[ match ] ) ) {
-								this[ match ]( context[ match ] );
+	    // if hostname begins with [ and ends with ]
+	    // assume that it's an IPv6 address.
+	    var ipv6Hostname = this.hostname[0] === '[' && this.hostname[this.hostname.length - 1] === ']';
 
-							// ...and otherwise set as attributes
-							} else {
-								this.attr( match, context[ match ] );
-							}
-						}
-					}
+	    // validate a little.
+	    if (!ipv6Hostname) {
+	      var hostparts = this.hostname.split(/\./);
+	      for (var i = 0, l = hostparts.length; i < l; i++) {
+	        var part = hostparts[i];
+	        if (!part) continue;
+	        if (!part.match(hostnamePartPattern)) {
+	          var newpart = '';
+	          for (var j = 0, k = part.length; j < k; j++) {
+	            if (part.charCodeAt(j) > 127) {
+	              // we replace non-ASCII char with a temporary placeholder
+	              // we need this to make sure size of hostname is not
+	              // broken by replacing non-ASCII by nothing
+	              newpart += 'x';
+	            } else {
+	              newpart += part[j];
+	            }
+	          }
+	          // we test again with ASCII char only
+	          if (!newpart.match(hostnamePartPattern)) {
+	            var validParts = hostparts.slice(0, i);
+	            var notHost = hostparts.slice(i + 1);
+	            var bit = part.match(hostnamePartStart);
+	            if (bit) {
+	              validParts.push(bit[1]);
+	              notHost.unshift(bit[2]);
+	            }
+	            if (notHost.length) {
+	              rest = '/' + notHost.join('.') + rest;
+	            }
+	            this.hostname = validParts.join('.');
+	            break;
+	          }
+	        }
+	      }
+	    }
 
-					return this;
+	    if (this.hostname.length > hostnameMaxLen) {
+	      this.hostname = '';
+	    } else {
+	      // hostnames are always lower case.
+	      this.hostname = this.hostname.toLowerCase();
+	    }
 
-				// HANDLE: $(#id)
-				} else {
-					elem = document.getElementById( match[ 2 ] );
+	    if (!ipv6Hostname) {
+	      // IDNA Support: Returns a puny coded representation of "domain".
+	      // It only converts the part of the domain name that
+	      // has non ASCII characters. I.e. it dosent matter if
+	      // you call it with a domain that already is in ASCII.
+	      var domainArray = this.hostname.split('.');
+	      var newOut = [];
+	      for (var i = 0; i < domainArray.length; ++i) {
+	        var s = domainArray[i];
+	        newOut.push(s.match(/[^A-Za-z0-9_-]/) ? 'xn--' + punycode.encode(s) : s);
+	      }
+	      this.hostname = newOut.join('.');
+	    }
 
-					// Support: Blackberry 4.6
-					// gEBID returns nodes no longer in the document (#6963)
-					if ( elem && elem.parentNode ) {
+	    var p = this.port ? ':' + this.port : '';
+	    var h = this.hostname || '';
+	    this.host = h + p;
+	    this.href += this.host;
 
-						// Inject the element directly into the jQuery object
-						this.length = 1;
-						this[ 0 ] = elem;
-					}
+	    // strip [ and ] from the hostname
+	    // the host field still retains them, though
+	    if (ipv6Hostname) {
+	      this.hostname = this.hostname.substr(1, this.hostname.length - 2);
+	      if (rest[0] !== '/') {
+	        rest = '/' + rest;
+	      }
+	    }
+	  }
 
-					this.context = document;
-					this.selector = selector;
-					return this;
-				}
+	  // now rest is set to the post-host stuff.
+	  // chop off any delim chars.
+	  if (!unsafeProtocol[lowerProto]) {
 
-			// HANDLE: $(expr, $(...))
-			} else if ( !context || context.jquery ) {
-				return ( context || root ).find( selector );
+	    // First, make 100% sure that any "autoEscape" chars get
+	    // escaped, even if encodeURIComponent doesn't think they
+	    // need to be.
+	    for (var i = 0, l = autoEscape.length; i < l; i++) {
+	      var ae = autoEscape[i];
+	      var esc = encodeURIComponent(ae);
+	      if (esc === ae) {
+	        esc = escape(ae);
+	      }
+	      rest = rest.split(ae).join(esc);
+	    }
+	  }
 
-			// HANDLE: $(expr, context)
-			// (which is just equivalent to: $(context).find(expr)
-			} else {
-				return this.constructor( context ).find( selector );
-			}
+	  // chop off from the tail first.
+	  var hash = rest.indexOf('#');
+	  if (hash !== -1) {
+	    // got a fragment string.
+	    this.hash = rest.substr(hash);
+	    rest = rest.slice(0, hash);
+	  }
+	  var qm = rest.indexOf('?');
+	  if (qm !== -1) {
+	    this.search = rest.substr(qm);
+	    this.query = rest.substr(qm + 1);
+	    if (parseQueryString) {
+	      this.query = querystring.parse(this.query);
+	    }
+	    rest = rest.slice(0, qm);
+	  } else if (parseQueryString) {
+	    // no query string, but parseQueryString still requested
+	    this.search = '';
+	    this.query = {};
+	  }
+	  if (rest) this.pathname = rest;
+	  if (slashedProtocol[lowerProto] && this.hostname && !this.pathname) {
+	    this.pathname = '/';
+	  }
 
-		// HANDLE: $(DOMElement)
-		} else if ( selector.nodeType ) {
-			this.context = this[ 0 ] = selector;
-			this.length = 1;
-			return this;
+	  //to support http.request
+	  if (this.pathname || this.search) {
+	    var p = this.pathname || '';
+	    var s = this.search || '';
+	    this.path = p + s;
+	  }
 
-		// HANDLE: $(function)
-		// Shortcut for document ready
-		} else if ( jQuery.isFunction( selector ) ) {
-			return root.ready !== undefined ?
-				root.ready( selector ) :
-
-				// Execute immediately if ready is not present
-				selector( jQuery );
-		}
-
-		if ( selector.selector !== undefined ) {
-			this.selector = selector.selector;
-			this.context = selector.context;
-		}
-
-		return jQuery.makeArray( selector, this );
+	  // finally, reconstruct the href based on what has been validated.
+	  this.href = this.format();
+	  return this;
 	};
 
-// Give the init function the jQuery prototype for later instantiation
-init.prototype = jQuery.fn;
+	// format a parsed object into a url string
+	function urlFormat(obj) {
+	  // ensure it's an object, and not a string url.
+	  // If it's an obj, this is a no-op.
+	  // this way, you can call url_format() on strings
+	  // to clean up potentially wonky urls.
+	  if (isString(obj)) obj = urlParse(obj);
+	  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
+	  return obj.format();
+	}
 
-// Initialize central reference
-rootjQuery = jQuery( document );
+	Url.prototype.format = function () {
+	  var auth = this.auth || '';
+	  if (auth) {
+	    auth = encodeURIComponent(auth);
+	    auth = auth.replace(/%3A/i, ':');
+	    auth += '@';
+	  }
 
+	  var protocol = this.protocol || '',
+	      pathname = this.pathname || '',
+	      hash = this.hash || '',
+	      host = false,
+	      query = '';
 
-var rparentsprev = /^(?:parents|prev(?:Until|All))/,
+	  if (this.host) {
+	    host = auth + this.host;
+	  } else if (this.hostname) {
+	    host = auth + (this.hostname.indexOf(':') === -1 ? this.hostname : '[' + this.hostname + ']');
+	    if (this.port) {
+	      host += ':' + this.port;
+	    }
+	  }
 
-	// Methods guaranteed to produce a unique set when starting from a unique set
-	guaranteedUnique = {
-		children: true,
-		contents: true,
-		next: true,
-		prev: true
+	  if (this.query && isObject(this.query) && Object.keys(this.query).length) {
+	    query = querystring.stringify(this.query);
+	  }
+
+	  var search = this.search || query && '?' + query || '';
+
+	  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
+
+	  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
+	  // unless they had them to begin with.
+	  if (this.slashes || (!protocol || slashedProtocol[protocol]) && host !== false) {
+	    host = '//' + (host || '');
+	    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
+	  } else if (!host) {
+	    host = '';
+	  }
+
+	  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
+	  if (search && search.charAt(0) !== '?') search = '?' + search;
+
+	  pathname = pathname.replace(/[?#]/g, function (match) {
+	    return encodeURIComponent(match);
+	  });
+	  search = search.replace('#', '%23');
+
+	  return protocol + host + pathname + search + hash;
 	};
 
-jQuery.fn.extend( {
-	has: function( target ) {
-		var targets = jQuery( target, this ),
-			l = targets.length;
-
-		return this.filter( function() {
-			var i = 0;
-			for ( ; i < l; i++ ) {
-				if ( jQuery.contains( this, targets[ i ] ) ) {
-					return true;
-				}
-			}
-		} );
-	},
-
-	closest: function( selectors, context ) {
-		var cur,
-			i = 0,
-			l = this.length,
-			matched = [],
-			pos = rneedsContext.test( selectors ) || typeof selectors !== "string" ?
-				jQuery( selectors, context || this.context ) :
-				0;
-
-		for ( ; i < l; i++ ) {
-			for ( cur = this[ i ]; cur && cur !== context; cur = cur.parentNode ) {
-
-				// Always skip document fragments
-				if ( cur.nodeType < 11 && ( pos ?
-					pos.index( cur ) > -1 :
-
-					// Don't pass non-elements to Sizzle
-					cur.nodeType === 1 &&
-						jQuery.find.matchesSelector( cur, selectors ) ) ) {
-
-					matched.push( cur );
-					break;
-				}
-			}
-		}
-
-		return this.pushStack( matched.length > 1 ? jQuery.uniqueSort( matched ) : matched );
-	},
-
-	// Determine the position of an element within the set
-	index: function( elem ) {
-
-		// No argument, return index in parent
-		if ( !elem ) {
-			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
-		}
-
-		// Index in selector
-		if ( typeof elem === "string" ) {
-			return indexOf.call( jQuery( elem ), this[ 0 ] );
-		}
-
-		// Locate the position of the desired element
-		return indexOf.call( this,
-
-			// If it receives a jQuery object, the first element is used
-			elem.jquery ? elem[ 0 ] : elem
-		);
-	},
-
-	add: function( selector, context ) {
-		return this.pushStack(
-			jQuery.uniqueSort(
-				jQuery.merge( this.get(), jQuery( selector, context ) )
-			)
-		);
-	},
-
-	addBack: function( selector ) {
-		return this.add( selector == null ?
-			this.prevObject : this.prevObject.filter( selector )
-		);
-	}
-} );
-
-function sibling( cur, dir ) {
-	while ( ( cur = cur[ dir ] ) && cur.nodeType !== 1 ) {}
-	return cur;
-}
-
-jQuery.each( {
-	parent: function( elem ) {
-		var parent = elem.parentNode;
-		return parent && parent.nodeType !== 11 ? parent : null;
-	},
-	parents: function( elem ) {
-		return dir( elem, "parentNode" );
-	},
-	parentsUntil: function( elem, i, until ) {
-		return dir( elem, "parentNode", until );
-	},
-	next: function( elem ) {
-		return sibling( elem, "nextSibling" );
-	},
-	prev: function( elem ) {
-		return sibling( elem, "previousSibling" );
-	},
-	nextAll: function( elem ) {
-		return dir( elem, "nextSibling" );
-	},
-	prevAll: function( elem ) {
-		return dir( elem, "previousSibling" );
-	},
-	nextUntil: function( elem, i, until ) {
-		return dir( elem, "nextSibling", until );
-	},
-	prevUntil: function( elem, i, until ) {
-		return dir( elem, "previousSibling", until );
-	},
-	siblings: function( elem ) {
-		return siblings( ( elem.parentNode || {} ).firstChild, elem );
-	},
-	children: function( elem ) {
-		return siblings( elem.firstChild );
-	},
-	contents: function( elem ) {
-		return elem.contentDocument || jQuery.merge( [], elem.childNodes );
-	}
-}, function( name, fn ) {
-	jQuery.fn[ name ] = function( until, selector ) {
-		var matched = jQuery.map( this, fn, until );
-
-		if ( name.slice( -5 ) !== "Until" ) {
-			selector = until;
-		}
-
-		if ( selector && typeof selector === "string" ) {
-			matched = jQuery.filter( selector, matched );
-		}
-
-		if ( this.length > 1 ) {
-
-			// Remove duplicates
-			if ( !guaranteedUnique[ name ] ) {
-				jQuery.uniqueSort( matched );
-			}
-
-			// Reverse order for parents* and prev-derivatives
-			if ( rparentsprev.test( name ) ) {
-				matched.reverse();
-			}
-		}
-
-		return this.pushStack( matched );
-	};
-} );
-var rnotwhite = ( /\S+/g );
-
-
-
-// Convert String-formatted options into Object-formatted ones
-function createOptions( options ) {
-	var object = {};
-	jQuery.each( options.match( rnotwhite ) || [], function( _, flag ) {
-		object[ flag ] = true;
-	} );
-	return object;
-}
-
-/*
- * Create a callback list using the following parameters:
- *
- *	options: an optional list of space-separated options that will change how
- *			the callback list behaves or a more traditional option object
- *
- * By default a callback list will act like an event callback list and can be
- * "fired" multiple times.
- *
- * Possible options:
- *
- *	once:			will ensure the callback list can only be fired once (like a Deferred)
- *
- *	memory:			will keep track of previous values and will call any callback added
- *					after the list has been fired right away with the latest "memorized"
- *					values (like a Deferred)
- *
- *	unique:			will ensure a callback can only be added once (no duplicate in the list)
- *
- *	stopOnFalse:	interrupt callings when a callback returns false
- *
- */
-jQuery.Callbacks = function( options ) {
-
-	// Convert options from String-formatted to Object-formatted if needed
-	// (we check in cache first)
-	options = typeof options === "string" ?
-		createOptions( options ) :
-		jQuery.extend( {}, options );
-
-	var // Flag to know if list is currently firing
-		firing,
-
-		// Last fire value for non-forgettable lists
-		memory,
-
-		// Flag to know if list was already fired
-		fired,
-
-		// Flag to prevent firing
-		locked,
-
-		// Actual callback list
-		list = [],
-
-		// Queue of execution data for repeatable lists
-		queue = [],
-
-		// Index of currently firing callback (modified by add/remove as needed)
-		firingIndex = -1,
-
-		// Fire callbacks
-		fire = function() {
-
-			// Enforce single-firing
-			locked = options.once;
-
-			// Execute callbacks for all pending executions,
-			// respecting firingIndex overrides and runtime changes
-			fired = firing = true;
-			for ( ; queue.length; firingIndex = -1 ) {
-				memory = queue.shift();
-				while ( ++firingIndex < list.length ) {
-
-					// Run callback and check for early termination
-					if ( list[ firingIndex ].apply( memory[ 0 ], memory[ 1 ] ) === false &&
-						options.stopOnFalse ) {
-
-						// Jump to end and forget the data so .add doesn't re-fire
-						firingIndex = list.length;
-						memory = false;
-					}
-				}
-			}
-
-			// Forget the data if we're done with it
-			if ( !options.memory ) {
-				memory = false;
-			}
-
-			firing = false;
-
-			// Clean up if we're done firing for good
-			if ( locked ) {
-
-				// Keep an empty list if we have data for future add calls
-				if ( memory ) {
-					list = [];
-
-				// Otherwise, this object is spent
-				} else {
-					list = "";
-				}
-			}
-		},
-
-		// Actual Callbacks object
-		self = {
-
-			// Add a callback or a collection of callbacks to the list
-			add: function() {
-				if ( list ) {
-
-					// If we have memory from a past run, we should fire after adding
-					if ( memory && !firing ) {
-						firingIndex = list.length - 1;
-						queue.push( memory );
-					}
-
-					( function add( args ) {
-						jQuery.each( args, function( _, arg ) {
-							if ( jQuery.isFunction( arg ) ) {
-								if ( !options.unique || !self.has( arg ) ) {
-									list.push( arg );
-								}
-							} else if ( arg && arg.length && jQuery.type( arg ) !== "string" ) {
-
-								// Inspect recursively
-								add( arg );
-							}
-						} );
-					} )( arguments );
-
-					if ( memory && !firing ) {
-						fire();
-					}
-				}
-				return this;
-			},
-
-			// Remove a callback from the list
-			remove: function() {
-				jQuery.each( arguments, function( _, arg ) {
-					var index;
-					while ( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
-						list.splice( index, 1 );
-
-						// Handle firing indexes
-						if ( index <= firingIndex ) {
-							firingIndex--;
-						}
-					}
-				} );
-				return this;
-			},
-
-			// Check if a given callback is in the list.
-			// If no argument is given, return whether or not list has callbacks attached.
-			has: function( fn ) {
-				return fn ?
-					jQuery.inArray( fn, list ) > -1 :
-					list.length > 0;
-			},
-
-			// Remove all callbacks from the list
-			empty: function() {
-				if ( list ) {
-					list = [];
-				}
-				return this;
-			},
-
-			// Disable .fire and .add
-			// Abort any current/pending executions
-			// Clear all callbacks and values
-			disable: function() {
-				locked = queue = [];
-				list = memory = "";
-				return this;
-			},
-			disabled: function() {
-				return !list;
-			},
-
-			// Disable .fire
-			// Also disable .add unless we have memory (since it would have no effect)
-			// Abort any pending executions
-			lock: function() {
-				locked = queue = [];
-				if ( !memory ) {
-					list = memory = "";
-				}
-				return this;
-			},
-			locked: function() {
-				return !!locked;
-			},
-
-			// Call all callbacks with the given context and arguments
-			fireWith: function( context, args ) {
-				if ( !locked ) {
-					args = args || [];
-					args = [ context, args.slice ? args.slice() : args ];
-					queue.push( args );
-					if ( !firing ) {
-						fire();
-					}
-				}
-				return this;
-			},
-
-			// Call all the callbacks with the given arguments
-			fire: function() {
-				self.fireWith( this, arguments );
-				return this;
-			},
-
-			// To know if the callbacks have already been called at least once
-			fired: function() {
-				return !!fired;
-			}
-		};
-
-	return self;
-};
-
-
-jQuery.extend( {
-
-	Deferred: function( func ) {
-		var tuples = [
-
-				// action, add listener, listener list, final state
-				[ "resolve", "done", jQuery.Callbacks( "once memory" ), "resolved" ],
-				[ "reject", "fail", jQuery.Callbacks( "once memory" ), "rejected" ],
-				[ "notify", "progress", jQuery.Callbacks( "memory" ) ]
-			],
-			state = "pending",
-			promise = {
-				state: function() {
-					return state;
-				},
-				always: function() {
-					deferred.done( arguments ).fail( arguments );
-					return this;
-				},
-				then: function( /* fnDone, fnFail, fnProgress */ ) {
-					var fns = arguments;
-					return jQuery.Deferred( function( newDefer ) {
-						jQuery.each( tuples, function( i, tuple ) {
-							var fn = jQuery.isFunction( fns[ i ] ) && fns[ i ];
-
-							// deferred[ done | fail | progress ] for forwarding actions to newDefer
-							deferred[ tuple[ 1 ] ]( function() {
-								var returned = fn && fn.apply( this, arguments );
-								if ( returned && jQuery.isFunction( returned.promise ) ) {
-									returned.promise()
-										.progress( newDefer.notify )
-										.done( newDefer.resolve )
-										.fail( newDefer.reject );
-								} else {
-									newDefer[ tuple[ 0 ] + "With" ](
-										this === promise ? newDefer.promise() : this,
-										fn ? [ returned ] : arguments
-									);
-								}
-							} );
-						} );
-						fns = null;
-					} ).promise();
-				},
-
-				// Get a promise for this deferred
-				// If obj is provided, the promise aspect is added to the object
-				promise: function( obj ) {
-					return obj != null ? jQuery.extend( obj, promise ) : promise;
-				}
-			},
-			deferred = {};
-
-		// Keep pipe for back-compat
-		promise.pipe = promise.then;
-
-		// Add list-specific methods
-		jQuery.each( tuples, function( i, tuple ) {
-			var list = tuple[ 2 ],
-				stateString = tuple[ 3 ];
-
-			// promise[ done | fail | progress ] = list.add
-			promise[ tuple[ 1 ] ] = list.add;
-
-			// Handle state
-			if ( stateString ) {
-				list.add( function() {
-
-					// state = [ resolved | rejected ]
-					state = stateString;
-
-				// [ reject_list | resolve_list ].disable; progress_list.lock
-				}, tuples[ i ^ 1 ][ 2 ].disable, tuples[ 2 ][ 2 ].lock );
-			}
-
-			// deferred[ resolve | reject | notify ]
-			deferred[ tuple[ 0 ] ] = function() {
-				deferred[ tuple[ 0 ] + "With" ]( this === deferred ? promise : this, arguments );
-				return this;
-			};
-			deferred[ tuple[ 0 ] + "With" ] = list.fireWith;
-		} );
-
-		// Make the deferred a promise
-		promise.promise( deferred );
-
-		// Call given func if any
-		if ( func ) {
-			func.call( deferred, deferred );
-		}
-
-		// All done!
-		return deferred;
-	},
-
-	// Deferred helper
-	when: function( subordinate /* , ..., subordinateN */ ) {
-		var i = 0,
-			resolveValues = slice.call( arguments ),
-			length = resolveValues.length,
-
-			// the count of uncompleted subordinates
-			remaining = length !== 1 ||
-				( subordinate && jQuery.isFunction( subordinate.promise ) ) ? length : 0,
-
-			// the master Deferred.
-			// If resolveValues consist of only a single Deferred, just use that.
-			deferred = remaining === 1 ? subordinate : jQuery.Deferred(),
-
-			// Update function for both resolve and progress values
-			updateFunc = function( i, contexts, values ) {
-				return function( value ) {
-					contexts[ i ] = this;
-					values[ i ] = arguments.length > 1 ? slice.call( arguments ) : value;
-					if ( values === progressValues ) {
-						deferred.notifyWith( contexts, values );
-					} else if ( !( --remaining ) ) {
-						deferred.resolveWith( contexts, values );
-					}
-				};
-			},
-
-			progressValues, progressContexts, resolveContexts;
-
-		// Add listeners to Deferred subordinates; treat others as resolved
-		if ( length > 1 ) {
-			progressValues = new Array( length );
-			progressContexts = new Array( length );
-			resolveContexts = new Array( length );
-			for ( ; i < length; i++ ) {
-				if ( resolveValues[ i ] && jQuery.isFunction( resolveValues[ i ].promise ) ) {
-					resolveValues[ i ].promise()
-						.progress( updateFunc( i, progressContexts, progressValues ) )
-						.done( updateFunc( i, resolveContexts, resolveValues ) )
-						.fail( deferred.reject );
-				} else {
-					--remaining;
-				}
-			}
-		}
-
-		// If we're not waiting on anything, resolve the master
-		if ( !remaining ) {
-			deferred.resolveWith( resolveContexts, resolveValues );
-		}
-
-		return deferred.promise();
-	}
-} );
-
-
-// The deferred used on DOM ready
-var readyList;
-
-jQuery.fn.ready = function( fn ) {
-
-	// Add the callback
-	jQuery.ready.promise().done( fn );
-
-	return this;
-};
-
-jQuery.extend( {
-
-	// Is the DOM ready to be used? Set to true once it occurs.
-	isReady: false,
-
-	// A counter to track how many items to wait for before
-	// the ready event fires. See #6781
-	readyWait: 1,
-
-	// Hold (or release) the ready event
-	holdReady: function( hold ) {
-		if ( hold ) {
-			jQuery.readyWait++;
-		} else {
-			jQuery.ready( true );
-		}
-	},
-
-	// Handle when the DOM is ready
-	ready: function( wait ) {
-
-		// Abort if there are pending holds or we're already ready
-		if ( wait === true ? --jQuery.readyWait : jQuery.isReady ) {
-			return;
-		}
-
-		// Remember that the DOM is ready
-		jQuery.isReady = true;
-
-		// If a normal DOM Ready event fired, decrement, and wait if need be
-		if ( wait !== true && --jQuery.readyWait > 0 ) {
-			return;
-		}
-
-		// If there are functions bound, to execute
-		readyList.resolveWith( document, [ jQuery ] );
-
-		// Trigger any bound ready events
-		if ( jQuery.fn.triggerHandler ) {
-			jQuery( document ).triggerHandler( "ready" );
-			jQuery( document ).off( "ready" );
-		}
-	}
-} );
-
-/**
- * The ready event handler and self cleanup method
- */
-function completed() {
-	document.removeEventListener( "DOMContentLoaded", completed );
-	window.removeEventListener( "load", completed );
-	jQuery.ready();
-}
-
-jQuery.ready.promise = function( obj ) {
-	if ( !readyList ) {
-
-		readyList = jQuery.Deferred();
-
-		// Catch cases where $(document).ready() is called
-		// after the browser event has already occurred.
-		// Support: IE9-10 only
-		// Older IE sometimes signals "interactive" too soon
-		if ( document.readyState === "complete" ||
-			( document.readyState !== "loading" && !document.documentElement.doScroll ) ) {
-
-			// Handle it asynchronously to allow scripts the opportunity to delay ready
-			window.setTimeout( jQuery.ready );
-
-		} else {
-
-			// Use the handy event callback
-			document.addEventListener( "DOMContentLoaded", completed );
-
-			// A fallback to window.onload, that will always work
-			window.addEventListener( "load", completed );
-		}
-	}
-	return readyList.promise( obj );
-};
-
-// Kick off the DOM ready check even if the user does not
-jQuery.ready.promise();
-
-
-
-
-// Multifunctional method to get and set values of a collection
-// The value/s can optionally be executed if it's a function
-var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
-	var i = 0,
-		len = elems.length,
-		bulk = key == null;
-
-	// Sets many values
-	if ( jQuery.type( key ) === "object" ) {
-		chainable = true;
-		for ( i in key ) {
-			access( elems, fn, i, key[ i ], true, emptyGet, raw );
-		}
-
-	// Sets one value
-	} else if ( value !== undefined ) {
-		chainable = true;
-
-		if ( !jQuery.isFunction( value ) ) {
-			raw = true;
-		}
-
-		if ( bulk ) {
-
-			// Bulk operations run against the entire set
-			if ( raw ) {
-				fn.call( elems, value );
-				fn = null;
-
-			// ...except when executing function values
-			} else {
-				bulk = fn;
-				fn = function( elem, key, value ) {
-					return bulk.call( jQuery( elem ), value );
-				};
-			}
-		}
-
-		if ( fn ) {
-			for ( ; i < len; i++ ) {
-				fn(
-					elems[ i ], key, raw ?
-					value :
-					value.call( elems[ i ], i, fn( elems[ i ], key ) )
-				);
-			}
-		}
+	function urlResolve(source, relative) {
+	  return urlParse(source, false, true).resolve(relative);
 	}
 
-	return chainable ?
-		elems :
-
-		// Gets
-		bulk ?
-			fn.call( elems ) :
-			len ? fn( elems[ 0 ], key ) : emptyGet;
-};
-var acceptData = function( owner ) {
-
-	// Accepts only:
-	//  - Node
-	//    - Node.ELEMENT_NODE
-	//    - Node.DOCUMENT_NODE
-	//  - Object
-	//    - Any
-	/* jshint -W018 */
-	return owner.nodeType === 1 || owner.nodeType === 9 || !( +owner.nodeType );
-};
-
-
-
-
-function Data() {
-	this.expando = jQuery.expando + Data.uid++;
-}
-
-Data.uid = 1;
-
-Data.prototype = {
-
-	register: function( owner, initial ) {
-		var value = initial || {};
-
-		// If it is a node unlikely to be stringify-ed or looped over
-		// use plain assignment
-		if ( owner.nodeType ) {
-			owner[ this.expando ] = value;
-
-		// Otherwise secure it in a non-enumerable, non-writable property
-		// configurability must be true to allow the property to be
-		// deleted with the delete operator
-		} else {
-			Object.defineProperty( owner, this.expando, {
-				value: value,
-				writable: true,
-				configurable: true
-			} );
-		}
-		return owner[ this.expando ];
-	},
-	cache: function( owner ) {
-
-		// We can accept data for non-element nodes in modern browsers,
-		// but we should not, see #8335.
-		// Always return an empty object.
-		if ( !acceptData( owner ) ) {
-			return {};
-		}
-
-		// Check if the owner object already has a cache
-		var value = owner[ this.expando ];
-
-		// If not, create one
-		if ( !value ) {
-			value = {};
-
-			// We can accept data for non-element nodes in modern browsers,
-			// but we should not, see #8335.
-			// Always return an empty object.
-			if ( acceptData( owner ) ) {
-
-				// If it is a node unlikely to be stringify-ed or looped over
-				// use plain assignment
-				if ( owner.nodeType ) {
-					owner[ this.expando ] = value;
-
-				// Otherwise secure it in a non-enumerable property
-				// configurable must be true to allow the property to be
-				// deleted when data is removed
-				} else {
-					Object.defineProperty( owner, this.expando, {
-						value: value,
-						configurable: true
-					} );
-				}
-			}
-		}
-
-		return value;
-	},
-	set: function( owner, data, value ) {
-		var prop,
-			cache = this.cache( owner );
-
-		// Handle: [ owner, key, value ] args
-		if ( typeof data === "string" ) {
-			cache[ data ] = value;
-
-		// Handle: [ owner, { properties } ] args
-		} else {
-
-			// Copy the properties one-by-one to the cache object
-			for ( prop in data ) {
-				cache[ prop ] = data[ prop ];
-			}
-		}
-		return cache;
-	},
-	get: function( owner, key ) {
-		return key === undefined ?
-			this.cache( owner ) :
-			owner[ this.expando ] && owner[ this.expando ][ key ];
-	},
-	access: function( owner, key, value ) {
-		var stored;
-
-		// In cases where either:
-		//
-		//   1. No key was specified
-		//   2. A string key was specified, but no value provided
-		//
-		// Take the "read" path and allow the get method to determine
-		// which value to return, respectively either:
-		//
-		//   1. The entire cache object
-		//   2. The data stored at the key
-		//
-		if ( key === undefined ||
-				( ( key && typeof key === "string" ) && value === undefined ) ) {
-
-			stored = this.get( owner, key );
-
-			return stored !== undefined ?
-				stored : this.get( owner, jQuery.camelCase( key ) );
-		}
-
-		// When the key is not a string, or both a key and value
-		// are specified, set or extend (existing objects) with either:
-		//
-		//   1. An object of properties
-		//   2. A key and value
-		//
-		this.set( owner, key, value );
-
-		// Since the "set" path can have two possible entry points
-		// return the expected data based on which path was taken[*]
-		return value !== undefined ? value : key;
-	},
-	remove: function( owner, key ) {
-		var i, name, camel,
-			cache = owner[ this.expando ];
-
-		if ( cache === undefined ) {
-			return;
-		}
-
-		if ( key === undefined ) {
-			this.register( owner );
-
-		} else {
-
-			// Support array or space separated string of keys
-			if ( jQuery.isArray( key ) ) {
-
-				// If "name" is an array of keys...
-				// When data is initially created, via ("key", "val") signature,
-				// keys will be converted to camelCase.
-				// Since there is no way to tell _how_ a key was added, remove
-				// both plain key and camelCase key. #12786
-				// This will only penalize the array argument path.
-				name = key.concat( key.map( jQuery.camelCase ) );
-			} else {
-				camel = jQuery.camelCase( key );
-
-				// Try the string as a key before any manipulation
-				if ( key in cache ) {
-					name = [ key, camel ];
-				} else {
-
-					// If a key with the spaces exists, use it.
-					// Otherwise, create an array by matching non-whitespace
-					name = camel;
-					name = name in cache ?
-						[ name ] : ( name.match( rnotwhite ) || [] );
-				}
-			}
-
-			i = name.length;
-
-			while ( i-- ) {
-				delete cache[ name[ i ] ];
-			}
-		}
-
-		// Remove the expando if there's no more data
-		if ( key === undefined || jQuery.isEmptyObject( cache ) ) {
-
-			// Support: Chrome <= 35-45+
-			// Webkit & Blink performance suffers when deleting properties
-			// from DOM nodes, so set to undefined instead
-			// https://code.google.com/p/chromium/issues/detail?id=378607
-			if ( owner.nodeType ) {
-				owner[ this.expando ] = undefined;
-			} else {
-				delete owner[ this.expando ];
-			}
-		}
-	},
-	hasData: function( owner ) {
-		var cache = owner[ this.expando ];
-		return cache !== undefined && !jQuery.isEmptyObject( cache );
-	}
-};
-var dataPriv = new Data();
-
-var dataUser = new Data();
-
-
-
-//	Implementation Summary
-//
-//	1. Enforce API surface and semantic compatibility with 1.9.x branch
-//	2. Improve the module's maintainability by reducing the storage
-//		paths to a single mechanism.
-//	3. Use the same single mechanism to support "private" and "user" data.
-//	4. _Never_ expose "private" data to user code (TODO: Drop _data, _removeData)
-//	5. Avoid exposing implementation details on user objects (eg. expando properties)
-//	6. Provide a clear path for implementation upgrade to WeakMap in 2014
-
-var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
-	rmultiDash = /[A-Z]/g;
-
-function dataAttr( elem, key, data ) {
-	var name;
-
-	// If nothing was found internally, try to fetch any
-	// data from the HTML5 data-* attribute
-	if ( data === undefined && elem.nodeType === 1 ) {
-		name = "data-" + key.replace( rmultiDash, "-$&" ).toLowerCase();
-		data = elem.getAttribute( name );
-
-		if ( typeof data === "string" ) {
-			try {
-				data = data === "true" ? true :
-					data === "false" ? false :
-					data === "null" ? null :
-
-					// Only convert to a number if it doesn't change the string
-					+data + "" === data ? +data :
-					rbrace.test( data ) ? jQuery.parseJSON( data ) :
-					data;
-			} catch ( e ) {}
-
-			// Make sure we set the data so it isn't changed later
-			dataUser.set( elem, key, data );
-		} else {
-			data = undefined;
-		}
-	}
-	return data;
-}
-
-jQuery.extend( {
-	hasData: function( elem ) {
-		return dataUser.hasData( elem ) || dataPriv.hasData( elem );
-	},
-
-	data: function( elem, name, data ) {
-		return dataUser.access( elem, name, data );
-	},
-
-	removeData: function( elem, name ) {
-		dataUser.remove( elem, name );
-	},
-
-	// TODO: Now that all calls to _data and _removeData have been replaced
-	// with direct calls to dataPriv methods, these can be deprecated.
-	_data: function( elem, name, data ) {
-		return dataPriv.access( elem, name, data );
-	},
-
-	_removeData: function( elem, name ) {
-		dataPriv.remove( elem, name );
-	}
-} );
-
-jQuery.fn.extend( {
-	data: function( key, value ) {
-		var i, name, data,
-			elem = this[ 0 ],
-			attrs = elem && elem.attributes;
-
-		// Gets all values
-		if ( key === undefined ) {
-			if ( this.length ) {
-				data = dataUser.get( elem );
-
-				if ( elem.nodeType === 1 && !dataPriv.get( elem, "hasDataAttrs" ) ) {
-					i = attrs.length;
-					while ( i-- ) {
-
-						// Support: IE11+
-						// The attrs elements can be null (#14894)
-						if ( attrs[ i ] ) {
-							name = attrs[ i ].name;
-							if ( name.indexOf( "data-" ) === 0 ) {
-								name = jQuery.camelCase( name.slice( 5 ) );
-								dataAttr( elem, name, data[ name ] );
-							}
-						}
-					}
-					dataPriv.set( elem, "hasDataAttrs", true );
-				}
-			}
-
-			return data;
-		}
-
-		// Sets multiple values
-		if ( typeof key === "object" ) {
-			return this.each( function() {
-				dataUser.set( this, key );
-			} );
-		}
-
-		return access( this, function( value ) {
-			var data, camelKey;
-
-			// The calling jQuery object (element matches) is not empty
-			// (and therefore has an element appears at this[ 0 ]) and the
-			// `value` parameter was not undefined. An empty jQuery object
-			// will result in `undefined` for elem = this[ 0 ] which will
-			// throw an exception if an attempt to read a data cache is made.
-			if ( elem && value === undefined ) {
-
-				// Attempt to get data from the cache
-				// with the key as-is
-				data = dataUser.get( elem, key ) ||
-
-					// Try to find dashed key if it exists (gh-2779)
-					// This is for 2.2.x only
-					dataUser.get( elem, key.replace( rmultiDash, "-$&" ).toLowerCase() );
-
-				if ( data !== undefined ) {
-					return data;
-				}
-
-				camelKey = jQuery.camelCase( key );
-
-				// Attempt to get data from the cache
-				// with the key camelized
-				data = dataUser.get( elem, camelKey );
-				if ( data !== undefined ) {
-					return data;
-				}
-
-				// Attempt to "discover" the data in
-				// HTML5 custom data-* attrs
-				data = dataAttr( elem, camelKey, undefined );
-				if ( data !== undefined ) {
-					return data;
-				}
-
-				// We tried really hard, but the data doesn't exist.
-				return;
-			}
-
-			// Set the data...
-			camelKey = jQuery.camelCase( key );
-			this.each( function() {
-
-				// First, attempt to store a copy or reference of any
-				// data that might've been store with a camelCased key.
-				var data = dataUser.get( this, camelKey );
-
-				// For HTML5 data-* attribute interop, we have to
-				// store property names with dashes in a camelCase form.
-				// This might not apply to all properties...*
-				dataUser.set( this, camelKey, value );
-
-				// *... In the case of properties that might _actually_
-				// have dashes, we need to also store a copy of that
-				// unchanged property.
-				if ( key.indexOf( "-" ) > -1 && data !== undefined ) {
-					dataUser.set( this, key, value );
-				}
-			} );
-		}, null, value, arguments.length > 1, null, true );
-	},
-
-	removeData: function( key ) {
-		return this.each( function() {
-			dataUser.remove( this, key );
-		} );
-	}
-} );
-
-
-jQuery.extend( {
-	queue: function( elem, type, data ) {
-		var queue;
-
-		if ( elem ) {
-			type = ( type || "fx" ) + "queue";
-			queue = dataPriv.get( elem, type );
-
-			// Speed up dequeue by getting out quickly if this is just a lookup
-			if ( data ) {
-				if ( !queue || jQuery.isArray( data ) ) {
-					queue = dataPriv.access( elem, type, jQuery.makeArray( data ) );
-				} else {
-					queue.push( data );
-				}
-			}
-			return queue || [];
-		}
-	},
-
-	dequeue: function( elem, type ) {
-		type = type || "fx";
-
-		var queue = jQuery.queue( elem, type ),
-			startLength = queue.length,
-			fn = queue.shift(),
-			hooks = jQuery._queueHooks( elem, type ),
-			next = function() {
-				jQuery.dequeue( elem, type );
-			};
-
-		// If the fx queue is dequeued, always remove the progress sentinel
-		if ( fn === "inprogress" ) {
-			fn = queue.shift();
-			startLength--;
-		}
-
-		if ( fn ) {
-
-			// Add a progress sentinel to prevent the fx queue from being
-			// automatically dequeued
-			if ( type === "fx" ) {
-				queue.unshift( "inprogress" );
-			}
-
-			// Clear up the last queue stop function
-			delete hooks.stop;
-			fn.call( elem, next, hooks );
-		}
-
-		if ( !startLength && hooks ) {
-			hooks.empty.fire();
-		}
-	},
-
-	// Not public - generate a queueHooks object, or return the current one
-	_queueHooks: function( elem, type ) {
-		var key = type + "queueHooks";
-		return dataPriv.get( elem, key ) || dataPriv.access( elem, key, {
-			empty: jQuery.Callbacks( "once memory" ).add( function() {
-				dataPriv.remove( elem, [ type + "queue", key ] );
-			} )
-		} );
-	}
-} );
-
-jQuery.fn.extend( {
-	queue: function( type, data ) {
-		var setter = 2;
-
-		if ( typeof type !== "string" ) {
-			data = type;
-			type = "fx";
-			setter--;
-		}
-
-		if ( arguments.length < setter ) {
-			return jQuery.queue( this[ 0 ], type );
-		}
-
-		return data === undefined ?
-			this :
-			this.each( function() {
-				var queue = jQuery.queue( this, type, data );
-
-				// Ensure a hooks for this queue
-				jQuery._queueHooks( this, type );
-
-				if ( type === "fx" && queue[ 0 ] !== "inprogress" ) {
-					jQuery.dequeue( this, type );
-				}
-			} );
-	},
-	dequeue: function( type ) {
-		return this.each( function() {
-			jQuery.dequeue( this, type );
-		} );
-	},
-	clearQueue: function( type ) {
-		return this.queue( type || "fx", [] );
-	},
-
-	// Get a promise resolved when queues of a certain type
-	// are emptied (fx is the type by default)
-	promise: function( type, obj ) {
-		var tmp,
-			count = 1,
-			defer = jQuery.Deferred(),
-			elements = this,
-			i = this.length,
-			resolve = function() {
-				if ( !( --count ) ) {
-					defer.resolveWith( elements, [ elements ] );
-				}
-			};
-
-		if ( typeof type !== "string" ) {
-			obj = type;
-			type = undefined;
-		}
-		type = type || "fx";
-
-		while ( i-- ) {
-			tmp = dataPriv.get( elements[ i ], type + "queueHooks" );
-			if ( tmp && tmp.empty ) {
-				count++;
-				tmp.empty.add( resolve );
-			}
-		}
-		resolve();
-		return defer.promise( obj );
-	}
-} );
-var pnum = ( /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/ ).source;
-
-var rcssNum = new RegExp( "^(?:([+-])=|)(" + pnum + ")([a-z%]*)$", "i" );
-
-
-var cssExpand = [ "Top", "Right", "Bottom", "Left" ];
-
-var isHidden = function( elem, el ) {
-
-		// isHidden might be called from jQuery#filter function;
-		// in that case, element will be second argument
-		elem = el || elem;
-		return jQuery.css( elem, "display" ) === "none" ||
-			!jQuery.contains( elem.ownerDocument, elem );
+	Url.prototype.resolve = function (relative) {
+	  return this.resolveObject(urlParse(relative, false, true)).format();
 	};
 
-
-
-function adjustCSS( elem, prop, valueParts, tween ) {
-	var adjusted,
-		scale = 1,
-		maxIterations = 20,
-		currentValue = tween ?
-			function() { return tween.cur(); } :
-			function() { return jQuery.css( elem, prop, "" ); },
-		initial = currentValue(),
-		unit = valueParts && valueParts[ 3 ] || ( jQuery.cssNumber[ prop ] ? "" : "px" ),
-
-		// Starting value computation is required for potential unit mismatches
-		initialInUnit = ( jQuery.cssNumber[ prop ] || unit !== "px" && +initial ) &&
-			rcssNum.exec( jQuery.css( elem, prop ) );
-
-	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
-
-		// Trust units reported by jQuery.css
-		unit = unit || initialInUnit[ 3 ];
-
-		// Make sure we update the tween properties later on
-		valueParts = valueParts || [];
-
-		// Iteratively approximate from a nonzero starting point
-		initialInUnit = +initial || 1;
-
-		do {
-
-			// If previous iteration zeroed out, double until we get *something*.
-			// Use string for doubling so we don't accidentally see scale as unchanged below
-			scale = scale || ".5";
-
-			// Adjust and apply
-			initialInUnit = initialInUnit / scale;
-			jQuery.style( elem, prop, initialInUnit + unit );
-
-		// Update scale, tolerating zero or NaN from tween.cur()
-		// Break the loop if scale is unchanged or perfect, or if we've just had enough.
-		} while (
-			scale !== ( scale = currentValue() / initial ) && scale !== 1 && --maxIterations
-		);
+	function urlResolveObject(source, relative) {
+	  if (!source) return relative;
+	  return urlParse(source, false, true).resolveObject(relative);
 	}
 
-	if ( valueParts ) {
-		initialInUnit = +initialInUnit || +initial || 0;
-
-		// Apply relative offset (+=/-=) if specified
-		adjusted = valueParts[ 1 ] ?
-			initialInUnit + ( valueParts[ 1 ] + 1 ) * valueParts[ 2 ] :
-			+valueParts[ 2 ];
-		if ( tween ) {
-			tween.unit = unit;
-			tween.start = initialInUnit;
-			tween.end = adjusted;
-		}
-	}
-	return adjusted;
-}
-var rcheckableType = ( /^(?:checkbox|radio)$/i );
-
-var rtagName = ( /<([\w:-]+)/ );
-
-var rscriptType = ( /^$|\/(?:java|ecma)script/i );
-
-
-
-// We have to close these tags to support XHTML (#13200)
-var wrapMap = {
-
-	// Support: IE9
-	option: [ 1, "<select multiple='multiple'>", "</select>" ],
-
-	// XHTML parsers do not magically insert elements in the
-	// same way that tag soup parsers do. So we cannot shorten
-	// this by omitting <tbody> or other required elements.
-	thead: [ 1, "<table>", "</table>" ],
-	col: [ 2, "<table><colgroup>", "</colgroup></table>" ],
-	tr: [ 2, "<table><tbody>", "</tbody></table>" ],
-	td: [ 3, "<table><tbody><tr>", "</tr></tbody></table>" ],
-
-	_default: [ 0, "", "" ]
-};
-
-// Support: IE9
-wrapMap.optgroup = wrapMap.option;
-
-wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead;
-wrapMap.th = wrapMap.td;
-
-
-function getAll( context, tag ) {
-
-	// Support: IE9-11+
-	// Use typeof to avoid zero-argument method invocation on host objects (#15151)
-	var ret = typeof context.getElementsByTagName !== "undefined" ?
-			context.getElementsByTagName( tag || "*" ) :
-			typeof context.querySelectorAll !== "undefined" ?
-				context.querySelectorAll( tag || "*" ) :
-			[];
-
-	return tag === undefined || tag && jQuery.nodeName( context, tag ) ?
-		jQuery.merge( [ context ], ret ) :
-		ret;
-}
-
-
-// Mark scripts as having already been evaluated
-function setGlobalEval( elems, refElements ) {
-	var i = 0,
-		l = elems.length;
-
-	for ( ; i < l; i++ ) {
-		dataPriv.set(
-			elems[ i ],
-			"globalEval",
-			!refElements || dataPriv.get( refElements[ i ], "globalEval" )
-		);
-	}
-}
-
-
-var rhtml = /<|&#?\w+;/;
-
-function buildFragment( elems, context, scripts, selection, ignored ) {
-	var elem, tmp, tag, wrap, contains, j,
-		fragment = context.createDocumentFragment(),
-		nodes = [],
-		i = 0,
-		l = elems.length;
-
-	for ( ; i < l; i++ ) {
-		elem = elems[ i ];
-
-		if ( elem || elem === 0 ) {
-
-			// Add nodes directly
-			if ( jQuery.type( elem ) === "object" ) {
-
-				// Support: Android<4.1, PhantomJS<2
-				// push.apply(_, arraylike) throws on ancient WebKit
-				jQuery.merge( nodes, elem.nodeType ? [ elem ] : elem );
-
-			// Convert non-html into a text node
-			} else if ( !rhtml.test( elem ) ) {
-				nodes.push( context.createTextNode( elem ) );
-
-			// Convert html into DOM nodes
-			} else {
-				tmp = tmp || fragment.appendChild( context.createElement( "div" ) );
-
-				// Deserialize a standard representation
-				tag = ( rtagName.exec( elem ) || [ "", "" ] )[ 1 ].toLowerCase();
-				wrap = wrapMap[ tag ] || wrapMap._default;
-				tmp.innerHTML = wrap[ 1 ] + jQuery.htmlPrefilter( elem ) + wrap[ 2 ];
-
-				// Descend through wrappers to the right content
-				j = wrap[ 0 ];
-				while ( j-- ) {
-					tmp = tmp.lastChild;
-				}
-
-				// Support: Android<4.1, PhantomJS<2
-				// push.apply(_, arraylike) throws on ancient WebKit
-				jQuery.merge( nodes, tmp.childNodes );
-
-				// Remember the top-level container
-				tmp = fragment.firstChild;
-
-				// Ensure the created nodes are orphaned (#12392)
-				tmp.textContent = "";
-			}
-		}
-	}
-
-	// Remove wrapper from fragment
-	fragment.textContent = "";
-
-	i = 0;
-	while ( ( elem = nodes[ i++ ] ) ) {
-
-		// Skip elements already in the context collection (trac-4087)
-		if ( selection && jQuery.inArray( elem, selection ) > -1 ) {
-			if ( ignored ) {
-				ignored.push( elem );
-			}
-			continue;
-		}
-
-		contains = jQuery.contains( elem.ownerDocument, elem );
-
-		// Append to fragment
-		tmp = getAll( fragment.appendChild( elem ), "script" );
-
-		// Preserve script evaluation history
-		if ( contains ) {
-			setGlobalEval( tmp );
-		}
-
-		// Capture executables
-		if ( scripts ) {
-			j = 0;
-			while ( ( elem = tmp[ j++ ] ) ) {
-				if ( rscriptType.test( elem.type || "" ) ) {
-					scripts.push( elem );
-				}
-			}
-		}
-	}
-
-	return fragment;
-}
-
-
-( function() {
-	var fragment = document.createDocumentFragment(),
-		div = fragment.appendChild( document.createElement( "div" ) ),
-		input = document.createElement( "input" );
-
-	// Support: Android 4.0-4.3, Safari<=5.1
-	// Check state lost if the name is set (#11217)
-	// Support: Windows Web Apps (WWA)
-	// `name` and `type` must use .setAttribute for WWA (#14901)
-	input.setAttribute( "type", "radio" );
-	input.setAttribute( "checked", "checked" );
-	input.setAttribute( "name", "t" );
-
-	div.appendChild( input );
-
-	// Support: Safari<=5.1, Android<4.2
-	// Older WebKit doesn't clone checked state correctly in fragments
-	support.checkClone = div.cloneNode( true ).cloneNode( true ).lastChild.checked;
-
-	// Support: IE<=11+
-	// Make sure textarea (and checkbox) defaultValue is properly cloned
-	div.innerHTML = "<textarea>x</textarea>";
-	support.noCloneChecked = !!div.cloneNode( true ).lastChild.defaultValue;
-} )();
-
-
-var
-	rkeyEvent = /^key/,
-	rmouseEvent = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
-	rtypenamespace = /^([^.]*)(?:\.(.+)|)/;
-
-function returnTrue() {
-	return true;
-}
-
-function returnFalse() {
-	return false;
-}
-
-// Support: IE9
-// See #13393 for more info
-function safeActiveElement() {
-	try {
-		return document.activeElement;
-	} catch ( err ) { }
-}
-
-function on( elem, types, selector, data, fn, one ) {
-	var origFn, type;
-
-	// Types can be a map of types/handlers
-	if ( typeof types === "object" ) {
-
-		// ( types-Object, selector, data )
-		if ( typeof selector !== "string" ) {
-
-			// ( types-Object, data )
-			data = data || selector;
-			selector = undefined;
-		}
-		for ( type in types ) {
-			on( elem, type, selector, data, types[ type ], one );
-		}
-		return elem;
-	}
-
-	if ( data == null && fn == null ) {
-
-		// ( types, fn )
-		fn = selector;
-		data = selector = undefined;
-	} else if ( fn == null ) {
-		if ( typeof selector === "string" ) {
-
-			// ( types, selector, fn )
-			fn = data;
-			data = undefined;
-		} else {
-
-			// ( types, data, fn )
-			fn = data;
-			data = selector;
-			selector = undefined;
-		}
-	}
-	if ( fn === false ) {
-		fn = returnFalse;
-	} else if ( !fn ) {
-		return elem;
-	}
-
-	if ( one === 1 ) {
-		origFn = fn;
-		fn = function( event ) {
-
-			// Can use an empty set, since event contains the info
-			jQuery().off( event );
-			return origFn.apply( this, arguments );
-		};
-
-		// Use same guid so caller can remove using origFn
-		fn.guid = origFn.guid || ( origFn.guid = jQuery.guid++ );
-	}
-	return elem.each( function() {
-		jQuery.event.add( this, types, fn, data, selector );
-	} );
-}
-
-/*
- * Helper functions for managing events -- not part of the public interface.
- * Props to Dean Edwards' addEvent library for many of the ideas.
- */
-jQuery.event = {
-
-	global: {},
-
-	add: function( elem, types, handler, data, selector ) {
-
-		var handleObjIn, eventHandle, tmp,
-			events, t, handleObj,
-			special, handlers, type, namespaces, origType,
-			elemData = dataPriv.get( elem );
-
-		// Don't attach events to noData or text/comment nodes (but allow plain objects)
-		if ( !elemData ) {
-			return;
-		}
-
-		// Caller can pass in an object of custom data in lieu of the handler
-		if ( handler.handler ) {
-			handleObjIn = handler;
-			handler = handleObjIn.handler;
-			selector = handleObjIn.selector;
-		}
-
-		// Make sure that the handler has a unique ID, used to find/remove it later
-		if ( !handler.guid ) {
-			handler.guid = jQuery.guid++;
-		}
-
-		// Init the element's event structure and main handler, if this is the first
-		if ( !( events = elemData.events ) ) {
-			events = elemData.events = {};
-		}
-		if ( !( eventHandle = elemData.handle ) ) {
-			eventHandle = elemData.handle = function( e ) {
-
-				// Discard the second event of a jQuery.event.trigger() and
-				// when an event is called after a page has unloaded
-				return typeof jQuery !== "undefined" && jQuery.event.triggered !== e.type ?
-					jQuery.event.dispatch.apply( elem, arguments ) : undefined;
-			};
-		}
-
-		// Handle multiple events separated by a space
-		types = ( types || "" ).match( rnotwhite ) || [ "" ];
-		t = types.length;
-		while ( t-- ) {
-			tmp = rtypenamespace.exec( types[ t ] ) || [];
-			type = origType = tmp[ 1 ];
-			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
-
-			// There *must* be a type, no attaching namespace-only handlers
-			if ( !type ) {
-				continue;
-			}
-
-			// If event changes its type, use the special event handlers for the changed type
-			special = jQuery.event.special[ type ] || {};
-
-			// If selector defined, determine special event api type, otherwise given type
-			type = ( selector ? special.delegateType : special.bindType ) || type;
-
-			// Update special based on newly reset type
-			special = jQuery.event.special[ type ] || {};
-
-			// handleObj is passed to all event handlers
-			handleObj = jQuery.extend( {
-				type: type,
-				origType: origType,
-				data: data,
-				handler: handler,
-				guid: handler.guid,
-				selector: selector,
-				needsContext: selector && jQuery.expr.match.needsContext.test( selector ),
-				namespace: namespaces.join( "." )
-			}, handleObjIn );
-
-			// Init the event handler queue if we're the first
-			if ( !( handlers = events[ type ] ) ) {
-				handlers = events[ type ] = [];
-				handlers.delegateCount = 0;
-
-				// Only use addEventListener if the special events handler returns false
-				if ( !special.setup ||
-					special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
-
-					if ( elem.addEventListener ) {
-						elem.addEventListener( type, eventHandle );
-					}
-				}
-			}
-
-			if ( special.add ) {
-				special.add.call( elem, handleObj );
-
-				if ( !handleObj.handler.guid ) {
-					handleObj.handler.guid = handler.guid;
-				}
-			}
-
-			// Add to the element's handler list, delegates in front
-			if ( selector ) {
-				handlers.splice( handlers.delegateCount++, 0, handleObj );
-			} else {
-				handlers.push( handleObj );
-			}
-
-			// Keep track of which events have ever been used, for event optimization
-			jQuery.event.global[ type ] = true;
-		}
-
-	},
-
-	// Detach an event or set of events from an element
-	remove: function( elem, types, handler, selector, mappedTypes ) {
-
-		var j, origCount, tmp,
-			events, t, handleObj,
-			special, handlers, type, namespaces, origType,
-			elemData = dataPriv.hasData( elem ) && dataPriv.get( elem );
-
-		if ( !elemData || !( events = elemData.events ) ) {
-			return;
-		}
-
-		// Once for each type.namespace in types; type may be omitted
-		types = ( types || "" ).match( rnotwhite ) || [ "" ];
-		t = types.length;
-		while ( t-- ) {
-			tmp = rtypenamespace.exec( types[ t ] ) || [];
-			type = origType = tmp[ 1 ];
-			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
-
-			// Unbind all events (on this namespace, if provided) for the element
-			if ( !type ) {
-				for ( type in events ) {
-					jQuery.event.remove( elem, type + types[ t ], handler, selector, true );
-				}
-				continue;
-			}
-
-			special = jQuery.event.special[ type ] || {};
-			type = ( selector ? special.delegateType : special.bindType ) || type;
-			handlers = events[ type ] || [];
-			tmp = tmp[ 2 ] &&
-				new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" );
-
-			// Remove matching events
-			origCount = j = handlers.length;
-			while ( j-- ) {
-				handleObj = handlers[ j ];
-
-				if ( ( mappedTypes || origType === handleObj.origType ) &&
-					( !handler || handler.guid === handleObj.guid ) &&
-					( !tmp || tmp.test( handleObj.namespace ) ) &&
-					( !selector || selector === handleObj.selector ||
-						selector === "**" && handleObj.selector ) ) {
-					handlers.splice( j, 1 );
-
-					if ( handleObj.selector ) {
-						handlers.delegateCount--;
-					}
-					if ( special.remove ) {
-						special.remove.call( elem, handleObj );
-					}
-				}
-			}
-
-			// Remove generic event handler if we removed something and no more handlers exist
-			// (avoids potential for endless recursion during removal of special event handlers)
-			if ( origCount && !handlers.length ) {
-				if ( !special.teardown ||
-					special.teardown.call( elem, namespaces, elemData.handle ) === false ) {
-
-					jQuery.removeEvent( elem, type, elemData.handle );
-				}
-
-				delete events[ type ];
-			}
-		}
-
-		// Remove data and the expando if it's no longer used
-		if ( jQuery.isEmptyObject( events ) ) {
-			dataPriv.remove( elem, "handle events" );
-		}
-	},
-
-	dispatch: function( event ) {
-
-		// Make a writable jQuery.Event from the native event object
-		event = jQuery.event.fix( event );
-
-		var i, j, ret, matched, handleObj,
-			handlerQueue = [],
-			args = slice.call( arguments ),
-			handlers = ( dataPriv.get( this, "events" ) || {} )[ event.type ] || [],
-			special = jQuery.event.special[ event.type ] || {};
-
-		// Use the fix-ed jQuery.Event rather than the (read-only) native event
-		args[ 0 ] = event;
-		event.delegateTarget = this;
-
-		// Call the preDispatch hook for the mapped type, and let it bail if desired
-		if ( special.preDispatch && special.preDispatch.call( this, event ) === false ) {
-			return;
-		}
-
-		// Determine handlers
-		handlerQueue = jQuery.event.handlers.call( this, event, handlers );
-
-		// Run delegates first; they may want to stop propagation beneath us
-		i = 0;
-		while ( ( matched = handlerQueue[ i++ ] ) && !event.isPropagationStopped() ) {
-			event.currentTarget = matched.elem;
-
-			j = 0;
-			while ( ( handleObj = matched.handlers[ j++ ] ) &&
-				!event.isImmediatePropagationStopped() ) {
-
-				// Triggered event must either 1) have no namespace, or 2) have namespace(s)
-				// a subset or equal to those in the bound event (both can have no namespace).
-				if ( !event.rnamespace || event.rnamespace.test( handleObj.namespace ) ) {
-
-					event.handleObj = handleObj;
-					event.data = handleObj.data;
-
-					ret = ( ( jQuery.event.special[ handleObj.origType ] || {} ).handle ||
-						handleObj.handler ).apply( matched.elem, args );
-
-					if ( ret !== undefined ) {
-						if ( ( event.result = ret ) === false ) {
-							event.preventDefault();
-							event.stopPropagation();
-						}
-					}
-				}
-			}
-		}
-
-		// Call the postDispatch hook for the mapped type
-		if ( special.postDispatch ) {
-			special.postDispatch.call( this, event );
-		}
-
-		return event.result;
-	},
-
-	handlers: function( event, handlers ) {
-		var i, matches, sel, handleObj,
-			handlerQueue = [],
-			delegateCount = handlers.delegateCount,
-			cur = event.target;
-
-		// Support (at least): Chrome, IE9
-		// Find delegate handlers
-		// Black-hole SVG <use> instance trees (#13180)
-		//
-		// Support: Firefox<=42+
-		// Avoid non-left-click in FF but don't block IE radio events (#3861, gh-2343)
-		if ( delegateCount && cur.nodeType &&
-			( event.type !== "click" || isNaN( event.button ) || event.button < 1 ) ) {
-
-			for ( ; cur !== this; cur = cur.parentNode || this ) {
-
-				// Don't check non-elements (#13208)
-				// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
-				if ( cur.nodeType === 1 && ( cur.disabled !== true || event.type !== "click" ) ) {
-					matches = [];
-					for ( i = 0; i < delegateCount; i++ ) {
-						handleObj = handlers[ i ];
-
-						// Don't conflict with Object.prototype properties (#13203)
-						sel = handleObj.selector + " ";
-
-						if ( matches[ sel ] === undefined ) {
-							matches[ sel ] = handleObj.needsContext ?
-								jQuery( sel, this ).index( cur ) > -1 :
-								jQuery.find( sel, this, null, [ cur ] ).length;
-						}
-						if ( matches[ sel ] ) {
-							matches.push( handleObj );
-						}
-					}
-					if ( matches.length ) {
-						handlerQueue.push( { elem: cur, handlers: matches } );
-					}
-				}
-			}
-		}
-
-		// Add the remaining (directly-bound) handlers
-		if ( delegateCount < handlers.length ) {
-			handlerQueue.push( { elem: this, handlers: handlers.slice( delegateCount ) } );
-		}
-
-		return handlerQueue;
-	},
-
-	// Includes some event props shared by KeyEvent and MouseEvent
-	props: ( "altKey bubbles cancelable ctrlKey currentTarget detail eventPhase " +
-		"metaKey relatedTarget shiftKey target timeStamp view which" ).split( " " ),
-
-	fixHooks: {},
-
-	keyHooks: {
-		props: "char charCode key keyCode".split( " " ),
-		filter: function( event, original ) {
-
-			// Add which for key events
-			if ( event.which == null ) {
-				event.which = original.charCode != null ? original.charCode : original.keyCode;
-			}
-
-			return event;
-		}
-	},
-
-	mouseHooks: {
-		props: ( "button buttons clientX clientY offsetX offsetY pageX pageY " +
-			"screenX screenY toElement" ).split( " " ),
-		filter: function( event, original ) {
-			var eventDoc, doc, body,
-				button = original.button;
-
-			// Calculate pageX/Y if missing and clientX/Y available
-			if ( event.pageX == null && original.clientX != null ) {
-				eventDoc = event.target.ownerDocument || document;
-				doc = eventDoc.documentElement;
-				body = eventDoc.body;
-
-				event.pageX = original.clientX +
-					( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) -
-					( doc && doc.clientLeft || body && body.clientLeft || 0 );
-				event.pageY = original.clientY +
-					( doc && doc.scrollTop  || body && body.scrollTop  || 0 ) -
-					( doc && doc.clientTop  || body && body.clientTop  || 0 );
-			}
-
-			// Add which for click: 1 === left; 2 === middle; 3 === right
-			// Note: button is not normalized, so don't use it
-			if ( !event.which && button !== undefined ) {
-				event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
-			}
-
-			return event;
-		}
-	},
-
-	fix: function( event ) {
-		if ( event[ jQuery.expando ] ) {
-			return event;
-		}
-
-		// Create a writable copy of the event object and normalize some properties
-		var i, prop, copy,
-			type = event.type,
-			originalEvent = event,
-			fixHook = this.fixHooks[ type ];
-
-		if ( !fixHook ) {
-			this.fixHooks[ type ] = fixHook =
-				rmouseEvent.test( type ) ? this.mouseHooks :
-				rkeyEvent.test( type ) ? this.keyHooks :
-				{};
-		}
-		copy = fixHook.props ? this.props.concat( fixHook.props ) : this.props;
-
-		event = new jQuery.Event( originalEvent );
-
-		i = copy.length;
-		while ( i-- ) {
-			prop = copy[ i ];
-			event[ prop ] = originalEvent[ prop ];
-		}
-
-		// Support: Cordova 2.5 (WebKit) (#13255)
-		// All events should have a target; Cordova deviceready doesn't
-		if ( !event.target ) {
-			event.target = document;
-		}
-
-		// Support: Safari 6.0+, Chrome<28
-		// Target should not be a text node (#504, #13143)
-		if ( event.target.nodeType === 3 ) {
-			event.target = event.target.parentNode;
-		}
-
-		return fixHook.filter ? fixHook.filter( event, originalEvent ) : event;
-	},
-
-	special: {
-		load: {
-
-			// Prevent triggered image.load events from bubbling to window.load
-			noBubble: true
-		},
-		focus: {
-
-			// Fire native event if possible so blur/focus sequence is correct
-			trigger: function() {
-				if ( this !== safeActiveElement() && this.focus ) {
-					this.focus();
-					return false;
-				}
-			},
-			delegateType: "focusin"
-		},
-		blur: {
-			trigger: function() {
-				if ( this === safeActiveElement() && this.blur ) {
-					this.blur();
-					return false;
-				}
-			},
-			delegateType: "focusout"
-		},
-		click: {
-
-			// For checkbox, fire native event so checked state will be right
-			trigger: function() {
-				if ( this.type === "checkbox" && this.click && jQuery.nodeName( this, "input" ) ) {
-					this.click();
-					return false;
-				}
-			},
-
-			// For cross-browser consistency, don't fire native .click() on links
-			_default: function( event ) {
-				return jQuery.nodeName( event.target, "a" );
-			}
-		},
-
-		beforeunload: {
-			postDispatch: function( event ) {
-
-				// Support: Firefox 20+
-				// Firefox doesn't alert if the returnValue field is not set.
-				if ( event.result !== undefined && event.originalEvent ) {
-					event.originalEvent.returnValue = event.result;
-				}
-			}
-		}
-	}
-};
-
-jQuery.removeEvent = function( elem, type, handle ) {
-
-	// This "if" is needed for plain objects
-	if ( elem.removeEventListener ) {
-		elem.removeEventListener( type, handle );
-	}
-};
-
-jQuery.Event = function( src, props ) {
-
-	// Allow instantiation without the 'new' keyword
-	if ( !( this instanceof jQuery.Event ) ) {
-		return new jQuery.Event( src, props );
-	}
-
-	// Event object
-	if ( src && src.type ) {
-		this.originalEvent = src;
-		this.type = src.type;
-
-		// Events bubbling up the document may have been marked as prevented
-		// by a handler lower down the tree; reflect the correct value.
-		this.isDefaultPrevented = src.defaultPrevented ||
-				src.defaultPrevented === undefined &&
-
-				// Support: Android<4.0
-				src.returnValue === false ?
-			returnTrue :
-			returnFalse;
-
-	// Event type
-	} else {
-		this.type = src;
-	}
-
-	// Put explicitly provided properties onto the event object
-	if ( props ) {
-		jQuery.extend( this, props );
-	}
-
-	// Create a timestamp if incoming event doesn't have one
-	this.timeStamp = src && src.timeStamp || jQuery.now();
-
-	// Mark it as fixed
-	this[ jQuery.expando ] = true;
-};
-
-// jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
-// http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
-jQuery.Event.prototype = {
-	constructor: jQuery.Event,
-	isDefaultPrevented: returnFalse,
-	isPropagationStopped: returnFalse,
-	isImmediatePropagationStopped: returnFalse,
-
-	preventDefault: function() {
-		var e = this.originalEvent;
-
-		this.isDefaultPrevented = returnTrue;
-
-		if ( e ) {
-			e.preventDefault();
-		}
-	},
-	stopPropagation: function() {
-		var e = this.originalEvent;
-
-		this.isPropagationStopped = returnTrue;
-
-		if ( e ) {
-			e.stopPropagation();
-		}
-	},
-	stopImmediatePropagation: function() {
-		var e = this.originalEvent;
-
-		this.isImmediatePropagationStopped = returnTrue;
-
-		if ( e ) {
-			e.stopImmediatePropagation();
-		}
-
-		this.stopPropagation();
-	}
-};
-
-// Create mouseenter/leave events using mouseover/out and event-time checks
-// so that event delegation works in jQuery.
-// Do the same for pointerenter/pointerleave and pointerover/pointerout
-//
-// Support: Safari 7 only
-// Safari sends mouseenter too often; see:
-// https://code.google.com/p/chromium/issues/detail?id=470258
-// for the description of the bug (it existed in older Chrome versions as well).
-jQuery.each( {
-	mouseenter: "mouseover",
-	mouseleave: "mouseout",
-	pointerenter: "pointerover",
-	pointerleave: "pointerout"
-}, function( orig, fix ) {
-	jQuery.event.special[ orig ] = {
-		delegateType: fix,
-		bindType: fix,
-
-		handle: function( event ) {
-			var ret,
-				target = this,
-				related = event.relatedTarget,
-				handleObj = event.handleObj;
-
-			// For mouseenter/leave call the handler if related is outside the target.
-			// NB: No relatedTarget if the mouse left/entered the browser window
-			if ( !related || ( related !== target && !jQuery.contains( target, related ) ) ) {
-				event.type = handleObj.origType;
-				ret = handleObj.handler.apply( this, arguments );
-				event.type = fix;
-			}
-			return ret;
-		}
-	};
-} );
-
-jQuery.fn.extend( {
-	on: function( types, selector, data, fn ) {
-		return on( this, types, selector, data, fn );
-	},
-	one: function( types, selector, data, fn ) {
-		return on( this, types, selector, data, fn, 1 );
-	},
-	off: function( types, selector, fn ) {
-		var handleObj, type;
-		if ( types && types.preventDefault && types.handleObj ) {
-
-			// ( event )  dispatched jQuery.Event
-			handleObj = types.handleObj;
-			jQuery( types.delegateTarget ).off(
-				handleObj.namespace ?
-					handleObj.origType + "." + handleObj.namespace :
-					handleObj.origType,
-				handleObj.selector,
-				handleObj.handler
-			);
-			return this;
-		}
-		if ( typeof types === "object" ) {
-
-			// ( types-object [, selector] )
-			for ( type in types ) {
-				this.off( type, selector, types[ type ] );
-			}
-			return this;
-		}
-		if ( selector === false || typeof selector === "function" ) {
-
-			// ( types [, fn] )
-			fn = selector;
-			selector = undefined;
-		}
-		if ( fn === false ) {
-			fn = returnFalse;
-		}
-		return this.each( function() {
-			jQuery.event.remove( this, types, fn, selector );
-		} );
-	}
-} );
-
-
-var
-	rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:-]+)[^>]*)\/>/gi,
-
-	// Support: IE 10-11, Edge 10240+
-	// In IE/Edge using regex groups here causes severe slowdowns.
-	// See https://connect.microsoft.com/IE/feedback/details/1736512/
-	rnoInnerhtml = /<script|<style|<link/i,
-
-	// checked="checked" or checked
-	rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i,
-	rscriptTypeMasked = /^true\/(.*)/,
-	rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
-
-// Manipulating tables requires a tbody
-function manipulationTarget( elem, content ) {
-	return jQuery.nodeName( elem, "table" ) &&
-		jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ?
-
-		elem.getElementsByTagName( "tbody" )[ 0 ] ||
-			elem.appendChild( elem.ownerDocument.createElement( "tbody" ) ) :
-		elem;
-}
-
-// Replace/restore the type attribute of script elements for safe DOM manipulation
-function disableScript( elem ) {
-	elem.type = ( elem.getAttribute( "type" ) !== null ) + "/" + elem.type;
-	return elem;
-}
-function restoreScript( elem ) {
-	var match = rscriptTypeMasked.exec( elem.type );
-
-	if ( match ) {
-		elem.type = match[ 1 ];
-	} else {
-		elem.removeAttribute( "type" );
-	}
-
-	return elem;
-}
-
-function cloneCopyEvent( src, dest ) {
-	var i, l, type, pdataOld, pdataCur, udataOld, udataCur, events;
-
-	if ( dest.nodeType !== 1 ) {
-		return;
-	}
-
-	// 1. Copy private data: events, handlers, etc.
-	if ( dataPriv.hasData( src ) ) {
-		pdataOld = dataPriv.access( src );
-		pdataCur = dataPriv.set( dest, pdataOld );
-		events = pdataOld.events;
-
-		if ( events ) {
-			delete pdataCur.handle;
-			pdataCur.events = {};
-
-			for ( type in events ) {
-				for ( i = 0, l = events[ type ].length; i < l; i++ ) {
-					jQuery.event.add( dest, type, events[ type ][ i ] );
-				}
-			}
-		}
-	}
-
-	// 2. Copy user data
-	if ( dataUser.hasData( src ) ) {
-		udataOld = dataUser.access( src );
-		udataCur = jQuery.extend( {}, udataOld );
-
-		dataUser.set( dest, udataCur );
-	}
-}
-
-// Fix IE bugs, see support tests
-function fixInput( src, dest ) {
-	var nodeName = dest.nodeName.toLowerCase();
-
-	// Fails to persist the checked state of a cloned checkbox or radio button.
-	if ( nodeName === "input" && rcheckableType.test( src.type ) ) {
-		dest.checked = src.checked;
-
-	// Fails to return the selected option to the default selected state when cloning options
-	} else if ( nodeName === "input" || nodeName === "textarea" ) {
-		dest.defaultValue = src.defaultValue;
-	}
-}
-
-function domManip( collection, args, callback, ignored ) {
-
-	// Flatten any nested arrays
-	args = concat.apply( [], args );
-
-	var fragment, first, scripts, hasScripts, node, doc,
-		i = 0,
-		l = collection.length,
-		iNoClone = l - 1,
-		value = args[ 0 ],
-		isFunction = jQuery.isFunction( value );
-
-	// We can't cloneNode fragments that contain checked, in WebKit
-	if ( isFunction ||
-			( l > 1 && typeof value === "string" &&
-				!support.checkClone && rchecked.test( value ) ) ) {
-		return collection.each( function( index ) {
-			var self = collection.eq( index );
-			if ( isFunction ) {
-				args[ 0 ] = value.call( this, index, self.html() );
-			}
-			domManip( self, args, callback, ignored );
-		} );
-	}
-
-	if ( l ) {
-		fragment = buildFragment( args, collection[ 0 ].ownerDocument, false, collection, ignored );
-		first = fragment.firstChild;
-
-		if ( fragment.childNodes.length === 1 ) {
-			fragment = first;
-		}
-
-		// Require either new content or an interest in ignored elements to invoke the callback
-		if ( first || ignored ) {
-			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
-			hasScripts = scripts.length;
-
-			// Use the original fragment for the last item
-			// instead of the first because it can end up
-			// being emptied incorrectly in certain situations (#8070).
-			for ( ; i < l; i++ ) {
-				node = fragment;
-
-				if ( i !== iNoClone ) {
-					node = jQuery.clone( node, true, true );
-
-					// Keep references to cloned scripts for later restoration
-					if ( hasScripts ) {
-
-						// Support: Android<4.1, PhantomJS<2
-						// push.apply(_, arraylike) throws on ancient WebKit
-						jQuery.merge( scripts, getAll( node, "script" ) );
-					}
-				}
-
-				callback.call( collection[ i ], node, i );
-			}
-
-			if ( hasScripts ) {
-				doc = scripts[ scripts.length - 1 ].ownerDocument;
-
-				// Reenable scripts
-				jQuery.map( scripts, restoreScript );
-
-				// Evaluate executable scripts on first document insertion
-				for ( i = 0; i < hasScripts; i++ ) {
-					node = scripts[ i ];
-					if ( rscriptType.test( node.type || "" ) &&
-						!dataPriv.access( node, "globalEval" ) &&
-						jQuery.contains( doc, node ) ) {
-
-						if ( node.src ) {
-
-							// Optional AJAX dependency, but won't run scripts if not present
-							if ( jQuery._evalUrl ) {
-								jQuery._evalUrl( node.src );
-							}
-						} else {
-							jQuery.globalEval( node.textContent.replace( rcleanScript, "" ) );
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return collection;
-}
-
-function remove( elem, selector, keepData ) {
-	var node,
-		nodes = selector ? jQuery.filter( selector, elem ) : elem,
-		i = 0;
-
-	for ( ; ( node = nodes[ i ] ) != null; i++ ) {
-		if ( !keepData && node.nodeType === 1 ) {
-			jQuery.cleanData( getAll( node ) );
-		}
-
-		if ( node.parentNode ) {
-			if ( keepData && jQuery.contains( node.ownerDocument, node ) ) {
-				setGlobalEval( getAll( node, "script" ) );
-			}
-			node.parentNode.removeChild( node );
-		}
-	}
-
-	return elem;
-}
-
-jQuery.extend( {
-	htmlPrefilter: function( html ) {
-		return html.replace( rxhtmlTag, "<$1></$2>" );
-	},
-
-	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
-		var i, l, srcElements, destElements,
-			clone = elem.cloneNode( true ),
-			inPage = jQuery.contains( elem.ownerDocument, elem );
-
-		// Fix IE cloning issues
-		if ( !support.noCloneChecked && ( elem.nodeType === 1 || elem.nodeType === 11 ) &&
-				!jQuery.isXMLDoc( elem ) ) {
-
-			// We eschew Sizzle here for performance reasons: http://jsperf.com/getall-vs-sizzle/2
-			destElements = getAll( clone );
-			srcElements = getAll( elem );
-
-			for ( i = 0, l = srcElements.length; i < l; i++ ) {
-				fixInput( srcElements[ i ], destElements[ i ] );
-			}
-		}
-
-		// Copy the events from the original to the clone
-		if ( dataAndEvents ) {
-			if ( deepDataAndEvents ) {
-				srcElements = srcElements || getAll( elem );
-				destElements = destElements || getAll( clone );
-
-				for ( i = 0, l = srcElements.length; i < l; i++ ) {
-					cloneCopyEvent( srcElements[ i ], destElements[ i ] );
-				}
-			} else {
-				cloneCopyEvent( elem, clone );
-			}
-		}
-
-		// Preserve script evaluation history
-		destElements = getAll( clone, "script" );
-		if ( destElements.length > 0 ) {
-			setGlobalEval( destElements, !inPage && getAll( elem, "script" ) );
-		}
-
-		// Return the cloned set
-		return clone;
-	},
-
-	cleanData: function( elems ) {
-		var data, elem, type,
-			special = jQuery.event.special,
-			i = 0;
-
-		for ( ; ( elem = elems[ i ] ) !== undefined; i++ ) {
-			if ( acceptData( elem ) ) {
-				if ( ( data = elem[ dataPriv.expando ] ) ) {
-					if ( data.events ) {
-						for ( type in data.events ) {
-							if ( special[ type ] ) {
-								jQuery.event.remove( elem, type );
-
-							// This is a shortcut to avoid jQuery.event.remove's overhead
-							} else {
-								jQuery.removeEvent( elem, type, data.handle );
-							}
-						}
-					}
-
-					// Support: Chrome <= 35-45+
-					// Assign undefined instead of using delete, see Data#remove
-					elem[ dataPriv.expando ] = undefined;
-				}
-				if ( elem[ dataUser.expando ] ) {
-
-					// Support: Chrome <= 35-45+
-					// Assign undefined instead of using delete, see Data#remove
-					elem[ dataUser.expando ] = undefined;
-				}
-			}
-		}
-	}
-} );
-
-jQuery.fn.extend( {
-
-	// Keep domManip exposed until 3.0 (gh-2225)
-	domManip: domManip,
-
-	detach: function( selector ) {
-		return remove( this, selector, true );
-	},
-
-	remove: function( selector ) {
-		return remove( this, selector );
-	},
-
-	text: function( value ) {
-		return access( this, function( value ) {
-			return value === undefined ?
-				jQuery.text( this ) :
-				this.empty().each( function() {
-					if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
-						this.textContent = value;
-					}
-				} );
-		}, null, value, arguments.length );
-	},
-
-	append: function() {
-		return domManip( this, arguments, function( elem ) {
-			if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
-				var target = manipulationTarget( this, elem );
-				target.appendChild( elem );
-			}
-		} );
-	},
-
-	prepend: function() {
-		return domManip( this, arguments, function( elem ) {
-			if ( this.nodeType === 1 || this.nodeType === 11 || this.nodeType === 9 ) {
-				var target = manipulationTarget( this, elem );
-				target.insertBefore( elem, target.firstChild );
-			}
-		} );
-	},
-
-	before: function() {
-		return domManip( this, arguments, function( elem ) {
-			if ( this.parentNode ) {
-				this.parentNode.insertBefore( elem, this );
-			}
-		} );
-	},
-
-	after: function() {
-		return domManip( this, arguments, function( elem ) {
-			if ( this.parentNode ) {
-				this.parentNode.insertBefore( elem, this.nextSibling );
-			}
-		} );
-	},
-
-	empty: function() {
-		var elem,
-			i = 0;
-
-		for ( ; ( elem = this[ i ] ) != null; i++ ) {
-			if ( elem.nodeType === 1 ) {
-
-				// Prevent memory leaks
-				jQuery.cleanData( getAll( elem, false ) );
-
-				// Remove any remaining nodes
-				elem.textContent = "";
-			}
-		}
-
-		return this;
-	},
-
-	clone: function( dataAndEvents, deepDataAndEvents ) {
-		dataAndEvents = dataAndEvents == null ? false : dataAndEvents;
-		deepDataAndEvents = deepDataAndEvents == null ? dataAndEvents : deepDataAndEvents;
-
-		return this.map( function() {
-			return jQuery.clone( this, dataAndEvents, deepDataAndEvents );
-		} );
-	},
-
-	html: function( value ) {
-		return access( this, function( value ) {
-			var elem = this[ 0 ] || {},
-				i = 0,
-				l = this.length;
-
-			if ( value === undefined && elem.nodeType === 1 ) {
-				return elem.innerHTML;
-			}
-
-			// See if we can take a shortcut and just use innerHTML
-			if ( typeof value === "string" && !rnoInnerhtml.test( value ) &&
-				!wrapMap[ ( rtagName.exec( value ) || [ "", "" ] )[ 1 ].toLowerCase() ] ) {
-
-				value = jQuery.htmlPrefilter( value );
-
-				try {
-					for ( ; i < l; i++ ) {
-						elem = this[ i ] || {};
-
-						// Remove element nodes and prevent memory leaks
-						if ( elem.nodeType === 1 ) {
-							jQuery.cleanData( getAll( elem, false ) );
-							elem.innerHTML = value;
-						}
-					}
-
-					elem = 0;
-
-				// If using innerHTML throws an exception, use the fallback method
-				} catch ( e ) {}
-			}
-
-			if ( elem ) {
-				this.empty().append( value );
-			}
-		}, null, value, arguments.length );
-	},
-
-	replaceWith: function() {
-		var ignored = [];
-
-		// Make the changes, replacing each non-ignored context element with the new content
-		return domManip( this, arguments, function( elem ) {
-			var parent = this.parentNode;
-
-			if ( jQuery.inArray( this, ignored ) < 0 ) {
-				jQuery.cleanData( getAll( this ) );
-				if ( parent ) {
-					parent.replaceChild( elem, this );
-				}
-			}
-
-		// Force callback invocation
-		}, ignored );
-	}
-} );
-
-jQuery.each( {
-	appendTo: "append",
-	prependTo: "prepend",
-	insertBefore: "before",
-	insertAfter: "after",
-	replaceAll: "replaceWith"
-}, function( name, original ) {
-	jQuery.fn[ name ] = function( selector ) {
-		var elems,
-			ret = [],
-			insert = jQuery( selector ),
-			last = insert.length - 1,
-			i = 0;
-
-		for ( ; i <= last; i++ ) {
-			elems = i === last ? this : this.clone( true );
-			jQuery( insert[ i ] )[ original ]( elems );
-
-			// Support: QtWebKit
-			// .get() because push.apply(_, arraylike) throws
-			push.apply( ret, elems.get() );
-		}
-
-		return this.pushStack( ret );
-	};
-} );
-
-
-var iframe,
-	elemdisplay = {
-
-		// Support: Firefox
-		// We have to pre-define these values for FF (#10227)
-		HTML: "block",
-		BODY: "block"
+	Url.prototype.resolveObject = function (relative) {
+	  if (isString(relative)) {
+	    var rel = new Url();
+	    rel.parse(relative, false, true);
+	    relative = rel;
+	  }
+
+	  var result = new Url();
+	  Object.keys(this).forEach(function (k) {
+	    result[k] = this[k];
+	  }, this);
+
+	  // hash is always overridden, no matter what.
+	  // even href="" will remove it.
+	  result.hash = relative.hash;
+
+	  // if the relative url is empty, then there's nothing left to do here.
+	  if (relative.href === '') {
+	    result.href = result.format();
+	    return result;
+	  }
+
+	  // hrefs like //foo/bar always cut to the protocol.
+	  if (relative.slashes && !relative.protocol) {
+	    // take everything except the protocol from relative
+	    Object.keys(relative).forEach(function (k) {
+	      if (k !== 'protocol') result[k] = relative[k];
+	    });
+
+	    //urlParse appends trailing / to urls like http://www.example.com
+	    if (slashedProtocol[result.protocol] && result.hostname && !result.pathname) {
+	      result.path = result.pathname = '/';
+	    }
+
+	    result.href = result.format();
+	    return result;
+	  }
+
+	  if (relative.protocol && relative.protocol !== result.protocol) {
+	    // if it's a known url protocol, then changing
+	    // the protocol does weird things
+	    // first, if it's not file:, then we MUST have a host,
+	    // and if there was a path
+	    // to begin with, then we MUST have a path.
+	    // if it is file:, then the host is dropped,
+	    // because that's known to be hostless.
+	    // anything else is assumed to be absolute.
+	    if (!slashedProtocol[relative.protocol]) {
+	      Object.keys(relative).forEach(function (k) {
+	        result[k] = relative[k];
+	      });
+	      result.href = result.format();
+	      return result;
+	    }
+
+	    result.protocol = relative.protocol;
+	    if (!relative.host && !hostlessProtocol[relative.protocol]) {
+	      var relPath = (relative.pathname || '').split('/');
+	      while (relPath.length && !(relative.host = relPath.shift())) {}
+	      if (!relative.host) relative.host = '';
+	      if (!relative.hostname) relative.hostname = '';
+	      if (relPath[0] !== '') relPath.unshift('');
+	      if (relPath.length < 2) relPath.unshift('');
+	      result.pathname = relPath.join('/');
+	    } else {
+	      result.pathname = relative.pathname;
+	    }
+	    result.search = relative.search;
+	    result.query = relative.query;
+	    result.host = relative.host || '';
+	    result.auth = relative.auth;
+	    result.hostname = relative.hostname || relative.host;
+	    result.port = relative.port;
+	    // to support http.request
+	    if (result.pathname || result.search) {
+	      var p = result.pathname || '';
+	      var s = result.search || '';
+	      result.path = p + s;
+	    }
+	    result.slashes = result.slashes || relative.slashes;
+	    result.href = result.format();
+	    return result;
+	  }
+
+	  var isSourceAbs = result.pathname && result.pathname.charAt(0) === '/',
+	      isRelAbs = relative.host || relative.pathname && relative.pathname.charAt(0) === '/',
+	      mustEndAbs = isRelAbs || isSourceAbs || result.host && relative.pathname,
+	      removeAllDots = mustEndAbs,
+	      srcPath = result.pathname && result.pathname.split('/') || [],
+	      relPath = relative.pathname && relative.pathname.split('/') || [],
+	      psychotic = result.protocol && !slashedProtocol[result.protocol];
+
+	  // if the url is a non-slashed url, then relative
+	  // links like ../.. should be able
+	  // to crawl up to the hostname, as well.  This is strange.
+	  // result.protocol has already been set by now.
+	  // Later on, put the first path part into the host field.
+	  if (psychotic) {
+	    result.hostname = '';
+	    result.port = null;
+	    if (result.host) {
+	      if (srcPath[0] === '') srcPath[0] = result.host;else srcPath.unshift(result.host);
+	    }
+	    result.host = '';
+	    if (relative.protocol) {
+	      relative.hostname = null;
+	      relative.port = null;
+	      if (relative.host) {
+	        if (relPath[0] === '') relPath[0] = relative.host;else relPath.unshift(relative.host);
+	      }
+	      relative.host = null;
+	    }
+	    mustEndAbs = mustEndAbs && (relPath[0] === '' || srcPath[0] === '');
+	  }
+
+	  if (isRelAbs) {
+	    // it's absolute.
+	    result.host = relative.host || relative.host === '' ? relative.host : result.host;
+	    result.hostname = relative.hostname || relative.hostname === '' ? relative.hostname : result.hostname;
+	    result.search = relative.search;
+	    result.query = relative.query;
+	    srcPath = relPath;
+	    // fall through to the dot-handling below.
+	  } else if (relPath.length) {
+	      // it's relative
+	      // throw away the existing file, and take the new path instead.
+	      if (!srcPath) srcPath = [];
+	      srcPath.pop();
+	      srcPath = srcPath.concat(relPath);
+	      result.search = relative.search;
+	      result.query = relative.query;
+	    } else if (!isNullOrUndefined(relative.search)) {
+	      // just pull out the search.
+	      // like href='?foo'.
+	      // Put this after the other two cases because it simplifies the booleans
+	      if (psychotic) {
+	        result.hostname = result.host = srcPath.shift();
+	        //occationaly the auth can get stuck only in host
+	        //this especialy happens in cases like
+	        //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+	        var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
+	        if (authInHost) {
+	          result.auth = authInHost.shift();
+	          result.host = result.hostname = authInHost.shift();
+	        }
+	      }
+	      result.search = relative.search;
+	      result.query = relative.query;
+	      //to support http.request
+	      if (!isNull(result.pathname) || !isNull(result.search)) {
+	        result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
+	      }
+	      result.href = result.format();
+	      return result;
+	    }
+
+	  if (!srcPath.length) {
+	    // no path at all.  easy.
+	    // we've already handled the other stuff above.
+	    result.pathname = null;
+	    //to support http.request
+	    if (result.search) {
+	      result.path = '/' + result.search;
+	    } else {
+	      result.path = null;
+	    }
+	    result.href = result.format();
+	    return result;
+	  }
+
+	  // if a url ENDs in . or .., then it must get a trailing slash.
+	  // however, if it ends in anything else non-slashy,
+	  // then it must NOT get a trailing slash.
+	  var last = srcPath.slice(-1)[0];
+	  var hasTrailingSlash = (result.host || relative.host) && (last === '.' || last === '..') || last === '';
+
+	  // strip single dots, resolve double dots to parent dir
+	  // if the path tries to go above the root, `up` ends up > 0
+	  var up = 0;
+	  for (var i = srcPath.length; i >= 0; i--) {
+	    last = srcPath[i];
+	    if (last == '.') {
+	      srcPath.splice(i, 1);
+	    } else if (last === '..') {
+	      srcPath.splice(i, 1);
+	      up++;
+	    } else if (up) {
+	      srcPath.splice(i, 1);
+	      up--;
+	    }
+	  }
+
+	  // if the path is allowed to go above the root, restore leading ..s
+	  if (!mustEndAbs && !removeAllDots) {
+	    for (; up--; up) {
+	      srcPath.unshift('..');
+	    }
+	  }
+
+	  if (mustEndAbs && srcPath[0] !== '' && (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
+	    srcPath.unshift('');
+	  }
+
+	  if (hasTrailingSlash && srcPath.join('/').substr(-1) !== '/') {
+	    srcPath.push('');
+	  }
+
+	  var isAbsolute = srcPath[0] === '' || srcPath[0] && srcPath[0].charAt(0) === '/';
+
+	  // put the host back
+	  if (psychotic) {
+	    result.hostname = result.host = isAbsolute ? '' : srcPath.length ? srcPath.shift() : '';
+	    //occationaly the auth can get stuck only in host
+	    //this especialy happens in cases like
+	    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+	    var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
+	    if (authInHost) {
+	      result.auth = authInHost.shift();
+	      result.host = result.hostname = authInHost.shift();
+	    }
+	  }
+
+	  mustEndAbs = mustEndAbs || result.host && srcPath.length;
+
+	  if (mustEndAbs && !isAbsolute) {
+	    srcPath.unshift('');
+	  }
+
+	  if (!srcPath.length) {
+	    result.pathname = null;
+	    result.path = null;
+	  } else {
+	    result.pathname = srcPath.join('/');
+	  }
+
+	  //to support request.http
+	  if (!isNull(result.pathname) || !isNull(result.search)) {
+	    result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
+	  }
+	  result.auth = relative.auth || result.auth;
+	  result.slashes = result.slashes || relative.slashes;
+	  result.href = result.format();
+	  return result;
 	};
 
-/**
- * Retrieve the actual display of a element
- * @param {String} name nodeName of the element
- * @param {Object} doc Document object
- */
-
-// Called only from within defaultDisplay
-function actualDisplay( name, doc ) {
-	var elem = jQuery( doc.createElement( name ) ).appendTo( doc.body ),
-
-		display = jQuery.css( elem[ 0 ], "display" );
-
-	// We don't have any data stored on the element,
-	// so use "detach" method as fast way to get rid of the element
-	elem.detach();
-
-	return display;
-}
-
-/**
- * Try to determine the default display value of an element
- * @param {String} nodeName
- */
-function defaultDisplay( nodeName ) {
-	var doc = document,
-		display = elemdisplay[ nodeName ];
-
-	if ( !display ) {
-		display = actualDisplay( nodeName, doc );
-
-		// If the simple way fails, read from inside an iframe
-		if ( display === "none" || !display ) {
-
-			// Use the already-created iframe if possible
-			iframe = ( iframe || jQuery( "<iframe frameborder='0' width='0' height='0'/>" ) )
-				.appendTo( doc.documentElement );
-
-			// Always write a new HTML skeleton so Webkit and Firefox don't choke on reuse
-			doc = iframe[ 0 ].contentDocument;
-
-			// Support: IE
-			doc.write();
-			doc.close();
-
-			display = actualDisplay( nodeName, doc );
-			iframe.detach();
-		}
-
-		// Store the correct default display
-		elemdisplay[ nodeName ] = display;
-	}
-
-	return display;
-}
-var rmargin = ( /^margin/ );
-
-var rnumnonpx = new RegExp( "^(" + pnum + ")(?!px)[a-z%]+$", "i" );
-
-var getStyles = function( elem ) {
-
-		// Support: IE<=11+, Firefox<=30+ (#15098, #14150)
-		// IE throws on elements created in popups
-		// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
-		var view = elem.ownerDocument.defaultView;
-
-		if ( !view || !view.opener ) {
-			view = window;
-		}
-
-		return view.getComputedStyle( elem );
+	Url.prototype.parseHost = function () {
+	  var host = this.host;
+	  var port = portPattern.exec(host);
+	  if (port) {
+	    port = port[0];
+	    if (port !== ':') {
+	      this.port = port.substr(1);
+	    }
+	    host = host.substr(0, host.length - port.length);
+	  }
+	  if (host) this.hostname = host;
 	};
 
-var swap = function( elem, options, callback, args ) {
-	var ret, name,
-		old = {};
-
-	// Remember the old values, and insert the new ones
-	for ( name in options ) {
-		old[ name ] = elem.style[ name ];
-		elem.style[ name ] = options[ name ];
+	function isString(arg) {
+	  return typeof arg === "string";
 	}
 
-	ret = callback.apply( elem, args || [] );
-
-	// Revert the old values
-	for ( name in options ) {
-		elem.style[ name ] = old[ name ];
+	function isObject(arg) {
+	  return (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object' && arg !== null;
 	}
 
-	return ret;
-};
-
-
-var documentElement = document.documentElement;
-
-
-
-( function() {
-	var pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal,
-		container = document.createElement( "div" ),
-		div = document.createElement( "div" );
-
-	// Finish early in limited (non-browser) environments
-	if ( !div.style ) {
-		return;
+	function isNull(arg) {
+	  return arg === null;
+	}
+	function isNullOrUndefined(arg) {
+	  return arg == null;
 	}
 
-	// Support: IE9-11+
-	// Style of cloned element affects source element cloned (#8908)
-	div.style.backgroundClip = "content-box";
-	div.cloneNode( true ).style.backgroundClip = "";
-	support.clearCloneStyle = div.style.backgroundClip === "content-box";
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
 
-	container.style.cssText = "border:0;width:8px;height:0;top:0;left:-9999px;" +
-		"padding:0;margin-top:1px;position:absolute";
-	container.appendChild( div );
+	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
 
-	// Executing both pixelPosition & boxSizingReliable tests require only one layout
-	// so they're executed at the same time to save the second computation.
-	function computeStyleTests() {
-		div.style.cssText =
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-			// Support: Firefox<29, Android 2.3
-			// Vendor-prefix box-sizing
-			"-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;" +
-			"position:relative;display:block;" +
-			"margin:auto;border:1px;padding:1px;" +
-			"top:1%;width:50%";
-		div.innerHTML = "";
-		documentElement.appendChild( container );
+	/*! https://mths.be/punycode v1.3.2 by @mathias */
+	;(function (root) {
 
-		var divStyle = window.getComputedStyle( div );
-		pixelPositionVal = divStyle.top !== "1%";
-		reliableMarginLeftVal = divStyle.marginLeft === "2px";
-		boxSizingReliableVal = divStyle.width === "4px";
-
-		// Support: Android 4.0 - 4.3 only
-		// Some styles come back with percentage values, even though they shouldn't
-		div.style.marginRight = "50%";
-		pixelMarginRightVal = divStyle.marginRight === "4px";
-
-		documentElement.removeChild( container );
-	}
-
-	jQuery.extend( support, {
-		pixelPosition: function() {
-
-			// This test is executed only once but we still do memoizing
-			// since we can use the boxSizingReliable pre-computing.
-			// No need to check if the test was already performed, though.
-			computeStyleTests();
-			return pixelPositionVal;
-		},
-		boxSizingReliable: function() {
-			if ( boxSizingReliableVal == null ) {
-				computeStyleTests();
-			}
-			return boxSizingReliableVal;
-		},
-		pixelMarginRight: function() {
-
-			// Support: Android 4.0-4.3
-			// We're checking for boxSizingReliableVal here instead of pixelMarginRightVal
-			// since that compresses better and they're computed together anyway.
-			if ( boxSizingReliableVal == null ) {
-				computeStyleTests();
-			}
-			return pixelMarginRightVal;
-		},
-		reliableMarginLeft: function() {
-
-			// Support: IE <=8 only, Android 4.0 - 4.3 only, Firefox <=3 - 37
-			if ( boxSizingReliableVal == null ) {
-				computeStyleTests();
-			}
-			return reliableMarginLeftVal;
-		},
-		reliableMarginRight: function() {
-
-			// Support: Android 2.3
-			// Check if div with explicit width and no margin-right incorrectly
-			// gets computed margin-right based on width of container. (#3333)
-			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
-			// This support function is only executed once so no memoizing is needed.
-			var ret,
-				marginDiv = div.appendChild( document.createElement( "div" ) );
-
-			// Reset CSS: box-sizing; display; margin; border; padding
-			marginDiv.style.cssText = div.style.cssText =
-
-				// Support: Android 2.3
-				// Vendor-prefix box-sizing
-				"-webkit-box-sizing:content-box;box-sizing:content-box;" +
-				"display:block;margin:0;border:0;padding:0";
-			marginDiv.style.marginRight = marginDiv.style.width = "0";
-			div.style.width = "1px";
-			documentElement.appendChild( container );
-
-			ret = !parseFloat( window.getComputedStyle( marginDiv ).marginRight );
-
-			documentElement.removeChild( container );
-			div.removeChild( marginDiv );
-
-			return ret;
-		}
-	} );
-} )();
-
-
-function curCSS( elem, name, computed ) {
-	var width, minWidth, maxWidth, ret,
-		style = elem.style;
-
-	computed = computed || getStyles( elem );
-	ret = computed ? computed.getPropertyValue( name ) || computed[ name ] : undefined;
-
-	// Support: Opera 12.1x only
-	// Fall back to style even without computed
-	// computed is undefined for elems on document fragments
-	if ( ( ret === "" || ret === undefined ) && !jQuery.contains( elem.ownerDocument, elem ) ) {
-		ret = jQuery.style( elem, name );
-	}
-
-	// Support: IE9
-	// getPropertyValue is only needed for .css('filter') (#12537)
-	if ( computed ) {
-
-		// A tribute to the "awesome hack by Dean Edwards"
-		// Android Browser returns percentage for some values,
-		// but width seems to be reliably pixels.
-		// This is against the CSSOM draft spec:
-		// http://dev.w3.org/csswg/cssom/#resolved-values
-		if ( !support.pixelMarginRight() && rnumnonpx.test( ret ) && rmargin.test( name ) ) {
-
-			// Remember the original values
-			width = style.width;
-			minWidth = style.minWidth;
-			maxWidth = style.maxWidth;
-
-			// Put in the new values to get a computed value out
-			style.minWidth = style.maxWidth = style.width = ret;
-			ret = computed.width;
-
-			// Revert the changed values
-			style.width = width;
-			style.minWidth = minWidth;
-			style.maxWidth = maxWidth;
-		}
-	}
-
-	return ret !== undefined ?
-
-		// Support: IE9-11+
-		// IE returns zIndex value as an integer.
-		ret + "" :
-		ret;
-}
-
-
-function addGetHookIf( conditionFn, hookFn ) {
-
-	// Define the hook, we'll check on the first run if it's really needed.
-	return {
-		get: function() {
-			if ( conditionFn() ) {
-
-				// Hook not needed (or it's not possible to use it due
-				// to missing dependency), remove it.
-				delete this.get;
-				return;
-			}
-
-			// Hook needed; redefine it so that the support test is not executed again.
-			return ( this.get = hookFn ).apply( this, arguments );
-		}
-	};
-}
-
-
-var
-
-	// Swappable if display is none or starts with table
-	// except "table", "table-cell", or "table-caption"
-	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
-	rdisplayswap = /^(none|table(?!-c[ea]).+)/,
-
-	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
-	cssNormalTransform = {
-		letterSpacing: "0",
-		fontWeight: "400"
-	},
-
-	cssPrefixes = [ "Webkit", "O", "Moz", "ms" ],
-	emptyStyle = document.createElement( "div" ).style;
-
-// Return a css property mapped to a potentially vendor prefixed property
-function vendorPropName( name ) {
-
-	// Shortcut for names that are not vendor prefixed
-	if ( name in emptyStyle ) {
-		return name;
-	}
-
-	// Check for vendor prefixed names
-	var capName = name[ 0 ].toUpperCase() + name.slice( 1 ),
-		i = cssPrefixes.length;
-
-	while ( i-- ) {
-		name = cssPrefixes[ i ] + capName;
-		if ( name in emptyStyle ) {
-			return name;
-		}
-	}
-}
-
-function setPositiveNumber( elem, value, subtract ) {
-
-	// Any relative (+/-) values have already been
-	// normalized at this point
-	var matches = rcssNum.exec( value );
-	return matches ?
-
-		// Guard against undefined "subtract", e.g., when used as in cssHooks
-		Math.max( 0, matches[ 2 ] - ( subtract || 0 ) ) + ( matches[ 3 ] || "px" ) :
-		value;
-}
-
-function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
-	var i = extra === ( isBorderBox ? "border" : "content" ) ?
-
-		// If we already have the right measurement, avoid augmentation
-		4 :
-
-		// Otherwise initialize for horizontal or vertical properties
-		name === "width" ? 1 : 0,
-
-		val = 0;
-
-	for ( ; i < 4; i += 2 ) {
-
-		// Both box models exclude margin, so add it if we want it
-		if ( extra === "margin" ) {
-			val += jQuery.css( elem, extra + cssExpand[ i ], true, styles );
+		/** Detect free variables */
+		var freeExports = ( false ? 'undefined' : _typeof(exports)) == 'object' && exports && !exports.nodeType && exports;
+		var freeModule = ( false ? 'undefined' : _typeof(module)) == 'object' && module && !module.nodeType && module;
+		var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global;
+		if (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal || freeGlobal.self === freeGlobal) {
+			root = freeGlobal;
 		}
 
-		if ( isBorderBox ) {
+		/**
+	  * The `punycode` object.
+	  * @name punycode
+	  * @type Object
+	  */
+		var punycode,
 
-			// border-box includes padding, so remove it if we want content
-			if ( extra === "content" ) {
-				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
-			}
 
-			// At this point, extra isn't border nor margin, so remove border
-			if ( extra !== "margin" ) {
-				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
-			}
-		} else {
+		/** Highest positive signed 32-bit float value */
+		maxInt = 2147483647,
+		    // aka. 0x7FFFFFFF or 2^31-1
 
-			// At this point, extra isn't content, so add padding
-			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
+		/** Bootstring parameters */
+		base = 36,
+		    tMin = 1,
+		    tMax = 26,
+		    skew = 38,
+		    damp = 700,
+		    initialBias = 72,
+		    initialN = 128,
+		    // 0x80
+		delimiter = '-',
+		    // '\x2D'
 
-			// At this point, extra isn't content nor padding, so add border
-			if ( extra !== "padding" ) {
-				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
-			}
-		}
-	}
+		/** Regular expressions */
+		regexPunycode = /^xn--/,
+		    regexNonASCII = /[^\x20-\x7E]/,
+		    // unprintable ASCII chars + non-ASCII chars
+		regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g,
+		    // RFC 3490 separators
 
-	return val;
-}
-
-function getWidthOrHeight( elem, name, extra ) {
-
-	// Start with offset property, which is equivalent to the border-box value
-	var valueIsBorderBox = true,
-		val = name === "width" ? elem.offsetWidth : elem.offsetHeight,
-		styles = getStyles( elem ),
-		isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
-
-	// Support: IE11 only
-	// In IE 11 fullscreen elements inside of an iframe have
-	// 100x too small dimensions (gh-1764).
-	if ( document.msFullscreenElement && window.top !== window ) {
-
-		// Support: IE11 only
-		// Running getBoundingClientRect on a disconnected node
-		// in IE throws an error.
-		if ( elem.getClientRects().length ) {
-			val = Math.round( elem.getBoundingClientRect()[ name ] * 100 );
-		}
-	}
-
-	// Some non-html elements return undefined for offsetWidth, so check for null/undefined
-	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
-	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
-	if ( val <= 0 || val == null ) {
-
-		// Fall back to computed then uncomputed css if necessary
-		val = curCSS( elem, name, styles );
-		if ( val < 0 || val == null ) {
-			val = elem.style[ name ];
-		}
-
-		// Computed unit is not pixels. Stop here and return.
-		if ( rnumnonpx.test( val ) ) {
-			return val;
-		}
-
-		// Check for style in case a browser which returns unreliable values
-		// for getComputedStyle silently falls back to the reliable elem.style
-		valueIsBorderBox = isBorderBox &&
-			( support.boxSizingReliable() || val === elem.style[ name ] );
-
-		// Normalize "", auto, and prepare for extra
-		val = parseFloat( val ) || 0;
-	}
-
-	// Use the active box-sizing model to add/subtract irrelevant styles
-	return ( val +
-		augmentWidthOrHeight(
-			elem,
-			name,
-			extra || ( isBorderBox ? "border" : "content" ),
-			valueIsBorderBox,
-			styles
-		)
-	) + "px";
-}
-
-function showHide( elements, show ) {
-	var display, elem, hidden,
-		values = [],
-		index = 0,
-		length = elements.length;
-
-	for ( ; index < length; index++ ) {
-		elem = elements[ index ];
-		if ( !elem.style ) {
-			continue;
-		}
-
-		values[ index ] = dataPriv.get( elem, "olddisplay" );
-		display = elem.style.display;
-		if ( show ) {
-
-			// Reset the inline display of this element to learn if it is
-			// being hidden by cascaded rules or not
-			if ( !values[ index ] && display === "none" ) {
-				elem.style.display = "";
-			}
-
-			// Set elements which have been overridden with display: none
-			// in a stylesheet to whatever the default browser style is
-			// for such an element
-			if ( elem.style.display === "" && isHidden( elem ) ) {
-				values[ index ] = dataPriv.access(
-					elem,
-					"olddisplay",
-					defaultDisplay( elem.nodeName )
-				);
-			}
-		} else {
-			hidden = isHidden( elem );
-
-			if ( display !== "none" || !hidden ) {
-				dataPriv.set(
-					elem,
-					"olddisplay",
-					hidden ? display : jQuery.css( elem, "display" )
-				);
-			}
-		}
-	}
-
-	// Set the display of most of the elements in a second loop
-	// to avoid the constant reflow
-	for ( index = 0; index < length; index++ ) {
-		elem = elements[ index ];
-		if ( !elem.style ) {
-			continue;
-		}
-		if ( !show || elem.style.display === "none" || elem.style.display === "" ) {
-			elem.style.display = show ? values[ index ] || "" : "none";
-		}
-	}
-
-	return elements;
-}
-
-jQuery.extend( {
-
-	// Add in style property hooks for overriding the default
-	// behavior of getting and setting a style property
-	cssHooks: {
-		opacity: {
-			get: function( elem, computed ) {
-				if ( computed ) {
-
-					// We should always get a number back from opacity
-					var ret = curCSS( elem, "opacity" );
-					return ret === "" ? "1" : ret;
-				}
-			}
-		}
-	},
-
-	// Don't automatically add "px" to these possibly-unitless properties
-	cssNumber: {
-		"animationIterationCount": true,
-		"columnCount": true,
-		"fillOpacity": true,
-		"flexGrow": true,
-		"flexShrink": true,
-		"fontWeight": true,
-		"lineHeight": true,
-		"opacity": true,
-		"order": true,
-		"orphans": true,
-		"widows": true,
-		"zIndex": true,
-		"zoom": true
-	},
-
-	// Add in properties whose names you wish to fix before
-	// setting or getting the value
-	cssProps: {
-		"float": "cssFloat"
-	},
-
-	// Get and set the style property on a DOM Node
-	style: function( elem, name, value, extra ) {
-
-		// Don't set styles on text and comment nodes
-		if ( !elem || elem.nodeType === 3 || elem.nodeType === 8 || !elem.style ) {
-			return;
-		}
-
-		// Make sure that we're working with the right name
-		var ret, type, hooks,
-			origName = jQuery.camelCase( name ),
-			style = elem.style;
-
-		name = jQuery.cssProps[ origName ] ||
-			( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
-
-		// Gets hook for the prefixed version, then unprefixed version
-		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
-
-		// Check if we're setting a value
-		if ( value !== undefined ) {
-			type = typeof value;
-
-			// Convert "+=" or "-=" to relative numbers (#7345)
-			if ( type === "string" && ( ret = rcssNum.exec( value ) ) && ret[ 1 ] ) {
-				value = adjustCSS( elem, name, ret );
-
-				// Fixes bug #9237
-				type = "number";
-			}
-
-			// Make sure that null and NaN values aren't set (#7116)
-			if ( value == null || value !== value ) {
-				return;
-			}
-
-			// If a number was passed in, add the unit (except for certain CSS properties)
-			if ( type === "number" ) {
-				value += ret && ret[ 3 ] || ( jQuery.cssNumber[ origName ] ? "" : "px" );
-			}
-
-			// Support: IE9-11+
-			// background-* props affect original clone's values
-			if ( !support.clearCloneStyle && value === "" && name.indexOf( "background" ) === 0 ) {
-				style[ name ] = "inherit";
-			}
-
-			// If a hook was provided, use that value, otherwise just set the specified value
-			if ( !hooks || !( "set" in hooks ) ||
-				( value = hooks.set( elem, value, extra ) ) !== undefined ) {
-
-				style[ name ] = value;
-			}
-
-		} else {
-
-			// If a hook was provided get the non-computed value from there
-			if ( hooks && "get" in hooks &&
-				( ret = hooks.get( elem, false, extra ) ) !== undefined ) {
-
-				return ret;
-			}
-
-			// Otherwise just get the value from the style object
-			return style[ name ];
-		}
-	},
-
-	css: function( elem, name, extra, styles ) {
-		var val, num, hooks,
-			origName = jQuery.camelCase( name );
-
-		// Make sure that we're working with the right name
-		name = jQuery.cssProps[ origName ] ||
-			( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
-
-		// Try prefixed name followed by the unprefixed name
-		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
-
-		// If a hook was provided get the computed value from there
-		if ( hooks && "get" in hooks ) {
-			val = hooks.get( elem, true, extra );
-		}
-
-		// Otherwise, if a way to get the computed value exists, use that
-		if ( val === undefined ) {
-			val = curCSS( elem, name, styles );
-		}
-
-		// Convert "normal" to computed value
-		if ( val === "normal" && name in cssNormalTransform ) {
-			val = cssNormalTransform[ name ];
-		}
-
-		// Make numeric if forced or a qualifier was provided and val looks numeric
-		if ( extra === "" || extra ) {
-			num = parseFloat( val );
-			return extra === true || isFinite( num ) ? num || 0 : val;
-		}
-		return val;
-	}
-} );
-
-jQuery.each( [ "height", "width" ], function( i, name ) {
-	jQuery.cssHooks[ name ] = {
-		get: function( elem, computed, extra ) {
-			if ( computed ) {
-
-				// Certain elements can have dimension info if we invisibly show them
-				// but it must have a current display style that would benefit
-				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
-					elem.offsetWidth === 0 ?
-						swap( elem, cssShow, function() {
-							return getWidthOrHeight( elem, name, extra );
-						} ) :
-						getWidthOrHeight( elem, name, extra );
-			}
+		/** Error messages */
+		errors = {
+			'overflow': 'Overflow: input needs wider integers to process',
+			'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+			'invalid-input': 'Invalid input'
 		},
 
-		set: function( elem, value, extra ) {
-			var matches,
-				styles = extra && getStyles( elem ),
-				subtract = extra && augmentWidthOrHeight(
-					elem,
-					name,
-					extra,
-					jQuery.css( elem, "boxSizing", false, styles ) === "border-box",
-					styles
-				);
 
-			// Convert to pixels if value adjustment is needed
-			if ( subtract && ( matches = rcssNum.exec( value ) ) &&
-				( matches[ 3 ] || "px" ) !== "px" ) {
+		/** Convenience shortcuts */
+		baseMinusTMin = base - tMin,
+		    floor = Math.floor,
+		    stringFromCharCode = String.fromCharCode,
 
-				elem.style[ name ] = value;
-				value = jQuery.css( elem, name );
-			}
 
-			return setPositiveNumber( elem, value, subtract );
-		}
-	};
-} );
+		/** Temporary variable */
+		key;
 
-jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
-	function( elem, computed ) {
-		if ( computed ) {
-			return ( parseFloat( curCSS( elem, "marginLeft" ) ) ||
-				elem.getBoundingClientRect().left -
-					swap( elem, { marginLeft: 0 }, function() {
-						return elem.getBoundingClientRect().left;
-					} )
-				) + "px";
-		}
-	}
-);
+		/*--------------------------------------------------------------------------*/
 
-// Support: Android 2.3
-jQuery.cssHooks.marginRight = addGetHookIf( support.reliableMarginRight,
-	function( elem, computed ) {
-		if ( computed ) {
-			return swap( elem, { "display": "inline-block" },
-				curCSS, [ elem, "marginRight" ] );
-		}
-	}
-);
-
-// These hooks are used by animate to expand properties
-jQuery.each( {
-	margin: "",
-	padding: "",
-	border: "Width"
-}, function( prefix, suffix ) {
-	jQuery.cssHooks[ prefix + suffix ] = {
-		expand: function( value ) {
-			var i = 0,
-				expanded = {},
-
-				// Assumes a single number if not a string
-				parts = typeof value === "string" ? value.split( " " ) : [ value ];
-
-			for ( ; i < 4; i++ ) {
-				expanded[ prefix + cssExpand[ i ] + suffix ] =
-					parts[ i ] || parts[ i - 2 ] || parts[ 0 ];
-			}
-
-			return expanded;
-		}
-	};
-
-	if ( !rmargin.test( prefix ) ) {
-		jQuery.cssHooks[ prefix + suffix ].set = setPositiveNumber;
-	}
-} );
-
-jQuery.fn.extend( {
-	css: function( name, value ) {
-		return access( this, function( elem, name, value ) {
-			var styles, len,
-				map = {},
-				i = 0;
-
-			if ( jQuery.isArray( name ) ) {
-				styles = getStyles( elem );
-				len = name.length;
-
-				for ( ; i < len; i++ ) {
-					map[ name[ i ] ] = jQuery.css( elem, name[ i ], false, styles );
-				}
-
-				return map;
-			}
-
-			return value !== undefined ?
-				jQuery.style( elem, name, value ) :
-				jQuery.css( elem, name );
-		}, name, value, arguments.length > 1 );
-	},
-	show: function() {
-		return showHide( this, true );
-	},
-	hide: function() {
-		return showHide( this );
-	},
-	toggle: function( state ) {
-		if ( typeof state === "boolean" ) {
-			return state ? this.show() : this.hide();
+		/**
+	  * A generic error utility function.
+	  * @private
+	  * @param {String} type The error type.
+	  * @returns {Error} Throws a `RangeError` with the applicable error message.
+	  */
+		function error(type) {
+			throw RangeError(errors[type]);
 		}
 
-		return this.each( function() {
-			if ( isHidden( this ) ) {
-				jQuery( this ).show();
-			} else {
-				jQuery( this ).hide();
-			}
-		} );
-	}
-} );
-
-
-function Tween( elem, options, prop, end, easing ) {
-	return new Tween.prototype.init( elem, options, prop, end, easing );
-}
-jQuery.Tween = Tween;
-
-Tween.prototype = {
-	constructor: Tween,
-	init: function( elem, options, prop, end, easing, unit ) {
-		this.elem = elem;
-		this.prop = prop;
-		this.easing = easing || jQuery.easing._default;
-		this.options = options;
-		this.start = this.now = this.cur();
-		this.end = end;
-		this.unit = unit || ( jQuery.cssNumber[ prop ] ? "" : "px" );
-	},
-	cur: function() {
-		var hooks = Tween.propHooks[ this.prop ];
-
-		return hooks && hooks.get ?
-			hooks.get( this ) :
-			Tween.propHooks._default.get( this );
-	},
-	run: function( percent ) {
-		var eased,
-			hooks = Tween.propHooks[ this.prop ];
-
-		if ( this.options.duration ) {
-			this.pos = eased = jQuery.easing[ this.easing ](
-				percent, this.options.duration * percent, 0, 1, this.options.duration
-			);
-		} else {
-			this.pos = eased = percent;
-		}
-		this.now = ( this.end - this.start ) * eased + this.start;
-
-		if ( this.options.step ) {
-			this.options.step.call( this.elem, this.now, this );
-		}
-
-		if ( hooks && hooks.set ) {
-			hooks.set( this );
-		} else {
-			Tween.propHooks._default.set( this );
-		}
-		return this;
-	}
-};
-
-Tween.prototype.init.prototype = Tween.prototype;
-
-Tween.propHooks = {
-	_default: {
-		get: function( tween ) {
-			var result;
-
-			// Use a property on the element directly when it is not a DOM element,
-			// or when there is no matching style property that exists.
-			if ( tween.elem.nodeType !== 1 ||
-				tween.elem[ tween.prop ] != null && tween.elem.style[ tween.prop ] == null ) {
-				return tween.elem[ tween.prop ];
-			}
-
-			// Passing an empty string as a 3rd parameter to .css will automatically
-			// attempt a parseFloat and fallback to a string if the parse fails.
-			// Simple values such as "10px" are parsed to Float;
-			// complex values such as "rotate(1rad)" are returned as-is.
-			result = jQuery.css( tween.elem, tween.prop, "" );
-
-			// Empty strings, null, undefined and "auto" are converted to 0.
-			return !result || result === "auto" ? 0 : result;
-		},
-		set: function( tween ) {
-
-			// Use step hook for back compat.
-			// Use cssHook if its there.
-			// Use .style if available and use plain properties where available.
-			if ( jQuery.fx.step[ tween.prop ] ) {
-				jQuery.fx.step[ tween.prop ]( tween );
-			} else if ( tween.elem.nodeType === 1 &&
-				( tween.elem.style[ jQuery.cssProps[ tween.prop ] ] != null ||
-					jQuery.cssHooks[ tween.prop ] ) ) {
-				jQuery.style( tween.elem, tween.prop, tween.now + tween.unit );
-			} else {
-				tween.elem[ tween.prop ] = tween.now;
-			}
-		}
-	}
-};
-
-// Support: IE9
-// Panic based approach to setting things on disconnected nodes
-Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {
-	set: function( tween ) {
-		if ( tween.elem.nodeType && tween.elem.parentNode ) {
-			tween.elem[ tween.prop ] = tween.now;
-		}
-	}
-};
-
-jQuery.easing = {
-	linear: function( p ) {
-		return p;
-	},
-	swing: function( p ) {
-		return 0.5 - Math.cos( p * Math.PI ) / 2;
-	},
-	_default: "swing"
-};
-
-jQuery.fx = Tween.prototype.init;
-
-// Back Compat <1.8 extension point
-jQuery.fx.step = {};
-
-
-
-
-var
-	fxNow, timerId,
-	rfxtypes = /^(?:toggle|show|hide)$/,
-	rrun = /queueHooks$/;
-
-// Animations created synchronously will run synchronously
-function createFxNow() {
-	window.setTimeout( function() {
-		fxNow = undefined;
-	} );
-	return ( fxNow = jQuery.now() );
-}
-
-// Generate parameters to create a standard animation
-function genFx( type, includeWidth ) {
-	var which,
-		i = 0,
-		attrs = { height: type };
-
-	// If we include width, step value is 1 to do all cssExpand values,
-	// otherwise step value is 2 to skip over Left and Right
-	includeWidth = includeWidth ? 1 : 0;
-	for ( ; i < 4 ; i += 2 - includeWidth ) {
-		which = cssExpand[ i ];
-		attrs[ "margin" + which ] = attrs[ "padding" + which ] = type;
-	}
-
-	if ( includeWidth ) {
-		attrs.opacity = attrs.width = type;
-	}
-
-	return attrs;
-}
-
-function createTween( value, prop, animation ) {
-	var tween,
-		collection = ( Animation.tweeners[ prop ] || [] ).concat( Animation.tweeners[ "*" ] ),
-		index = 0,
-		length = collection.length;
-	for ( ; index < length; index++ ) {
-		if ( ( tween = collection[ index ].call( animation, prop, value ) ) ) {
-
-			// We're done with this property
-			return tween;
-		}
-	}
-}
-
-function defaultPrefilter( elem, props, opts ) {
-	/* jshint validthis: true */
-	var prop, value, toggle, tween, hooks, oldfire, display, checkDisplay,
-		anim = this,
-		orig = {},
-		style = elem.style,
-		hidden = elem.nodeType && isHidden( elem ),
-		dataShow = dataPriv.get( elem, "fxshow" );
-
-	// Handle queue: false promises
-	if ( !opts.queue ) {
-		hooks = jQuery._queueHooks( elem, "fx" );
-		if ( hooks.unqueued == null ) {
-			hooks.unqueued = 0;
-			oldfire = hooks.empty.fire;
-			hooks.empty.fire = function() {
-				if ( !hooks.unqueued ) {
-					oldfire();
-				}
-			};
-		}
-		hooks.unqueued++;
-
-		anim.always( function() {
-
-			// Ensure the complete handler is called before this completes
-			anim.always( function() {
-				hooks.unqueued--;
-				if ( !jQuery.queue( elem, "fx" ).length ) {
-					hooks.empty.fire();
-				}
-			} );
-		} );
-	}
-
-	// Height/width overflow pass
-	if ( elem.nodeType === 1 && ( "height" in props || "width" in props ) ) {
-
-		// Make sure that nothing sneaks out
-		// Record all 3 overflow attributes because IE9-10 do not
-		// change the overflow attribute when overflowX and
-		// overflowY are set to the same value
-		opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
-
-		// Set display property to inline-block for height/width
-		// animations on inline elements that are having width/height animated
-		display = jQuery.css( elem, "display" );
-
-		// Test default display if display is currently "none"
-		checkDisplay = display === "none" ?
-			dataPriv.get( elem, "olddisplay" ) || defaultDisplay( elem.nodeName ) : display;
-
-		if ( checkDisplay === "inline" && jQuery.css( elem, "float" ) === "none" ) {
-			style.display = "inline-block";
-		}
-	}
-
-	if ( opts.overflow ) {
-		style.overflow = "hidden";
-		anim.always( function() {
-			style.overflow = opts.overflow[ 0 ];
-			style.overflowX = opts.overflow[ 1 ];
-			style.overflowY = opts.overflow[ 2 ];
-		} );
-	}
-
-	// show/hide pass
-	for ( prop in props ) {
-		value = props[ prop ];
-		if ( rfxtypes.exec( value ) ) {
-			delete props[ prop ];
-			toggle = toggle || value === "toggle";
-			if ( value === ( hidden ? "hide" : "show" ) ) {
-
-				// If there is dataShow left over from a stopped hide or show
-				// and we are going to proceed with show, we should pretend to be hidden
-				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
-					hidden = true;
-				} else {
-					continue;
-				}
-			}
-			orig[ prop ] = dataShow && dataShow[ prop ] || jQuery.style( elem, prop );
-
-		// Any non-fx value stops us from restoring the original display value
-		} else {
-			display = undefined;
-		}
-	}
-
-	if ( !jQuery.isEmptyObject( orig ) ) {
-		if ( dataShow ) {
-			if ( "hidden" in dataShow ) {
-				hidden = dataShow.hidden;
-			}
-		} else {
-			dataShow = dataPriv.access( elem, "fxshow", {} );
-		}
-
-		// Store state if its toggle - enables .stop().toggle() to "reverse"
-		if ( toggle ) {
-			dataShow.hidden = !hidden;
-		}
-		if ( hidden ) {
-			jQuery( elem ).show();
-		} else {
-			anim.done( function() {
-				jQuery( elem ).hide();
-			} );
-		}
-		anim.done( function() {
-			var prop;
-
-			dataPriv.remove( elem, "fxshow" );
-			for ( prop in orig ) {
-				jQuery.style( elem, prop, orig[ prop ] );
-			}
-		} );
-		for ( prop in orig ) {
-			tween = createTween( hidden ? dataShow[ prop ] : 0, prop, anim );
-
-			if ( !( prop in dataShow ) ) {
-				dataShow[ prop ] = tween.start;
-				if ( hidden ) {
-					tween.end = tween.start;
-					tween.start = prop === "width" || prop === "height" ? 1 : 0;
-				}
-			}
-		}
-
-	// If this is a noop like .hide().hide(), restore an overwritten display value
-	} else if ( ( display === "none" ? defaultDisplay( elem.nodeName ) : display ) === "inline" ) {
-		style.display = display;
-	}
-}
-
-function propFilter( props, specialEasing ) {
-	var index, name, easing, value, hooks;
-
-	// camelCase, specialEasing and expand cssHook pass
-	for ( index in props ) {
-		name = jQuery.camelCase( index );
-		easing = specialEasing[ name ];
-		value = props[ index ];
-		if ( jQuery.isArray( value ) ) {
-			easing = value[ 1 ];
-			value = props[ index ] = value[ 0 ];
-		}
-
-		if ( index !== name ) {
-			props[ name ] = value;
-			delete props[ index ];
-		}
-
-		hooks = jQuery.cssHooks[ name ];
-		if ( hooks && "expand" in hooks ) {
-			value = hooks.expand( value );
-			delete props[ name ];
-
-			// Not quite $.extend, this won't overwrite existing keys.
-			// Reusing 'index' because we have the correct "name"
-			for ( index in value ) {
-				if ( !( index in props ) ) {
-					props[ index ] = value[ index ];
-					specialEasing[ index ] = easing;
-				}
-			}
-		} else {
-			specialEasing[ name ] = easing;
-		}
-	}
-}
-
-function Animation( elem, properties, options ) {
-	var result,
-		stopped,
-		index = 0,
-		length = Animation.prefilters.length,
-		deferred = jQuery.Deferred().always( function() {
-
-			// Don't match elem in the :animated selector
-			delete tick.elem;
-		} ),
-		tick = function() {
-			if ( stopped ) {
-				return false;
-			}
-			var currentTime = fxNow || createFxNow(),
-				remaining = Math.max( 0, animation.startTime + animation.duration - currentTime ),
-
-				// Support: Android 2.3
-				// Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (#12497)
-				temp = remaining / animation.duration || 0,
-				percent = 1 - temp,
-				index = 0,
-				length = animation.tweens.length;
-
-			for ( ; index < length ; index++ ) {
-				animation.tweens[ index ].run( percent );
-			}
-
-			deferred.notifyWith( elem, [ animation, percent, remaining ] );
-
-			if ( percent < 1 && length ) {
-				return remaining;
-			} else {
-				deferred.resolveWith( elem, [ animation ] );
-				return false;
-			}
-		},
-		animation = deferred.promise( {
-			elem: elem,
-			props: jQuery.extend( {}, properties ),
-			opts: jQuery.extend( true, {
-				specialEasing: {},
-				easing: jQuery.easing._default
-			}, options ),
-			originalProperties: properties,
-			originalOptions: options,
-			startTime: fxNow || createFxNow(),
-			duration: options.duration,
-			tweens: [],
-			createTween: function( prop, end ) {
-				var tween = jQuery.Tween( elem, animation.opts, prop, end,
-						animation.opts.specialEasing[ prop ] || animation.opts.easing );
-				animation.tweens.push( tween );
-				return tween;
-			},
-			stop: function( gotoEnd ) {
-				var index = 0,
-
-					// If we are going to the end, we want to run all the tweens
-					// otherwise we skip this part
-					length = gotoEnd ? animation.tweens.length : 0;
-				if ( stopped ) {
-					return this;
-				}
-				stopped = true;
-				for ( ; index < length ; index++ ) {
-					animation.tweens[ index ].run( 1 );
-				}
-
-				// Resolve when we played the last frame; otherwise, reject
-				if ( gotoEnd ) {
-					deferred.notifyWith( elem, [ animation, 1, 0 ] );
-					deferred.resolveWith( elem, [ animation, gotoEnd ] );
-				} else {
-					deferred.rejectWith( elem, [ animation, gotoEnd ] );
-				}
-				return this;
-			}
-		} ),
-		props = animation.props;
-
-	propFilter( props, animation.opts.specialEasing );
-
-	for ( ; index < length ; index++ ) {
-		result = Animation.prefilters[ index ].call( animation, elem, props, animation.opts );
-		if ( result ) {
-			if ( jQuery.isFunction( result.stop ) ) {
-				jQuery._queueHooks( animation.elem, animation.opts.queue ).stop =
-					jQuery.proxy( result.stop, result );
+		/**
+	  * A generic `Array#map` utility function.
+	  * @private
+	  * @param {Array} array The array to iterate over.
+	  * @param {Function} callback The function that gets called for every array
+	  * item.
+	  * @returns {Array} A new array of values returned by the callback function.
+	  */
+		function map(array, fn) {
+			var length = array.length;
+			var result = [];
+			while (length--) {
+				result[length] = fn(array[length]);
 			}
 			return result;
 		}
-	}
 
-	jQuery.map( props, createTween, animation );
-
-	if ( jQuery.isFunction( animation.opts.start ) ) {
-		animation.opts.start.call( elem, animation );
-	}
-
-	jQuery.fx.timer(
-		jQuery.extend( tick, {
-			elem: elem,
-			anim: animation,
-			queue: animation.opts.queue
-		} )
-	);
-
-	// attach callbacks from options
-	return animation.progress( animation.opts.progress )
-		.done( animation.opts.done, animation.opts.complete )
-		.fail( animation.opts.fail )
-		.always( animation.opts.always );
-}
-
-jQuery.Animation = jQuery.extend( Animation, {
-	tweeners: {
-		"*": [ function( prop, value ) {
-			var tween = this.createTween( prop, value );
-			adjustCSS( tween.elem, prop, rcssNum.exec( value ), tween );
-			return tween;
-		} ]
-	},
-
-	tweener: function( props, callback ) {
-		if ( jQuery.isFunction( props ) ) {
-			callback = props;
-			props = [ "*" ];
-		} else {
-			props = props.match( rnotwhite );
-		}
-
-		var prop,
-			index = 0,
-			length = props.length;
-
-		for ( ; index < length ; index++ ) {
-			prop = props[ index ];
-			Animation.tweeners[ prop ] = Animation.tweeners[ prop ] || [];
-			Animation.tweeners[ prop ].unshift( callback );
-		}
-	},
-
-	prefilters: [ defaultPrefilter ],
-
-	prefilter: function( callback, prepend ) {
-		if ( prepend ) {
-			Animation.prefilters.unshift( callback );
-		} else {
-			Animation.prefilters.push( callback );
-		}
-	}
-} );
-
-jQuery.speed = function( speed, easing, fn ) {
-	var opt = speed && typeof speed === "object" ? jQuery.extend( {}, speed ) : {
-		complete: fn || !fn && easing ||
-			jQuery.isFunction( speed ) && speed,
-		duration: speed,
-		easing: fn && easing || easing && !jQuery.isFunction( easing ) && easing
-	};
-
-	opt.duration = jQuery.fx.off ? 0 : typeof opt.duration === "number" ?
-		opt.duration : opt.duration in jQuery.fx.speeds ?
-			jQuery.fx.speeds[ opt.duration ] : jQuery.fx.speeds._default;
-
-	// Normalize opt.queue - true/undefined/null -> "fx"
-	if ( opt.queue == null || opt.queue === true ) {
-		opt.queue = "fx";
-	}
-
-	// Queueing
-	opt.old = opt.complete;
-
-	opt.complete = function() {
-		if ( jQuery.isFunction( opt.old ) ) {
-			opt.old.call( this );
-		}
-
-		if ( opt.queue ) {
-			jQuery.dequeue( this, opt.queue );
-		}
-	};
-
-	return opt;
-};
-
-jQuery.fn.extend( {
-	fadeTo: function( speed, to, easing, callback ) {
-
-		// Show any hidden elements after setting opacity to 0
-		return this.filter( isHidden ).css( "opacity", 0 ).show()
-
-			// Animate to the value specified
-			.end().animate( { opacity: to }, speed, easing, callback );
-	},
-	animate: function( prop, speed, easing, callback ) {
-		var empty = jQuery.isEmptyObject( prop ),
-			optall = jQuery.speed( speed, easing, callback ),
-			doAnimation = function() {
-
-				// Operate on a copy of prop so per-property easing won't be lost
-				var anim = Animation( this, jQuery.extend( {}, prop ), optall );
-
-				// Empty animations, or finishing resolves immediately
-				if ( empty || dataPriv.get( this, "finish" ) ) {
-					anim.stop( true );
-				}
-			};
-			doAnimation.finish = doAnimation;
-
-		return empty || optall.queue === false ?
-			this.each( doAnimation ) :
-			this.queue( optall.queue, doAnimation );
-	},
-	stop: function( type, clearQueue, gotoEnd ) {
-		var stopQueue = function( hooks ) {
-			var stop = hooks.stop;
-			delete hooks.stop;
-			stop( gotoEnd );
-		};
-
-		if ( typeof type !== "string" ) {
-			gotoEnd = clearQueue;
-			clearQueue = type;
-			type = undefined;
-		}
-		if ( clearQueue && type !== false ) {
-			this.queue( type || "fx", [] );
-		}
-
-		return this.each( function() {
-			var dequeue = true,
-				index = type != null && type + "queueHooks",
-				timers = jQuery.timers,
-				data = dataPriv.get( this );
-
-			if ( index ) {
-				if ( data[ index ] && data[ index ].stop ) {
-					stopQueue( data[ index ] );
-				}
-			} else {
-				for ( index in data ) {
-					if ( data[ index ] && data[ index ].stop && rrun.test( index ) ) {
-						stopQueue( data[ index ] );
-					}
-				}
+		/**
+	  * A simple `Array#map`-like wrapper to work with domain name strings or email
+	  * addresses.
+	  * @private
+	  * @param {String} domain The domain name or email address.
+	  * @param {Function} callback The function that gets called for every
+	  * character.
+	  * @returns {Array} A new string of characters returned by the callback
+	  * function.
+	  */
+		function mapDomain(string, fn) {
+			var parts = string.split('@');
+			var result = '';
+			if (parts.length > 1) {
+				// In email addresses, only the domain name should be punycoded. Leave
+				// the local part (i.e. everything up to `@`) intact.
+				result = parts[0] + '@';
+				string = parts[1];
 			}
-
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this &&
-					( type == null || timers[ index ].queue === type ) ) {
-
-					timers[ index ].anim.stop( gotoEnd );
-					dequeue = false;
-					timers.splice( index, 1 );
-				}
-			}
-
-			// Start the next in the queue if the last step wasn't forced.
-			// Timers currently will call their complete callbacks, which
-			// will dequeue but only if they were gotoEnd.
-			if ( dequeue || !gotoEnd ) {
-				jQuery.dequeue( this, type );
-			}
-		} );
-	},
-	finish: function( type ) {
-		if ( type !== false ) {
-			type = type || "fx";
-		}
-		return this.each( function() {
-			var index,
-				data = dataPriv.get( this ),
-				queue = data[ type + "queue" ],
-				hooks = data[ type + "queueHooks" ],
-				timers = jQuery.timers,
-				length = queue ? queue.length : 0;
-
-			// Enable finishing flag on private data
-			data.finish = true;
-
-			// Empty the queue first
-			jQuery.queue( this, type, [] );
-
-			if ( hooks && hooks.stop ) {
-				hooks.stop.call( this, true );
-			}
-
-			// Look for any active animations, and finish them
-			for ( index = timers.length; index--; ) {
-				if ( timers[ index ].elem === this && timers[ index ].queue === type ) {
-					timers[ index ].anim.stop( true );
-					timers.splice( index, 1 );
-				}
-			}
-
-			// Look for any animations in the old queue and finish them
-			for ( index = 0; index < length; index++ ) {
-				if ( queue[ index ] && queue[ index ].finish ) {
-					queue[ index ].finish.call( this );
-				}
-			}
-
-			// Turn off finishing flag
-			delete data.finish;
-		} );
-	}
-} );
-
-jQuery.each( [ "toggle", "show", "hide" ], function( i, name ) {
-	var cssFn = jQuery.fn[ name ];
-	jQuery.fn[ name ] = function( speed, easing, callback ) {
-		return speed == null || typeof speed === "boolean" ?
-			cssFn.apply( this, arguments ) :
-			this.animate( genFx( name, true ), speed, easing, callback );
-	};
-} );
-
-// Generate shortcuts for custom animations
-jQuery.each( {
-	slideDown: genFx( "show" ),
-	slideUp: genFx( "hide" ),
-	slideToggle: genFx( "toggle" ),
-	fadeIn: { opacity: "show" },
-	fadeOut: { opacity: "hide" },
-	fadeToggle: { opacity: "toggle" }
-}, function( name, props ) {
-	jQuery.fn[ name ] = function( speed, easing, callback ) {
-		return this.animate( props, speed, easing, callback );
-	};
-} );
-
-jQuery.timers = [];
-jQuery.fx.tick = function() {
-	var timer,
-		i = 0,
-		timers = jQuery.timers;
-
-	fxNow = jQuery.now();
-
-	for ( ; i < timers.length; i++ ) {
-		timer = timers[ i ];
-
-		// Checks the timer has not already been removed
-		if ( !timer() && timers[ i ] === timer ) {
-			timers.splice( i--, 1 );
-		}
-	}
-
-	if ( !timers.length ) {
-		jQuery.fx.stop();
-	}
-	fxNow = undefined;
-};
-
-jQuery.fx.timer = function( timer ) {
-	jQuery.timers.push( timer );
-	if ( timer() ) {
-		jQuery.fx.start();
-	} else {
-		jQuery.timers.pop();
-	}
-};
-
-jQuery.fx.interval = 13;
-jQuery.fx.start = function() {
-	if ( !timerId ) {
-		timerId = window.setInterval( jQuery.fx.tick, jQuery.fx.interval );
-	}
-};
-
-jQuery.fx.stop = function() {
-	window.clearInterval( timerId );
-
-	timerId = null;
-};
-
-jQuery.fx.speeds = {
-	slow: 600,
-	fast: 200,
-
-	// Default speed
-	_default: 400
-};
-
-
-// Based off of the plugin by Clint Helfers, with permission.
-// http://web.archive.org/web/20100324014747/http://blindsignals.com/index.php/2009/07/jquery-delay/
-jQuery.fn.delay = function( time, type ) {
-	time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
-	type = type || "fx";
-
-	return this.queue( type, function( next, hooks ) {
-		var timeout = window.setTimeout( next, time );
-		hooks.stop = function() {
-			window.clearTimeout( timeout );
-		};
-	} );
-};
-
-
-( function() {
-	var input = document.createElement( "input" ),
-		select = document.createElement( "select" ),
-		opt = select.appendChild( document.createElement( "option" ) );
-
-	input.type = "checkbox";
-
-	// Support: iOS<=5.1, Android<=4.2+
-	// Default value for a checkbox should be "on"
-	support.checkOn = input.value !== "";
-
-	// Support: IE<=11+
-	// Must access selectedIndex to make default options select
-	support.optSelected = opt.selected;
-
-	// Support: Android<=2.3
-	// Options inside disabled selects are incorrectly marked as disabled
-	select.disabled = true;
-	support.optDisabled = !opt.disabled;
-
-	// Support: IE<=11+
-	// An input loses its value after becoming a radio
-	input = document.createElement( "input" );
-	input.value = "t";
-	input.type = "radio";
-	support.radioValue = input.value === "t";
-} )();
-
-
-var boolHook,
-	attrHandle = jQuery.expr.attrHandle;
-
-jQuery.fn.extend( {
-	attr: function( name, value ) {
-		return access( this, jQuery.attr, name, value, arguments.length > 1 );
-	},
-
-	removeAttr: function( name ) {
-		return this.each( function() {
-			jQuery.removeAttr( this, name );
-		} );
-	}
-} );
-
-jQuery.extend( {
-	attr: function( elem, name, value ) {
-		var ret, hooks,
-			nType = elem.nodeType;
-
-		// Don't get/set attributes on text, comment and attribute nodes
-		if ( nType === 3 || nType === 8 || nType === 2 ) {
-			return;
+			// Avoid `split(regex)` for IE8 compatibility. See #17.
+			string = string.replace(regexSeparators, '\x2E');
+			var labels = string.split('.');
+			var encoded = map(labels, fn).join('.');
+			return result + encoded;
 		}
 
-		// Fallback to prop when attributes are not supported
-		if ( typeof elem.getAttribute === "undefined" ) {
-			return jQuery.prop( elem, name, value );
-		}
-
-		// All attributes are lowercase
-		// Grab necessary hook if one is defined
-		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
-			name = name.toLowerCase();
-			hooks = jQuery.attrHooks[ name ] ||
-				( jQuery.expr.match.bool.test( name ) ? boolHook : undefined );
-		}
-
-		if ( value !== undefined ) {
-			if ( value === null ) {
-				jQuery.removeAttr( elem, name );
-				return;
-			}
-
-			if ( hooks && "set" in hooks &&
-				( ret = hooks.set( elem, value, name ) ) !== undefined ) {
-				return ret;
-			}
-
-			elem.setAttribute( name, value + "" );
-			return value;
-		}
-
-		if ( hooks && "get" in hooks && ( ret = hooks.get( elem, name ) ) !== null ) {
-			return ret;
-		}
-
-		ret = jQuery.find.attr( elem, name );
-
-		// Non-existent attributes return null, we normalize to undefined
-		return ret == null ? undefined : ret;
-	},
-
-	attrHooks: {
-		type: {
-			set: function( elem, value ) {
-				if ( !support.radioValue && value === "radio" &&
-					jQuery.nodeName( elem, "input" ) ) {
-					var val = elem.value;
-					elem.setAttribute( "type", value );
-					if ( val ) {
-						elem.value = val;
-					}
-					return value;
-				}
-			}
-		}
-	},
-
-	removeAttr: function( elem, value ) {
-		var name, propName,
-			i = 0,
-			attrNames = value && value.match( rnotwhite );
-
-		if ( attrNames && elem.nodeType === 1 ) {
-			while ( ( name = attrNames[ i++ ] ) ) {
-				propName = jQuery.propFix[ name ] || name;
-
-				// Boolean attributes get special treatment (#10870)
-				if ( jQuery.expr.match.bool.test( name ) ) {
-
-					// Set corresponding property to false
-					elem[ propName ] = false;
-				}
-
-				elem.removeAttribute( name );
-			}
-		}
-	}
-} );
-
-// Hooks for boolean attributes
-boolHook = {
-	set: function( elem, value, name ) {
-		if ( value === false ) {
-
-			// Remove boolean attributes when set to false
-			jQuery.removeAttr( elem, name );
-		} else {
-			elem.setAttribute( name, name );
-		}
-		return name;
-	}
-};
-jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) {
-	var getter = attrHandle[ name ] || jQuery.find.attr;
-
-	attrHandle[ name ] = function( elem, name, isXML ) {
-		var ret, handle;
-		if ( !isXML ) {
-
-			// Avoid an infinite loop by temporarily removing this function from the getter
-			handle = attrHandle[ name ];
-			attrHandle[ name ] = ret;
-			ret = getter( elem, name, isXML ) != null ?
-				name.toLowerCase() :
-				null;
-			attrHandle[ name ] = handle;
-		}
-		return ret;
-	};
-} );
-
-
-
-
-var rfocusable = /^(?:input|select|textarea|button)$/i,
-	rclickable = /^(?:a|area)$/i;
-
-jQuery.fn.extend( {
-	prop: function( name, value ) {
-		return access( this, jQuery.prop, name, value, arguments.length > 1 );
-	},
-
-	removeProp: function( name ) {
-		return this.each( function() {
-			delete this[ jQuery.propFix[ name ] || name ];
-		} );
-	}
-} );
-
-jQuery.extend( {
-	prop: function( elem, name, value ) {
-		var ret, hooks,
-			nType = elem.nodeType;
-
-		// Don't get/set properties on text, comment and attribute nodes
-		if ( nType === 3 || nType === 8 || nType === 2 ) {
-			return;
-		}
-
-		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
-
-			// Fix name and attach hooks
-			name = jQuery.propFix[ name ] || name;
-			hooks = jQuery.propHooks[ name ];
-		}
-
-		if ( value !== undefined ) {
-			if ( hooks && "set" in hooks &&
-				( ret = hooks.set( elem, value, name ) ) !== undefined ) {
-				return ret;
-			}
-
-			return ( elem[ name ] = value );
-		}
-
-		if ( hooks && "get" in hooks && ( ret = hooks.get( elem, name ) ) !== null ) {
-			return ret;
-		}
-
-		return elem[ name ];
-	},
-
-	propHooks: {
-		tabIndex: {
-			get: function( elem ) {
-
-				// elem.tabIndex doesn't always return the
-				// correct value when it hasn't been explicitly set
-				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
-				// Use proper attribute retrieval(#12072)
-				var tabindex = jQuery.find.attr( elem, "tabindex" );
-
-				return tabindex ?
-					parseInt( tabindex, 10 ) :
-					rfocusable.test( elem.nodeName ) ||
-						rclickable.test( elem.nodeName ) && elem.href ?
-							0 :
-							-1;
-			}
-		}
-	},
-
-	propFix: {
-		"for": "htmlFor",
-		"class": "className"
-	}
-} );
-
-// Support: IE <=11 only
-// Accessing the selectedIndex property
-// forces the browser to respect setting selected
-// on the option
-// The getter ensures a default option is selected
-// when in an optgroup
-if ( !support.optSelected ) {
-	jQuery.propHooks.selected = {
-		get: function( elem ) {
-			var parent = elem.parentNode;
-			if ( parent && parent.parentNode ) {
-				parent.parentNode.selectedIndex;
-			}
-			return null;
-		},
-		set: function( elem ) {
-			var parent = elem.parentNode;
-			if ( parent ) {
-				parent.selectedIndex;
-
-				if ( parent.parentNode ) {
-					parent.parentNode.selectedIndex;
-				}
-			}
-		}
-	};
-}
-
-jQuery.each( [
-	"tabIndex",
-	"readOnly",
-	"maxLength",
-	"cellSpacing",
-	"cellPadding",
-	"rowSpan",
-	"colSpan",
-	"useMap",
-	"frameBorder",
-	"contentEditable"
-], function() {
-	jQuery.propFix[ this.toLowerCase() ] = this;
-} );
-
-
-
-
-var rclass = /[\t\r\n\f]/g;
-
-function getClass( elem ) {
-	return elem.getAttribute && elem.getAttribute( "class" ) || "";
-}
-
-jQuery.fn.extend( {
-	addClass: function( value ) {
-		var classes, elem, cur, curValue, clazz, j, finalValue,
-			i = 0;
-
-		if ( jQuery.isFunction( value ) ) {
-			return this.each( function( j ) {
-				jQuery( this ).addClass( value.call( this, j, getClass( this ) ) );
-			} );
-		}
-
-		if ( typeof value === "string" && value ) {
-			classes = value.match( rnotwhite ) || [];
-
-			while ( ( elem = this[ i++ ] ) ) {
-				curValue = getClass( elem );
-				cur = elem.nodeType === 1 &&
-					( " " + curValue + " " ).replace( rclass, " " );
-
-				if ( cur ) {
-					j = 0;
-					while ( ( clazz = classes[ j++ ] ) ) {
-						if ( cur.indexOf( " " + clazz + " " ) < 0 ) {
-							cur += clazz + " ";
-						}
-					}
-
-					// Only assign if different to avoid unneeded rendering.
-					finalValue = jQuery.trim( cur );
-					if ( curValue !== finalValue ) {
-						elem.setAttribute( "class", finalValue );
-					}
-				}
-			}
-		}
-
-		return this;
-	},
-
-	removeClass: function( value ) {
-		var classes, elem, cur, curValue, clazz, j, finalValue,
-			i = 0;
-
-		if ( jQuery.isFunction( value ) ) {
-			return this.each( function( j ) {
-				jQuery( this ).removeClass( value.call( this, j, getClass( this ) ) );
-			} );
-		}
-
-		if ( !arguments.length ) {
-			return this.attr( "class", "" );
-		}
-
-		if ( typeof value === "string" && value ) {
-			classes = value.match( rnotwhite ) || [];
-
-			while ( ( elem = this[ i++ ] ) ) {
-				curValue = getClass( elem );
-
-				// This expression is here for better compressibility (see addClass)
-				cur = elem.nodeType === 1 &&
-					( " " + curValue + " " ).replace( rclass, " " );
-
-				if ( cur ) {
-					j = 0;
-					while ( ( clazz = classes[ j++ ] ) ) {
-
-						// Remove *all* instances
-						while ( cur.indexOf( " " + clazz + " " ) > -1 ) {
-							cur = cur.replace( " " + clazz + " ", " " );
-						}
-					}
-
-					// Only assign if different to avoid unneeded rendering.
-					finalValue = jQuery.trim( cur );
-					if ( curValue !== finalValue ) {
-						elem.setAttribute( "class", finalValue );
-					}
-				}
-			}
-		}
-
-		return this;
-	},
-
-	toggleClass: function( value, stateVal ) {
-		var type = typeof value;
-
-		if ( typeof stateVal === "boolean" && type === "string" ) {
-			return stateVal ? this.addClass( value ) : this.removeClass( value );
-		}
-
-		if ( jQuery.isFunction( value ) ) {
-			return this.each( function( i ) {
-				jQuery( this ).toggleClass(
-					value.call( this, i, getClass( this ), stateVal ),
-					stateVal
-				);
-			} );
-		}
-
-		return this.each( function() {
-			var className, i, self, classNames;
-
-			if ( type === "string" ) {
-
-				// Toggle individual class names
-				i = 0;
-				self = jQuery( this );
-				classNames = value.match( rnotwhite ) || [];
-
-				while ( ( className = classNames[ i++ ] ) ) {
-
-					// Check each className given, space separated list
-					if ( self.hasClass( className ) ) {
-						self.removeClass( className );
+		/**
+	  * Creates an array containing the numeric code points of each Unicode
+	  * character in the string. While JavaScript uses UCS-2 internally,
+	  * this function will convert a pair of surrogate halves (each of which
+	  * UCS-2 exposes as separate characters) into a single code point,
+	  * matching UTF-16.
+	  * @see `punycode.ucs2.encode`
+	  * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	  * @memberOf punycode.ucs2
+	  * @name decode
+	  * @param {String} string The Unicode input string (UCS-2).
+	  * @returns {Array} The new array of code points.
+	  */
+		function ucs2decode(string) {
+			var output = [],
+			    counter = 0,
+			    length = string.length,
+			    value,
+			    extra;
+			while (counter < length) {
+				value = string.charCodeAt(counter++);
+				if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+					// high surrogate, and there is a next character
+					extra = string.charCodeAt(counter++);
+					if ((extra & 0xFC00) == 0xDC00) {
+						// low surrogate
+						output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
 					} else {
-						self.addClass( className );
+						// unmatched surrogate; only append this code unit, in case the next
+						// code unit is the high surrogate of a surrogate pair
+						output.push(value);
+						counter--;
 					}
-				}
-
-			// Toggle whole class name
-			} else if ( value === undefined || type === "boolean" ) {
-				className = getClass( this );
-				if ( className ) {
-
-					// Store className if set
-					dataPriv.set( this, "__className__", className );
-				}
-
-				// If the element has a class name or if we're passed `false`,
-				// then remove the whole classname (if there was one, the above saved it).
-				// Otherwise bring back whatever was previously saved (if anything),
-				// falling back to the empty string if nothing was stored.
-				if ( this.setAttribute ) {
-					this.setAttribute( "class",
-						className || value === false ?
-						"" :
-						dataPriv.get( this, "__className__" ) || ""
-					);
-				}
-			}
-		} );
-	},
-
-	hasClass: function( selector ) {
-		var className, elem,
-			i = 0;
-
-		className = " " + selector + " ";
-		while ( ( elem = this[ i++ ] ) ) {
-			if ( elem.nodeType === 1 &&
-				( " " + getClass( elem ) + " " ).replace( rclass, " " )
-					.indexOf( className ) > -1
-			) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-} );
-
-
-
-
-var rreturn = /\r/g,
-	rspaces = /[\x20\t\r\n\f]+/g;
-
-jQuery.fn.extend( {
-	val: function( value ) {
-		var hooks, ret, isFunction,
-			elem = this[ 0 ];
-
-		if ( !arguments.length ) {
-			if ( elem ) {
-				hooks = jQuery.valHooks[ elem.type ] ||
-					jQuery.valHooks[ elem.nodeName.toLowerCase() ];
-
-				if ( hooks &&
-					"get" in hooks &&
-					( ret = hooks.get( elem, "value" ) ) !== undefined
-				) {
-					return ret;
-				}
-
-				ret = elem.value;
-
-				return typeof ret === "string" ?
-
-					// Handle most common string cases
-					ret.replace( rreturn, "" ) :
-
-					// Handle cases where value is null/undef or number
-					ret == null ? "" : ret;
-			}
-
-			return;
-		}
-
-		isFunction = jQuery.isFunction( value );
-
-		return this.each( function( i ) {
-			var val;
-
-			if ( this.nodeType !== 1 ) {
-				return;
-			}
-
-			if ( isFunction ) {
-				val = value.call( this, i, jQuery( this ).val() );
-			} else {
-				val = value;
-			}
-
-			// Treat null/undefined as ""; convert numbers to string
-			if ( val == null ) {
-				val = "";
-
-			} else if ( typeof val === "number" ) {
-				val += "";
-
-			} else if ( jQuery.isArray( val ) ) {
-				val = jQuery.map( val, function( value ) {
-					return value == null ? "" : value + "";
-				} );
-			}
-
-			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
-
-			// If set returns undefined, fall back to normal setting
-			if ( !hooks || !( "set" in hooks ) || hooks.set( this, val, "value" ) === undefined ) {
-				this.value = val;
-			}
-		} );
-	}
-} );
-
-jQuery.extend( {
-	valHooks: {
-		option: {
-			get: function( elem ) {
-
-				var val = jQuery.find.attr( elem, "value" );
-				return val != null ?
-					val :
-
-					// Support: IE10-11+
-					// option.text throws exceptions (#14686, #14858)
-					// Strip and collapse whitespace
-					// https://html.spec.whatwg.org/#strip-and-collapse-whitespace
-					jQuery.trim( jQuery.text( elem ) ).replace( rspaces, " " );
-			}
-		},
-		select: {
-			get: function( elem ) {
-				var value, option,
-					options = elem.options,
-					index = elem.selectedIndex,
-					one = elem.type === "select-one" || index < 0,
-					values = one ? null : [],
-					max = one ? index + 1 : options.length,
-					i = index < 0 ?
-						max :
-						one ? index : 0;
-
-				// Loop through all the selected options
-				for ( ; i < max; i++ ) {
-					option = options[ i ];
-
-					// IE8-9 doesn't update selected after form reset (#2551)
-					if ( ( option.selected || i === index ) &&
-
-							// Don't return options that are disabled or in a disabled optgroup
-							( support.optDisabled ?
-								!option.disabled : option.getAttribute( "disabled" ) === null ) &&
-							( !option.parentNode.disabled ||
-								!jQuery.nodeName( option.parentNode, "optgroup" ) ) ) {
-
-						// Get the specific value for the option
-						value = jQuery( option ).val();
-
-						// We don't need an array for one selects
-						if ( one ) {
-							return value;
-						}
-
-						// Multi-Selects return an array
-						values.push( value );
-					}
-				}
-
-				return values;
-			},
-
-			set: function( elem, value ) {
-				var optionSet, option,
-					options = elem.options,
-					values = jQuery.makeArray( value ),
-					i = options.length;
-
-				while ( i-- ) {
-					option = options[ i ];
-					if ( option.selected =
-						jQuery.inArray( jQuery.valHooks.option.get( option ), values ) > -1
-					) {
-						optionSet = true;
-					}
-				}
-
-				// Force browsers to behave consistently when non-matching value is set
-				if ( !optionSet ) {
-					elem.selectedIndex = -1;
-				}
-				return values;
-			}
-		}
-	}
-} );
-
-// Radios and checkboxes getter/setter
-jQuery.each( [ "radio", "checkbox" ], function() {
-	jQuery.valHooks[ this ] = {
-		set: function( elem, value ) {
-			if ( jQuery.isArray( value ) ) {
-				return ( elem.checked = jQuery.inArray( jQuery( elem ).val(), value ) > -1 );
-			}
-		}
-	};
-	if ( !support.checkOn ) {
-		jQuery.valHooks[ this ].get = function( elem ) {
-			return elem.getAttribute( "value" ) === null ? "on" : elem.value;
-		};
-	}
-} );
-
-
-
-
-// Return jQuery for attributes-only inclusion
-
-
-var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/;
-
-jQuery.extend( jQuery.event, {
-
-	trigger: function( event, data, elem, onlyHandlers ) {
-
-		var i, cur, tmp, bubbleType, ontype, handle, special,
-			eventPath = [ elem || document ],
-			type = hasOwn.call( event, "type" ) ? event.type : event,
-			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
-
-		cur = tmp = elem = elem || document;
-
-		// Don't do events on text and comment nodes
-		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
-			return;
-		}
-
-		// focus/blur morphs to focusin/out; ensure we're not firing them right now
-		if ( rfocusMorph.test( type + jQuery.event.triggered ) ) {
-			return;
-		}
-
-		if ( type.indexOf( "." ) > -1 ) {
-
-			// Namespaced trigger; create a regexp to match event type in handle()
-			namespaces = type.split( "." );
-			type = namespaces.shift();
-			namespaces.sort();
-		}
-		ontype = type.indexOf( ":" ) < 0 && "on" + type;
-
-		// Caller can pass in a jQuery.Event object, Object, or just an event type string
-		event = event[ jQuery.expando ] ?
-			event :
-			new jQuery.Event( type, typeof event === "object" && event );
-
-		// Trigger bitmask: & 1 for native handlers; & 2 for jQuery (always true)
-		event.isTrigger = onlyHandlers ? 2 : 3;
-		event.namespace = namespaces.join( "." );
-		event.rnamespace = event.namespace ?
-			new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" ) :
-			null;
-
-		// Clean up the event in case it is being reused
-		event.result = undefined;
-		if ( !event.target ) {
-			event.target = elem;
-		}
-
-		// Clone any incoming data and prepend the event, creating the handler arg list
-		data = data == null ?
-			[ event ] :
-			jQuery.makeArray( data, [ event ] );
-
-		// Allow special events to draw outside the lines
-		special = jQuery.event.special[ type ] || {};
-		if ( !onlyHandlers && special.trigger && special.trigger.apply( elem, data ) === false ) {
-			return;
-		}
-
-		// Determine event propagation path in advance, per W3C events spec (#9951)
-		// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
-		if ( !onlyHandlers && !special.noBubble && !jQuery.isWindow( elem ) ) {
-
-			bubbleType = special.delegateType || type;
-			if ( !rfocusMorph.test( bubbleType + type ) ) {
-				cur = cur.parentNode;
-			}
-			for ( ; cur; cur = cur.parentNode ) {
-				eventPath.push( cur );
-				tmp = cur;
-			}
-
-			// Only add window if we got to document (e.g., not plain obj or detached DOM)
-			if ( tmp === ( elem.ownerDocument || document ) ) {
-				eventPath.push( tmp.defaultView || tmp.parentWindow || window );
-			}
-		}
-
-		// Fire handlers on the event path
-		i = 0;
-		while ( ( cur = eventPath[ i++ ] ) && !event.isPropagationStopped() ) {
-
-			event.type = i > 1 ?
-				bubbleType :
-				special.bindType || type;
-
-			// jQuery handler
-			handle = ( dataPriv.get( cur, "events" ) || {} )[ event.type ] &&
-				dataPriv.get( cur, "handle" );
-			if ( handle ) {
-				handle.apply( cur, data );
-			}
-
-			// Native handler
-			handle = ontype && cur[ ontype ];
-			if ( handle && handle.apply && acceptData( cur ) ) {
-				event.result = handle.apply( cur, data );
-				if ( event.result === false ) {
-					event.preventDefault();
-				}
-			}
-		}
-		event.type = type;
-
-		// If nobody prevented the default action, do it now
-		if ( !onlyHandlers && !event.isDefaultPrevented() ) {
-
-			if ( ( !special._default ||
-				special._default.apply( eventPath.pop(), data ) === false ) &&
-				acceptData( elem ) ) {
-
-				// Call a native DOM method on the target with the same name name as the event.
-				// Don't do default actions on window, that's where global variables be (#6170)
-				if ( ontype && jQuery.isFunction( elem[ type ] ) && !jQuery.isWindow( elem ) ) {
-
-					// Don't re-trigger an onFOO event when we call its FOO() method
-					tmp = elem[ ontype ];
-
-					if ( tmp ) {
-						elem[ ontype ] = null;
-					}
-
-					// Prevent re-triggering of the same event, since we already bubbled it above
-					jQuery.event.triggered = type;
-					elem[ type ]();
-					jQuery.event.triggered = undefined;
-
-					if ( tmp ) {
-						elem[ ontype ] = tmp;
-					}
-				}
-			}
-		}
-
-		return event.result;
-	},
-
-	// Piggyback on a donor event to simulate a different one
-	simulate: function( type, elem, event ) {
-		var e = jQuery.extend(
-			new jQuery.Event(),
-			event,
-			{
-				type: type,
-				isSimulated: true
-
-				// Previously, `originalEvent: {}` was set here, so stopPropagation call
-				// would not be triggered on donor event, since in our own
-				// jQuery.event.stopPropagation function we had a check for existence of
-				// originalEvent.stopPropagation method, so, consequently it would be a noop.
-				//
-				// But now, this "simulate" function is used only for events
-				// for which stopPropagation() is noop, so there is no need for that anymore.
-				//
-				// For the 1.x branch though, guard for "click" and "submit"
-				// events is still used, but was moved to jQuery.event.stopPropagation function
-				// because `originalEvent` should point to the original event for the constancy
-				// with other events and for more focused logic
-			}
-		);
-
-		jQuery.event.trigger( e, null, elem );
-
-		if ( e.isDefaultPrevented() ) {
-			event.preventDefault();
-		}
-	}
-
-} );
-
-jQuery.fn.extend( {
-
-	trigger: function( type, data ) {
-		return this.each( function() {
-			jQuery.event.trigger( type, data, this );
-		} );
-	},
-	triggerHandler: function( type, data ) {
-		var elem = this[ 0 ];
-		if ( elem ) {
-			return jQuery.event.trigger( type, data, elem, true );
-		}
-	}
-} );
-
-
-jQuery.each( ( "blur focus focusin focusout load resize scroll unload click dblclick " +
-	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-	"change select submit keydown keypress keyup error contextmenu" ).split( " " ),
-	function( i, name ) {
-
-	// Handle event binding
-	jQuery.fn[ name ] = function( data, fn ) {
-		return arguments.length > 0 ?
-			this.on( name, null, data, fn ) :
-			this.trigger( name );
-	};
-} );
-
-jQuery.fn.extend( {
-	hover: function( fnOver, fnOut ) {
-		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
-	}
-} );
-
-
-
-
-support.focusin = "onfocusin" in window;
-
-
-// Support: Firefox
-// Firefox doesn't have focus(in | out) events
-// Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
-//
-// Support: Chrome, Safari
-// focus(in | out) events fire after focus & blur events,
-// which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
-// Related ticket - https://code.google.com/p/chromium/issues/detail?id=449857
-if ( !support.focusin ) {
-	jQuery.each( { focus: "focusin", blur: "focusout" }, function( orig, fix ) {
-
-		// Attach a single capturing handler on the document while someone wants focusin/focusout
-		var handler = function( event ) {
-			jQuery.event.simulate( fix, event.target, jQuery.event.fix( event ) );
-		};
-
-		jQuery.event.special[ fix ] = {
-			setup: function() {
-				var doc = this.ownerDocument || this,
-					attaches = dataPriv.access( doc, fix );
-
-				if ( !attaches ) {
-					doc.addEventListener( orig, handler, true );
-				}
-				dataPriv.access( doc, fix, ( attaches || 0 ) + 1 );
-			},
-			teardown: function() {
-				var doc = this.ownerDocument || this,
-					attaches = dataPriv.access( doc, fix ) - 1;
-
-				if ( !attaches ) {
-					doc.removeEventListener( orig, handler, true );
-					dataPriv.remove( doc, fix );
-
 				} else {
-					dataPriv.access( doc, fix, attaches );
+					output.push(value);
 				}
 			}
-		};
-	} );
-}
-var location = window.location;
-
-var nonce = jQuery.now();
-
-var rquery = ( /\?/ );
-
-
-
-// Support: Android 2.3
-// Workaround failure to string-cast null input
-jQuery.parseJSON = function( data ) {
-	return JSON.parse( data + "" );
-};
-
-
-// Cross-browser xml parsing
-jQuery.parseXML = function( data ) {
-	var xml;
-	if ( !data || typeof data !== "string" ) {
-		return null;
-	}
-
-	// Support: IE9
-	try {
-		xml = ( new window.DOMParser() ).parseFromString( data, "text/xml" );
-	} catch ( e ) {
-		xml = undefined;
-	}
-
-	if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {
-		jQuery.error( "Invalid XML: " + data );
-	}
-	return xml;
-};
-
-
-var
-	rhash = /#.*$/,
-	rts = /([?&])_=[^&]*/,
-	rheaders = /^(.*?):[ \t]*([^\r\n]*)$/mg,
-
-	// #7653, #8125, #8152: local protocol detection
-	rlocalProtocol = /^(?:about|app|app-storage|.+-extension|file|res|widget):$/,
-	rnoContent = /^(?:GET|HEAD)$/,
-	rprotocol = /^\/\//,
-
-	/* Prefilters
-	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
-	 * 2) These are called:
-	 *    - BEFORE asking for a transport
-	 *    - AFTER param serialization (s.data is a string if s.processData is true)
-	 * 3) key is the dataType
-	 * 4) the catchall symbol "*" can be used
-	 * 5) execution will start with transport dataType and THEN continue down to "*" if needed
-	 */
-	prefilters = {},
-
-	/* Transports bindings
-	 * 1) key is the dataType
-	 * 2) the catchall symbol "*" can be used
-	 * 3) selection will start with transport dataType and THEN go to "*" if needed
-	 */
-	transports = {},
-
-	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
-	allTypes = "*/".concat( "*" ),
-
-	// Anchor tag for parsing the document origin
-	originAnchor = document.createElement( "a" );
-	originAnchor.href = location.href;
-
-// Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
-function addToPrefiltersOrTransports( structure ) {
-
-	// dataTypeExpression is optional and defaults to "*"
-	return function( dataTypeExpression, func ) {
-
-		if ( typeof dataTypeExpression !== "string" ) {
-			func = dataTypeExpression;
-			dataTypeExpression = "*";
+			return output;
 		}
 
-		var dataType,
-			i = 0,
-			dataTypes = dataTypeExpression.toLowerCase().match( rnotwhite ) || [];
+		/**
+	  * Creates a string based on an array of numeric code points.
+	  * @see `punycode.ucs2.decode`
+	  * @memberOf punycode.ucs2
+	  * @name encode
+	  * @param {Array} codePoints The array of numeric code points.
+	  * @returns {String} The new Unicode string (UCS-2).
+	  */
+		function ucs2encode(array) {
+			return map(array, function (value) {
+				var output = '';
+				if (value > 0xFFFF) {
+					value -= 0x10000;
+					output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+					value = 0xDC00 | value & 0x3FF;
+				}
+				output += stringFromCharCode(value);
+				return output;
+			}).join('');
+		}
 
-		if ( jQuery.isFunction( func ) ) {
+		/**
+	  * Converts a basic code point into a digit/integer.
+	  * @see `digitToBasic()`
+	  * @private
+	  * @param {Number} codePoint The basic numeric code point value.
+	  * @returns {Number} The numeric value of a basic code point (for use in
+	  * representing integers) in the range `0` to `base - 1`, or `base` if
+	  * the code point does not represent a value.
+	  */
+		function basicToDigit(codePoint) {
+			if (codePoint - 48 < 10) {
+				return codePoint - 22;
+			}
+			if (codePoint - 65 < 26) {
+				return codePoint - 65;
+			}
+			if (codePoint - 97 < 26) {
+				return codePoint - 97;
+			}
+			return base;
+		}
 
-			// For each dataType in the dataTypeExpression
-			while ( ( dataType = dataTypes[ i++ ] ) ) {
+		/**
+	  * Converts a digit/integer into a basic code point.
+	  * @see `basicToDigit()`
+	  * @private
+	  * @param {Number} digit The numeric value of a basic code point.
+	  * @returns {Number} The basic code point whose value (when used for
+	  * representing integers) is `digit`, which needs to be in the range
+	  * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	  * used; else, the lowercase form is used. The behavior is undefined
+	  * if `flag` is non-zero and `digit` has no uppercase form.
+	  */
+		function digitToBasic(digit, flag) {
+			//  0..25 map to ASCII a..z or A..Z
+			// 26..35 map to ASCII 0..9
+			return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+		}
 
-				// Prepend if requested
-				if ( dataType[ 0 ] === "+" ) {
-					dataType = dataType.slice( 1 ) || "*";
-					( structure[ dataType ] = structure[ dataType ] || [] ).unshift( func );
+		/**
+	  * Bias adaptation function as per section 3.4 of RFC 3492.
+	  * http://tools.ietf.org/html/rfc3492#section-3.4
+	  * @private
+	  */
+		function adapt(delta, numPoints, firstTime) {
+			var k = 0;
+			delta = firstTime ? floor(delta / damp) : delta >> 1;
+			delta += floor(delta / numPoints);
+			for (; /* no initialization */delta > baseMinusTMin * tMax >> 1; k += base) {
+				delta = floor(delta / baseMinusTMin);
+			}
+			return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+		}
 
-				// Otherwise append
-				} else {
-					( structure[ dataType ] = structure[ dataType ] || [] ).push( func );
+		/**
+	  * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	  * symbols.
+	  * @memberOf punycode
+	  * @param {String} input The Punycode string of ASCII-only symbols.
+	  * @returns {String} The resulting string of Unicode symbols.
+	  */
+		function decode(input) {
+			// Don't use UCS-2
+			var output = [],
+			    inputLength = input.length,
+			    out,
+			    i = 0,
+			    n = initialN,
+			    bias = initialBias,
+			    basic,
+			    j,
+			    index,
+			    oldi,
+			    w,
+			    k,
+			    digit,
+			    t,
+
+			/** Cached calculation results */
+			baseMinusT;
+
+			// Handle the basic code points: let `basic` be the number of input code
+			// points before the last delimiter, or `0` if there is none, then copy
+			// the first basic code points to the output.
+
+			basic = input.lastIndexOf(delimiter);
+			if (basic < 0) {
+				basic = 0;
+			}
+
+			for (j = 0; j < basic; ++j) {
+				// if it's not a basic code point
+				if (input.charCodeAt(j) >= 0x80) {
+					error('not-basic');
+				}
+				output.push(input.charCodeAt(j));
+			}
+
+			// Main decoding loop: start just after the last delimiter if any basic code
+			// points were copied; start at the beginning otherwise.
+
+			for (index = basic > 0 ? basic + 1 : 0; index < inputLength;) /* no final expression */{
+
+				// `index` is the index of the next character to be consumed.
+				// Decode a generalized variable-length integer into `delta`,
+				// which gets added to `i`. The overflow checking is easier
+				// if we increase `i` as we go, then subtract off its starting
+				// value at the end to obtain `delta`.
+				for (oldi = i, w = 1, k = base;; /* no condition */k += base) {
+
+					if (index >= inputLength) {
+						error('invalid-input');
+					}
+
+					digit = basicToDigit(input.charCodeAt(index++));
+
+					if (digit >= base || digit > floor((maxInt - i) / w)) {
+						error('overflow');
+					}
+
+					i += digit * w;
+					t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+
+					if (digit < t) {
+						break;
+					}
+
+					baseMinusT = base - t;
+					if (w > floor(maxInt / baseMinusT)) {
+						error('overflow');
+					}
+
+					w *= baseMinusT;
+				}
+
+				out = output.length + 1;
+				bias = adapt(i - oldi, out, oldi == 0);
+
+				// `i` was supposed to wrap around from `out` to `0`,
+				// incrementing `n` each time, so we'll fix that now:
+				if (floor(i / out) > maxInt - n) {
+					error('overflow');
+				}
+
+				n += floor(i / out);
+				i %= out;
+
+				// Insert `n` at position `i` of the output
+				output.splice(i++, 0, n);
+			}
+
+			return ucs2encode(output);
+		}
+
+		/**
+	  * Converts a string of Unicode symbols (e.g. a domain name label) to a
+	  * Punycode string of ASCII-only symbols.
+	  * @memberOf punycode
+	  * @param {String} input The string of Unicode symbols.
+	  * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	  */
+		function encode(input) {
+			var n,
+			    delta,
+			    handledCPCount,
+			    basicLength,
+			    bias,
+			    j,
+			    m,
+			    q,
+			    k,
+			    t,
+			    currentValue,
+			    output = [],
+
+			/** `inputLength` will hold the number of code points in `input`. */
+			inputLength,
+
+			/** Cached calculation results */
+			handledCPCountPlusOne,
+			    baseMinusT,
+			    qMinusT;
+
+			// Convert the input in UCS-2 to Unicode
+			input = ucs2decode(input);
+
+			// Cache the length
+			inputLength = input.length;
+
+			// Initialize the state
+			n = initialN;
+			delta = 0;
+			bias = initialBias;
+
+			// Handle the basic code points
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue < 0x80) {
+					output.push(stringFromCharCode(currentValue));
 				}
 			}
-		}
-	};
-}
 
-// Base inspection function for prefilters and transports
-function inspectPrefiltersOrTransports( structure, options, originalOptions, jqXHR ) {
+			handledCPCount = basicLength = output.length;
 
-	var inspected = {},
-		seekingTransport = ( structure === transports );
+			// `handledCPCount` is the number of code points that have been handled;
+			// `basicLength` is the number of basic code points.
 
-	function inspect( dataType ) {
-		var selected;
-		inspected[ dataType ] = true;
-		jQuery.each( structure[ dataType ] || [], function( _, prefilterOrFactory ) {
-			var dataTypeOrTransport = prefilterOrFactory( options, originalOptions, jqXHR );
-			if ( typeof dataTypeOrTransport === "string" &&
-				!seekingTransport && !inspected[ dataTypeOrTransport ] ) {
-
-				options.dataTypes.unshift( dataTypeOrTransport );
-				inspect( dataTypeOrTransport );
-				return false;
-			} else if ( seekingTransport ) {
-				return !( selected = dataTypeOrTransport );
+			// Finish the basic string - if it is not empty - with a delimiter
+			if (basicLength) {
+				output.push(delimiter);
 			}
-		} );
-		return selected;
-	}
 
-	return inspect( options.dataTypes[ 0 ] ) || !inspected[ "*" ] && inspect( "*" );
-}
+			// Main encoding loop:
+			while (handledCPCount < inputLength) {
 
-// A special extend for ajax options
-// that takes "flat" options (not to be deep extended)
-// Fixes #9887
-function ajaxExtend( target, src ) {
-	var key, deep,
-		flatOptions = jQuery.ajaxSettings.flatOptions || {};
+				// All non-basic code points < n have been handled already. Find the next
+				// larger one:
+				for (m = maxInt, j = 0; j < inputLength; ++j) {
+					currentValue = input[j];
+					if (currentValue >= n && currentValue < m) {
+						m = currentValue;
+					}
+				}
 
-	for ( key in src ) {
-		if ( src[ key ] !== undefined ) {
-			( flatOptions[ key ] ? target : ( deep || ( deep = {} ) ) )[ key ] = src[ key ];
-		}
-	}
-	if ( deep ) {
-		jQuery.extend( true, target, deep );
-	}
+				// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+				// but guard against overflow
+				handledCPCountPlusOne = handledCPCount + 1;
+				if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+					error('overflow');
+				}
 
-	return target;
-}
+				delta += (m - n) * handledCPCountPlusOne;
+				n = m;
 
-/* Handles responses to an ajax request:
- * - finds the right dataType (mediates between content-type and expected dataType)
- * - returns the corresponding response
- */
-function ajaxHandleResponses( s, jqXHR, responses ) {
+				for (j = 0; j < inputLength; ++j) {
+					currentValue = input[j];
 
-	var ct, type, finalDataType, firstDataType,
-		contents = s.contents,
-		dataTypes = s.dataTypes;
+					if (currentValue < n && ++delta > maxInt) {
+						error('overflow');
+					}
 
-	// Remove auto dataType and get content-type in the process
-	while ( dataTypes[ 0 ] === "*" ) {
-		dataTypes.shift();
-		if ( ct === undefined ) {
-			ct = s.mimeType || jqXHR.getResponseHeader( "Content-Type" );
-		}
-	}
-
-	// Check if we're dealing with a known content-type
-	if ( ct ) {
-		for ( type in contents ) {
-			if ( contents[ type ] && contents[ type ].test( ct ) ) {
-				dataTypes.unshift( type );
-				break;
-			}
-		}
-	}
-
-	// Check to see if we have a response for the expected dataType
-	if ( dataTypes[ 0 ] in responses ) {
-		finalDataType = dataTypes[ 0 ];
-	} else {
-
-		// Try convertible dataTypes
-		for ( type in responses ) {
-			if ( !dataTypes[ 0 ] || s.converters[ type + " " + dataTypes[ 0 ] ] ) {
-				finalDataType = type;
-				break;
-			}
-			if ( !firstDataType ) {
-				firstDataType = type;
-			}
-		}
-
-		// Or just use first one
-		finalDataType = finalDataType || firstDataType;
-	}
-
-	// If we found a dataType
-	// We add the dataType to the list if needed
-	// and return the corresponding response
-	if ( finalDataType ) {
-		if ( finalDataType !== dataTypes[ 0 ] ) {
-			dataTypes.unshift( finalDataType );
-		}
-		return responses[ finalDataType ];
-	}
-}
-
-/* Chain conversions given the request and the original response
- * Also sets the responseXXX fields on the jqXHR instance
- */
-function ajaxConvert( s, response, jqXHR, isSuccess ) {
-	var conv2, current, conv, tmp, prev,
-		converters = {},
-
-		// Work with a copy of dataTypes in case we need to modify it for conversion
-		dataTypes = s.dataTypes.slice();
-
-	// Create converters map with lowercased keys
-	if ( dataTypes[ 1 ] ) {
-		for ( conv in s.converters ) {
-			converters[ conv.toLowerCase() ] = s.converters[ conv ];
-		}
-	}
-
-	current = dataTypes.shift();
-
-	// Convert to each sequential dataType
-	while ( current ) {
-
-		if ( s.responseFields[ current ] ) {
-			jqXHR[ s.responseFields[ current ] ] = response;
-		}
-
-		// Apply the dataFilter if provided
-		if ( !prev && isSuccess && s.dataFilter ) {
-			response = s.dataFilter( response, s.dataType );
-		}
-
-		prev = current;
-		current = dataTypes.shift();
-
-		if ( current ) {
-
-		// There's only work to do if current dataType is non-auto
-			if ( current === "*" ) {
-
-				current = prev;
-
-			// Convert response if prev dataType is non-auto and differs from current
-			} else if ( prev !== "*" && prev !== current ) {
-
-				// Seek a direct converter
-				conv = converters[ prev + " " + current ] || converters[ "* " + current ];
-
-				// If none found, seek a pair
-				if ( !conv ) {
-					for ( conv2 in converters ) {
-
-						// If conv2 outputs current
-						tmp = conv2.split( " " );
-						if ( tmp[ 1 ] === current ) {
-
-							// If prev can be converted to accepted input
-							conv = converters[ prev + " " + tmp[ 0 ] ] ||
-								converters[ "* " + tmp[ 0 ] ];
-							if ( conv ) {
-
-								// Condense equivalence converters
-								if ( conv === true ) {
-									conv = converters[ conv2 ];
-
-								// Otherwise, insert the intermediate dataType
-								} else if ( converters[ conv2 ] !== true ) {
-									current = tmp[ 0 ];
-									dataTypes.unshift( tmp[ 1 ] );
-								}
+					if (currentValue == n) {
+						// Represent delta as a generalized variable-length integer
+						for (q = delta, k = base;; /* no condition */k += base) {
+							t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias;
+							if (q < t) {
 								break;
 							}
+							qMinusT = q - t;
+							baseMinusT = base - t;
+							output.push(stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0)));
+							q = floor(qMinusT / baseMinusT);
 						}
+
+						output.push(stringFromCharCode(digitToBasic(q, 0)));
+						bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+						delta = 0;
+						++handledCPCount;
 					}
 				}
 
-				// Apply converter (if not an equivalence)
-				if ( conv !== true ) {
+				++delta;
+				++n;
+			}
+			return output.join('');
+		}
 
-					// Unless errors are allowed to bubble, catch and return them
-					if ( conv && s.throws ) {
-						response = conv( response );
-					} else {
-						try {
-							response = conv( response );
-						} catch ( e ) {
-							return {
-								state: "parsererror",
-								error: conv ? e : "No conversion from " + prev + " to " + current
-							};
-						}
-					}
+		/**
+	  * Converts a Punycode string representing a domain name or an email address
+	  * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+	  * it doesn't matter if you call it on a string that has already been
+	  * converted to Unicode.
+	  * @memberOf punycode
+	  * @param {String} input The Punycoded domain name or email address to
+	  * convert to Unicode.
+	  * @returns {String} The Unicode representation of the given Punycode
+	  * string.
+	  */
+		function toUnicode(input) {
+			return mapDomain(input, function (string) {
+				return regexPunycode.test(string) ? decode(string.slice(4).toLowerCase()) : string;
+			});
+		}
+
+		/**
+	  * Converts a Unicode string representing a domain name or an email address to
+	  * Punycode. Only the non-ASCII parts of the domain name will be converted,
+	  * i.e. it doesn't matter if you call it with a domain that's already in
+	  * ASCII.
+	  * @memberOf punycode
+	  * @param {String} input The domain name or email address to convert, as a
+	  * Unicode string.
+	  * @returns {String} The Punycode representation of the given domain name or
+	  * email address.
+	  */
+		function toASCII(input) {
+			return mapDomain(input, function (string) {
+				return regexNonASCII.test(string) ? 'xn--' + encode(string) : string;
+			});
+		}
+
+		/*--------------------------------------------------------------------------*/
+
+		/** Define the public API */
+		punycode = {
+			/**
+	   * A string representing the current Punycode.js version number.
+	   * @memberOf punycode
+	   * @type String
+	   */
+			'version': '1.3.2',
+			/**
+	   * An object of methods to convert from JavaScript's internal character
+	   * representation (UCS-2) to Unicode code points, and back.
+	   * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	   * @memberOf punycode
+	   * @type Object
+	   */
+			'ucs2': {
+				'decode': ucs2decode,
+				'encode': ucs2encode
+			},
+			'decode': decode,
+			'encode': encode,
+			'toASCII': toASCII,
+			'toUnicode': toUnicode
+		};
+
+		/** Expose `punycode` */
+		// Some AMD build optimizers, like r.js, check for specific condition patterns
+		// like the following:
+		if ("function" == 'function' && _typeof(__webpack_require__(38)) == 'object' && __webpack_require__(38)) {
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return punycode;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if (freeExports && freeModule) {
+			if (module.exports == freeExports) {
+				// in Node.js or RingoJS v0.8.0+
+				freeModule.exports = punycode;
+			} else {
+				// in Narwhal or RingoJS v0.7.0-
+				for (key in punycode) {
+					punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
 				}
 			}
+		} else {
+			// in Rhino or a web browser
+			root.punycode = punycode;
 		}
+	})(undefined);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)(module), (function() { return this; }())))
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function (module) {
+		if (!module.webpackPolyfill) {
+			module.deprecate = function () {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	};
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, {}))
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.decode = exports.parse = __webpack_require__(40);
+	exports.encode = exports.stringify = __webpack_require__(41);
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	'use strict';
+
+	// If obj.hasOwnProperty has been overridden, then calling
+	// obj.hasOwnProperty(prop) will break.
+	// See: https://github.com/joyent/node/issues/1707
+
+	function hasOwnProperty(obj, prop) {
+	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 
-	return { state: "success", data: response };
-}
+	module.exports = function (qs, sep, eq, options) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  var obj = {};
 
-jQuery.extend( {
+	  if (typeof qs !== 'string' || qs.length === 0) {
+	    return obj;
+	  }
 
-	// Counter for holding the number of active queries
-	active: 0,
+	  var regexp = /\+/g;
+	  qs = qs.split(sep);
 
-	// Last-Modified header cache for next request
-	lastModified: {},
-	etag: {},
+	  var maxKeys = 1000;
+	  if (options && typeof options.maxKeys === 'number') {
+	    maxKeys = options.maxKeys;
+	  }
 
-	ajaxSettings: {
-		url: location.href,
-		type: "GET",
-		isLocal: rlocalProtocol.test( location.protocol ),
-		global: true,
-		processData: true,
-		async: true,
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		/*
-		timeout: 0,
-		data: null,
-		dataType: null,
-		username: null,
-		password: null,
-		cache: null,
-		throws: false,
-		traditional: false,
-		headers: {},
-		*/
+	  var len = qs.length;
+	  // maxKeys <= 0 means that we should not limit keys count
+	  if (maxKeys > 0 && len > maxKeys) {
+	    len = maxKeys;
+	  }
 
-		accepts: {
-			"*": allTypes,
-			text: "text/plain",
-			html: "text/html",
-			xml: "application/xml, text/xml",
-			json: "application/json, text/javascript"
-		},
+	  for (var i = 0; i < len; ++i) {
+	    var x = qs[i].replace(regexp, '%20'),
+	        idx = x.indexOf(eq),
+	        kstr,
+	        vstr,
+	        k,
+	        v;
 
-		contents: {
-			xml: /\bxml\b/,
-			html: /\bhtml/,
-			json: /\bjson\b/
-		},
+	    if (idx >= 0) {
+	      kstr = x.substr(0, idx);
+	      vstr = x.substr(idx + 1);
+	    } else {
+	      kstr = x;
+	      vstr = '';
+	    }
 
-		responseFields: {
-			xml: "responseXML",
-			text: "responseText",
-			json: "responseJSON"
-		},
+	    k = decodeURIComponent(kstr);
+	    v = decodeURIComponent(vstr);
 
-		// Data converters
-		// Keys separate source (or catchall "*") and destination types with a single space
-		converters: {
+	    if (!hasOwnProperty(obj, k)) {
+	      obj[k] = v;
+	    } else if (Array.isArray(obj[k])) {
+	      obj[k].push(v);
+	    } else {
+	      obj[k] = [obj[k], v];
+	    }
+	  }
 
-			// Convert anything to text
-			"* text": String,
+	  return obj;
+	};
 
-			// Text to html (true = no transformation)
-			"text html": true,
+/***/ },
+/* 41 */
+/***/ function(module, exports) {
 
-			// Evaluate text as a json expression
-			"text json": jQuery.parseJSON,
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-			// Parse text as xml
-			"text xml": jQuery.parseXML
-		},
+	'use strict';
 
-		// For options that shouldn't be deep extended:
-		// you can add your own custom options here if
-		// and when you create one that shouldn't be
-		// deep extended (see ajaxExtend)
-		flatOptions: {
-			url: true,
-			context: true
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var stringifyPrimitive = function stringifyPrimitive(v) {
+	  switch (typeof v === 'undefined' ? 'undefined' : _typeof(v)) {
+	    case 'string':
+	      return v;
+
+	    case 'boolean':
+	      return v ? 'true' : 'false';
+
+	    case 'number':
+	      return isFinite(v) ? v : '';
+
+	    default:
+	      return '';
+	  }
+	};
+
+	module.exports = function (obj, sep, eq, name) {
+	  sep = sep || '&';
+	  eq = eq || '=';
+	  if (obj === null) {
+	    obj = undefined;
+	  }
+
+	  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+	    return Object.keys(obj).map(function (k) {
+	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+	      if (Array.isArray(obj[k])) {
+	        return obj[k].map(function (v) {
+	          return ks + encodeURIComponent(stringifyPrimitive(v));
+	        }).join(sep);
+	      } else {
+	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+	      }
+	    }).join(sep);
+	  }
+
+	  if (!name) return '';
+	  return encodeURIComponent(stringifyPrimitive(name)) + eq + encodeURIComponent(stringifyPrimitive(obj));
+	};
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	/*! PhotoSwipe - v4.1.1 - 2015-12-24
+	* http://photoswipe.com
+	* Copyright (c) 2015 Dmitry Semenov; */
+	(function (root, factory) {
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+			module.exports = factory();
+		} else {
+			root.PhotoSwipe = factory();
 		}
-	},
+	})(undefined, function () {
 
-	// Creates a full fledged settings object into target
-	// with both ajaxSettings and settings fields.
-	// If target is omitted, writes into ajaxSettings.
-	ajaxSetup: function( target, settings ) {
-		return settings ?
+		'use strict';
 
-			// Building a settings object
-			ajaxExtend( ajaxExtend( target, jQuery.ajaxSettings ), settings ) :
+		var PhotoSwipe = function PhotoSwipe(template, UiClass, items, options) {
 
-			// Extending ajaxSettings
-			ajaxExtend( jQuery.ajaxSettings, target );
-	},
-
-	ajaxPrefilter: addToPrefiltersOrTransports( prefilters ),
-	ajaxTransport: addToPrefiltersOrTransports( transports ),
-
-	// Main method
-	ajax: function( url, options ) {
-
-		// If url is an object, simulate pre-1.5 signature
-		if ( typeof url === "object" ) {
-			options = url;
-			url = undefined;
-		}
-
-		// Force options to be an object
-		options = options || {};
-
-		var transport,
-
-			// URL without anti-cache param
-			cacheURL,
-
-			// Response headers
-			responseHeadersString,
-			responseHeaders,
-
-			// timeout handle
-			timeoutTimer,
-
-			// Url cleanup var
-			urlAnchor,
-
-			// To know if global events are to be dispatched
-			fireGlobals,
-
-			// Loop variable
-			i,
-
-			// Create the final options object
-			s = jQuery.ajaxSetup( {}, options ),
-
-			// Callbacks context
-			callbackContext = s.context || s,
-
-			// Context for global events is callbackContext if it is a DOM node or jQuery collection
-			globalEventContext = s.context &&
-				( callbackContext.nodeType || callbackContext.jquery ) ?
-					jQuery( callbackContext ) :
-					jQuery.event,
-
-			// Deferreds
-			deferred = jQuery.Deferred(),
-			completeDeferred = jQuery.Callbacks( "once memory" ),
-
-			// Status-dependent callbacks
-			statusCode = s.statusCode || {},
-
-			// Headers (they are sent all at once)
-			requestHeaders = {},
-			requestHeadersNames = {},
-
-			// The jqXHR state
-			state = 0,
-
-			// Default abort message
-			strAbort = "canceled",
-
-			// Fake xhr
-			jqXHR = {
-				readyState: 0,
-
-				// Builds headers hashtable if needed
-				getResponseHeader: function( key ) {
-					var match;
-					if ( state === 2 ) {
-						if ( !responseHeaders ) {
-							responseHeaders = {};
-							while ( ( match = rheaders.exec( responseHeadersString ) ) ) {
-								responseHeaders[ match[ 1 ].toLowerCase() ] = match[ 2 ];
-							}
-						}
-						match = responseHeaders[ key.toLowerCase() ];
-					}
-					return match == null ? null : match;
-				},
-
-				// Raw string
-				getAllResponseHeaders: function() {
-					return state === 2 ? responseHeadersString : null;
-				},
-
-				// Caches the header
-				setRequestHeader: function( name, value ) {
-					var lname = name.toLowerCase();
-					if ( !state ) {
-						name = requestHeadersNames[ lname ] = requestHeadersNames[ lname ] || name;
-						requestHeaders[ name ] = value;
-					}
-					return this;
-				},
-
-				// Overrides response content-type header
-				overrideMimeType: function( type ) {
-					if ( !state ) {
-						s.mimeType = type;
-					}
-					return this;
-				},
-
-				// Status-dependent callbacks
-				statusCode: function( map ) {
-					var code;
-					if ( map ) {
-						if ( state < 2 ) {
-							for ( code in map ) {
-
-								// Lazy-add the new callback in a way that preserves old ones
-								statusCode[ code ] = [ statusCode[ code ], map[ code ] ];
-							}
-						} else {
-
-							// Execute the appropriate callbacks
-							jqXHR.always( map[ jqXHR.status ] );
+			/*>>framework-bridge*/
+			/**
+	   *
+	   * Set of generic functions used by gallery.
+	   *
+	   * You're free to modify anything here as long as functionality is kept.
+	   *
+	   */
+			var framework = {
+				features: null,
+				bind: function bind(target, type, listener, unbind) {
+					var methodName = (unbind ? 'remove' : 'add') + 'EventListener';
+					type = type.split(' ');
+					for (var i = 0; i < type.length; i++) {
+						if (type[i]) {
+							target[methodName](type[i], listener, false);
 						}
 					}
-					return this;
+				},
+				isArray: function isArray(obj) {
+					return obj instanceof Array;
+				},
+				createEl: function createEl(classes, tag) {
+					var el = document.createElement(tag || 'div');
+					if (classes) {
+						el.className = classes;
+					}
+					return el;
+				},
+				getScrollY: function getScrollY() {
+					var yOffset = window.pageYOffset;
+					return yOffset !== undefined ? yOffset : document.documentElement.scrollTop;
+				},
+				unbind: function unbind(target, type, listener) {
+					framework.bind(target, type, listener, true);
+				},
+				removeClass: function removeClass(el, className) {
+					var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+					el.className = el.className.replace(reg, ' ').replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+				},
+				addClass: function addClass(el, className) {
+					if (!framework.hasClass(el, className)) {
+						el.className += (el.className ? ' ' : '') + className;
+					}
+				},
+				hasClass: function hasClass(el, className) {
+					return el.className && new RegExp('(^|\\s)' + className + '(\\s|$)').test(el.className);
+				},
+				getChildByClass: function getChildByClass(parentEl, childClassName) {
+					var node = parentEl.firstChild;
+					while (node) {
+						if (framework.hasClass(node, childClassName)) {
+							return node;
+						}
+						node = node.nextSibling;
+					}
+				},
+				arraySearch: function arraySearch(array, value, key) {
+					var i = array.length;
+					while (i--) {
+						if (array[i][key] === value) {
+							return i;
+						}
+					}
+					return -1;
+				},
+				extend: function extend(o1, o2, preventOverwrite) {
+					for (var prop in o2) {
+						if (o2.hasOwnProperty(prop)) {
+							if (preventOverwrite && o1.hasOwnProperty(prop)) {
+								continue;
+							}
+							o1[prop] = o2[prop];
+						}
+					}
+				},
+				easing: {
+					sine: {
+						out: function out(k) {
+							return Math.sin(k * (Math.PI / 2));
+						},
+						inOut: function inOut(k) {
+							return -(Math.cos(Math.PI * k) - 1) / 2;
+						}
+					},
+					cubic: {
+						out: function out(k) {
+							return --k * k * k + 1;
+						}
+					}
+					/*
+	    	elastic: {
+	    		out: function ( k ) {
+	    				var s, a = 0.1, p = 0.4;
+	    			if ( k === 0 ) return 0;
+	    			if ( k === 1 ) return 1;
+	    			if ( !a || a < 1 ) { a = 1; s = p / 4; }
+	    			else s = p * Math.asin( 1 / a ) / ( 2 * Math.PI );
+	    			return ( a * Math.pow( 2, - 10 * k) * Math.sin( ( k - s ) * ( 2 * Math.PI ) / p ) + 1 );
+	    			},
+	    	},
+	    	back: {
+	    		out: function ( k ) {
+	    			var s = 1.70158;
+	    			return --k * k * ( ( s + 1 ) * k + s ) + 1;
+	    		}
+	    	}
+	    */
 				},
 
-				// Cancel the request
-				abort: function( statusText ) {
-					var finalText = statusText || strAbort;
-					if ( transport ) {
-						transport.abort( finalText );
+				/**
+	    *
+	    * @return {object}
+	    *
+	    * {
+	    *  raf : request animation frame function
+	    *  caf : cancel animation frame function
+	    *  transfrom : transform property key (with vendor), or null if not supported
+	    *  oldIE : IE8 or below
+	    * }
+	    *
+	    */
+				detectFeatures: function detectFeatures() {
+					if (framework.features) {
+						return framework.features;
 					}
-					done( 0, finalText );
-					return this;
+					var helperEl = framework.createEl(),
+					    helperStyle = helperEl.style,
+					    vendor = '',
+					    features = {};
+
+					// IE8 and below
+					features.oldIE = document.all && !document.addEventListener;
+
+					features.touch = 'ontouchstart' in window;
+
+					if (window.requestAnimationFrame) {
+						features.raf = window.requestAnimationFrame;
+						features.caf = window.cancelAnimationFrame;
+					}
+
+					features.pointerEvent = navigator.pointerEnabled || navigator.msPointerEnabled;
+
+					// fix false-positive detection of old Android in new IE
+					// (IE11 ua string contains "Android 4.0")
+
+					if (!features.pointerEvent) {
+
+						var ua = navigator.userAgent;
+
+						// Detect if device is iPhone or iPod and if it's older than iOS 8
+						// http://stackoverflow.com/a/14223920
+						//
+						// This detection is made because of buggy top/bottom toolbars
+						// that don't trigger window.resize event.
+						// For more info refer to _isFixedPosition variable in core.js
+
+						if (/iP(hone|od)/.test(navigator.platform)) {
+							var v = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
+							if (v && v.length > 0) {
+								v = parseInt(v[1], 10);
+								if (v >= 1 && v < 8) {
+									features.isOldIOSPhone = true;
+								}
+							}
+						}
+
+						// Detect old Android (before KitKat)
+						// due to bugs related to position:fixed
+						// http://stackoverflow.com/questions/7184573/pick-up-the-android-version-in-the-browser-by-javascript
+
+						var match = ua.match(/Android\s([0-9\.]*)/);
+						var androidversion = match ? match[1] : 0;
+						androidversion = parseFloat(androidversion);
+						if (androidversion >= 1) {
+							if (androidversion < 4.4) {
+								features.isOldAndroid = true; // for fixed position bug & performance
+							}
+							features.androidVersion = androidversion; // for touchend bug
+						}
+						features.isMobileOpera = /opera mini|opera mobi/i.test(ua);
+
+						// p.s. yes, yes, UA sniffing is bad, propose your solution for above bugs.
+					}
+
+					var styleChecks = ['transform', 'perspective', 'animationName'],
+					    vendors = ['', 'webkit', 'Moz', 'ms', 'O'],
+					    styleCheckItem,
+					    styleName;
+
+					for (var i = 0; i < 4; i++) {
+						vendor = vendors[i];
+
+						for (var a = 0; a < 3; a++) {
+							styleCheckItem = styleChecks[a];
+
+							// uppercase first letter of property name, if vendor is present
+							styleName = vendor + (vendor ? styleCheckItem.charAt(0).toUpperCase() + styleCheckItem.slice(1) : styleCheckItem);
+
+							if (!features[styleCheckItem] && styleName in helperStyle) {
+								features[styleCheckItem] = styleName;
+							}
+						}
+
+						if (vendor && !features.raf) {
+							vendor = vendor.toLowerCase();
+							features.raf = window[vendor + 'RequestAnimationFrame'];
+							if (features.raf) {
+								features.caf = window[vendor + 'CancelAnimationFrame'] || window[vendor + 'CancelRequestAnimationFrame'];
+							}
+						}
+					}
+
+					if (!features.raf) {
+						var lastTime = 0;
+						features.raf = function (fn) {
+							var currTime = new Date().getTime();
+							var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+							var id = window.setTimeout(function () {
+								fn(currTime + timeToCall);
+							}, timeToCall);
+							lastTime = currTime + timeToCall;
+							return id;
+						};
+						features.caf = function (id) {
+							clearTimeout(id);
+						};
+					}
+
+					// Detect SVG support
+					features.svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
+
+					framework.features = features;
+
+					return features;
 				}
 			};
 
-		// Attach deferreds
-		deferred.promise( jqXHR ).complete = completeDeferred.add;
-		jqXHR.success = jqXHR.done;
-		jqXHR.error = jqXHR.fail;
+			framework.detectFeatures();
 
-		// Remove hash character (#7531: and string promotion)
-		// Add protocol if not provided (prefilters might expect it)
-		// Handle falsy url in the settings object (#10093: consistency with old signature)
-		// We also use the url parameter if available
-		s.url = ( ( url || s.url || location.href ) + "" ).replace( rhash, "" )
-			.replace( rprotocol, location.protocol + "//" );
+			// Override addEventListener for old versions of IE
+			if (framework.features.oldIE) {
 
-		// Alias method option to type as per ticket #12004
-		s.type = options.method || options.type || s.method || s.type;
+				framework.bind = function (target, type, listener, unbind) {
 
-		// Extract dataTypes list
-		s.dataTypes = jQuery.trim( s.dataType || "*" ).toLowerCase().match( rnotwhite ) || [ "" ];
+					type = type.split(' ');
 
-		// A cross-domain request is in order when the origin doesn't match the current origin.
-		if ( s.crossDomain == null ) {
-			urlAnchor = document.createElement( "a" );
+					var methodName = (unbind ? 'detach' : 'attach') + 'Event',
+					    evName,
+					    _handleEv = function _handleEv() {
+						listener.handleEvent.call(listener);
+					};
 
-			// Support: IE8-11+
-			// IE throws exception if url is malformed, e.g. http://example.com:80x/
-			try {
-				urlAnchor.href = s.url;
+					for (var i = 0; i < type.length; i++) {
+						evName = type[i];
+						if (evName) {
 
-				// Support: IE8-11+
-				// Anchor's host property isn't correctly set when s.url is relative
-				urlAnchor.href = urlAnchor.href;
-				s.crossDomain = originAnchor.protocol + "//" + originAnchor.host !==
-					urlAnchor.protocol + "//" + urlAnchor.host;
-			} catch ( e ) {
-
-				// If there is an error parsing the URL, assume it is crossDomain,
-				// it can be rejected by the transport if it is invalid
-				s.crossDomain = true;
-			}
-		}
-
-		// Convert data if not already a string
-		if ( s.data && s.processData && typeof s.data !== "string" ) {
-			s.data = jQuery.param( s.data, s.traditional );
-		}
-
-		// Apply prefilters
-		inspectPrefiltersOrTransports( prefilters, s, options, jqXHR );
-
-		// If request was aborted inside a prefilter, stop there
-		if ( state === 2 ) {
-			return jqXHR;
-		}
-
-		// We can fire global events as of now if asked to
-		// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (#15118)
-		fireGlobals = jQuery.event && s.global;
-
-		// Watch for a new set of requests
-		if ( fireGlobals && jQuery.active++ === 0 ) {
-			jQuery.event.trigger( "ajaxStart" );
-		}
-
-		// Uppercase the type
-		s.type = s.type.toUpperCase();
-
-		// Determine if request has content
-		s.hasContent = !rnoContent.test( s.type );
-
-		// Save the URL in case we're toying with the If-Modified-Since
-		// and/or If-None-Match header later on
-		cacheURL = s.url;
-
-		// More options handling for requests with no content
-		if ( !s.hasContent ) {
-
-			// If data is available, append data to url
-			if ( s.data ) {
-				cacheURL = ( s.url += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data );
-
-				// #9682: remove data so that it's not used in an eventual retry
-				delete s.data;
-			}
-
-			// Add anti-cache in url if needed
-			if ( s.cache === false ) {
-				s.url = rts.test( cacheURL ) ?
-
-					// If there is already a '_' parameter, set its value
-					cacheURL.replace( rts, "$1_=" + nonce++ ) :
-
-					// Otherwise add one to the end
-					cacheURL + ( rquery.test( cacheURL ) ? "&" : "?" ) + "_=" + nonce++;
-			}
-		}
-
-		// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
-		if ( s.ifModified ) {
-			if ( jQuery.lastModified[ cacheURL ] ) {
-				jqXHR.setRequestHeader( "If-Modified-Since", jQuery.lastModified[ cacheURL ] );
-			}
-			if ( jQuery.etag[ cacheURL ] ) {
-				jqXHR.setRequestHeader( "If-None-Match", jQuery.etag[ cacheURL ] );
-			}
-		}
-
-		// Set the correct header, if data is being sent
-		if ( s.data && s.hasContent && s.contentType !== false || options.contentType ) {
-			jqXHR.setRequestHeader( "Content-Type", s.contentType );
-		}
-
-		// Set the Accepts header for the server, depending on the dataType
-		jqXHR.setRequestHeader(
-			"Accept",
-			s.dataTypes[ 0 ] && s.accepts[ s.dataTypes[ 0 ] ] ?
-				s.accepts[ s.dataTypes[ 0 ] ] +
-					( s.dataTypes[ 0 ] !== "*" ? ", " + allTypes + "; q=0.01" : "" ) :
-				s.accepts[ "*" ]
-		);
-
-		// Check for headers option
-		for ( i in s.headers ) {
-			jqXHR.setRequestHeader( i, s.headers[ i ] );
-		}
-
-		// Allow custom headers/mimetypes and early abort
-		if ( s.beforeSend &&
-			( s.beforeSend.call( callbackContext, jqXHR, s ) === false || state === 2 ) ) {
-
-			// Abort if not done already and return
-			return jqXHR.abort();
-		}
-
-		// Aborting is no longer a cancellation
-		strAbort = "abort";
-
-		// Install callbacks on deferreds
-		for ( i in { success: 1, error: 1, complete: 1 } ) {
-			jqXHR[ i ]( s[ i ] );
-		}
-
-		// Get transport
-		transport = inspectPrefiltersOrTransports( transports, s, options, jqXHR );
-
-		// If no transport, we auto-abort
-		if ( !transport ) {
-			done( -1, "No Transport" );
-		} else {
-			jqXHR.readyState = 1;
-
-			// Send global event
-			if ( fireGlobals ) {
-				globalEventContext.trigger( "ajaxSend", [ jqXHR, s ] );
-			}
-
-			// If request was aborted inside ajaxSend, stop there
-			if ( state === 2 ) {
-				return jqXHR;
-			}
-
-			// Timeout
-			if ( s.async && s.timeout > 0 ) {
-				timeoutTimer = window.setTimeout( function() {
-					jqXHR.abort( "timeout" );
-				}, s.timeout );
-			}
-
-			try {
-				state = 1;
-				transport.send( requestHeaders, done );
-			} catch ( e ) {
-
-				// Propagate exception as error if not done
-				if ( state < 2 ) {
-					done( -1, e );
-
-				// Simply rethrow otherwise
-				} else {
-					throw e;
-				}
-			}
-		}
-
-		// Callback for when everything is done
-		function done( status, nativeStatusText, responses, headers ) {
-			var isSuccess, success, error, response, modified,
-				statusText = nativeStatusText;
-
-			// Called once
-			if ( state === 2 ) {
-				return;
-			}
-
-			// State is "done" now
-			state = 2;
-
-			// Clear timeout if it exists
-			if ( timeoutTimer ) {
-				window.clearTimeout( timeoutTimer );
-			}
-
-			// Dereference transport for early garbage collection
-			// (no matter how long the jqXHR object will be used)
-			transport = undefined;
-
-			// Cache response headers
-			responseHeadersString = headers || "";
-
-			// Set readyState
-			jqXHR.readyState = status > 0 ? 4 : 0;
-
-			// Determine if successful
-			isSuccess = status >= 200 && status < 300 || status === 304;
-
-			// Get response data
-			if ( responses ) {
-				response = ajaxHandleResponses( s, jqXHR, responses );
-			}
-
-			// Convert no matter what (that way responseXXX fields are always set)
-			response = ajaxConvert( s, response, jqXHR, isSuccess );
-
-			// If successful, handle type chaining
-			if ( isSuccess ) {
-
-				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
-				if ( s.ifModified ) {
-					modified = jqXHR.getResponseHeader( "Last-Modified" );
-					if ( modified ) {
-						jQuery.lastModified[ cacheURL ] = modified;
-					}
-					modified = jqXHR.getResponseHeader( "etag" );
-					if ( modified ) {
-						jQuery.etag[ cacheURL ] = modified;
-					}
-				}
-
-				// if no content
-				if ( status === 204 || s.type === "HEAD" ) {
-					statusText = "nocontent";
-
-				// if not modified
-				} else if ( status === 304 ) {
-					statusText = "notmodified";
-
-				// If we have data, let's convert it
-				} else {
-					statusText = response.state;
-					success = response.data;
-					error = response.error;
-					isSuccess = !error;
-				}
-			} else {
-
-				// Extract error from statusText and normalize for non-aborts
-				error = statusText;
-				if ( status || !statusText ) {
-					statusText = "error";
-					if ( status < 0 ) {
-						status = 0;
-					}
-				}
-			}
-
-			// Set data for the fake xhr object
-			jqXHR.status = status;
-			jqXHR.statusText = ( nativeStatusText || statusText ) + "";
-
-			// Success/Error
-			if ( isSuccess ) {
-				deferred.resolveWith( callbackContext, [ success, statusText, jqXHR ] );
-			} else {
-				deferred.rejectWith( callbackContext, [ jqXHR, statusText, error ] );
-			}
-
-			// Status-dependent callbacks
-			jqXHR.statusCode( statusCode );
-			statusCode = undefined;
-
-			if ( fireGlobals ) {
-				globalEventContext.trigger( isSuccess ? "ajaxSuccess" : "ajaxError",
-					[ jqXHR, s, isSuccess ? success : error ] );
-			}
-
-			// Complete
-			completeDeferred.fireWith( callbackContext, [ jqXHR, statusText ] );
-
-			if ( fireGlobals ) {
-				globalEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
-
-				// Handle the global AJAX counter
-				if ( !( --jQuery.active ) ) {
-					jQuery.event.trigger( "ajaxStop" );
-				}
-			}
-		}
-
-		return jqXHR;
-	},
-
-	getJSON: function( url, data, callback ) {
-		return jQuery.get( url, data, callback, "json" );
-	},
-
-	getScript: function( url, callback ) {
-		return jQuery.get( url, undefined, callback, "script" );
-	}
-} );
-
-jQuery.each( [ "get", "post" ], function( i, method ) {
-	jQuery[ method ] = function( url, data, callback, type ) {
-
-		// Shift arguments if data argument was omitted
-		if ( jQuery.isFunction( data ) ) {
-			type = type || callback;
-			callback = data;
-			data = undefined;
-		}
-
-		// The url can be an options object (which then must have .url)
-		return jQuery.ajax( jQuery.extend( {
-			url: url,
-			type: method,
-			dataType: type,
-			data: data,
-			success: callback
-		}, jQuery.isPlainObject( url ) && url ) );
-	};
-} );
-
-
-jQuery._evalUrl = function( url ) {
-	return jQuery.ajax( {
-		url: url,
-
-		// Make this explicit, since user can override this through ajaxSetup (#11264)
-		type: "GET",
-		dataType: "script",
-		async: false,
-		global: false,
-		"throws": true
-	} );
-};
-
-
-jQuery.fn.extend( {
-	wrapAll: function( html ) {
-		var wrap;
-
-		if ( jQuery.isFunction( html ) ) {
-			return this.each( function( i ) {
-				jQuery( this ).wrapAll( html.call( this, i ) );
-			} );
-		}
-
-		if ( this[ 0 ] ) {
-
-			// The elements to wrap the target around
-			wrap = jQuery( html, this[ 0 ].ownerDocument ).eq( 0 ).clone( true );
-
-			if ( this[ 0 ].parentNode ) {
-				wrap.insertBefore( this[ 0 ] );
-			}
-
-			wrap.map( function() {
-				var elem = this;
-
-				while ( elem.firstElementChild ) {
-					elem = elem.firstElementChild;
-				}
-
-				return elem;
-			} ).append( this );
-		}
-
-		return this;
-	},
-
-	wrapInner: function( html ) {
-		if ( jQuery.isFunction( html ) ) {
-			return this.each( function( i ) {
-				jQuery( this ).wrapInner( html.call( this, i ) );
-			} );
-		}
-
-		return this.each( function() {
-			var self = jQuery( this ),
-				contents = self.contents();
-
-			if ( contents.length ) {
-				contents.wrapAll( html );
-
-			} else {
-				self.append( html );
-			}
-		} );
-	},
-
-	wrap: function( html ) {
-		var isFunction = jQuery.isFunction( html );
-
-		return this.each( function( i ) {
-			jQuery( this ).wrapAll( isFunction ? html.call( this, i ) : html );
-		} );
-	},
-
-	unwrap: function() {
-		return this.parent().each( function() {
-			if ( !jQuery.nodeName( this, "body" ) ) {
-				jQuery( this ).replaceWith( this.childNodes );
-			}
-		} ).end();
-	}
-} );
-
-
-jQuery.expr.filters.hidden = function( elem ) {
-	return !jQuery.expr.filters.visible( elem );
-};
-jQuery.expr.filters.visible = function( elem ) {
-
-	// Support: Opera <= 12.12
-	// Opera reports offsetWidths and offsetHeights less than zero on some elements
-	// Use OR instead of AND as the element is not visible if either is true
-	// See tickets #10406 and #13132
-	return elem.offsetWidth > 0 || elem.offsetHeight > 0 || elem.getClientRects().length > 0;
-};
-
-
-
-
-var r20 = /%20/g,
-	rbracket = /\[\]$/,
-	rCRLF = /\r?\n/g,
-	rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
-	rsubmittable = /^(?:input|select|textarea|keygen)/i;
-
-function buildParams( prefix, obj, traditional, add ) {
-	var name;
-
-	if ( jQuery.isArray( obj ) ) {
-
-		// Serialize array item.
-		jQuery.each( obj, function( i, v ) {
-			if ( traditional || rbracket.test( prefix ) ) {
-
-				// Treat each array item as a scalar.
-				add( prefix, v );
-
-			} else {
-
-				// Item is non-scalar (array or object), encode its numeric index.
-				buildParams(
-					prefix + "[" + ( typeof v === "object" && v != null ? i : "" ) + "]",
-					v,
-					traditional,
-					add
-				);
-			}
-		} );
-
-	} else if ( !traditional && jQuery.type( obj ) === "object" ) {
-
-		// Serialize object item.
-		for ( name in obj ) {
-			buildParams( prefix + "[" + name + "]", obj[ name ], traditional, add );
-		}
-
-	} else {
-
-		// Serialize scalar item.
-		add( prefix, obj );
-	}
-}
-
-// Serialize an array of form elements or a set of
-// key/values into a query string
-jQuery.param = function( a, traditional ) {
-	var prefix,
-		s = [],
-		add = function( key, value ) {
-
-			// If value is a function, invoke it and return its value
-			value = jQuery.isFunction( value ) ? value() : ( value == null ? "" : value );
-			s[ s.length ] = encodeURIComponent( key ) + "=" + encodeURIComponent( value );
-		};
-
-	// Set traditional to true for jQuery <= 1.3.2 behavior.
-	if ( traditional === undefined ) {
-		traditional = jQuery.ajaxSettings && jQuery.ajaxSettings.traditional;
-	}
-
-	// If an array was passed in, assume that it is an array of form elements.
-	if ( jQuery.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
-
-		// Serialize the form elements
-		jQuery.each( a, function() {
-			add( this.name, this.value );
-		} );
-
-	} else {
-
-		// If traditional, encode the "old" way (the way 1.3.2 or older
-		// did it), otherwise encode params recursively.
-		for ( prefix in a ) {
-			buildParams( prefix, a[ prefix ], traditional, add );
-		}
-	}
-
-	// Return the resulting serialization
-	return s.join( "&" ).replace( r20, "+" );
-};
-
-jQuery.fn.extend( {
-	serialize: function() {
-		return jQuery.param( this.serializeArray() );
-	},
-	serializeArray: function() {
-		return this.map( function() {
-
-			// Can add propHook for "elements" to filter or add form elements
-			var elements = jQuery.prop( this, "elements" );
-			return elements ? jQuery.makeArray( elements ) : this;
-		} )
-		.filter( function() {
-			var type = this.type;
-
-			// Use .is( ":disabled" ) so that fieldset[disabled] works
-			return this.name && !jQuery( this ).is( ":disabled" ) &&
-				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
-				( this.checked || !rcheckableType.test( type ) );
-		} )
-		.map( function( i, elem ) {
-			var val = jQuery( this ).val();
-
-			return val == null ?
-				null :
-				jQuery.isArray( val ) ?
-					jQuery.map( val, function( val ) {
-						return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
-					} ) :
-					{ name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
-		} ).get();
-	}
-} );
-
-
-jQuery.ajaxSettings.xhr = function() {
-	try {
-		return new window.XMLHttpRequest();
-	} catch ( e ) {}
-};
-
-var xhrSuccessStatus = {
-
-		// File protocol always yields status code 0, assume 200
-		0: 200,
-
-		// Support: IE9
-		// #1450: sometimes IE returns 1223 when it should be 204
-		1223: 204
-	},
-	xhrSupported = jQuery.ajaxSettings.xhr();
-
-support.cors = !!xhrSupported && ( "withCredentials" in xhrSupported );
-support.ajax = xhrSupported = !!xhrSupported;
-
-jQuery.ajaxTransport( function( options ) {
-	var callback, errorCallback;
-
-	// Cross domain only allowed if supported through XMLHttpRequest
-	if ( support.cors || xhrSupported && !options.crossDomain ) {
-		return {
-			send: function( headers, complete ) {
-				var i,
-					xhr = options.xhr();
-
-				xhr.open(
-					options.type,
-					options.url,
-					options.async,
-					options.username,
-					options.password
-				);
-
-				// Apply custom fields if provided
-				if ( options.xhrFields ) {
-					for ( i in options.xhrFields ) {
-						xhr[ i ] = options.xhrFields[ i ];
-					}
-				}
-
-				// Override mime type if needed
-				if ( options.mimeType && xhr.overrideMimeType ) {
-					xhr.overrideMimeType( options.mimeType );
-				}
-
-				// X-Requested-With header
-				// For cross-domain requests, seeing as conditions for a preflight are
-				// akin to a jigsaw puzzle, we simply never set it to be sure.
-				// (it can always be set on a per-request basis or even using ajaxSetup)
-				// For same-domain requests, won't change header if already provided.
-				if ( !options.crossDomain && !headers[ "X-Requested-With" ] ) {
-					headers[ "X-Requested-With" ] = "XMLHttpRequest";
-				}
-
-				// Set headers
-				for ( i in headers ) {
-					xhr.setRequestHeader( i, headers[ i ] );
-				}
-
-				// Callback
-				callback = function( type ) {
-					return function() {
-						if ( callback ) {
-							callback = errorCallback = xhr.onload =
-								xhr.onerror = xhr.onabort = xhr.onreadystatechange = null;
-
-							if ( type === "abort" ) {
-								xhr.abort();
-							} else if ( type === "error" ) {
-
-								// Support: IE9
-								// On a manual native abort, IE9 throws
-								// errors on any property access that is not readyState
-								if ( typeof xhr.status !== "number" ) {
-									complete( 0, "error" );
+							if ((typeof listener === 'undefined' ? 'undefined' : _typeof(listener)) === 'object' && listener.handleEvent) {
+								if (!unbind) {
+									listener['oldIE' + evName] = _handleEv;
 								} else {
-									complete(
-
-										// File: protocol always yields status 0; see #8605, #14207
-										xhr.status,
-										xhr.statusText
-									);
+									if (!listener['oldIE' + evName]) {
+										return false;
+									}
 								}
+
+								target[methodName]('on' + evName, listener['oldIE' + evName]);
 							} else {
-								complete(
-									xhrSuccessStatus[ xhr.status ] || xhr.status,
-									xhr.statusText,
-
-									// Support: IE9 only
-									// IE9 has no XHR2 but throws on binary (trac-11426)
-									// For XHR2 non-text, let the caller handle it (gh-2498)
-									( xhr.responseType || "text" ) !== "text"  ||
-									typeof xhr.responseText !== "string" ?
-										{ binary: xhr.response } :
-										{ text: xhr.responseText },
-									xhr.getAllResponseHeaders()
-								);
+								target[methodName]('on' + evName, listener);
 							}
 						}
-					};
+					}
 				};
-
-				// Listen to events
-				xhr.onload = callback();
-				errorCallback = xhr.onerror = callback( "error" );
-
-				// Support: IE9
-				// Use onreadystatechange to replace onabort
-				// to handle uncaught aborts
-				if ( xhr.onabort !== undefined ) {
-					xhr.onabort = errorCallback;
-				} else {
-					xhr.onreadystatechange = function() {
-
-						// Check readyState before timeout as it changes
-						if ( xhr.readyState === 4 ) {
-
-							// Allow onerror to be called first,
-							// but that will not handle a native abort
-							// Also, save errorCallback to a variable
-							// as xhr.onerror cannot be accessed
-							window.setTimeout( function() {
-								if ( callback ) {
-									errorCallback();
-								}
-							} );
-						}
-					};
-				}
-
-				// Create the abort callback
-				callback = callback( "abort" );
-
-				try {
-
-					// Do send the request (this may raise an exception)
-					xhr.send( options.hasContent && options.data || null );
-				} catch ( e ) {
-
-					// #14683: Only rethrow if this hasn't been notified as an error yet
-					if ( callback ) {
-						throw e;
-					}
-				}
-			},
-
-			abort: function() {
-				if ( callback ) {
-					callback();
-				}
-			}
-		};
-	}
-} );
-
-
-
-
-// Install script dataType
-jQuery.ajaxSetup( {
-	accepts: {
-		script: "text/javascript, application/javascript, " +
-			"application/ecmascript, application/x-ecmascript"
-	},
-	contents: {
-		script: /\b(?:java|ecma)script\b/
-	},
-	converters: {
-		"text script": function( text ) {
-			jQuery.globalEval( text );
-			return text;
-		}
-	}
-} );
-
-// Handle cache's special case and crossDomain
-jQuery.ajaxPrefilter( "script", function( s ) {
-	if ( s.cache === undefined ) {
-		s.cache = false;
-	}
-	if ( s.crossDomain ) {
-		s.type = "GET";
-	}
-} );
-
-// Bind script tag hack transport
-jQuery.ajaxTransport( "script", function( s ) {
-
-	// This transport only deals with cross domain requests
-	if ( s.crossDomain ) {
-		var script, callback;
-		return {
-			send: function( _, complete ) {
-				script = jQuery( "<script>" ).prop( {
-					charset: s.scriptCharset,
-					src: s.url
-				} ).on(
-					"load error",
-					callback = function( evt ) {
-						script.remove();
-						callback = null;
-						if ( evt ) {
-							complete( evt.type === "error" ? 404 : 200, evt.type );
-						}
-					}
-				);
-
-				// Use native DOM manipulation to avoid our domManip AJAX trickery
-				document.head.appendChild( script[ 0 ] );
-			},
-			abort: function() {
-				if ( callback ) {
-					callback();
-				}
-			}
-		};
-	}
-} );
-
-
-
-
-var oldCallbacks = [],
-	rjsonp = /(=)\?(?=&|$)|\?\?/;
-
-// Default jsonp settings
-jQuery.ajaxSetup( {
-	jsonp: "callback",
-	jsonpCallback: function() {
-		var callback = oldCallbacks.pop() || ( jQuery.expando + "_" + ( nonce++ ) );
-		this[ callback ] = true;
-		return callback;
-	}
-} );
-
-// Detect, normalize options and install callbacks for jsonp requests
-jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
-
-	var callbackName, overwritten, responseContainer,
-		jsonProp = s.jsonp !== false && ( rjsonp.test( s.url ) ?
-			"url" :
-			typeof s.data === "string" &&
-				( s.contentType || "" )
-					.indexOf( "application/x-www-form-urlencoded" ) === 0 &&
-				rjsonp.test( s.data ) && "data"
-		);
-
-	// Handle iff the expected data type is "jsonp" or we have a parameter to set
-	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
-
-		// Get callback name, remembering preexisting value associated with it
-		callbackName = s.jsonpCallback = jQuery.isFunction( s.jsonpCallback ) ?
-			s.jsonpCallback() :
-			s.jsonpCallback;
-
-		// Insert callback into url or form data
-		if ( jsonProp ) {
-			s[ jsonProp ] = s[ jsonProp ].replace( rjsonp, "$1" + callbackName );
-		} else if ( s.jsonp !== false ) {
-			s.url += ( rquery.test( s.url ) ? "&" : "?" ) + s.jsonp + "=" + callbackName;
-		}
-
-		// Use data converter to retrieve json after script execution
-		s.converters[ "script json" ] = function() {
-			if ( !responseContainer ) {
-				jQuery.error( callbackName + " was not called" );
-			}
-			return responseContainer[ 0 ];
-		};
-
-		// Force json dataType
-		s.dataTypes[ 0 ] = "json";
-
-		// Install callback
-		overwritten = window[ callbackName ];
-		window[ callbackName ] = function() {
-			responseContainer = arguments;
-		};
-
-		// Clean-up function (fires after converters)
-		jqXHR.always( function() {
-
-			// If previous value didn't exist - remove it
-			if ( overwritten === undefined ) {
-				jQuery( window ).removeProp( callbackName );
-
-			// Otherwise restore preexisting value
-			} else {
-				window[ callbackName ] = overwritten;
 			}
 
-			// Save back as free
-			if ( s[ callbackName ] ) {
-
-				// Make sure that re-using the options doesn't screw things around
-				s.jsonpCallback = originalSettings.jsonpCallback;
-
-				// Save the callback name for future use
-				oldCallbacks.push( callbackName );
-			}
-
-			// Call if it was a function and we have a response
-			if ( responseContainer && jQuery.isFunction( overwritten ) ) {
-				overwritten( responseContainer[ 0 ] );
-			}
-
-			responseContainer = overwritten = undefined;
-		} );
-
-		// Delegate to script
-		return "script";
-	}
-} );
-
-
-
-
-// Argument "data" should be string of html
-// context (optional): If specified, the fragment will be created in this context,
-// defaults to document
-// keepScripts (optional): If true, will include scripts passed in the html string
-jQuery.parseHTML = function( data, context, keepScripts ) {
-	if ( !data || typeof data !== "string" ) {
-		return null;
-	}
-	if ( typeof context === "boolean" ) {
-		keepScripts = context;
-		context = false;
-	}
-	context = context || document;
-
-	var parsed = rsingleTag.exec( data ),
-		scripts = !keepScripts && [];
-
-	// Single tag
-	if ( parsed ) {
-		return [ context.createElement( parsed[ 1 ] ) ];
-	}
-
-	parsed = buildFragment( [ data ], context, scripts );
-
-	if ( scripts && scripts.length ) {
-		jQuery( scripts ).remove();
-	}
-
-	return jQuery.merge( [], parsed.childNodes );
-};
-
-
-// Keep a copy of the old load method
-var _load = jQuery.fn.load;
-
-/**
- * Load a url into a page
- */
-jQuery.fn.load = function( url, params, callback ) {
-	if ( typeof url !== "string" && _load ) {
-		return _load.apply( this, arguments );
-	}
-
-	var selector, type, response,
-		self = this,
-		off = url.indexOf( " " );
-
-	if ( off > -1 ) {
-		selector = jQuery.trim( url.slice( off ) );
-		url = url.slice( 0, off );
-	}
-
-	// If it's a function
-	if ( jQuery.isFunction( params ) ) {
-
-		// We assume that it's the callback
-		callback = params;
-		params = undefined;
-
-	// Otherwise, build a param string
-	} else if ( params && typeof params === "object" ) {
-		type = "POST";
-	}
-
-	// If we have elements to modify, make the request
-	if ( self.length > 0 ) {
-		jQuery.ajax( {
-			url: url,
-
-			// If "type" variable is undefined, then "GET" method will be used.
-			// Make value of this field explicit since
-			// user can override it through ajaxSetup method
-			type: type || "GET",
-			dataType: "html",
-			data: params
-		} ).done( function( responseText ) {
-
-			// Save response for use in complete callback
-			response = arguments;
-
-			self.html( selector ?
-
-				// If a selector was specified, locate the right elements in a dummy div
-				// Exclude scripts to avoid IE 'Permission Denied' errors
-				jQuery( "<div>" ).append( jQuery.parseHTML( responseText ) ).find( selector ) :
-
-				// Otherwise use the full result
-				responseText );
-
-		// If the request succeeds, this function gets "data", "status", "jqXHR"
-		// but they are ignored because response was set above.
-		// If it fails, this function gets "jqXHR", "status", "error"
-		} ).always( callback && function( jqXHR, status ) {
-			self.each( function() {
-				callback.apply( this, response || [ jqXHR.responseText, status, jqXHR ] );
-			} );
-		} );
-	}
-
-	return this;
-};
-
-
-
-
-// Attach a bunch of functions for handling common AJAX events
-jQuery.each( [
-	"ajaxStart",
-	"ajaxStop",
-	"ajaxComplete",
-	"ajaxError",
-	"ajaxSuccess",
-	"ajaxSend"
-], function( i, type ) {
-	jQuery.fn[ type ] = function( fn ) {
-		return this.on( type, fn );
-	};
-} );
-
-
-
-
-jQuery.expr.filters.animated = function( elem ) {
-	return jQuery.grep( jQuery.timers, function( fn ) {
-		return elem === fn.elem;
-	} ).length;
-};
-
-
-
-
-/**
- * Gets a window from an element
- */
-function getWindow( elem ) {
-	return jQuery.isWindow( elem ) ? elem : elem.nodeType === 9 && elem.defaultView;
-}
-
-jQuery.offset = {
-	setOffset: function( elem, options, i ) {
-		var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition,
-			position = jQuery.css( elem, "position" ),
-			curElem = jQuery( elem ),
-			props = {};
-
-		// Set position first, in-case top/left are set even on static elem
-		if ( position === "static" ) {
-			elem.style.position = "relative";
-		}
-
-		curOffset = curElem.offset();
-		curCSSTop = jQuery.css( elem, "top" );
-		curCSSLeft = jQuery.css( elem, "left" );
-		calculatePosition = ( position === "absolute" || position === "fixed" ) &&
-			( curCSSTop + curCSSLeft ).indexOf( "auto" ) > -1;
-
-		// Need to be able to calculate position if either
-		// top or left is auto and position is either absolute or fixed
-		if ( calculatePosition ) {
-			curPosition = curElem.position();
-			curTop = curPosition.top;
-			curLeft = curPosition.left;
-
-		} else {
-			curTop = parseFloat( curCSSTop ) || 0;
-			curLeft = parseFloat( curCSSLeft ) || 0;
-		}
-
-		if ( jQuery.isFunction( options ) ) {
-
-			// Use jQuery.extend here to allow modification of coordinates argument (gh-1848)
-			options = options.call( elem, i, jQuery.extend( {}, curOffset ) );
-		}
-
-		if ( options.top != null ) {
-			props.top = ( options.top - curOffset.top ) + curTop;
-		}
-		if ( options.left != null ) {
-			props.left = ( options.left - curOffset.left ) + curLeft;
-		}
-
-		if ( "using" in options ) {
-			options.using.call( elem, props );
-
-		} else {
-			curElem.css( props );
-		}
-	}
-};
-
-jQuery.fn.extend( {
-	offset: function( options ) {
-		if ( arguments.length ) {
-			return options === undefined ?
-				this :
-				this.each( function( i ) {
-					jQuery.offset.setOffset( this, options, i );
-				} );
-		}
-
-		var docElem, win,
-			elem = this[ 0 ],
-			box = { top: 0, left: 0 },
-			doc = elem && elem.ownerDocument;
-
-		if ( !doc ) {
-			return;
-		}
-
-		docElem = doc.documentElement;
-
-		// Make sure it's not a disconnected DOM node
-		if ( !jQuery.contains( docElem, elem ) ) {
-			return box;
-		}
-
-		box = elem.getBoundingClientRect();
-		win = getWindow( doc );
-		return {
-			top: box.top + win.pageYOffset - docElem.clientTop,
-			left: box.left + win.pageXOffset - docElem.clientLeft
-		};
-	},
-
-	position: function() {
-		if ( !this[ 0 ] ) {
-			return;
-		}
-
-		var offsetParent, offset,
-			elem = this[ 0 ],
-			parentOffset = { top: 0, left: 0 };
-
-		// Fixed elements are offset from window (parentOffset = {top:0, left: 0},
-		// because it is its only offset parent
-		if ( jQuery.css( elem, "position" ) === "fixed" ) {
-
-			// Assume getBoundingClientRect is there when computed position is fixed
-			offset = elem.getBoundingClientRect();
-
-		} else {
-
-			// Get *real* offsetParent
-			offsetParent = this.offsetParent();
-
-			// Get correct offsets
-			offset = this.offset();
-			if ( !jQuery.nodeName( offsetParent[ 0 ], "html" ) ) {
-				parentOffset = offsetParent.offset();
-			}
-
-			// Add offsetParent borders
-			parentOffset.top += jQuery.css( offsetParent[ 0 ], "borderTopWidth", true );
-			parentOffset.left += jQuery.css( offsetParent[ 0 ], "borderLeftWidth", true );
-		}
-
-		// Subtract parent offsets and element margins
-		return {
-			top: offset.top - parentOffset.top - jQuery.css( elem, "marginTop", true ),
-			left: offset.left - parentOffset.left - jQuery.css( elem, "marginLeft", true )
-		};
-	},
-
-	// This method will return documentElement in the following cases:
-	// 1) For the element inside the iframe without offsetParent, this method will return
-	//    documentElement of the parent window
-	// 2) For the hidden or detached element
-	// 3) For body or html element, i.e. in case of the html node - it will return itself
-	//
-	// but those exceptions were never presented as a real life use-cases
-	// and might be considered as more preferable results.
-	//
-	// This logic, however, is not guaranteed and can change at any point in the future
-	offsetParent: function() {
-		return this.map( function() {
-			var offsetParent = this.offsetParent;
-
-			while ( offsetParent && jQuery.css( offsetParent, "position" ) === "static" ) {
-				offsetParent = offsetParent.offsetParent;
-			}
-
-			return offsetParent || documentElement;
-		} );
-	}
-} );
-
-// Create scrollLeft and scrollTop methods
-jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( method, prop ) {
-	var top = "pageYOffset" === prop;
-
-	jQuery.fn[ method ] = function( val ) {
-		return access( this, function( elem, method, val ) {
-			var win = getWindow( elem );
-
-			if ( val === undefined ) {
-				return win ? win[ prop ] : elem[ method ];
-			}
-
-			if ( win ) {
-				win.scrollTo(
-					!top ? val : win.pageXOffset,
-					top ? val : win.pageYOffset
-				);
-
-			} else {
-				elem[ method ] = val;
-			}
-		}, method, val, arguments.length );
-	};
-} );
-
-// Support: Safari<7-8+, Chrome<37-44+
-// Add the top/left cssHooks using jQuery.fn.position
-// Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=29084
-// Blink bug: https://code.google.com/p/chromium/issues/detail?id=229280
-// getComputedStyle returns percent when specified for top/left/bottom/right;
-// rather than make the css module depend on the offset module, just check for it here
-jQuery.each( [ "top", "left" ], function( i, prop ) {
-	jQuery.cssHooks[ prop ] = addGetHookIf( support.pixelPosition,
-		function( elem, computed ) {
-			if ( computed ) {
-				computed = curCSS( elem, prop );
-
-				// If curCSS returns percentage, fallback to offset
-				return rnumnonpx.test( computed ) ?
-					jQuery( elem ).position()[ prop ] + "px" :
-					computed;
-			}
-		}
-	);
-} );
-
-
-// Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
-jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
-	jQuery.each( { padding: "inner" + name, content: type, "": "outer" + name },
-		function( defaultExtra, funcName ) {
-
-		// Margin is only for outerHeight, outerWidth
-		jQuery.fn[ funcName ] = function( margin, value ) {
-			var chainable = arguments.length && ( defaultExtra || typeof margin !== "boolean" ),
-				extra = defaultExtra || ( margin === true || value === true ? "margin" : "border" );
-
-			return access( this, function( elem, type, value ) {
-				var doc;
-
-				if ( jQuery.isWindow( elem ) ) {
-
-					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
-					// isn't a whole lot we can do. See pull request at this URL for discussion:
-					// https://github.com/jquery/jquery/pull/764
-					return elem.document.documentElement[ "client" + name ];
-				}
-
-				// Get document width or height
-				if ( elem.nodeType === 9 ) {
-					doc = elem.documentElement;
-
-					// Either scroll[Width/Height] or offset[Width/Height] or client[Width/Height],
-					// whichever is greatest
-					return Math.max(
-						elem.body[ "scroll" + name ], doc[ "scroll" + name ],
-						elem.body[ "offset" + name ], doc[ "offset" + name ],
-						doc[ "client" + name ]
-					);
-				}
-
-				return value === undefined ?
-
-					// Get width or height on the element, requesting but not forcing parseFloat
-					jQuery.css( elem, type, extra ) :
-
-					// Set width or height on the element
-					jQuery.style( elem, type, value, extra );
-			}, type, chainable ? margin : undefined, chainable, null );
-		};
-	} );
-} );
-
-
-jQuery.fn.extend( {
-
-	bind: function( types, data, fn ) {
-		return this.on( types, null, data, fn );
-	},
-	unbind: function( types, fn ) {
-		return this.off( types, null, fn );
-	},
-
-	delegate: function( selector, types, data, fn ) {
-		return this.on( types, selector, data, fn );
-	},
-	undelegate: function( selector, types, fn ) {
-
-		// ( namespace ) or ( selector, types [, fn] )
-		return arguments.length === 1 ?
-			this.off( selector, "**" ) :
-			this.off( types, selector || "**", fn );
-	},
-	size: function() {
-		return this.length;
-	}
-} );
-
-jQuery.fn.andSelf = jQuery.fn.addBack;
-
-
-
-
-// Register as a named AMD module, since jQuery can be concatenated with other
-// files that may use define, but not via a proper concatenation script that
-// understands anonymous AMD modules. A named AMD is safest and most robust
-// way to register. Lowercase jquery is used because AMD module names are
-// derived from file names, and jQuery is normally delivered in a lowercase
-// file name. Do this after creating the global so that if an AMD module wants
-// to call noConflict to hide this version of jQuery, it will work.
-
-// Note that for maximum portability, libraries that are not jQuery should
-// declare themselves as anonymous modules, and avoid setting a global if an
-// AMD loader is present. jQuery is a special case. For more information, see
-// https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
-
-if ( typeof define === "function" && define.amd ) {
-	define( "jquery", [], function() {
-		return jQuery;
-	} );
-}
-
-
-
-var
-
-	// Map over jQuery in case of overwrite
-	_jQuery = window.jQuery,
-
-	// Map over the $ in case of overwrite
-	_$ = window.$;
-
-jQuery.noConflict = function( deep ) {
-	if ( window.$ === jQuery ) {
-		window.$ = _$;
-	}
-
-	if ( deep && window.jQuery === jQuery ) {
-		window.jQuery = _jQuery;
-	}
-
-	return jQuery;
-};
-
-// Expose jQuery and $ identifiers, even in AMD
-// (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
-// and CommonJS for browser emulators (#13566)
-if ( !noGlobal ) {
-	window.jQuery = window.$ = jQuery;
-}
-
-return jQuery;
-}));
-
-},{}],23:[function(require,module,exports){
-/*! PhotoSwipe Default UI - 4.1.1 - 2015-12-24
-* http://photoswipe.com
-* Copyright (c) 2015 Dmitry Semenov; */
-/**
-*
-* UI on top of main sliding area (caption, arrows, close button, etc.).
-* Built just using public methods/properties of PhotoSwipe.
-* 
-*/
-(function (root, factory) { 
-	if (typeof define === 'function' && define.amd) {
-		define(factory);
-	} else if (typeof exports === 'object') {
-		module.exports = factory();
-	} else {
-		root.PhotoSwipeUI_Default = factory();
-	}
-})(this, function () {
-
-	'use strict';
-
-
-
-var PhotoSwipeUI_Default =
- function(pswp, framework) {
-
-	var ui = this;
-	var _overlayUIUpdated = false,
-		_controlsVisible = true,
-		_fullscrenAPI,
-		_controls,
-		_captionContainer,
-		_fakeCaptionContainer,
-		_indexIndicator,
-		_shareButton,
-		_shareModal,
-		_shareModalHidden = true,
-		_initalCloseOnScrollValue,
-		_isIdle,
-		_listen,
-
-		_loadingIndicator,
-		_loadingIndicatorHidden,
-		_loadingIndicatorTimeout,
-
-		_galleryHasOneSlide,
-
-		_options,
-		_defaultUIOptions = {
-			barsSize: {top:44, bottom:'auto'},
-			closeElClasses: ['item', 'caption', 'zoom-wrap', 'ui', 'top-bar'], 
-			timeToIdle: 4000, 
-			timeToIdleOutside: 1000,
-			loadingIndicatorDelay: 1000, // 2s
-			
-			addCaptionHTMLFn: function(item, captionEl /*, isFake */) {
-				if(!item.title) {
-					captionEl.children[0].innerHTML = '';
-					return false;
-				}
-				captionEl.children[0].innerHTML = item.title;
-				return true;
-			},
-
-			closeEl:true,
-			captionEl: true,
-			fullscreenEl: true,
-			zoomEl: true,
-			shareEl: true,
-			counterEl: true,
-			arrowEl: true,
-			preloaderEl: true,
-
-			tapToClose: false,
-			tapToToggleControls: true,
-
-			clickToCloseNonZoomable: true,
-
-			shareButtons: [
-				{id:'facebook', label:'Share on Facebook', url:'https://www.facebook.com/sharer/sharer.php?u={{url}}'},
-				{id:'twitter', label:'Tweet', url:'https://twitter.com/intent/tweet?text={{text}}&url={{url}}'},
-				{id:'pinterest', label:'Pin it', url:'http://www.pinterest.com/pin/create/button/'+
-													'?url={{url}}&media={{image_url}}&description={{text}}'},
-				{id:'download', label:'Download image', url:'{{raw_image_url}}', download:true}
-			],
-			getImageURLForShare: function( /* shareButtonData */ ) {
-				return pswp.currItem.src || '';
-			},
-			getPageURLForShare: function( /* shareButtonData */ ) {
-				return window.location.href;
-			},
-			getTextForShare: function( /* shareButtonData */ ) {
-				return pswp.currItem.title || '';
-			},
-				
-			indexIndicatorSep: ' / ',
-			fitControlsWidth: 1200
-
-		},
-		_blockControlsTap,
-		_blockControlsTapTimeout;
-
-
-
-	var _onControlsTap = function(e) {
-			if(_blockControlsTap) {
-				return true;
-			}
-
-
-			e = e || window.event;
-
-			if(_options.timeToIdle && _options.mouseUsed && !_isIdle) {
-				// reset idle timer
-				_onIdleMouseMove();
-			}
-
-
-			var target = e.target || e.srcElement,
-				uiElement,
-				clickedClass = target.getAttribute('class') || '',
-				found;
-
-			for(var i = 0; i < _uiElements.length; i++) {
-				uiElement = _uiElements[i];
-				if(uiElement.onTap && clickedClass.indexOf('pswp__' + uiElement.name ) > -1 ) {
-					uiElement.onTap();
-					found = true;
-
-				}
-			}
-
-			if(found) {
-				if(e.stopPropagation) {
-					e.stopPropagation();
-				}
-				_blockControlsTap = true;
-
-				// Some versions of Android don't prevent ghost click event 
-				// when preventDefault() was called on touchstart and/or touchend.
-				// 
-				// This happens on v4.3, 4.2, 4.1, 
-				// older versions strangely work correctly, 
-				// but just in case we add delay on all of them)	
-				var tapDelay = framework.features.isOldAndroid ? 600 : 30;
-				_blockControlsTapTimeout = setTimeout(function() {
-					_blockControlsTap = false;
-				}, tapDelay);
-			}
-
-		},
-		_fitControlsInViewport = function() {
-			return !pswp.likelyTouchDevice || _options.mouseUsed || screen.width > _options.fitControlsWidth;
-		},
-		_togglePswpClass = function(el, cName, add) {
-			framework[ (add ? 'add' : 'remove') + 'Class' ](el, 'pswp__' + cName);
-		},
-
-		// add class when there is just one item in the gallery
-		// (by default it hides left/right arrows and 1ofX counter)
-		_countNumItems = function() {
-			var hasOneSlide = (_options.getNumItemsFn() === 1);
-
-			if(hasOneSlide !== _galleryHasOneSlide) {
-				_togglePswpClass(_controls, 'ui--one-slide', hasOneSlide);
-				_galleryHasOneSlide = hasOneSlide;
-			}
-		},
-		_toggleShareModalClass = function() {
-			_togglePswpClass(_shareModal, 'share-modal--hidden', _shareModalHidden);
-		},
-		_toggleShareModal = function() {
-
-			_shareModalHidden = !_shareModalHidden;
-			
-			
-			if(!_shareModalHidden) {
-				_toggleShareModalClass();
-				setTimeout(function() {
-					if(!_shareModalHidden) {
-						framework.addClass(_shareModal, 'pswp__share-modal--fade-in');
-					}
-				}, 30);
-			} else {
-				framework.removeClass(_shareModal, 'pswp__share-modal--fade-in');
-				setTimeout(function() {
-					if(_shareModalHidden) {
-						_toggleShareModalClass();
-					}
-				}, 300);
-			}
-			
-			if(!_shareModalHidden) {
-				_updateShareURLs();
-			}
-			return false;
-		},
-
-		_openWindowPopup = function(e) {
-			e = e || window.event;
-			var target = e.target || e.srcElement;
-
-			pswp.shout('shareLinkClick', e, target);
-
-			if(!target.href) {
-				return false;
-			}
-
-			if( target.hasAttribute('download') ) {
-				return true;
-			}
-
-			window.open(target.href, 'pswp_share', 'scrollbars=yes,resizable=yes,toolbar=no,'+
-										'location=yes,width=550,height=420,top=100,left=' + 
-										(window.screen ? Math.round(screen.width / 2 - 275) : 100)  );
-
-			if(!_shareModalHidden) {
-				_toggleShareModal();
-			}
-			
-			return false;
-		},
-		_updateShareURLs = function() {
-			var shareButtonOut = '',
-				shareButtonData,
-				shareURL,
-				image_url,
-				page_url,
-				share_text;
-
-			for(var i = 0; i < _options.shareButtons.length; i++) {
-				shareButtonData = _options.shareButtons[i];
-
-				image_url = _options.getImageURLForShare(shareButtonData);
-				page_url = _options.getPageURLForShare(shareButtonData);
-				share_text = _options.getTextForShare(shareButtonData);
-
-				shareURL = shareButtonData.url.replace('{{url}}', encodeURIComponent(page_url) )
-									.replace('{{image_url}}', encodeURIComponent(image_url) )
-									.replace('{{raw_image_url}}', image_url )
-									.replace('{{text}}', encodeURIComponent(share_text) );
-
-				shareButtonOut += '<a href="' + shareURL + '" target="_blank" '+
-									'class="pswp__share--' + shareButtonData.id + '"' +
-									(shareButtonData.download ? 'download' : '') + '>' + 
-									shareButtonData.label + '</a>';
-
-				if(_options.parseShareButtonOut) {
-					shareButtonOut = _options.parseShareButtonOut(shareButtonData, shareButtonOut);
-				}
-			}
-			_shareModal.children[0].innerHTML = shareButtonOut;
-			_shareModal.children[0].onclick = _openWindowPopup;
-
-		},
-		_hasCloseClass = function(target) {
-			for(var  i = 0; i < _options.closeElClasses.length; i++) {
-				if( framework.hasClass(target, 'pswp__' + _options.closeElClasses[i]) ) {
-					return true;
-				}
-			}
-		},
-		_idleInterval,
-		_idleTimer,
-		_idleIncrement = 0,
-		_onIdleMouseMove = function() {
-			clearTimeout(_idleTimer);
-			_idleIncrement = 0;
-			if(_isIdle) {
-				ui.setIdle(false);
-			}
-		},
-		_onMouseLeaveWindow = function(e) {
-			e = e ? e : window.event;
-			var from = e.relatedTarget || e.toElement;
-			if (!from || from.nodeName === 'HTML') {
-				clearTimeout(_idleTimer);
-				_idleTimer = setTimeout(function() {
-					ui.setIdle(true);
-				}, _options.timeToIdleOutside);
-			}
-		},
-		_setupFullscreenAPI = function() {
-			if(_options.fullscreenEl && !framework.features.isOldAndroid) {
-				if(!_fullscrenAPI) {
-					_fullscrenAPI = ui.getFullscreenAPI();
-				}
-				if(_fullscrenAPI) {
-					framework.bind(document, _fullscrenAPI.eventK, ui.updateFullscreen);
-					ui.updateFullscreen();
-					framework.addClass(pswp.template, 'pswp--supports-fs');
-				} else {
-					framework.removeClass(pswp.template, 'pswp--supports-fs');
-				}
-			}
-		},
-		_setupLoadingIndicator = function() {
-			// Setup loading indicator
-			if(_options.preloaderEl) {
-			
-				_toggleLoadingIndicator(true);
-
-				_listen('beforeChange', function() {
-
-					clearTimeout(_loadingIndicatorTimeout);
-
-					// display loading indicator with delay
-					_loadingIndicatorTimeout = setTimeout(function() {
-
-						if(pswp.currItem && pswp.currItem.loading) {
-
-							if( !pswp.allowProgressiveImg() || (pswp.currItem.img && !pswp.currItem.img.naturalWidth)  ) {
-								// show preloader if progressive loading is not enabled, 
-								// or image width is not defined yet (because of slow connection)
-								_toggleLoadingIndicator(false); 
-								// items-controller.js function allowProgressiveImg
-							}
-							
-						} else {
-							_toggleLoadingIndicator(true); // hide preloader
-						}
-
-					}, _options.loadingIndicatorDelay);
-					
-				});
-				_listen('imageLoadComplete', function(index, item) {
-					if(pswp.currItem === item) {
-						_toggleLoadingIndicator(true);
-					}
-				});
-
-			}
-		},
-		_toggleLoadingIndicator = function(hide) {
-			if( _loadingIndicatorHidden !== hide ) {
-				_togglePswpClass(_loadingIndicator, 'preloader--active', !hide);
-				_loadingIndicatorHidden = hide;
-			}
-		},
-		_applyNavBarGaps = function(item) {
-			var gap = item.vGap;
-
-			if( _fitControlsInViewport() ) {
-				
-				var bars = _options.barsSize; 
-				if(_options.captionEl && bars.bottom === 'auto') {
-					if(!_fakeCaptionContainer) {
-						_fakeCaptionContainer = framework.createEl('pswp__caption pswp__caption--fake');
-						_fakeCaptionContainer.appendChild( framework.createEl('pswp__caption__center') );
-						_controls.insertBefore(_fakeCaptionContainer, _captionContainer);
-						framework.addClass(_controls, 'pswp__ui--fit');
-					}
-					if( _options.addCaptionHTMLFn(item, _fakeCaptionContainer, true) ) {
-
-						var captionSize = _fakeCaptionContainer.clientHeight;
-						gap.bottom = parseInt(captionSize,10) || 44;
-					} else {
-						gap.bottom = bars.top; // if no caption, set size of bottom gap to size of top
-					}
-				} else {
-					gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
-				}
-				
-				// height of top bar is static, no need to calculate it
-				gap.top = bars.top;
-			} else {
-				gap.top = gap.bottom = 0;
-			}
-		},
-		_setupIdle = function() {
-			// Hide controls when mouse is used
-			if(_options.timeToIdle) {
-				_listen('mouseUsed', function() {
-					
-					framework.bind(document, 'mousemove', _onIdleMouseMove);
-					framework.bind(document, 'mouseout', _onMouseLeaveWindow);
-
-					_idleInterval = setInterval(function() {
-						_idleIncrement++;
-						if(_idleIncrement === 2) {
-							ui.setIdle(true);
-						}
-					}, _options.timeToIdle / 2);
-				});
-			}
-		},
-		_setupHidingControlsDuringGestures = function() {
-
-			// Hide controls on vertical drag
-			_listen('onVerticalDrag', function(now) {
-				if(_controlsVisible && now < 0.95) {
-					ui.hideControls();
-				} else if(!_controlsVisible && now >= 0.95) {
-					ui.showControls();
-				}
-			});
-
-			// Hide controls when pinching to close
-			var pinchControlsHidden;
-			_listen('onPinchClose' , function(now) {
-				if(_controlsVisible && now < 0.9) {
-					ui.hideControls();
-					pinchControlsHidden = true;
-				} else if(pinchControlsHidden && !_controlsVisible && now > 0.9) {
-					ui.showControls();
-				}
-			});
-
-			_listen('zoomGestureEnded', function() {
-				pinchControlsHidden = false;
-				if(pinchControlsHidden && !_controlsVisible) {
-					ui.showControls();
-				}
-			});
-
-		};
-
-
-
-	var _uiElements = [
-		{ 
-			name: 'caption', 
-			option: 'captionEl',
-			onInit: function(el) {  
-				_captionContainer = el; 
-			} 
-		},
-		{ 
-			name: 'share-modal', 
-			option: 'shareEl',
-			onInit: function(el) {  
-				_shareModal = el;
-			},
-			onTap: function() {
-				_toggleShareModal();
-			} 
-		},
-		{ 
-			name: 'button--share', 
-			option: 'shareEl',
-			onInit: function(el) { 
-				_shareButton = el;
-			},
-			onTap: function() {
-				_toggleShareModal();
-			} 
-		},
-		{ 
-			name: 'button--zoom', 
-			option: 'zoomEl',
-			onTap: pswp.toggleDesktopZoom
-		},
-		{ 
-			name: 'counter', 
-			option: 'counterEl',
-			onInit: function(el) {  
-				_indexIndicator = el;
-			} 
-		},
-		{ 
-			name: 'button--close', 
-			option: 'closeEl',
-			onTap: pswp.close
-		},
-		{ 
-			name: 'button--arrow--left', 
-			option: 'arrowEl',
-			onTap: pswp.prev
-		},
-		{ 
-			name: 'button--arrow--right', 
-			option: 'arrowEl',
-			onTap: pswp.next
-		},
-		{ 
-			name: 'button--fs', 
-			option: 'fullscreenEl',
-			onTap: function() {  
-				if(_fullscrenAPI.isFullscreen()) {
-					_fullscrenAPI.exit();
-				} else {
-					_fullscrenAPI.enter();
-				}
-			} 
-		},
-		{ 
-			name: 'preloader', 
-			option: 'preloaderEl',
-			onInit: function(el) {  
-				_loadingIndicator = el;
-			} 
-		}
-
-	];
-
-	var _setupUIElements = function() {
-		var item,
-			classAttr,
-			uiElement;
-
-		var loopThroughChildElements = function(sChildren) {
-			if(!sChildren) {
-				return;
-			}
-
-			var l = sChildren.length;
-			for(var i = 0; i < l; i++) {
-				item = sChildren[i];
-				classAttr = item.className;
-
-				for(var a = 0; a < _uiElements.length; a++) {
-					uiElement = _uiElements[a];
-
-					if(classAttr.indexOf('pswp__' + uiElement.name) > -1  ) {
-
-						if( _options[uiElement.option] ) { // if element is not disabled from options
-							
-							framework.removeClass(item, 'pswp__element--disabled');
-							if(uiElement.onInit) {
-								uiElement.onInit(item);
-							}
-							
-							//item.style.display = 'block';
-						} else {
-							framework.addClass(item, 'pswp__element--disabled');
-							//item.style.display = 'none';
-						}
-					}
-				}
-			}
-		};
-		loopThroughChildElements(_controls.children);
-
-		var topBar =  framework.getChildByClass(_controls, 'pswp__top-bar');
-		if(topBar) {
-			loopThroughChildElements( topBar.children );
-		}
-	};
-
-
-	
-
-	ui.init = function() {
-
-		// extend options
-		framework.extend(pswp.options, _defaultUIOptions, true);
-
-		// create local link for fast access
-		_options = pswp.options;
-
-		// find pswp__ui element
-		_controls = framework.getChildByClass(pswp.scrollWrap, 'pswp__ui');
-
-		// create local link
-		_listen = pswp.listen;
-
-
-		_setupHidingControlsDuringGestures();
-
-		// update controls when slides change
-		_listen('beforeChange', ui.update);
-
-		// toggle zoom on double-tap
-		_listen('doubleTap', function(point) {
-			var initialZoomLevel = pswp.currItem.initialZoomLevel;
-			if(pswp.getZoomLevel() !== initialZoomLevel) {
-				pswp.zoomTo(initialZoomLevel, point, 333);
-			} else {
-				pswp.zoomTo(_options.getDoubleTapZoom(false, pswp.currItem), point, 333);
-			}
-		});
-
-		// Allow text selection in caption
-		_listen('preventDragEvent', function(e, isDown, preventObj) {
-			var t = e.target || e.srcElement;
-			if(
-				t && 
-				t.getAttribute('class') && e.type.indexOf('mouse') > -1 && 
-				( t.getAttribute('class').indexOf('__caption') > 0 || (/(SMALL|STRONG|EM)/i).test(t.tagName) ) 
-			) {
-				preventObj.prevent = false;
-			}
-		});
-
-		// bind events for UI
-		_listen('bindEvents', function() {
-			framework.bind(_controls, 'pswpTap click', _onControlsTap);
-			framework.bind(pswp.scrollWrap, 'pswpTap', ui.onGlobalTap);
-
-			if(!pswp.likelyTouchDevice) {
-				framework.bind(pswp.scrollWrap, 'mouseover', ui.onMouseOver);
-			}
-		});
-
-		// unbind events for UI
-		_listen('unbindEvents', function() {
-			if(!_shareModalHidden) {
-				_toggleShareModal();
-			}
-
-			if(_idleInterval) {
-				clearInterval(_idleInterval);
-			}
-			framework.unbind(document, 'mouseout', _onMouseLeaveWindow);
-			framework.unbind(document, 'mousemove', _onIdleMouseMove);
-			framework.unbind(_controls, 'pswpTap click', _onControlsTap);
-			framework.unbind(pswp.scrollWrap, 'pswpTap', ui.onGlobalTap);
-			framework.unbind(pswp.scrollWrap, 'mouseover', ui.onMouseOver);
-
-			if(_fullscrenAPI) {
-				framework.unbind(document, _fullscrenAPI.eventK, ui.updateFullscreen);
-				if(_fullscrenAPI.isFullscreen()) {
-					_options.hideAnimationDuration = 0;
-					_fullscrenAPI.exit();
-				}
-				_fullscrenAPI = null;
-			}
-		});
-
-
-		// clean up things when gallery is destroyed
-		_listen('destroy', function() {
-			if(_options.captionEl) {
-				if(_fakeCaptionContainer) {
-					_controls.removeChild(_fakeCaptionContainer);
-				}
-				framework.removeClass(_captionContainer, 'pswp__caption--empty');
-			}
-
-			if(_shareModal) {
-				_shareModal.children[0].onclick = null;
-			}
-			framework.removeClass(_controls, 'pswp__ui--over-close');
-			framework.addClass( _controls, 'pswp__ui--hidden');
-			ui.setIdle(false);
-		});
-		
-
-		if(!_options.showAnimationDuration) {
-			framework.removeClass( _controls, 'pswp__ui--hidden');
-		}
-		_listen('initialZoomIn', function() {
-			if(_options.showAnimationDuration) {
-				framework.removeClass( _controls, 'pswp__ui--hidden');
-			}
-		});
-		_listen('initialZoomOut', function() {
-			framework.addClass( _controls, 'pswp__ui--hidden');
-		});
-
-		_listen('parseVerticalMargin', _applyNavBarGaps);
-		
-		_setupUIElements();
-
-		if(_options.shareEl && _shareButton && _shareModal) {
-			_shareModalHidden = true;
-		}
-
-		_countNumItems();
-
-		_setupIdle();
-
-		_setupFullscreenAPI();
-
-		_setupLoadingIndicator();
-	};
-
-	ui.setIdle = function(isIdle) {
-		_isIdle = isIdle;
-		_togglePswpClass(_controls, 'ui--idle', isIdle);
-	};
-
-	ui.update = function() {
-		// Don't update UI if it's hidden
-		if(_controlsVisible && pswp.currItem) {
-			
-			ui.updateIndexIndicator();
-
-			if(_options.captionEl) {
-				_options.addCaptionHTMLFn(pswp.currItem, _captionContainer);
-
-				_togglePswpClass(_captionContainer, 'caption--empty', !pswp.currItem.title);
-			}
-
-			_overlayUIUpdated = true;
-
-		} else {
-			_overlayUIUpdated = false;
-		}
-
-		if(!_shareModalHidden) {
-			_toggleShareModal();
-		}
-
-		_countNumItems();
-	};
-
-	ui.updateFullscreen = function(e) {
-
-		if(e) {
-			// some browsers change window scroll position during the fullscreen
-			// so PhotoSwipe updates it just in case
-			setTimeout(function() {
-				pswp.setScrollOffset( 0, framework.getScrollY() );
-			}, 50);
-		}
-		
-		// toogle pswp--fs class on root element
-		framework[ (_fullscrenAPI.isFullscreen() ? 'add' : 'remove') + 'Class' ](pswp.template, 'pswp--fs');
-	};
-
-	ui.updateIndexIndicator = function() {
-		if(_options.counterEl) {
-			_indexIndicator.innerHTML = (pswp.getCurrentIndex()+1) + 
-										_options.indexIndicatorSep + 
-										_options.getNumItemsFn();
-		}
-	};
-	
-	ui.onGlobalTap = function(e) {
-		e = e || window.event;
-		var target = e.target || e.srcElement;
-
-		if(_blockControlsTap) {
-			return;
-		}
-
-		if(e.detail && e.detail.pointerType === 'mouse') {
-
-			// close gallery if clicked outside of the image
-			if(_hasCloseClass(target)) {
-				pswp.close();
-				return;
-			}
-
-			if(framework.hasClass(target, 'pswp__img')) {
-				if(pswp.getZoomLevel() === 1 && pswp.getZoomLevel() <= pswp.currItem.fitRatio) {
-					if(_options.clickToCloseNonZoomable) {
-						pswp.close();
-					}
-				} else {
-					pswp.toggleDesktopZoom(e.detail.releasePoint);
-				}
-			}
-			
-		} else {
-
-			// tap anywhere (except buttons) to toggle visibility of controls
-			if(_options.tapToToggleControls) {
-				if(_controlsVisible) {
-					ui.hideControls();
-				} else {
-					ui.showControls();
-				}
-			}
-
-			// tap to close gallery
-			if(_options.tapToClose && (framework.hasClass(target, 'pswp__img') || _hasCloseClass(target)) ) {
-				pswp.close();
-				return;
-			}
-			
-		}
-	};
-	ui.onMouseOver = function(e) {
-		e = e || window.event;
-		var target = e.target || e.srcElement;
-
-		// add class when mouse is over an element that should close the gallery
-		_togglePswpClass(_controls, 'ui--over-close', _hasCloseClass(target));
-	};
-
-	ui.hideControls = function() {
-		framework.addClass(_controls,'pswp__ui--hidden');
-		_controlsVisible = false;
-	};
-
-	ui.showControls = function() {
-		_controlsVisible = true;
-		if(!_overlayUIUpdated) {
-			ui.update();
-		}
-		framework.removeClass(_controls,'pswp__ui--hidden');
-	};
-
-	ui.supportsFullscreen = function() {
-		var d = document;
-		return !!(d.exitFullscreen || d.mozCancelFullScreen || d.webkitExitFullscreen || d.msExitFullscreen);
-	};
-
-	ui.getFullscreenAPI = function() {
-		var dE = document.documentElement,
-			api,
-			tF = 'fullscreenchange';
-
-		if (dE.requestFullscreen) {
-			api = {
-				enterK: 'requestFullscreen',
-				exitK: 'exitFullscreen',
-				elementK: 'fullscreenElement',
-				eventK: tF
-			};
-
-		} else if(dE.mozRequestFullScreen ) {
-			api = {
-				enterK: 'mozRequestFullScreen',
-				exitK: 'mozCancelFullScreen',
-				elementK: 'mozFullScreenElement',
-				eventK: 'moz' + tF
-			};
-
-			
-
-		} else if(dE.webkitRequestFullscreen) {
-			api = {
-				enterK: 'webkitRequestFullscreen',
-				exitK: 'webkitExitFullscreen',
-				elementK: 'webkitFullscreenElement',
-				eventK: 'webkit' + tF
-			};
-
-		} else if(dE.msRequestFullscreen) {
-			api = {
-				enterK: 'msRequestFullscreen',
-				exitK: 'msExitFullscreen',
-				elementK: 'msFullscreenElement',
-				eventK: 'MSFullscreenChange'
-			};
-		}
-
-		if(api) {
-			api.enter = function() { 
-				// disable close-on-scroll in fullscreen
-				_initalCloseOnScrollValue = _options.closeOnScroll; 
-				_options.closeOnScroll = false; 
-
-				if(this.enterK === 'webkitRequestFullscreen') {
-					pswp.template[this.enterK]( Element.ALLOW_KEYBOARD_INPUT );
-				} else {
-					return pswp.template[this.enterK](); 
-				}
-			};
-			api.exit = function() { 
-				_options.closeOnScroll = _initalCloseOnScrollValue;
-
-				return document[this.exitK](); 
-
-			};
-			api.isFullscreen = function() { return document[this.elementK]; };
-		}
-
-		return api;
-	};
-
-
-
-};
-return PhotoSwipeUI_Default;
-
-
-});
-
-},{}],24:[function(require,module,exports){
-/*! PhotoSwipe - v4.1.1 - 2015-12-24
-* http://photoswipe.com
-* Copyright (c) 2015 Dmitry Semenov; */
-(function (root, factory) { 
-	if (typeof define === 'function' && define.amd) {
-		define(factory);
-	} else if (typeof exports === 'object') {
-		module.exports = factory();
-	} else {
-		root.PhotoSwipe = factory();
-	}
-})(this, function () {
-
-	'use strict';
-	var PhotoSwipe = function(template, UiClass, items, options){
-
-/*>>framework-bridge*/
-/**
- *
- * Set of generic functions used by gallery.
- * 
- * You're free to modify anything here as long as functionality is kept.
- * 
- */
-var framework = {
-	features: null,
-	bind: function(target, type, listener, unbind) {
-		var methodName = (unbind ? 'remove' : 'add') + 'EventListener';
-		type = type.split(' ');
-		for(var i = 0; i < type.length; i++) {
-			if(type[i]) {
-				target[methodName]( type[i], listener, false);
-			}
-		}
-	},
-	isArray: function(obj) {
-		return (obj instanceof Array);
-	},
-	createEl: function(classes, tag) {
-		var el = document.createElement(tag || 'div');
-		if(classes) {
-			el.className = classes;
-		}
-		return el;
-	},
-	getScrollY: function() {
-		var yOffset = window.pageYOffset;
-		return yOffset !== undefined ? yOffset : document.documentElement.scrollTop;
-	},
-	unbind: function(target, type, listener) {
-		framework.bind(target,type,listener,true);
-	},
-	removeClass: function(el, className) {
-		var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-		el.className = el.className.replace(reg, ' ').replace(/^\s\s*/, '').replace(/\s\s*$/, ''); 
-	},
-	addClass: function(el, className) {
-		if( !framework.hasClass(el,className) ) {
-			el.className += (el.className ? ' ' : '') + className;
-		}
-	},
-	hasClass: function(el, className) {
-		return el.className && new RegExp('(^|\\s)' + className + '(\\s|$)').test(el.className);
-	},
-	getChildByClass: function(parentEl, childClassName) {
-		var node = parentEl.firstChild;
-		while(node) {
-			if( framework.hasClass(node, childClassName) ) {
-				return node;
-			}
-			node = node.nextSibling;
-		}
-	},
-	arraySearch: function(array, value, key) {
-		var i = array.length;
-		while(i--) {
-			if(array[i][key] === value) {
-				return i;
-			} 
-		}
-		return -1;
-	},
-	extend: function(o1, o2, preventOverwrite) {
-		for (var prop in o2) {
-			if (o2.hasOwnProperty(prop)) {
-				if(preventOverwrite && o1.hasOwnProperty(prop)) {
-					continue;
-				}
-				o1[prop] = o2[prop];
-			}
-		}
-	},
-	easing: {
-		sine: {
-			out: function(k) {
-				return Math.sin(k * (Math.PI / 2));
-			},
-			inOut: function(k) {
-				return - (Math.cos(Math.PI * k) - 1) / 2;
-			}
-		},
-		cubic: {
-			out: function(k) {
-				return --k * k * k + 1;
-			}
-		}
-		/*
-			elastic: {
-				out: function ( k ) {
-
-					var s, a = 0.1, p = 0.4;
-					if ( k === 0 ) return 0;
-					if ( k === 1 ) return 1;
-					if ( !a || a < 1 ) { a = 1; s = p / 4; }
-					else s = p * Math.asin( 1 / a ) / ( 2 * Math.PI );
-					return ( a * Math.pow( 2, - 10 * k) * Math.sin( ( k - s ) * ( 2 * Math.PI ) / p ) + 1 );
-
+			/*>>framework-bridge*/
+
+			/*>>core*/
+			//function(template, UiClass, items, options)
+
+			var self = this;
+
+			/**
+	   * Static vars, don't change unless you know what you're doing.
+	   */
+			var DOUBLE_TAP_RADIUS = 25,
+			    NUM_HOLDERS = 3;
+
+			/**
+	   * Options
+	   */
+			var _options = {
+				allowPanToNext: true,
+				spacing: 0.12,
+				bgOpacity: 1,
+				mouseUsed: false,
+				loop: true,
+				pinchToClose: true,
+				closeOnScroll: true,
+				closeOnVerticalDrag: true,
+				verticalDragRange: 0.75,
+				hideAnimationDuration: 333,
+				showAnimationDuration: 333,
+				showHideOpacity: false,
+				focus: true,
+				escKey: true,
+				arrowKeys: true,
+				mainScrollEndFriction: 0.35,
+				panEndFriction: 0.35,
+				isClickableElement: function isClickableElement(el) {
+					return el.tagName === 'A';
 				},
+				getDoubleTapZoom: function getDoubleTapZoom(isMouseClick, item) {
+					if (isMouseClick) {
+						return 1;
+					} else {
+						return item.initialZoomLevel < 0.7 ? 1 : 1.33;
+					}
+				},
+				maxSpreadZoom: 1.33,
+				modal: true,
+
+				// not fully implemented yet
+				scaleMode: 'fit' // TODO
+			};
+			framework.extend(_options, options);
+
+			/**
+	   * Private helper variables & functions
+	   */
+
+			var _getEmptyPoint = function _getEmptyPoint() {
+				return { x: 0, y: 0 };
+			};
+
+			var _isOpen,
+			    _isDestroying,
+			    _closedByScroll,
+			    _currentItemIndex,
+			    _containerStyle,
+			    _containerShiftIndex,
+			    _currPanDist = _getEmptyPoint(),
+			    _startPanOffset = _getEmptyPoint(),
+			    _panOffset = _getEmptyPoint(),
+			    _upMoveEvents,
+			    // drag move, drag end & drag cancel events array
+			_downEvents,
+			    // drag start events array
+			_globalEventHandlers,
+			    _viewportSize = {},
+			    _currZoomLevel,
+			    _startZoomLevel,
+			    _translatePrefix,
+			    _translateSufix,
+			    _updateSizeInterval,
+			    _itemsNeedUpdate,
+			    _currPositionIndex = 0,
+			    _offset = {},
+			    _slideSize = _getEmptyPoint(),
+			    // size of slide area, including spacing
+			_itemHolders,
+			    _prevItemIndex,
+			    _indexDiff = 0,
+			    // difference of indexes since last content update
+			_dragStartEvent,
+			    _dragMoveEvent,
+			    _dragEndEvent,
+			    _dragCancelEvent,
+			    _transformKey,
+			    _pointerEventEnabled,
+			    _isFixedPosition = true,
+			    _likelyTouchDevice,
+			    _modules = [],
+			    _requestAF,
+			    _cancelAF,
+			    _initalClassName,
+			    _initalWindowScrollY,
+			    _oldIE,
+			    _currentWindowScrollY,
+			    _features,
+			    _windowVisibleSize = {},
+			    _renderMaxResolution = false,
+
+
+			// Registers PhotoSWipe module (History, Controller ...)
+			_registerModule = function _registerModule(name, module) {
+				framework.extend(self, module.publicMethods);
+				_modules.push(name);
 			},
-			back: {
-				out: function ( k ) {
-					var s = 1.70158;
-					return --k * k * ( ( s + 1 ) * k + s ) + 1;
+			    _getLoopedId = function _getLoopedId(index) {
+				var numSlides = _getNumItems();
+				if (index > numSlides - 1) {
+					return index - numSlides;
+				} else if (index < 0) {
+					return numSlides + index;
 				}
-			}
-		*/
-	},
+				return index;
+			},
 
-	/**
-	 * 
-	 * @return {object}
-	 * 
-	 * {
-	 *  raf : request animation frame function
-	 *  caf : cancel animation frame function
-	 *  transfrom : transform property key (with vendor), or null if not supported
-	 *  oldIE : IE8 or below
-	 * }
-	 * 
-	 */
-	detectFeatures: function() {
-		if(framework.features) {
-			return framework.features;
-		}
-		var helperEl = framework.createEl(),
-			helperStyle = helperEl.style,
-			vendor = '',
-			features = {};
 
-		// IE8 and below
-		features.oldIE = document.all && !document.addEventListener;
+			// Micro bind/trigger
+			_listeners = {},
+			    _listen = function _listen(name, fn) {
+				if (!_listeners[name]) {
+					_listeners[name] = [];
+				}
+				return _listeners[name].push(fn);
+			},
+			    _shout = function _shout(name) {
+				var listeners = _listeners[name];
 
-		features.touch = 'ontouchstart' in window;
+				if (listeners) {
+					var args = Array.prototype.slice.call(arguments);
+					args.shift();
 
-		if(window.requestAnimationFrame) {
-			features.raf = window.requestAnimationFrame;
-			features.caf = window.cancelAnimationFrame;
-		}
-
-		features.pointerEvent = navigator.pointerEnabled || navigator.msPointerEnabled;
-
-		// fix false-positive detection of old Android in new IE
-		// (IE11 ua string contains "Android 4.0")
-		
-		if(!features.pointerEvent) { 
-
-			var ua = navigator.userAgent;
-
-			// Detect if device is iPhone or iPod and if it's older than iOS 8
-			// http://stackoverflow.com/a/14223920
-			// 
-			// This detection is made because of buggy top/bottom toolbars
-			// that don't trigger window.resize event.
-			// For more info refer to _isFixedPosition variable in core.js
-
-			if (/iP(hone|od)/.test(navigator.platform)) {
-				var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-				if(v && v.length > 0) {
-					v = parseInt(v[1], 10);
-					if(v >= 1 && v < 8 ) {
-						features.isOldIOSPhone = true;
+					for (var i = 0; i < listeners.length; i++) {
+						listeners[i].apply(self, args);
 					}
 				}
-			}
-
-			// Detect old Android (before KitKat)
-			// due to bugs related to position:fixed
-			// http://stackoverflow.com/questions/7184573/pick-up-the-android-version-in-the-browser-by-javascript
-			
-			var match = ua.match(/Android\s([0-9\.]*)/);
-			var androidversion =  match ? match[1] : 0;
-			androidversion = parseFloat(androidversion);
-			if(androidversion >= 1 ) {
-				if(androidversion < 4.4) {
-					features.isOldAndroid = true; // for fixed position bug & performance
+			},
+			    _getCurrentTime = function _getCurrentTime() {
+				return new Date().getTime();
+			},
+			    _applyBgOpacity = function _applyBgOpacity(opacity) {
+				_bgOpacity = opacity;
+				self.bg.style.opacity = opacity * _options.bgOpacity;
+			},
+			    _applyZoomTransform = function _applyZoomTransform(styleObj, x, y, zoom, item) {
+				if (!_renderMaxResolution || item && item !== self.currItem) {
+					zoom = zoom / (item ? item.fitRatio : self.currItem.fitRatio);
 				}
-				features.androidVersion = androidversion; // for touchend bug
-			}	
-			features.isMobileOpera = /opera mini|opera mobi/i.test(ua);
 
-			// p.s. yes, yes, UA sniffing is bad, propose your solution for above bugs.
-		}
-		
-		var styleChecks = ['transform', 'perspective', 'animationName'],
-			vendors = ['', 'webkit','Moz','ms','O'],
-			styleCheckItem,
-			styleName;
+				styleObj[_transformKey] = _translatePrefix + x + 'px, ' + y + 'px' + _translateSufix + ' scale(' + zoom + ')';
+			},
+			    _applyCurrentZoomPan = function _applyCurrentZoomPan(allowRenderResolution) {
+				if (_currZoomElementStyle) {
 
-		for(var i = 0; i < 4; i++) {
-			vendor = vendors[i];
-
-			for(var a = 0; a < 3; a++) {
-				styleCheckItem = styleChecks[a];
-
-				// uppercase first letter of property name, if vendor is present
-				styleName = vendor + (vendor ? 
-										styleCheckItem.charAt(0).toUpperCase() + styleCheckItem.slice(1) : 
-										styleCheckItem);
-			
-				if(!features[styleCheckItem] && styleName in helperStyle ) {
-					features[styleCheckItem] = styleName;
-				}
-			}
-
-			if(vendor && !features.raf) {
-				vendor = vendor.toLowerCase();
-				features.raf = window[vendor+'RequestAnimationFrame'];
-				if(features.raf) {
-					features.caf = window[vendor+'CancelAnimationFrame'] || 
-									window[vendor+'CancelRequestAnimationFrame'];
-				}
-			}
-		}
-			
-		if(!features.raf) {
-			var lastTime = 0;
-			features.raf = function(fn) {
-				var currTime = new Date().getTime();
-				var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-				var id = window.setTimeout(function() { fn(currTime + timeToCall); }, timeToCall);
-				lastTime = currTime + timeToCall;
-				return id;
-			};
-			features.caf = function(id) { clearTimeout(id); };
-		}
-
-		// Detect SVG support
-		features.svg = !!document.createElementNS && 
-						!!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
-
-		framework.features = features;
-
-		return features;
-	}
-};
-
-framework.detectFeatures();
-
-// Override addEventListener for old versions of IE
-if(framework.features.oldIE) {
-
-	framework.bind = function(target, type, listener, unbind) {
-		
-		type = type.split(' ');
-
-		var methodName = (unbind ? 'detach' : 'attach') + 'Event',
-			evName,
-			_handleEv = function() {
-				listener.handleEvent.call(listener);
-			};
-
-		for(var i = 0; i < type.length; i++) {
-			evName = type[i];
-			if(evName) {
-
-				if(typeof listener === 'object' && listener.handleEvent) {
-					if(!unbind) {
-						listener['oldIE' + evName] = _handleEv;
-					} else {
-						if(!listener['oldIE' + evName]) {
-							return false;
+					if (allowRenderResolution) {
+						if (_currZoomLevel > self.currItem.fitRatio) {
+							if (!_renderMaxResolution) {
+								_setImageSize(self.currItem, false, true);
+								_renderMaxResolution = true;
+							}
+						} else {
+							if (_renderMaxResolution) {
+								_setImageSize(self.currItem);
+								_renderMaxResolution = false;
+							}
 						}
 					}
 
-					target[methodName]( 'on' + evName, listener['oldIE' + evName]);
-				} else {
-					target[methodName]( 'on' + evName, listener);
+					_applyZoomTransform(_currZoomElementStyle, _panOffset.x, _panOffset.y, _currZoomLevel);
+				}
+			},
+			    _applyZoomPanToItem = function _applyZoomPanToItem(item) {
+				if (item.container) {
+
+					_applyZoomTransform(item.container.style, item.initialPosition.x, item.initialPosition.y, item.initialZoomLevel, item);
+				}
+			},
+			    _setTranslateX = function _setTranslateX(x, elStyle) {
+				elStyle[_transformKey] = _translatePrefix + x + 'px, 0px' + _translateSufix;
+			},
+			    _moveMainScroll = function _moveMainScroll(x, dragging) {
+
+				if (!_options.loop && dragging) {
+					var newSlideIndexOffset = _currentItemIndex + (_slideSize.x * _currPositionIndex - x) / _slideSize.x,
+					    delta = Math.round(x - _mainScrollPos.x);
+
+					if (newSlideIndexOffset < 0 && delta > 0 || newSlideIndexOffset >= _getNumItems() - 1 && delta < 0) {
+						x = _mainScrollPos.x + delta * _options.mainScrollEndFriction;
+					}
 				}
 
-			}
-		}
-	};
-	
-}
+				_mainScrollPos.x = x;
+				_setTranslateX(x, _containerStyle);
+			},
+			    _calculatePanOffset = function _calculatePanOffset(axis, zoomLevel) {
+				var m = _midZoomPoint[axis] - _offset[axis];
+				return _startPanOffset[axis] + _currPanDist[axis] + m - m * (zoomLevel / _startZoomLevel);
+			},
+			    _equalizePoints = function _equalizePoints(p1, p2) {
+				p1.x = p2.x;
+				p1.y = p2.y;
+				if (p2.id) {
+					p1.id = p2.id;
+				}
+			},
+			    _roundPoint = function _roundPoint(p) {
+				p.x = Math.round(p.x);
+				p.y = Math.round(p.y);
+			},
+			    _mouseMoveTimeout = null,
+			    _onFirstMouseMove = function _onFirstMouseMove() {
+				// Wait until mouse move event is fired at least twice during 100ms
+				// We do this, because some mobile browsers trigger it on touchstart
+				if (_mouseMoveTimeout) {
+					framework.unbind(document, 'mousemove', _onFirstMouseMove);
+					framework.addClass(template, 'pswp--has_mouse');
+					_options.mouseUsed = true;
+					_shout('mouseUsed');
+				}
+				_mouseMoveTimeout = setTimeout(function () {
+					_mouseMoveTimeout = null;
+				}, 100);
+			},
+			    _bindEvents = function _bindEvents() {
+				framework.bind(document, 'keydown', self);
 
-/*>>framework-bridge*/
+				if (_features.transform) {
+					// don't bind click event in browsers that don't support transform (mostly IE8)
+					framework.bind(self.scrollWrap, 'click', self);
+				}
 
-/*>>core*/
-//function(template, UiClass, items, options)
+				if (!_options.mouseUsed) {
+					framework.bind(document, 'mousemove', _onFirstMouseMove);
+				}
 
-var self = this;
+				framework.bind(window, 'resize scroll', self);
 
-/**
- * Static vars, don't change unless you know what you're doing.
- */
-var DOUBLE_TAP_RADIUS = 25, 
-	NUM_HOLDERS = 3;
+				_shout('bindEvents');
+			},
+			    _unbindEvents = function _unbindEvents() {
+				framework.unbind(window, 'resize', self);
+				framework.unbind(window, 'scroll', _globalEventHandlers.scroll);
+				framework.unbind(document, 'keydown', self);
+				framework.unbind(document, 'mousemove', _onFirstMouseMove);
 
-/**
- * Options
- */
-var _options = {
-	allowPanToNext:true,
-	spacing: 0.12,
-	bgOpacity: 1,
-	mouseUsed: false,
-	loop: true,
-	pinchToClose: true,
-	closeOnScroll: true,
-	closeOnVerticalDrag: true,
-	verticalDragRange: 0.75,
-	hideAnimationDuration: 333,
-	showAnimationDuration: 333,
-	showHideOpacity: false,
-	focus: true,
-	escKey: true,
-	arrowKeys: true,
-	mainScrollEndFriction: 0.35,
-	panEndFriction: 0.35,
-	isClickableElement: function(el) {
-        return el.tagName === 'A';
-    },
-    getDoubleTapZoom: function(isMouseClick, item) {
-    	if(isMouseClick) {
-    		return 1;
-    	} else {
-    		return item.initialZoomLevel < 0.7 ? 1 : 1.33;
-    	}
-    },
-    maxSpreadZoom: 1.33,
-	modal: true,
+				if (_features.transform) {
+					framework.unbind(self.scrollWrap, 'click', self);
+				}
 
-	// not fully implemented yet
-	scaleMode: 'fit' // TODO
-};
-framework.extend(_options, options);
+				if (_isDragging) {
+					framework.unbind(window, _upMoveEvents, self);
+				}
+
+				_shout('unbindEvents');
+			},
+			    _calculatePanBounds = function _calculatePanBounds(zoomLevel, update) {
+				var bounds = _calculateItemSize(self.currItem, _viewportSize, zoomLevel);
+				if (update) {
+					_currPanBounds = bounds;
+				}
+				return bounds;
+			},
+			    _getMinZoomLevel = function _getMinZoomLevel(item) {
+				if (!item) {
+					item = self.currItem;
+				}
+				return item.initialZoomLevel;
+			},
+			    _getMaxZoomLevel = function _getMaxZoomLevel(item) {
+				if (!item) {
+					item = self.currItem;
+				}
+				return item.w > 0 ? _options.maxSpreadZoom : 1;
+			},
 
 
-/**
- * Private helper variables & functions
- */
-
-var _getEmptyPoint = function() { 
-		return {x:0,y:0}; 
-	};
-
-var _isOpen,
-	_isDestroying,
-	_closedByScroll,
-	_currentItemIndex,
-	_containerStyle,
-	_containerShiftIndex,
-	_currPanDist = _getEmptyPoint(),
-	_startPanOffset = _getEmptyPoint(),
-	_panOffset = _getEmptyPoint(),
-	_upMoveEvents, // drag move, drag end & drag cancel events array
-	_downEvents, // drag start events array
-	_globalEventHandlers,
-	_viewportSize = {},
-	_currZoomLevel,
-	_startZoomLevel,
-	_translatePrefix,
-	_translateSufix,
-	_updateSizeInterval,
-	_itemsNeedUpdate,
-	_currPositionIndex = 0,
-	_offset = {},
-	_slideSize = _getEmptyPoint(), // size of slide area, including spacing
-	_itemHolders,
-	_prevItemIndex,
-	_indexDiff = 0, // difference of indexes since last content update
-	_dragStartEvent,
-	_dragMoveEvent,
-	_dragEndEvent,
-	_dragCancelEvent,
-	_transformKey,
-	_pointerEventEnabled,
-	_isFixedPosition = true,
-	_likelyTouchDevice,
-	_modules = [],
-	_requestAF,
-	_cancelAF,
-	_initalClassName,
-	_initalWindowScrollY,
-	_oldIE,
-	_currentWindowScrollY,
-	_features,
-	_windowVisibleSize = {},
-	_renderMaxResolution = false,
-
-	// Registers PhotoSWipe module (History, Controller ...)
-	_registerModule = function(name, module) {
-		framework.extend(self, module.publicMethods);
-		_modules.push(name);
-	},
-
-	_getLoopedId = function(index) {
-		var numSlides = _getNumItems();
-		if(index > numSlides - 1) {
-			return index - numSlides;
-		} else  if(index < 0) {
-			return numSlides + index;
-		}
-		return index;
-	},
-	
-	// Micro bind/trigger
-	_listeners = {},
-	_listen = function(name, fn) {
-		if(!_listeners[name]) {
-			_listeners[name] = [];
-		}
-		return _listeners[name].push(fn);
-	},
-	_shout = function(name) {
-		var listeners = _listeners[name];
-
-		if(listeners) {
-			var args = Array.prototype.slice.call(arguments);
-			args.shift();
-
-			for(var i = 0; i < listeners.length; i++) {
-				listeners[i].apply(self, args);
-			}
-		}
-	},
-
-	_getCurrentTime = function() {
-		return new Date().getTime();
-	},
-	_applyBgOpacity = function(opacity) {
-		_bgOpacity = opacity;
-		self.bg.style.opacity = opacity * _options.bgOpacity;
-	},
-
-	_applyZoomTransform = function(styleObj,x,y,zoom,item) {
-		if(!_renderMaxResolution || (item && item !== self.currItem) ) {
-			zoom = zoom / (item ? item.fitRatio : self.currItem.fitRatio);	
-		}
-			
-		styleObj[_transformKey] = _translatePrefix + x + 'px, ' + y + 'px' + _translateSufix + ' scale(' + zoom + ')';
-	},
-	_applyCurrentZoomPan = function( allowRenderResolution ) {
-		if(_currZoomElementStyle) {
-
-			if(allowRenderResolution) {
-				if(_currZoomLevel > self.currItem.fitRatio) {
-					if(!_renderMaxResolution) {
-						_setImageSize(self.currItem, false, true);
-						_renderMaxResolution = true;
-					}
+			// Return true if offset is out of the bounds
+			_modifyDestPanOffset = function _modifyDestPanOffset(axis, destPanBounds, destPanOffset, destZoomLevel) {
+				if (destZoomLevel === self.currItem.initialZoomLevel) {
+					destPanOffset[axis] = self.currItem.initialPosition[axis];
+					return true;
 				} else {
-					if(_renderMaxResolution) {
-						_setImageSize(self.currItem);
-						_renderMaxResolution = false;
+					destPanOffset[axis] = _calculatePanOffset(axis, destZoomLevel);
+
+					if (destPanOffset[axis] > destPanBounds.min[axis]) {
+						destPanOffset[axis] = destPanBounds.min[axis];
+						return true;
+					} else if (destPanOffset[axis] < destPanBounds.max[axis]) {
+						destPanOffset[axis] = destPanBounds.max[axis];
+						return true;
 					}
 				}
-			}
-			
+				return false;
+			},
+			    _setupTransforms = function _setupTransforms() {
 
-			_applyZoomTransform(_currZoomElementStyle, _panOffset.x, _panOffset.y, _currZoomLevel);
-		}
-	},
-	_applyZoomPanToItem = function(item) {
-		if(item.container) {
-
-			_applyZoomTransform(item.container.style, 
-								item.initialPosition.x, 
-								item.initialPosition.y, 
-								item.initialZoomLevel,
-								item);
-		}
-	},
-	_setTranslateX = function(x, elStyle) {
-		elStyle[_transformKey] = _translatePrefix + x + 'px, 0px' + _translateSufix;
-	},
-	_moveMainScroll = function(x, dragging) {
-
-		if(!_options.loop && dragging) {
-			var newSlideIndexOffset = _currentItemIndex + (_slideSize.x * _currPositionIndex - x) / _slideSize.x,
-				delta = Math.round(x - _mainScrollPos.x);
-
-			if( (newSlideIndexOffset < 0 && delta > 0) || 
-				(newSlideIndexOffset >= _getNumItems() - 1 && delta < 0) ) {
-				x = _mainScrollPos.x + delta * _options.mainScrollEndFriction;
-			} 
-		}
-		
-		_mainScrollPos.x = x;
-		_setTranslateX(x, _containerStyle);
-	},
-	_calculatePanOffset = function(axis, zoomLevel) {
-		var m = _midZoomPoint[axis] - _offset[axis];
-		return _startPanOffset[axis] + _currPanDist[axis] + m - m * ( zoomLevel / _startZoomLevel );
-	},
-	
-	_equalizePoints = function(p1, p2) {
-		p1.x = p2.x;
-		p1.y = p2.y;
-		if(p2.id) {
-			p1.id = p2.id;
-		}
-	},
-	_roundPoint = function(p) {
-		p.x = Math.round(p.x);
-		p.y = Math.round(p.y);
-	},
-
-	_mouseMoveTimeout = null,
-	_onFirstMouseMove = function() {
-		// Wait until mouse move event is fired at least twice during 100ms
-		// We do this, because some mobile browsers trigger it on touchstart
-		if(_mouseMoveTimeout ) { 
-			framework.unbind(document, 'mousemove', _onFirstMouseMove);
-			framework.addClass(template, 'pswp--has_mouse');
-			_options.mouseUsed = true;
-			_shout('mouseUsed');
-		}
-		_mouseMoveTimeout = setTimeout(function() {
-			_mouseMoveTimeout = null;
-		}, 100);
-	},
-
-	_bindEvents = function() {
-		framework.bind(document, 'keydown', self);
-
-		if(_features.transform) {
-			// don't bind click event in browsers that don't support transform (mostly IE8)
-			framework.bind(self.scrollWrap, 'click', self);
-		}
-		
-
-		if(!_options.mouseUsed) {
-			framework.bind(document, 'mousemove', _onFirstMouseMove);
-		}
-
-		framework.bind(window, 'resize scroll', self);
-
-		_shout('bindEvents');
-	},
-
-	_unbindEvents = function() {
-		framework.unbind(window, 'resize', self);
-		framework.unbind(window, 'scroll', _globalEventHandlers.scroll);
-		framework.unbind(document, 'keydown', self);
-		framework.unbind(document, 'mousemove', _onFirstMouseMove);
-
-		if(_features.transform) {
-			framework.unbind(self.scrollWrap, 'click', self);
-		}
-
-		if(_isDragging) {
-			framework.unbind(window, _upMoveEvents, self);
-		}
-
-		_shout('unbindEvents');
-	},
-	
-	_calculatePanBounds = function(zoomLevel, update) {
-		var bounds = _calculateItemSize( self.currItem, _viewportSize, zoomLevel );
-		if(update) {
-			_currPanBounds = bounds;
-		}
-		return bounds;
-	},
-	
-	_getMinZoomLevel = function(item) {
-		if(!item) {
-			item = self.currItem;
-		}
-		return item.initialZoomLevel;
-	},
-	_getMaxZoomLevel = function(item) {
-		if(!item) {
-			item = self.currItem;
-		}
-		return item.w > 0 ? _options.maxSpreadZoom : 1;
-	},
-
-	// Return true if offset is out of the bounds
-	_modifyDestPanOffset = function(axis, destPanBounds, destPanOffset, destZoomLevel) {
-		if(destZoomLevel === self.currItem.initialZoomLevel) {
-			destPanOffset[axis] = self.currItem.initialPosition[axis];
-			return true;
-		} else {
-			destPanOffset[axis] = _calculatePanOffset(axis, destZoomLevel); 
-
-			if(destPanOffset[axis] > destPanBounds.min[axis]) {
-				destPanOffset[axis] = destPanBounds.min[axis];
-				return true;
-			} else if(destPanOffset[axis] < destPanBounds.max[axis] ) {
-				destPanOffset[axis] = destPanBounds.max[axis];
-				return true;
-			}
-		}
-		return false;
-	},
-
-	_setupTransforms = function() {
-
-		if(_transformKey) {
-			// setup 3d transforms
-			var allow3dTransform = _features.perspective && !_likelyTouchDevice;
-			_translatePrefix = 'translate' + (allow3dTransform ? '3d(' : '(');
-			_translateSufix = _features.perspective ? ', 0px)' : ')';	
-			return;
-		}
-
-		// Override zoom/pan/move functions in case old browser is used (most likely IE)
-		// (so they use left/top/width/height, instead of CSS transform)
-	
-		_transformKey = 'left';
-		framework.addClass(template, 'pswp--ie');
-
-		_setTranslateX = function(x, elStyle) {
-			elStyle.left = x + 'px';
-		};
-		_applyZoomPanToItem = function(item) {
-
-			var zoomRatio = item.fitRatio > 1 ? 1 : item.fitRatio,
-				s = item.container.style,
-				w = zoomRatio * item.w,
-				h = zoomRatio * item.h;
-
-			s.width = w + 'px';
-			s.height = h + 'px';
-			s.left = item.initialPosition.x + 'px';
-			s.top = item.initialPosition.y + 'px';
-
-		};
-		_applyCurrentZoomPan = function() {
-			if(_currZoomElementStyle) {
-
-				var s = _currZoomElementStyle,
-					item = self.currItem,
-					zoomRatio = item.fitRatio > 1 ? 1 : item.fitRatio,
-					w = zoomRatio * item.w,
-					h = zoomRatio * item.h;
-
-				s.width = w + 'px';
-				s.height = h + 'px';
-
-
-				s.left = _panOffset.x + 'px';
-				s.top = _panOffset.y + 'px';
-			}
-			
-		};
-	},
-
-	_onKeyDown = function(e) {
-		var keydownAction = '';
-		if(_options.escKey && e.keyCode === 27) { 
-			keydownAction = 'close';
-		} else if(_options.arrowKeys) {
-			if(e.keyCode === 37) {
-				keydownAction = 'prev';
-			} else if(e.keyCode === 39) { 
-				keydownAction = 'next';
-			}
-		}
-
-		if(keydownAction) {
-			// don't do anything if special key pressed to prevent from overriding default browser actions
-			// e.g. in Chrome on Mac cmd+arrow-left returns to previous page
-			if( !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey ) {
-				if(e.preventDefault) {
-					e.preventDefault();
-				} else {
-					e.returnValue = false;
-				} 
-				self[keydownAction]();
-			}
-		}
-	},
-
-	_onGlobalClick = function(e) {
-		if(!e) {
-			return;
-		}
-
-		// don't allow click event to pass through when triggering after drag or some other gesture
-		if(_moved || _zoomStarted || _mainScrollAnimating || _verticalDragInitiated) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-	},
-
-	_updatePageScrollOffset = function() {
-		self.setScrollOffset(0, framework.getScrollY());		
-	};
-	
-
-
-	
-
-
-
-// Micro animation engine
-var _animations = {},
-	_numAnimations = 0,
-	_stopAnimation = function(name) {
-		if(_animations[name]) {
-			if(_animations[name].raf) {
-				_cancelAF( _animations[name].raf );
-			}
-			_numAnimations--;
-			delete _animations[name];
-		}
-	},
-	_registerStartAnimation = function(name) {
-		if(_animations[name]) {
-			_stopAnimation(name);
-		}
-		if(!_animations[name]) {
-			_numAnimations++;
-			_animations[name] = {};
-		}
-	},
-	_stopAllAnimations = function() {
-		for (var prop in _animations) {
-
-			if( _animations.hasOwnProperty( prop ) ) {
-				_stopAnimation(prop);
-			} 
-			
-		}
-	},
-	_animateProp = function(name, b, endProp, d, easingFn, onUpdate, onComplete) {
-		var startAnimTime = _getCurrentTime(), t;
-		_registerStartAnimation(name);
-
-		var animloop = function(){
-			if ( _animations[name] ) {
-				
-				t = _getCurrentTime() - startAnimTime; // time diff
-				//b - beginning (start prop)
-				//d - anim duration
-
-				if ( t >= d ) {
-					_stopAnimation(name);
-					onUpdate(endProp);
-					if(onComplete) {
-						onComplete();
-					}
+				if (_transformKey) {
+					// setup 3d transforms
+					var allow3dTransform = _features.perspective && !_likelyTouchDevice;
+					_translatePrefix = 'translate' + (allow3dTransform ? '3d(' : '(');
+					_translateSufix = _features.perspective ? ', 0px)' : ')';
 					return;
 				}
-				onUpdate( (endProp - b) * easingFn(t/d) + b );
 
-				_animations[name].raf = _requestAF(animloop);
-			}
-		};
-		animloop();
-	};
-	
-
-
-var publicMethods = {
-
-	// make a few local variables and functions public
-	shout: _shout,
-	listen: _listen,
-	viewportSize: _viewportSize,
-	options: _options,
-
-	isMainScrollAnimating: function() {
-		return _mainScrollAnimating;
-	},
-	getZoomLevel: function() {
-		return _currZoomLevel;
-	},
-	getCurrentIndex: function() {
-		return _currentItemIndex;
-	},
-	isDragging: function() {
-		return _isDragging;
-	},	
-	isZooming: function() {
-		return _isZooming;
-	},
-	setScrollOffset: function(x,y) {
-		_offset.x = x;
-		_currentWindowScrollY = _offset.y = y;
-		_shout('updateScrollOffset', _offset);
-	},
-	applyZoomPan: function(zoomLevel,panX,panY,allowRenderResolution) {
-		_panOffset.x = panX;
-		_panOffset.y = panY;
-		_currZoomLevel = zoomLevel;
-		_applyCurrentZoomPan( allowRenderResolution );
-	},
-
-	init: function() {
-
-		if(_isOpen || _isDestroying) {
-			return;
-		}
-
-		var i;
-
-		self.framework = framework; // basic functionality
-		self.template = template; // root DOM element of PhotoSwipe
-		self.bg = framework.getChildByClass(template, 'pswp__bg');
-
-		_initalClassName = template.className;
-		_isOpen = true;
-				
-		_features = framework.detectFeatures();
-		_requestAF = _features.raf;
-		_cancelAF = _features.caf;
-		_transformKey = _features.transform;
-		_oldIE = _features.oldIE;
-		
-		self.scrollWrap = framework.getChildByClass(template, 'pswp__scroll-wrap');
-		self.container = framework.getChildByClass(self.scrollWrap, 'pswp__container');
-
-		_containerStyle = self.container.style; // for fast access
-
-		// Objects that hold slides (there are only 3 in DOM)
-		self.itemHolders = _itemHolders = [
-			{el:self.container.children[0] , wrap:0, index: -1},
-			{el:self.container.children[1] , wrap:0, index: -1},
-			{el:self.container.children[2] , wrap:0, index: -1}
-		];
-
-		// hide nearby item holders until initial zoom animation finishes (to avoid extra Paints)
-		_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'none';
-
-		_setupTransforms();
-
-		// Setup global events
-		_globalEventHandlers = {
-			resize: self.updateSize,
-			scroll: _updatePageScrollOffset,
-			keydown: _onKeyDown,
-			click: _onGlobalClick
-		};
-
-		// disable show/hide effects on old browsers that don't support CSS animations or transforms, 
-		// old IOS, Android and Opera mobile. Blackberry seems to work fine, even older models.
-		var oldPhone = _features.isOldIOSPhone || _features.isOldAndroid || _features.isMobileOpera;
-		if(!_features.animationName || !_features.transform || oldPhone) {
-			_options.showAnimationDuration = _options.hideAnimationDuration = 0;
-		}
-
-		// init modules
-		for(i = 0; i < _modules.length; i++) {
-			self['init' + _modules[i]]();
-		}
-		
-		// init
-		if(UiClass) {
-			var ui = self.ui = new UiClass(self, framework);
-			ui.init();
-		}
-
-		_shout('firstUpdate');
-		_currentItemIndex = _currentItemIndex || _options.index || 0;
-		// validate index
-		if( isNaN(_currentItemIndex) || _currentItemIndex < 0 || _currentItemIndex >= _getNumItems() ) {
-			_currentItemIndex = 0;
-		}
-		self.currItem = _getItemAt( _currentItemIndex );
-
-		
-		if(_features.isOldIOSPhone || _features.isOldAndroid) {
-			_isFixedPosition = false;
-		}
-		
-		template.setAttribute('aria-hidden', 'false');
-		if(_options.modal) {
-			if(!_isFixedPosition) {
-				template.style.position = 'absolute';
-				template.style.top = framework.getScrollY() + 'px';
-			} else {
-				template.style.position = 'fixed';
-			}
-		}
-
-		if(_currentWindowScrollY === undefined) {
-			_shout('initialLayout');
-			_currentWindowScrollY = _initalWindowScrollY = framework.getScrollY();
-		}
-		
-		// add classes to root element of PhotoSwipe
-		var rootClasses = 'pswp--open ';
-		if(_options.mainClass) {
-			rootClasses += _options.mainClass + ' ';
-		}
-		if(_options.showHideOpacity) {
-			rootClasses += 'pswp--animate_opacity ';
-		}
-		rootClasses += _likelyTouchDevice ? 'pswp--touch' : 'pswp--notouch';
-		rootClasses += _features.animationName ? ' pswp--css_animation' : '';
-		rootClasses += _features.svg ? ' pswp--svg' : '';
-		framework.addClass(template, rootClasses);
-
-		self.updateSize();
-
-		// initial update
-		_containerShiftIndex = -1;
-		_indexDiff = null;
-		for(i = 0; i < NUM_HOLDERS; i++) {
-			_setTranslateX( (i+_containerShiftIndex) * _slideSize.x, _itemHolders[i].el.style);
-		}
-
-		if(!_oldIE) {
-			framework.bind(self.scrollWrap, _downEvents, self); // no dragging for old IE
-		}	
-
-		_listen('initialZoomInEnd', function() {
-			self.setContent(_itemHolders[0], _currentItemIndex-1);
-			self.setContent(_itemHolders[2], _currentItemIndex+1);
-
-			_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'block';
-
-			if(_options.focus) {
-				// focus causes layout, 
-				// which causes lag during the animation, 
-				// that's why we delay it untill the initial zoom transition ends
-				template.focus();
-			}
-			 
-
-			_bindEvents();
-		});
-
-		// set content for center slide (first time)
-		self.setContent(_itemHolders[1], _currentItemIndex);
-		
-		self.updateCurrItem();
-
-		_shout('afterInit');
-
-		if(!_isFixedPosition) {
-
-			// On all versions of iOS lower than 8.0, we check size of viewport every second.
-			// 
-			// This is done to detect when Safari top & bottom bars appear, 
-			// as this action doesn't trigger any events (like resize). 
-			// 
-			// On iOS8 they fixed this.
-			// 
-			// 10 Nov 2014: iOS 7 usage ~40%. iOS 8 usage 56%.
-			
-			_updateSizeInterval = setInterval(function() {
-				if(!_numAnimations && !_isDragging && !_isZooming && (_currZoomLevel === self.currItem.initialZoomLevel)  ) {
-					self.updateSize();
-				}
-			}, 1000);
-		}
-
-		framework.addClass(template, 'pswp--visible');
-	},
-
-	// Close the gallery, then destroy it
-	close: function() {
-		if(!_isOpen) {
-			return;
-		}
-
-		_isOpen = false;
-		_isDestroying = true;
-		_shout('close');
-		_unbindEvents();
-
-		_showOrHide(self.currItem, null, true, self.destroy);
-	},
-
-	// destroys the gallery (unbinds events, cleans up intervals and timeouts to avoid memory leaks)
-	destroy: function() {
-		_shout('destroy');
-
-		if(_showOrHideTimeout) {
-			clearTimeout(_showOrHideTimeout);
-		}
-		
-		template.setAttribute('aria-hidden', 'true');
-		template.className = _initalClassName;
-
-		if(_updateSizeInterval) {
-			clearInterval(_updateSizeInterval);
-		}
-
-		framework.unbind(self.scrollWrap, _downEvents, self);
-
-		// we unbind scroll event at the end, as closing animation may depend on it
-		framework.unbind(window, 'scroll', self);
-
-		_stopDragUpdateLoop();
-
-		_stopAllAnimations();
-
-		_listeners = null;
-	},
-
-	/**
-	 * Pan image to position
-	 * @param {Number} x     
-	 * @param {Number} y     
-	 * @param {Boolean} force Will ignore bounds if set to true.
-	 */
-	panTo: function(x,y,force) {
-		if(!force) {
-			if(x > _currPanBounds.min.x) {
-				x = _currPanBounds.min.x;
-			} else if(x < _currPanBounds.max.x) {
-				x = _currPanBounds.max.x;
-			}
-
-			if(y > _currPanBounds.min.y) {
-				y = _currPanBounds.min.y;
-			} else if(y < _currPanBounds.max.y) {
-				y = _currPanBounds.max.y;
-			}
-		}
-		
-		_panOffset.x = x;
-		_panOffset.y = y;
-		_applyCurrentZoomPan();
-	},
-	
-	handleEvent: function (e) {
-		e = e || window.event;
-		if(_globalEventHandlers[e.type]) {
-			_globalEventHandlers[e.type](e);
-		}
-	},
-
-
-	goTo: function(index) {
-
-		index = _getLoopedId(index);
-
-		var diff = index - _currentItemIndex;
-		_indexDiff = diff;
-
-		_currentItemIndex = index;
-		self.currItem = _getItemAt( _currentItemIndex );
-		_currPositionIndex -= diff;
-		
-		_moveMainScroll(_slideSize.x * _currPositionIndex);
-		
-
-		_stopAllAnimations();
-		_mainScrollAnimating = false;
-
-		self.updateCurrItem();
-	},
-	next: function() {
-		self.goTo( _currentItemIndex + 1);
-	},
-	prev: function() {
-		self.goTo( _currentItemIndex - 1);
-	},
-
-	// update current zoom/pan objects
-	updateCurrZoomItem: function(emulateSetContent) {
-		if(emulateSetContent) {
-			_shout('beforeChange', 0);
-		}
-
-		// itemHolder[1] is middle (current) item
-		if(_itemHolders[1].el.children.length) {
-			var zoomElement = _itemHolders[1].el.children[0];
-			if( framework.hasClass(zoomElement, 'pswp__zoom-wrap') ) {
-				_currZoomElementStyle = zoomElement.style;
-			} else {
-				_currZoomElementStyle = null;
-			}
-		} else {
-			_currZoomElementStyle = null;
-		}
-		
-		_currPanBounds = self.currItem.bounds;	
-		_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
-
-		_panOffset.x = _currPanBounds.center.x;
-		_panOffset.y = _currPanBounds.center.y;
-
-		if(emulateSetContent) {
-			_shout('afterChange');
-		}
-	},
-
-
-	invalidateCurrItems: function() {
-		_itemsNeedUpdate = true;
-		for(var i = 0; i < NUM_HOLDERS; i++) {
-			if( _itemHolders[i].item ) {
-				_itemHolders[i].item.needsUpdate = true;
-			}
-		}
-	},
-
-	updateCurrItem: function(beforeAnimation) {
-
-		if(_indexDiff === 0) {
-			return;
-		}
-
-		var diffAbs = Math.abs(_indexDiff),
-			tempHolder;
-
-		if(beforeAnimation && diffAbs < 2) {
-			return;
-		}
-
-
-		self.currItem = _getItemAt( _currentItemIndex );
-		_renderMaxResolution = false;
-		
-		_shout('beforeChange', _indexDiff);
-
-		if(diffAbs >= NUM_HOLDERS) {
-			_containerShiftIndex += _indexDiff + (_indexDiff > 0 ? -NUM_HOLDERS : NUM_HOLDERS);
-			diffAbs = NUM_HOLDERS;
-		}
-		for(var i = 0; i < diffAbs; i++) {
-			if(_indexDiff > 0) {
-				tempHolder = _itemHolders.shift();
-				_itemHolders[NUM_HOLDERS-1] = tempHolder; // move first to last
-
-				_containerShiftIndex++;
-				_setTranslateX( (_containerShiftIndex+2) * _slideSize.x, tempHolder.el.style);
-				self.setContent(tempHolder, _currentItemIndex - diffAbs + i + 1 + 1);
-			} else {
-				tempHolder = _itemHolders.pop();
-				_itemHolders.unshift( tempHolder ); // move last to first
-
-				_containerShiftIndex--;
-				_setTranslateX( _containerShiftIndex * _slideSize.x, tempHolder.el.style);
-				self.setContent(tempHolder, _currentItemIndex + diffAbs - i - 1 - 1);
-			}
-			
-		}
-
-		// reset zoom/pan on previous item
-		if(_currZoomElementStyle && Math.abs(_indexDiff) === 1) {
-
-			var prevItem = _getItemAt(_prevItemIndex);
-			if(prevItem.initialZoomLevel !== _currZoomLevel) {
-				_calculateItemSize(prevItem , _viewportSize );
-				_setImageSize(prevItem);
-				_applyZoomPanToItem( prevItem ); 				
-			}
-
-		}
-
-		// reset diff after update
-		_indexDiff = 0;
-
-		self.updateCurrZoomItem();
-
-		_prevItemIndex = _currentItemIndex;
-
-		_shout('afterChange');
-		
-	},
-
-
-
-	updateSize: function(force) {
-		
-		if(!_isFixedPosition && _options.modal) {
-			var windowScrollY = framework.getScrollY();
-			if(_currentWindowScrollY !== windowScrollY) {
-				template.style.top = windowScrollY + 'px';
-				_currentWindowScrollY = windowScrollY;
-			}
-			if(!force && _windowVisibleSize.x === window.innerWidth && _windowVisibleSize.y === window.innerHeight) {
-				return;
-			}
-			_windowVisibleSize.x = window.innerWidth;
-			_windowVisibleSize.y = window.innerHeight;
-
-			//template.style.width = _windowVisibleSize.x + 'px';
-			template.style.height = _windowVisibleSize.y + 'px';
-		}
-
-
-
-		_viewportSize.x = self.scrollWrap.clientWidth;
-		_viewportSize.y = self.scrollWrap.clientHeight;
-
-		_updatePageScrollOffset();
-
-		_slideSize.x = _viewportSize.x + Math.round(_viewportSize.x * _options.spacing);
-		_slideSize.y = _viewportSize.y;
-
-		_moveMainScroll(_slideSize.x * _currPositionIndex);
-
-		_shout('beforeResize'); // even may be used for example to switch image sources
-
-
-		// don't re-calculate size on inital size update
-		if(_containerShiftIndex !== undefined) {
-
-			var holder,
-				item,
-				hIndex;
-
-			for(var i = 0; i < NUM_HOLDERS; i++) {
-				holder = _itemHolders[i];
-				_setTranslateX( (i+_containerShiftIndex) * _slideSize.x, holder.el.style);
-
-				hIndex = _currentItemIndex+i-1;
-
-				if(_options.loop && _getNumItems() > 2) {
-					hIndex = _getLoopedId(hIndex);
-				}
-
-				// update zoom level on items and refresh source (if needsUpdate)
-				item = _getItemAt( hIndex );
-
-				// re-render gallery item if `needsUpdate`,
-				// or doesn't have `bounds` (entirely new slide object)
-				if( item && (_itemsNeedUpdate || item.needsUpdate || !item.bounds) ) {
-
-					self.cleanSlide( item );
-					
-					self.setContent( holder, hIndex );
-
-					// if "center" slide
-					if(i === 1) {
-						self.currItem = item;
-						self.updateCurrZoomItem(true);
+				// Override zoom/pan/move functions in case old browser is used (most likely IE)
+				// (so they use left/top/width/height, instead of CSS transform)
+
+				_transformKey = 'left';
+				framework.addClass(template, 'pswp--ie');
+
+				_setTranslateX = function _setTranslateX(x, elStyle) {
+					elStyle.left = x + 'px';
+				};
+				_applyZoomPanToItem = function _applyZoomPanToItem(item) {
+
+					var zoomRatio = item.fitRatio > 1 ? 1 : item.fitRatio,
+					    s = item.container.style,
+					    w = zoomRatio * item.w,
+					    h = zoomRatio * item.h;
+
+					s.width = w + 'px';
+					s.height = h + 'px';
+					s.left = item.initialPosition.x + 'px';
+					s.top = item.initialPosition.y + 'px';
+				};
+				_applyCurrentZoomPan = function _applyCurrentZoomPan() {
+					if (_currZoomElementStyle) {
+
+						var s = _currZoomElementStyle,
+						    item = self.currItem,
+						    zoomRatio = item.fitRatio > 1 ? 1 : item.fitRatio,
+						    w = zoomRatio * item.w,
+						    h = zoomRatio * item.h;
+
+						s.width = w + 'px';
+						s.height = h + 'px';
+
+						s.left = _panOffset.x + 'px';
+						s.top = _panOffset.y + 'px';
 					}
-
-					item.needsUpdate = false;
-
-				} else if(holder.index === -1 && hIndex >= 0) {
-					// add content first time
-					self.setContent( holder, hIndex );
-				}
-				if(item && item.container) {
-					_calculateItemSize(item, _viewportSize);
-					_setImageSize(item);
-					_applyZoomPanToItem( item );
-				}
-				
-			}
-			_itemsNeedUpdate = false;
-		}	
-
-		_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
-		_currPanBounds = self.currItem.bounds;
-
-		if(_currPanBounds) {
-			_panOffset.x = _currPanBounds.center.x;
-			_panOffset.y = _currPanBounds.center.y;
-			_applyCurrentZoomPan( true );
-		}
-		
-		_shout('resize');
-	},
-	
-	// Zoom current item to
-	zoomTo: function(destZoomLevel, centerPoint, speed, easingFn, updateFn) {
-		/*
-			if(destZoomLevel === 'fit') {
-				destZoomLevel = self.currItem.fitRatio;
-			} else if(destZoomLevel === 'fill') {
-				destZoomLevel = self.currItem.fillRatio;
-			}
-		*/
-
-		if(centerPoint) {
-			_startZoomLevel = _currZoomLevel;
-			_midZoomPoint.x = Math.abs(centerPoint.x) - _panOffset.x ;
-			_midZoomPoint.y = Math.abs(centerPoint.y) - _panOffset.y ;
-			_equalizePoints(_startPanOffset, _panOffset);
-		}
-
-		var destPanBounds = _calculatePanBounds(destZoomLevel, false),
-			destPanOffset = {};
-
-		_modifyDestPanOffset('x', destPanBounds, destPanOffset, destZoomLevel);
-		_modifyDestPanOffset('y', destPanBounds, destPanOffset, destZoomLevel);
-
-		var initialZoomLevel = _currZoomLevel;
-		var initialPanOffset = {
-			x: _panOffset.x,
-			y: _panOffset.y
-		};
-
-		_roundPoint(destPanOffset);
-
-		var onUpdate = function(now) {
-			if(now === 1) {
-				_currZoomLevel = destZoomLevel;
-				_panOffset.x = destPanOffset.x;
-				_panOffset.y = destPanOffset.y;
-			} else {
-				_currZoomLevel = (destZoomLevel - initialZoomLevel) * now + initialZoomLevel;
-				_panOffset.x = (destPanOffset.x - initialPanOffset.x) * now + initialPanOffset.x;
-				_panOffset.y = (destPanOffset.y - initialPanOffset.y) * now + initialPanOffset.y;
-			}
-
-			if(updateFn) {
-				updateFn(now);
-			}
-
-			_applyCurrentZoomPan( now === 1 );
-		};
-
-		if(speed) {
-			_animateProp('customZoomTo', 0, 1, speed, easingFn || framework.easing.sine.inOut, onUpdate);
-		} else {
-			onUpdate(1);
-		}
-	}
-
-
-};
-
-
-/*>>core*/
-
-/*>>gestures*/
-/**
- * Mouse/touch/pointer event handlers.
- * 
- * separated from @core.js for readability
- */
-
-var MIN_SWIPE_DISTANCE = 30,
-	DIRECTION_CHECK_OFFSET = 10; // amount of pixels to drag to determine direction of swipe
-
-var _gestureStartTime,
-	_gestureCheckSpeedTime,
-
-	// pool of objects that are used during dragging of zooming
-	p = {}, // first point
-	p2 = {}, // second point (for zoom gesture)
-	delta = {},
-	_currPoint = {},
-	_startPoint = {},
-	_currPointers = [],
-	_startMainScrollPos = {},
-	_releaseAnimData,
-	_posPoints = [], // array of points during dragging, used to determine type of gesture
-	_tempPoint = {},
-
-	_isZoomingIn,
-	_verticalDragInitiated,
-	_oldAndroidTouchEndTimeout,
-	_currZoomedItemIndex = 0,
-	_centerPoint = _getEmptyPoint(),
-	_lastReleaseTime = 0,
-	_isDragging, // at least one pointer is down
-	_isMultitouch, // at least two _pointers are down
-	_zoomStarted, // zoom level changed during zoom gesture
-	_moved,
-	_dragAnimFrame,
-	_mainScrollShifted,
-	_currentPoints, // array of current touch points
-	_isZooming,
-	_currPointsDistance,
-	_startPointsDistance,
-	_currPanBounds,
-	_mainScrollPos = _getEmptyPoint(),
-	_currZoomElementStyle,
-	_mainScrollAnimating, // true, if animation after swipe gesture is running
-	_midZoomPoint = _getEmptyPoint(),
-	_currCenterPoint = _getEmptyPoint(),
-	_direction,
-	_isFirstMove,
-	_opacityChanged,
-	_bgOpacity,
-	_wasOverInitialZoom,
-
-	_isEqualPoints = function(p1, p2) {
-		return p1.x === p2.x && p1.y === p2.y;
-	},
-	_isNearbyPoints = function(touch0, touch1) {
-		return Math.abs(touch0.x - touch1.x) < DOUBLE_TAP_RADIUS && Math.abs(touch0.y - touch1.y) < DOUBLE_TAP_RADIUS;
-	},
-	_calculatePointsDistance = function(p1, p2) {
-		_tempPoint.x = Math.abs( p1.x - p2.x );
-		_tempPoint.y = Math.abs( p1.y - p2.y );
-		return Math.sqrt(_tempPoint.x * _tempPoint.x + _tempPoint.y * _tempPoint.y);
-	},
-	_stopDragUpdateLoop = function() {
-		if(_dragAnimFrame) {
-			_cancelAF(_dragAnimFrame);
-			_dragAnimFrame = null;
-		}
-	},
-	_dragUpdateLoop = function() {
-		if(_isDragging) {
-			_dragAnimFrame = _requestAF(_dragUpdateLoop);
-			_renderMovement();
-		}
-	},
-	_canPan = function() {
-		return !(_options.scaleMode === 'fit' && _currZoomLevel ===  self.currItem.initialZoomLevel);
-	},
-	
-	// find the closest parent DOM element
-	_closestElement = function(el, fn) {
-	  	if(!el || el === document) {
-	  		return false;
-	  	}
-
-	  	// don't search elements above pswp__scroll-wrap
-	  	if(el.getAttribute('class') && el.getAttribute('class').indexOf('pswp__scroll-wrap') > -1 ) {
-	  		return false;
-	  	}
-
-	  	if( fn(el) ) {
-	  		return el;
-	  	}
-
-	  	return _closestElement(el.parentNode, fn);
-	},
-
-	_preventObj = {},
-	_preventDefaultEventBehaviour = function(e, isDown) {
-	    _preventObj.prevent = !_closestElement(e.target, _options.isClickableElement);
-
-		_shout('preventDragEvent', e, isDown, _preventObj);
-		return _preventObj.prevent;
-
-	},
-	_convertTouchToPoint = function(touch, p) {
-		p.x = touch.pageX;
-		p.y = touch.pageY;
-		p.id = touch.identifier;
-		return p;
-	},
-	_findCenterOfPoints = function(p1, p2, pCenter) {
-		pCenter.x = (p1.x + p2.x) * 0.5;
-		pCenter.y = (p1.y + p2.y) * 0.5;
-	},
-	_pushPosPoint = function(time, x, y) {
-		if(time - _gestureCheckSpeedTime > 50) {
-			var o = _posPoints.length > 2 ? _posPoints.shift() : {};
-			o.x = x;
-			o.y = y; 
-			_posPoints.push(o);
-			_gestureCheckSpeedTime = time;
-		}
-	},
-
-	_calculateVerticalDragOpacityRatio = function() {
-		var yOffset = _panOffset.y - self.currItem.initialPosition.y; // difference between initial and current position
-		return 1 -  Math.abs( yOffset / (_viewportSize.y / 2)  );
-	},
-
-	
-	// points pool, reused during touch events
-	_ePoint1 = {},
-	_ePoint2 = {},
-	_tempPointsArr = [],
-	_tempCounter,
-	_getTouchPoints = function(e) {
-		// clean up previous points, without recreating array
-		while(_tempPointsArr.length > 0) {
-			_tempPointsArr.pop();
-		}
-
-		if(!_pointerEventEnabled) {
-			if(e.type.indexOf('touch') > -1) {
-
-				if(e.touches && e.touches.length > 0) {
-					_tempPointsArr[0] = _convertTouchToPoint(e.touches[0], _ePoint1);
-					if(e.touches.length > 1) {
-						_tempPointsArr[1] = _convertTouchToPoint(e.touches[1], _ePoint2);
-					}
-				}
-				
-			} else {
-				_ePoint1.x = e.pageX;
-				_ePoint1.y = e.pageY;
-				_ePoint1.id = '';
-				_tempPointsArr[0] = _ePoint1;//_ePoint1;
-			}
-		} else {
-			_tempCounter = 0;
-			// we can use forEach, as pointer events are supported only in modern browsers
-			_currPointers.forEach(function(p) {
-				if(_tempCounter === 0) {
-					_tempPointsArr[0] = p;
-				} else if(_tempCounter === 1) {
-					_tempPointsArr[1] = p;
-				}
-				_tempCounter++;
-
-			});
-		}
-		return _tempPointsArr;
-	},
-
-	_panOrMoveMainScroll = function(axis, delta) {
-
-		var panFriction,
-			overDiff = 0,
-			newOffset = _panOffset[axis] + delta[axis],
-			startOverDiff,
-			dir = delta[axis] > 0,
-			newMainScrollPosition = _mainScrollPos.x + delta.x,
-			mainScrollDiff = _mainScrollPos.x - _startMainScrollPos.x,
-			newPanPos,
-			newMainScrollPos;
-
-		// calculate fdistance over the bounds and friction
-		if(newOffset > _currPanBounds.min[axis] || newOffset < _currPanBounds.max[axis]) {
-			panFriction = _options.panEndFriction;
-			// Linear increasing of friction, so at 1/4 of viewport it's at max value. 
-			// Looks not as nice as was expected. Left for history.
-			// panFriction = (1 - (_panOffset[axis] + delta[axis] + panBounds.min[axis]) / (_viewportSize[axis] / 4) );
-		} else {
-			panFriction = 1;
-		}
-		
-		newOffset = _panOffset[axis] + delta[axis] * panFriction;
-
-		// move main scroll or start panning
-		if(_options.allowPanToNext || _currZoomLevel === self.currItem.initialZoomLevel) {
-
-
-			if(!_currZoomElementStyle) {
-				
-				newMainScrollPos = newMainScrollPosition;
-
-			} else if(_direction === 'h' && axis === 'x' && !_zoomStarted ) {
-				
-				if(dir) {
-					if(newOffset > _currPanBounds.min[axis]) {
-						panFriction = _options.panEndFriction;
-						overDiff = _currPanBounds.min[axis] - newOffset;
-						startOverDiff = _currPanBounds.min[axis] - _startPanOffset[axis];
-					}
-					
-					// drag right
-					if( (startOverDiff <= 0 || mainScrollDiff < 0) && _getNumItems() > 1 ) {
-						newMainScrollPos = newMainScrollPosition;
-						if(mainScrollDiff < 0 && newMainScrollPosition > _startMainScrollPos.x) {
-							newMainScrollPos = _startMainScrollPos.x;
-						}
-					} else {
-						if(_currPanBounds.min.x !== _currPanBounds.max.x) {
-							newPanPos = newOffset;
-						}
-						
-					}
-
-				} else {
-
-					if(newOffset < _currPanBounds.max[axis] ) {
-						panFriction =_options.panEndFriction;
-						overDiff = newOffset - _currPanBounds.max[axis];
-						startOverDiff = _startPanOffset[axis] - _currPanBounds.max[axis];
-					}
-
-					if( (startOverDiff <= 0 || mainScrollDiff > 0) && _getNumItems() > 1 ) {
-						newMainScrollPos = newMainScrollPosition;
-
-						if(mainScrollDiff > 0 && newMainScrollPosition < _startMainScrollPos.x) {
-							newMainScrollPos = _startMainScrollPos.x;
-						}
-
-					} else {
-						if(_currPanBounds.min.x !== _currPanBounds.max.x) {
-							newPanPos = newOffset;
-						}
-					}
-
-				}
-
-
-				//
-			}
-
-			if(axis === 'x') {
-
-				if(newMainScrollPos !== undefined) {
-					_moveMainScroll(newMainScrollPos, true);
-					if(newMainScrollPos === _startMainScrollPos.x) {
-						_mainScrollShifted = false;
-					} else {
-						_mainScrollShifted = true;
-					}
-				}
-
-				if(_currPanBounds.min.x !== _currPanBounds.max.x) {
-					if(newPanPos !== undefined) {
-						_panOffset.x = newPanPos;
-					} else if(!_mainScrollShifted) {
-						_panOffset.x += delta.x * panFriction;
-					}
-				}
-
-				return newMainScrollPos !== undefined;
-			}
-
-		}
-
-		if(!_mainScrollAnimating) {
-			
-			if(!_mainScrollShifted) {
-				if(_currZoomLevel > self.currItem.fitRatio) {
-					_panOffset[axis] += delta[axis] * panFriction;
-				
-				}
-			}
-
-			
-		}
-		
-	},
-
-	// Pointerdown/touchstart/mousedown handler
-	_onDragStart = function(e) {
-
-		// Allow dragging only via left mouse button.
-		// As this handler is not added in IE8 - we ignore e.which
-		// 
-		// http://www.quirksmode.org/js/events_properties.html
-		// https://developer.mozilla.org/en-US/docs/Web/API/event.button
-		if(e.type === 'mousedown' && e.button > 0  ) {
-			return;
-		}
-
-		if(_initialZoomRunning) {
-			e.preventDefault();
-			return;
-		}
-
-		if(_oldAndroidTouchEndTimeout && e.type === 'mousedown') {
-			return;
-		}
-
-		if(_preventDefaultEventBehaviour(e, true)) {
-			e.preventDefault();
-		}
-
-
-
-		_shout('pointerDown');
-
-		if(_pointerEventEnabled) {
-			var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
-			if(pointerIndex < 0) {
-				pointerIndex = _currPointers.length;
-			}
-			_currPointers[pointerIndex] = {x:e.pageX, y:e.pageY, id: e.pointerId};
-		}
-		
-
-
-		var startPointsList = _getTouchPoints(e),
-			numPoints = startPointsList.length;
-
-		_currentPoints = null;
-
-		_stopAllAnimations();
-
-		// init drag
-		if(!_isDragging || numPoints === 1) {
-
-			
-
-			_isDragging = _isFirstMove = true;
-			framework.bind(window, _upMoveEvents, self);
-
-			_isZoomingIn = 
-				_wasOverInitialZoom = 
-				_opacityChanged = 
-				_verticalDragInitiated = 
-				_mainScrollShifted = 
-				_moved = 
-				_isMultitouch = 
-				_zoomStarted = false;
-
-			_direction = null;
-
-			_shout('firstTouchStart', startPointsList);
-
-			_equalizePoints(_startPanOffset, _panOffset);
-
-			_currPanDist.x = _currPanDist.y = 0;
-			_equalizePoints(_currPoint, startPointsList[0]);
-			_equalizePoints(_startPoint, _currPoint);
-
-			//_equalizePoints(_startMainScrollPos, _mainScrollPos);
-			_startMainScrollPos.x = _slideSize.x * _currPositionIndex;
-
-			_posPoints = [{
-				x: _currPoint.x,
-				y: _currPoint.y
-			}];
-
-			_gestureCheckSpeedTime = _gestureStartTime = _getCurrentTime();
-
-			//_mainScrollAnimationEnd(true);
-			_calculatePanBounds( _currZoomLevel, true );
-			
-			// Start rendering
-			_stopDragUpdateLoop();
-			_dragUpdateLoop();
-			
-		}
-
-		// init zoom
-		if(!_isZooming && numPoints > 1 && !_mainScrollAnimating && !_mainScrollShifted) {
-			_startZoomLevel = _currZoomLevel;
-			_zoomStarted = false; // true if zoom changed at least once
-
-			_isZooming = _isMultitouch = true;
-			_currPanDist.y = _currPanDist.x = 0;
-
-			_equalizePoints(_startPanOffset, _panOffset);
-
-			_equalizePoints(p, startPointsList[0]);
-			_equalizePoints(p2, startPointsList[1]);
-
-			_findCenterOfPoints(p, p2, _currCenterPoint);
-
-			_midZoomPoint.x = Math.abs(_currCenterPoint.x) - _panOffset.x;
-			_midZoomPoint.y = Math.abs(_currCenterPoint.y) - _panOffset.y;
-			_currPointsDistance = _startPointsDistance = _calculatePointsDistance(p, p2);
-		}
-
-
-	},
-
-	// Pointermove/touchmove/mousemove handler
-	_onDragMove = function(e) {
-
-		e.preventDefault();
-
-		if(_pointerEventEnabled) {
-			var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
-			if(pointerIndex > -1) {
-				var p = _currPointers[pointerIndex];
-				p.x = e.pageX;
-				p.y = e.pageY; 
-			}
-		}
-
-		if(_isDragging) {
-			var touchesList = _getTouchPoints(e);
-			if(!_direction && !_moved && !_isZooming) {
-
-				if(_mainScrollPos.x !== _slideSize.x * _currPositionIndex) {
-					// if main scroll position is shifted – direction is always horizontal
-					_direction = 'h';
-				} else {
-					var diff = Math.abs(touchesList[0].x - _currPoint.x) - Math.abs(touchesList[0].y - _currPoint.y);
-					// check the direction of movement
-					if(Math.abs(diff) >= DIRECTION_CHECK_OFFSET) {
-						_direction = diff > 0 ? 'h' : 'v';
-						_currentPoints = touchesList;
-					}
-				}
-				
-			} else {
-				_currentPoints = touchesList;
-			}
-		}	
-	},
-	// 
-	_renderMovement =  function() {
-
-		if(!_currentPoints) {
-			return;
-		}
-
-		var numPoints = _currentPoints.length;
-
-		if(numPoints === 0) {
-			return;
-		}
-
-		_equalizePoints(p, _currentPoints[0]);
-
-		delta.x = p.x - _currPoint.x;
-		delta.y = p.y - _currPoint.y;
-
-		if(_isZooming && numPoints > 1) {
-			// Handle behaviour for more than 1 point
-
-			_currPoint.x = p.x;
-			_currPoint.y = p.y;
-		
-			// check if one of two points changed
-			if( !delta.x && !delta.y && _isEqualPoints(_currentPoints[1], p2) ) {
-				return;
-			}
-
-			_equalizePoints(p2, _currentPoints[1]);
-
-
-			if(!_zoomStarted) {
-				_zoomStarted = true;
-				_shout('zoomGestureStarted');
-			}
-			
-			// Distance between two points
-			var pointsDistance = _calculatePointsDistance(p,p2);
-
-			var zoomLevel = _calculateZoomLevel(pointsDistance);
-
-			// slightly over the of initial zoom level
-			if(zoomLevel > self.currItem.initialZoomLevel + self.currItem.initialZoomLevel / 15) {
-				_wasOverInitialZoom = true;
-			}
-
-			// Apply the friction if zoom level is out of the bounds
-			var zoomFriction = 1,
-				minZoomLevel = _getMinZoomLevel(),
-				maxZoomLevel = _getMaxZoomLevel();
-
-			if ( zoomLevel < minZoomLevel ) {
-				
-				if(_options.pinchToClose && !_wasOverInitialZoom && _startZoomLevel <= self.currItem.initialZoomLevel) {
-					// fade out background if zooming out
-					var minusDiff = minZoomLevel - zoomLevel;
-					var percent = 1 - minusDiff / (minZoomLevel / 1.2);
-
-					_applyBgOpacity(percent);
-					_shout('onPinchClose', percent);
-					_opacityChanged = true;
-				} else {
-					zoomFriction = (minZoomLevel - zoomLevel) / minZoomLevel;
-					if(zoomFriction > 1) {
-						zoomFriction = 1;
-					}
-					zoomLevel = minZoomLevel - zoomFriction * (minZoomLevel / 3);
-				}
-				
-			} else if ( zoomLevel > maxZoomLevel ) {
-				// 1.5 - extra zoom level above the max. E.g. if max is x6, real max 6 + 1.5 = 7.5
-				zoomFriction = (zoomLevel - maxZoomLevel) / ( minZoomLevel * 6 );
-				if(zoomFriction > 1) {
-					zoomFriction = 1;
-				}
-				zoomLevel = maxZoomLevel + zoomFriction * minZoomLevel;
-			}
-
-			if(zoomFriction < 0) {
-				zoomFriction = 0;
-			}
-
-			// distance between touch points after friction is applied
-			_currPointsDistance = pointsDistance;
-
-			// _centerPoint - The point in the middle of two pointers
-			_findCenterOfPoints(p, p2, _centerPoint);
-		
-			// paning with two pointers pressed
-			_currPanDist.x += _centerPoint.x - _currCenterPoint.x;
-			_currPanDist.y += _centerPoint.y - _currCenterPoint.y;
-			_equalizePoints(_currCenterPoint, _centerPoint);
-
-			_panOffset.x = _calculatePanOffset('x', zoomLevel);
-			_panOffset.y = _calculatePanOffset('y', zoomLevel);
-
-			_isZoomingIn = zoomLevel > _currZoomLevel;
-			_currZoomLevel = zoomLevel;
-			_applyCurrentZoomPan();
-
-		} else {
-
-			// handle behaviour for one point (dragging or panning)
-
-			if(!_direction) {
-				return;
-			}
-
-			if(_isFirstMove) {
-				_isFirstMove = false;
-
-				// subtract drag distance that was used during the detection direction  
-
-				if( Math.abs(delta.x) >= DIRECTION_CHECK_OFFSET) {
-					delta.x -= _currentPoints[0].x - _startPoint.x;
-				}
-				
-				if( Math.abs(delta.y) >= DIRECTION_CHECK_OFFSET) {
-					delta.y -= _currentPoints[0].y - _startPoint.y;
-				}
-			}
-
-			_currPoint.x = p.x;
-			_currPoint.y = p.y;
-
-			// do nothing if pointers position hasn't changed
-			if(delta.x === 0 && delta.y === 0) {
-				return;
-			}
-
-			if(_direction === 'v' && _options.closeOnVerticalDrag) {
-				if(!_canPan()) {
-					_currPanDist.y += delta.y;
-					_panOffset.y += delta.y;
-
-					var opacityRatio = _calculateVerticalDragOpacityRatio();
-
-					_verticalDragInitiated = true;
-					_shout('onVerticalDrag', opacityRatio);
-
-					_applyBgOpacity(opacityRatio);
-					_applyCurrentZoomPan();
-					return ;
-				}
-			}
-
-			_pushPosPoint(_getCurrentTime(), p.x, p.y);
-
-			_moved = true;
-			_currPanBounds = self.currItem.bounds;
-			
-			var mainScrollChanged = _panOrMoveMainScroll('x', delta);
-			if(!mainScrollChanged) {
-				_panOrMoveMainScroll('y', delta);
-
-				_roundPoint(_panOffset);
-				_applyCurrentZoomPan();
-			}
-
-		}
-
-	},
-	
-	// Pointerup/pointercancel/touchend/touchcancel/mouseup event handler
-	_onDragRelease = function(e) {
-
-		if(_features.isOldAndroid ) {
-
-			if(_oldAndroidTouchEndTimeout && e.type === 'mouseup') {
-				return;
-			}
-
-			// on Android (v4.1, 4.2, 4.3 & possibly older) 
-			// ghost mousedown/up event isn't preventable via e.preventDefault,
-			// which causes fake mousedown event
-			// so we block mousedown/up for 600ms
-			if( e.type.indexOf('touch') > -1 ) {
-				clearTimeout(_oldAndroidTouchEndTimeout);
-				_oldAndroidTouchEndTimeout = setTimeout(function() {
-					_oldAndroidTouchEndTimeout = 0;
-				}, 600);
-			}
-			
-		}
-
-		_shout('pointerUp');
-
-		if(_preventDefaultEventBehaviour(e, false)) {
-			e.preventDefault();
-		}
-
-		var releasePoint;
-
-		if(_pointerEventEnabled) {
-			var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
-			
-			if(pointerIndex > -1) {
-				releasePoint = _currPointers.splice(pointerIndex, 1)[0];
-
-				if(navigator.pointerEnabled) {
-					releasePoint.type = e.pointerType || 'mouse';
-				} else {
-					var MSPOINTER_TYPES = {
-						4: 'mouse', // event.MSPOINTER_TYPE_MOUSE
-						2: 'touch', // event.MSPOINTER_TYPE_TOUCH 
-						3: 'pen' // event.MSPOINTER_TYPE_PEN
-					};
-					releasePoint.type = MSPOINTER_TYPES[e.pointerType];
-
-					if(!releasePoint.type) {
-						releasePoint.type = e.pointerType || 'mouse';
-					}
-				}
-
-			}
-		}
-
-		var touchList = _getTouchPoints(e),
-			gestureType,
-			numPoints = touchList.length;
-
-		if(e.type === 'mouseup') {
-			numPoints = 0;
-		}
-
-		// Do nothing if there were 3 touch points or more
-		if(numPoints === 2) {
-			_currentPoints = null;
-			return true;
-		}
-
-		// if second pointer released
-		if(numPoints === 1) {
-			_equalizePoints(_startPoint, touchList[0]);
-		}				
-
-
-		// pointer hasn't moved, send "tap release" point
-		if(numPoints === 0 && !_direction && !_mainScrollAnimating) {
-			if(!releasePoint) {
-				if(e.type === 'mouseup') {
-					releasePoint = {x: e.pageX, y: e.pageY, type:'mouse'};
-				} else if(e.changedTouches && e.changedTouches[0]) {
-					releasePoint = {x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY, type:'touch'};
-				}		
-			}
-
-			_shout('touchRelease', e, releasePoint);
-		}
-
-		// Difference in time between releasing of two last touch points (zoom gesture)
-		var releaseTimeDiff = -1;
-
-		// Gesture completed, no pointers left
-		if(numPoints === 0) {
-			_isDragging = false;
-			framework.unbind(window, _upMoveEvents, self);
-
-			_stopDragUpdateLoop();
-
-			if(_isZooming) {
-				// Two points released at the same time
-				releaseTimeDiff = 0;
-			} else if(_lastReleaseTime !== -1) {
-				releaseTimeDiff = _getCurrentTime() - _lastReleaseTime;
-			}
-		}
-		_lastReleaseTime = numPoints === 1 ? _getCurrentTime() : -1;
-		
-		if(releaseTimeDiff !== -1 && releaseTimeDiff < 150) {
-			gestureType = 'zoom';
-		} else {
-			gestureType = 'swipe';
-		}
-
-		if(_isZooming && numPoints < 2) {
-			_isZooming = false;
-
-			// Only second point released
-			if(numPoints === 1) {
-				gestureType = 'zoomPointerUp';
-			}
-			_shout('zoomGestureEnded');
-		}
-
-		_currentPoints = null;
-		if(!_moved && !_zoomStarted && !_mainScrollAnimating && !_verticalDragInitiated) {
-			// nothing to animate
-			return;
-		}
-	
-		_stopAllAnimations();
-
-		
-		if(!_releaseAnimData) {
-			_releaseAnimData = _initDragReleaseAnimationData();
-		}
-		
-		_releaseAnimData.calculateSwipeSpeed('x');
-
-
-		if(_verticalDragInitiated) {
-
-			var opacityRatio = _calculateVerticalDragOpacityRatio();
-
-			if(opacityRatio < _options.verticalDragRange) {
-				self.close();
-			} else {
-				var initalPanY = _panOffset.y,
-					initialBgOpacity = _bgOpacity;
-
-				_animateProp('verticalDrag', 0, 1, 300, framework.easing.cubic.out, function(now) {
-					
-					_panOffset.y = (self.currItem.initialPosition.y - initalPanY) * now + initalPanY;
-
-					_applyBgOpacity(  (1 - initialBgOpacity) * now + initialBgOpacity );
-					_applyCurrentZoomPan();
-				});
-
-				_shout('onVerticalDrag', 1);
-			}
-
-			return;
-		}
-
-
-		// main scroll 
-		if(  (_mainScrollShifted || _mainScrollAnimating) && numPoints === 0) {
-			var itemChanged = _finishSwipeMainScrollGesture(gestureType, _releaseAnimData);
-			if(itemChanged) {
-				return;
-			}
-			gestureType = 'zoomPointerUp';
-		}
-
-		// prevent zoom/pan animation when main scroll animation runs
-		if(_mainScrollAnimating) {
-			return;
-		}
-		
-		// Complete simple zoom gesture (reset zoom level if it's out of the bounds)  
-		if(gestureType !== 'swipe') {
-			_completeZoomGesture();
-			return;
-		}
-	
-		// Complete pan gesture if main scroll is not shifted, and it's possible to pan current image
-		if(!_mainScrollShifted && _currZoomLevel > self.currItem.fitRatio) {
-			_completePanGesture(_releaseAnimData);
-		}
-	},
-
-
-	// Returns object with data about gesture
-	// It's created only once and then reused
-	_initDragReleaseAnimationData  = function() {
-		// temp local vars
-		var lastFlickDuration,
-			tempReleasePos;
-
-		// s = this
-		var s = {
-			lastFlickOffset: {},
-			lastFlickDist: {},
-			lastFlickSpeed: {},
-			slowDownRatio:  {},
-			slowDownRatioReverse:  {},
-			speedDecelerationRatio:  {},
-			speedDecelerationRatioAbs:  {},
-			distanceOffset:  {},
-			backAnimDestination: {},
-			backAnimStarted: {},
-			calculateSwipeSpeed: function(axis) {
-				
-
-				if( _posPoints.length > 1) {
-					lastFlickDuration = _getCurrentTime() - _gestureCheckSpeedTime + 50;
-					tempReleasePos = _posPoints[_posPoints.length-2][axis];
-				} else {
-					lastFlickDuration = _getCurrentTime() - _gestureStartTime; // total gesture duration
-					tempReleasePos = _startPoint[axis];
-				}
-				s.lastFlickOffset[axis] = _currPoint[axis] - tempReleasePos;
-				s.lastFlickDist[axis] = Math.abs(s.lastFlickOffset[axis]);
-				if(s.lastFlickDist[axis] > 20) {
-					s.lastFlickSpeed[axis] = s.lastFlickOffset[axis] / lastFlickDuration;
-				} else {
-					s.lastFlickSpeed[axis] = 0;
-				}
-				if( Math.abs(s.lastFlickSpeed[axis]) < 0.1 ) {
-					s.lastFlickSpeed[axis] = 0;
-				}
-				
-				s.slowDownRatio[axis] = 0.95;
-				s.slowDownRatioReverse[axis] = 1 - s.slowDownRatio[axis];
-				s.speedDecelerationRatio[axis] = 1;
+				};
 			},
-
-			calculateOverBoundsAnimOffset: function(axis, speed) {
-				if(!s.backAnimStarted[axis]) {
-
-					if(_panOffset[axis] > _currPanBounds.min[axis]) {
-						s.backAnimDestination[axis] = _currPanBounds.min[axis];
-						
-					} else if(_panOffset[axis] < _currPanBounds.max[axis]) {
-						s.backAnimDestination[axis] = _currPanBounds.max[axis];
+			    _onKeyDown = function _onKeyDown(e) {
+				var keydownAction = '';
+				if (_options.escKey && e.keyCode === 27) {
+					keydownAction = 'close';
+				} else if (_options.arrowKeys) {
+					if (e.keyCode === 37) {
+						keydownAction = 'prev';
+					} else if (e.keyCode === 39) {
+						keydownAction = 'next';
 					}
+				}
 
-					if(s.backAnimDestination[axis] !== undefined) {
-						s.slowDownRatio[axis] = 0.7;
-						s.slowDownRatioReverse[axis] = 1 - s.slowDownRatio[axis];
-						if(s.speedDecelerationRatioAbs[axis] < 0.05) {
-
-							s.lastFlickSpeed[axis] = 0;
-							s.backAnimStarted[axis] = true;
-
-							_animateProp('bounceZoomPan'+axis,_panOffset[axis], 
-								s.backAnimDestination[axis], 
-								speed || 300, 
-								framework.easing.sine.out, 
-								function(pos) {
-									_panOffset[axis] = pos;
-									_applyCurrentZoomPan();
-								}
-							);
-
+				if (keydownAction) {
+					// don't do anything if special key pressed to prevent from overriding default browser actions
+					// e.g. in Chrome on Mac cmd+arrow-left returns to previous page
+					if (!e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey) {
+						if (e.preventDefault) {
+							e.preventDefault();
+						} else {
+							e.returnValue = false;
 						}
+						self[keydownAction]();
 					}
 				}
 			},
+			    _onGlobalClick = function _onGlobalClick(e) {
+				if (!e) {
+					return;
+				}
 
-			// Reduces the speed by slowDownRatio (per 10ms)
-			calculateAnimOffset: function(axis) {
-				if(!s.backAnimStarted[axis]) {
-					s.speedDecelerationRatio[axis] = s.speedDecelerationRatio[axis] * (s.slowDownRatio[axis] + 
-												s.slowDownRatioReverse[axis] - 
-												s.slowDownRatioReverse[axis] * s.timeDiff / 10);
-
-					s.speedDecelerationRatioAbs[axis] = Math.abs(s.lastFlickSpeed[axis] * s.speedDecelerationRatio[axis]);
-					s.distanceOffset[axis] = s.lastFlickSpeed[axis] * s.speedDecelerationRatio[axis] * s.timeDiff;
-					_panOffset[axis] += s.distanceOffset[axis];
-
+				// don't allow click event to pass through when triggering after drag or some other gesture
+				if (_moved || _zoomStarted || _mainScrollAnimating || _verticalDragInitiated) {
+					e.preventDefault();
+					e.stopPropagation();
 				}
 			},
-
-			panAnimLoop: function() {
-				if ( _animations.zoomPan ) {
-					_animations.zoomPan.raf = _requestAF(s.panAnimLoop);
-
-					s.now = _getCurrentTime();
-					s.timeDiff = s.now - s.lastNow;
-					s.lastNow = s.now;
-					
-					s.calculateAnimOffset('x');
-					s.calculateAnimOffset('y');
-
-					_applyCurrentZoomPan();
-					
-					s.calculateOverBoundsAnimOffset('x');
-					s.calculateOverBoundsAnimOffset('y');
-
-
-					if (s.speedDecelerationRatioAbs.x < 0.05 && s.speedDecelerationRatioAbs.y < 0.05) {
-
-						// round pan position
-						_panOffset.x = Math.round(_panOffset.x);
-						_panOffset.y = Math.round(_panOffset.y);
-						_applyCurrentZoomPan();
-						
-						_stopAnimation('zoomPan');
-						return;
-					}
-				}
-
-			}
-		};
-		return s;
-	},
-
-	_completePanGesture = function(animData) {
-		// calculate swipe speed for Y axis (paanning)
-		animData.calculateSwipeSpeed('y');
-
-		_currPanBounds = self.currItem.bounds;
-		
-		animData.backAnimDestination = {};
-		animData.backAnimStarted = {};
-
-		// Avoid acceleration animation if speed is too low
-		if(Math.abs(animData.lastFlickSpeed.x) <= 0.05 && Math.abs(animData.lastFlickSpeed.y) <= 0.05 ) {
-			animData.speedDecelerationRatioAbs.x = animData.speedDecelerationRatioAbs.y = 0;
-
-			// Run pan drag release animation. E.g. if you drag image and release finger without momentum.
-			animData.calculateOverBoundsAnimOffset('x');
-			animData.calculateOverBoundsAnimOffset('y');
-			return true;
-		}
-
-		// Animation loop that controls the acceleration after pan gesture ends
-		_registerStartAnimation('zoomPan');
-		animData.lastNow = _getCurrentTime();
-		animData.panAnimLoop();
-	},
-
-
-	_finishSwipeMainScrollGesture = function(gestureType, _releaseAnimData) {
-		var itemChanged;
-		if(!_mainScrollAnimating) {
-			_currZoomedItemIndex = _currentItemIndex;
-		}
-
-
-		
-		var itemsDiff;
-
-		if(gestureType === 'swipe') {
-			var totalShiftDist = _currPoint.x - _startPoint.x,
-				isFastLastFlick = _releaseAnimData.lastFlickDist.x < 10;
-
-			// if container is shifted for more than MIN_SWIPE_DISTANCE, 
-			// and last flick gesture was in right direction
-			if(totalShiftDist > MIN_SWIPE_DISTANCE && 
-				(isFastLastFlick || _releaseAnimData.lastFlickOffset.x > 20) ) {
-				// go to prev item
-				itemsDiff = -1;
-			} else if(totalShiftDist < -MIN_SWIPE_DISTANCE && 
-				(isFastLastFlick || _releaseAnimData.lastFlickOffset.x < -20) ) {
-				// go to next item
-				itemsDiff = 1;
-			}
-		}
-
-		var nextCircle;
-
-		if(itemsDiff) {
-			
-			_currentItemIndex += itemsDiff;
-
-			if(_currentItemIndex < 0) {
-				_currentItemIndex = _options.loop ? _getNumItems()-1 : 0;
-				nextCircle = true;
-			} else if(_currentItemIndex >= _getNumItems()) {
-				_currentItemIndex = _options.loop ? 0 : _getNumItems()-1;
-				nextCircle = true;
-			}
-
-			if(!nextCircle || _options.loop) {
-				_indexDiff += itemsDiff;
-				_currPositionIndex -= itemsDiff;
-				itemChanged = true;
-			}
-			
-
-			
-		}
-
-		var animateToX = _slideSize.x * _currPositionIndex;
-		var animateToDist = Math.abs( animateToX - _mainScrollPos.x );
-		var finishAnimDuration;
-
-
-		if(!itemChanged && animateToX > _mainScrollPos.x !== _releaseAnimData.lastFlickSpeed.x > 0) {
-			// "return to current" duration, e.g. when dragging from slide 0 to -1
-			finishAnimDuration = 333; 
-		} else {
-			finishAnimDuration = Math.abs(_releaseAnimData.lastFlickSpeed.x) > 0 ? 
-									animateToDist / Math.abs(_releaseAnimData.lastFlickSpeed.x) : 
-									333;
-
-			finishAnimDuration = Math.min(finishAnimDuration, 400);
-			finishAnimDuration = Math.max(finishAnimDuration, 250);
-		}
-
-		if(_currZoomedItemIndex === _currentItemIndex) {
-			itemChanged = false;
-		}
-		
-		_mainScrollAnimating = true;
-		
-		_shout('mainScrollAnimStart');
-
-		_animateProp('mainScroll', _mainScrollPos.x, animateToX, finishAnimDuration, framework.easing.cubic.out, 
-			_moveMainScroll,
-			function() {
-				_stopAllAnimations();
-				_mainScrollAnimating = false;
-				_currZoomedItemIndex = -1;
-				
-				if(itemChanged || _currZoomedItemIndex !== _currentItemIndex) {
-					self.updateCurrItem();
-				}
-				
-				_shout('mainScrollAnimComplete');
-			}
-		);
-
-		if(itemChanged) {
-			self.updateCurrItem(true);
-		}
-
-		return itemChanged;
-	},
-
-	_calculateZoomLevel = function(touchesDistance) {
-		return  1 / _startPointsDistance * touchesDistance * _startZoomLevel;
-	},
-
-	// Resets zoom if it's out of bounds
-	_completeZoomGesture = function() {
-		var destZoomLevel = _currZoomLevel,
-			minZoomLevel = _getMinZoomLevel(),
-			maxZoomLevel = _getMaxZoomLevel();
-
-		if ( _currZoomLevel < minZoomLevel ) {
-			destZoomLevel = minZoomLevel;
-		} else if ( _currZoomLevel > maxZoomLevel ) {
-			destZoomLevel = maxZoomLevel;
-		}
-
-		var destOpacity = 1,
-			onUpdate,
-			initialOpacity = _bgOpacity;
-
-		if(_opacityChanged && !_isZoomingIn && !_wasOverInitialZoom && _currZoomLevel < minZoomLevel) {
-			//_closedByScroll = true;
-			self.close();
-			return true;
-		}
-
-		if(_opacityChanged) {
-			onUpdate = function(now) {
-				_applyBgOpacity(  (destOpacity - initialOpacity) * now + initialOpacity );
-			};
-		}
-
-		self.zoomTo(destZoomLevel, 0, 200,  framework.easing.cubic.out, onUpdate);
-		return true;
-	};
-
-
-_registerModule('Gestures', {
-	publicMethods: {
-
-		initGestures: function() {
-
-			// helper function that builds touch/pointer/mouse events
-			var addEventNames = function(pref, down, move, up, cancel) {
-				_dragStartEvent = pref + down;
-				_dragMoveEvent = pref + move;
-				_dragEndEvent = pref + up;
-				if(cancel) {
-					_dragCancelEvent = pref + cancel;
-				} else {
-					_dragCancelEvent = '';
-				}
+			    _updatePageScrollOffset = function _updatePageScrollOffset() {
+				self.setScrollOffset(0, framework.getScrollY());
 			};
 
-			_pointerEventEnabled = _features.pointerEvent;
-			if(_pointerEventEnabled && _features.touch) {
-				// we don't need touch events, if browser supports pointer events
-				_features.touch = false;
-			}
-
-			if(_pointerEventEnabled) {
-				if(navigator.pointerEnabled) {
-					addEventNames('pointer', 'down', 'move', 'up', 'cancel');
-				} else {
-					// IE10 pointer events are case-sensitive
-					addEventNames('MSPointer', 'Down', 'Move', 'Up', 'Cancel');
-				}
-			} else if(_features.touch) {
-				addEventNames('touch', 'start', 'move', 'end', 'cancel');
-				_likelyTouchDevice = true;
-			} else {
-				addEventNames('mouse', 'down', 'move', 'up');	
-			}
-
-			_upMoveEvents = _dragMoveEvent + ' ' + _dragEndEvent  + ' ' +  _dragCancelEvent;
-			_downEvents = _dragStartEvent;
-
-			if(_pointerEventEnabled && !_likelyTouchDevice) {
-				_likelyTouchDevice = (navigator.maxTouchPoints > 1) || (navigator.msMaxTouchPoints > 1);
-			}
-			// make variable public
-			self.likelyTouchDevice = _likelyTouchDevice; 
-			
-			_globalEventHandlers[_dragStartEvent] = _onDragStart;
-			_globalEventHandlers[_dragMoveEvent] = _onDragMove;
-			_globalEventHandlers[_dragEndEvent] = _onDragRelease; // the Kraken
-
-			if(_dragCancelEvent) {
-				_globalEventHandlers[_dragCancelEvent] = _globalEventHandlers[_dragEndEvent];
-			}
-
-			// Bind mouse events on device with detected hardware touch support, in case it supports multiple types of input.
-			if(_features.touch) {
-				_downEvents += ' mousedown';
-				_upMoveEvents += ' mousemove mouseup';
-				_globalEventHandlers.mousedown = _globalEventHandlers[_dragStartEvent];
-				_globalEventHandlers.mousemove = _globalEventHandlers[_dragMoveEvent];
-				_globalEventHandlers.mouseup = _globalEventHandlers[_dragEndEvent];
-			}
-
-			if(!_likelyTouchDevice) {
-				// don't allow pan to next slide from zoomed state on Desktop
-				_options.allowPanToNext = false;
-			}
-		}
-
-	}
-});
-
-
-/*>>gestures*/
-
-/*>>show-hide-transition*/
-/**
- * show-hide-transition.js:
- *
- * Manages initial opening or closing transition.
- *
- * If you're not planning to use transition for gallery at all,
- * you may set options hideAnimationDuration and showAnimationDuration to 0,
- * and just delete startAnimation function.
- * 
- */
-
-
-var _showOrHideTimeout,
-	_showOrHide = function(item, img, out, completeFn) {
-
-		if(_showOrHideTimeout) {
-			clearTimeout(_showOrHideTimeout);
-		}
-
-		_initialZoomRunning = true;
-		_initialContentSet = true;
-		
-		// dimensions of small thumbnail {x:,y:,w:}.
-		// Height is optional, as calculated based on large image.
-		var thumbBounds; 
-		if(item.initialLayout) {
-			thumbBounds = item.initialLayout;
-			item.initialLayout = null;
-		} else {
-			thumbBounds = _options.getThumbBoundsFn && _options.getThumbBoundsFn(_currentItemIndex);
-		}
-
-		var duration = out ? _options.hideAnimationDuration : _options.showAnimationDuration;
-
-		var onComplete = function() {
-			_stopAnimation('initialZoom');
-			if(!out) {
-				_applyBgOpacity(1);
-				if(img) {
-					img.style.display = 'block';
-				}
-				framework.addClass(template, 'pswp--animated-in');
-				_shout('initialZoom' + (out ? 'OutEnd' : 'InEnd'));
-			} else {
-				self.template.removeAttribute('style');
-				self.bg.removeAttribute('style');
-			}
-
-			if(completeFn) {
-				completeFn();
-			}
-			_initialZoomRunning = false;
-		};
-
-		// if bounds aren't provided, just open gallery without animation
-		if(!duration || !thumbBounds || thumbBounds.x === undefined) {
-
-			_shout('initialZoom' + (out ? 'Out' : 'In') );
-
-			_currZoomLevel = item.initialZoomLevel;
-			_equalizePoints(_panOffset,  item.initialPosition );
-			_applyCurrentZoomPan();
-
-			template.style.opacity = out ? 0 : 1;
-			_applyBgOpacity(1);
-
-			if(duration) {
-				setTimeout(function() {
-					onComplete();
-				}, duration);
-			} else {
-				onComplete();
-			}
-
-			return;
-		}
-
-		var startAnimation = function() {
-			var closeWithRaf = _closedByScroll,
-				fadeEverything = !self.currItem.src || self.currItem.loadError || _options.showHideOpacity;
-			
-			// apply hw-acceleration to image
-			if(item.miniImg) {
-				item.miniImg.style.webkitBackfaceVisibility = 'hidden';
-			}
-
-			if(!out) {
-				_currZoomLevel = thumbBounds.w / item.w;
-				_panOffset.x = thumbBounds.x;
-				_panOffset.y = thumbBounds.y - _initalWindowScrollY;
-
-				self[fadeEverything ? 'template' : 'bg'].style.opacity = 0.001;
-				_applyCurrentZoomPan();
-			}
-
-			_registerStartAnimation('initialZoom');
-			
-			if(out && !closeWithRaf) {
-				framework.removeClass(template, 'pswp--animated-in');
-			}
-
-			if(fadeEverything) {
-				if(out) {
-					framework[ (closeWithRaf ? 'remove' : 'add') + 'Class' ](template, 'pswp--animate_opacity');
-				} else {
-					setTimeout(function() {
-						framework.addClass(template, 'pswp--animate_opacity');
-					}, 30);
-				}
-			}
-
-			_showOrHideTimeout = setTimeout(function() {
-
-				_shout('initialZoom' + (out ? 'Out' : 'In') );
-				
-
-				if(!out) {
-
-					// "in" animation always uses CSS transitions (instead of rAF).
-					// CSS transition work faster here, 
-					// as developer may also want to animate other things, 
-					// like ui on top of sliding area, which can be animated just via CSS
-					
-					_currZoomLevel = item.initialZoomLevel;
-					_equalizePoints(_panOffset,  item.initialPosition );
-					_applyCurrentZoomPan();
-					_applyBgOpacity(1);
-
-					if(fadeEverything) {
-						template.style.opacity = 1;
-					} else {
-						_applyBgOpacity(1);
+			// Micro animation engine
+			var _animations = {},
+			    _numAnimations = 0,
+			    _stopAnimation = function _stopAnimation(name) {
+				if (_animations[name]) {
+					if (_animations[name].raf) {
+						_cancelAF(_animations[name].raf);
 					}
+					_numAnimations--;
+					delete _animations[name];
+				}
+			},
+			    _registerStartAnimation = function _registerStartAnimation(name) {
+				if (_animations[name]) {
+					_stopAnimation(name);
+				}
+				if (!_animations[name]) {
+					_numAnimations++;
+					_animations[name] = {};
+				}
+			},
+			    _stopAllAnimations = function _stopAllAnimations() {
+				for (var prop in _animations) {
 
-					_showOrHideTimeout = setTimeout(onComplete, duration + 20);
-				} else {
-
-					// "out" animation uses rAF only when PhotoSwipe is closed by browser scroll, to recalculate position
-					var destZoomLevel = thumbBounds.w / item.w,
-						initialPanOffset = {
-							x: _panOffset.x,
-							y: _panOffset.y
-						},
-						initialZoomLevel = _currZoomLevel,
-						initalBgOpacity = _bgOpacity,
-						onUpdate = function(now) {
-							
-							if(now === 1) {
-								_currZoomLevel = destZoomLevel;
-								_panOffset.x = thumbBounds.x;
-								_panOffset.y = thumbBounds.y  - _currentWindowScrollY;
-							} else {
-								_currZoomLevel = (destZoomLevel - initialZoomLevel) * now + initialZoomLevel;
-								_panOffset.x = (thumbBounds.x - initialPanOffset.x) * now + initialPanOffset.x;
-								_panOffset.y = (thumbBounds.y - _currentWindowScrollY - initialPanOffset.y) * now + initialPanOffset.y;
-							}
-							
-							_applyCurrentZoomPan();
-							if(fadeEverything) {
-								template.style.opacity = 1 - now;
-							} else {
-								_applyBgOpacity( initalBgOpacity - now * initalBgOpacity );
-							}
-						};
-
-					if(closeWithRaf) {
-						_animateProp('initialZoom', 0, 1, duration, framework.easing.cubic.out, onUpdate, onComplete);
-					} else {
-						onUpdate(1);
-						_showOrHideTimeout = setTimeout(onComplete, duration + 20);
+					if (_animations.hasOwnProperty(prop)) {
+						_stopAnimation(prop);
 					}
 				}
-			
-			}, out ? 25 : 90); // Main purpose of this delay is to give browser time to paint and
-					// create composite layers of PhotoSwipe UI parts (background, controls, caption, arrows).
-					// Which avoids lag at the beginning of scale transition.
-		};
-		startAnimation();
-
-		
-	};
-
-/*>>show-hide-transition*/
-
-/*>>items-controller*/
-/**
-*
-* Controller manages gallery items, their dimensions, and their content.
-* 
-*/
-
-var _items,
-	_tempPanAreaSize = {},
-	_imagesToAppendPool = [],
-	_initialContentSet,
-	_initialZoomRunning,
-	_controllerDefaultOptions = {
-		index: 0,
-		errorMsg: '<div class="pswp__error-msg"><a href="%url%" target="_blank">The image</a> could not be loaded.</div>',
-		forceProgressiveLoading: false, // TODO
-		preload: [1,1],
-		getNumItemsFn: function() {
-			return _items.length;
-		}
-	};
-
-
-var _getItemAt,
-	_getNumItems,
-	_initialIsLoop,
-	_getZeroBounds = function() {
-		return {
-			center:{x:0,y:0}, 
-			max:{x:0,y:0}, 
-			min:{x:0,y:0}
-		};
-	},
-	_calculateSingleItemPanBounds = function(item, realPanElementW, realPanElementH ) {
-		var bounds = item.bounds;
-
-		// position of element when it's centered
-		bounds.center.x = Math.round((_tempPanAreaSize.x - realPanElementW) / 2);
-		bounds.center.y = Math.round((_tempPanAreaSize.y - realPanElementH) / 2) + item.vGap.top;
-
-		// maximum pan position
-		bounds.max.x = (realPanElementW > _tempPanAreaSize.x) ? 
-							Math.round(_tempPanAreaSize.x - realPanElementW) : 
-							bounds.center.x;
-		
-		bounds.max.y = (realPanElementH > _tempPanAreaSize.y) ? 
-							Math.round(_tempPanAreaSize.y - realPanElementH) + item.vGap.top : 
-							bounds.center.y;
-		
-		// minimum pan position
-		bounds.min.x = (realPanElementW > _tempPanAreaSize.x) ? 0 : bounds.center.x;
-		bounds.min.y = (realPanElementH > _tempPanAreaSize.y) ? item.vGap.top : bounds.center.y;
-	},
-	_calculateItemSize = function(item, viewportSize, zoomLevel) {
-
-		if (item.src && !item.loadError) {
-			var isInitial = !zoomLevel;
-			
-			if(isInitial) {
-				if(!item.vGap) {
-					item.vGap = {top:0,bottom:0};
-				}
-				// allows overriding vertical margin for individual items
-				_shout('parseVerticalMargin', item);
-			}
-
-
-			_tempPanAreaSize.x = viewportSize.x;
-			_tempPanAreaSize.y = viewportSize.y - item.vGap.top - item.vGap.bottom;
-
-			if (isInitial) {
-				var hRatio = _tempPanAreaSize.x / item.w;
-				var vRatio = _tempPanAreaSize.y / item.h;
-
-				item.fitRatio = hRatio < vRatio ? hRatio : vRatio;
-				//item.fillRatio = hRatio > vRatio ? hRatio : vRatio;
-
-				var scaleMode = _options.scaleMode;
-
-				if (scaleMode === 'orig') {
-					zoomLevel = 1;
-				} else if (scaleMode === 'fit') {
-					zoomLevel = item.fitRatio;
-				}
-
-				if (zoomLevel > 1) {
-					zoomLevel = 1;
-				}
-
-				item.initialZoomLevel = zoomLevel;
-				
-				if(!item.bounds) {
-					// reuse bounds object
-					item.bounds = _getZeroBounds(); 
-				}
-			}
-
-			if(!zoomLevel) {
-				return;
-			}
-
-			_calculateSingleItemPanBounds(item, item.w * zoomLevel, item.h * zoomLevel);
-
-			if (isInitial && zoomLevel === item.initialZoomLevel) {
-				item.initialPosition = item.bounds.center;
-			}
-
-			return item.bounds;
-		} else {
-			item.w = item.h = 0;
-			item.initialZoomLevel = item.fitRatio = 1;
-			item.bounds = _getZeroBounds();
-			item.initialPosition = item.bounds.center;
-
-			// if it's not image, we return zero bounds (content is not zoomable)
-			return item.bounds;
-		}
-		
-	},
-
-	
-
-
-	_appendImage = function(index, item, baseDiv, img, preventAnimation, keepPlaceholder) {
-		
-
-		if(item.loadError) {
-			return;
-		}
-
-		if(img) {
-
-			item.imageAppended = true;
-			_setImageSize(item, img, (item === self.currItem && _renderMaxResolution) );
-			
-			baseDiv.appendChild(img);
-
-			if(keepPlaceholder) {
-				setTimeout(function() {
-					if(item && item.loaded && item.placeholder) {
-						item.placeholder.style.display = 'none';
-						item.placeholder = null;
-					}
-				}, 500);
-			}
-		}
-	},
-	
-
-
-	_preloadImage = function(item) {
-		item.loading = true;
-		item.loaded = false;
-		var img = item.img = framework.createEl('pswp__img', 'img');
-		var onComplete = function() {
-			item.loading = false;
-			item.loaded = true;
-
-			if(item.loadComplete) {
-				item.loadComplete(item);
-			} else {
-				item.img = null; // no need to store image object
-			}
-			img.onload = img.onerror = null;
-			img = null;
-		};
-		img.onload = onComplete;
-		img.onerror = function() {
-			item.loadError = true;
-			onComplete();
-		};		
-
-		img.src = item.src;// + '?a=' + Math.random();
-
-		return img;
-	},
-	_checkForError = function(item, cleanUp) {
-		if(item.src && item.loadError && item.container) {
-
-			if(cleanUp) {
-				item.container.innerHTML = '';
-			}
-
-			item.container.innerHTML = _options.errorMsg.replace('%url%',  item.src );
-			return true;
-			
-		}
-	},
-	_setImageSize = function(item, img, maxRes) {
-		if(!item.src) {
-			return;
-		}
-
-		if(!img) {
-			img = item.container.lastChild;
-		}
-
-		var w = maxRes ? item.w : Math.round(item.w * item.fitRatio),
-			h = maxRes ? item.h : Math.round(item.h * item.fitRatio);
-		
-		if(item.placeholder && !item.loaded) {
-			item.placeholder.style.width = w + 'px';
-			item.placeholder.style.height = h + 'px';
-		}
-
-		img.style.width = w + 'px';
-		img.style.height = h + 'px';
-	},
-	_appendImagesPool = function() {
-
-		if(_imagesToAppendPool.length) {
-			var poolItem;
-
-			for(var i = 0; i < _imagesToAppendPool.length; i++) {
-				poolItem = _imagesToAppendPool[i];
-				if( poolItem.holder.index === poolItem.index ) {
-					_appendImage(poolItem.index, poolItem.item, poolItem.baseDiv, poolItem.img, false, poolItem.clearPlaceholder);
-				}
-			}
-			_imagesToAppendPool = [];
-		}
-	};
-	
-
-
-_registerModule('Controller', {
-
-	publicMethods: {
-
-		lazyLoadItem: function(index) {
-			index = _getLoopedId(index);
-			var item = _getItemAt(index);
-
-			if(!item || ((item.loaded || item.loading) && !_itemsNeedUpdate)) {
-				return;
-			}
-
-			_shout('gettingData', index, item);
-
-			if (!item.src) {
-				return;
-			}
-
-			_preloadImage(item);
-		},
-		initController: function() {
-			framework.extend(_options, _controllerDefaultOptions, true);
-			self.items = _items = items;
-			_getItemAt = self.getItemAt;
-			_getNumItems = _options.getNumItemsFn; //self.getNumItems;
-
-
-
-			_initialIsLoop = _options.loop;
-			if(_getNumItems() < 3) {
-				_options.loop = false; // disable loop if less then 3 items
-			}
-
-			_listen('beforeChange', function(diff) {
-
-				var p = _options.preload,
-					isNext = diff === null ? true : (diff >= 0),
-					preloadBefore = Math.min(p[0], _getNumItems() ),
-					preloadAfter = Math.min(p[1], _getNumItems() ),
-					i;
-
-
-				for(i = 1; i <= (isNext ? preloadAfter : preloadBefore); i++) {
-					self.lazyLoadItem(_currentItemIndex+i);
-				}
-				for(i = 1; i <= (isNext ? preloadBefore : preloadAfter); i++) {
-					self.lazyLoadItem(_currentItemIndex-i);
-				}
-			});
-
-			_listen('initialLayout', function() {
-				self.currItem.initialLayout = _options.getThumbBoundsFn && _options.getThumbBoundsFn(_currentItemIndex);
-			});
-
-			_listen('mainScrollAnimComplete', _appendImagesPool);
-			_listen('initialZoomInEnd', _appendImagesPool);
-
-
-
-			_listen('destroy', function() {
-				var item;
-				for(var i = 0; i < _items.length; i++) {
-					item = _items[i];
-					// remove reference to DOM elements, for GC
-					if(item.container) {
-						item.container = null; 
-					}
-					if(item.placeholder) {
-						item.placeholder = null;
-					}
-					if(item.img) {
-						item.img = null;
-					}
-					if(item.preloader) {
-						item.preloader = null;
-					}
-					if(item.loadError) {
-						item.loaded = item.loadError = false;
-					}
-				}
-				_imagesToAppendPool = null;
-			});
-		},
-
-
-		getItemAt: function(index) {
-			if (index >= 0) {
-				return _items[index] !== undefined ? _items[index] : false;
-			}
-			return false;
-		},
-
-		allowProgressiveImg: function() {
-			// 1. Progressive image loading isn't working on webkit/blink 
-			//    when hw-acceleration (e.g. translateZ) is applied to IMG element.
-			//    That's why in PhotoSwipe parent element gets zoom transform, not image itself.
-			//    
-			// 2. Progressive image loading sometimes blinks in webkit/blink when applying animation to parent element.
-			//    That's why it's disabled on touch devices (mainly because of swipe transition)
-			//    
-			// 3. Progressive image loading sometimes doesn't work in IE (up to 11).
-
-			// Don't allow progressive loading on non-large touch devices
-			return _options.forceProgressiveLoading || !_likelyTouchDevice || _options.mouseUsed || screen.width > 1200; 
-			// 1200 - to eliminate touch devices with large screen (like Chromebook Pixel)
-		},
-
-		setContent: function(holder, index) {
-
-			if(_options.loop) {
-				index = _getLoopedId(index);
-			}
-
-			var prevItem = self.getItemAt(holder.index);
-			if(prevItem) {
-				prevItem.container = null;
-			}
-	
-			var item = self.getItemAt(index),
-				img;
-			
-			if(!item) {
-				holder.el.innerHTML = '';
-				return;
-			}
-
-			// allow to override data
-			_shout('gettingData', index, item);
-
-			holder.index = index;
-			holder.item = item;
-
-			// base container DIV is created only once for each of 3 holders
-			var baseDiv = item.container = framework.createEl('pswp__zoom-wrap'); 
-
-			
-
-			if(!item.src && item.html) {
-				if(item.html.tagName) {
-					baseDiv.appendChild(item.html);
-				} else {
-					baseDiv.innerHTML = item.html;
-				}
-			}
-
-			_checkForError(item);
-
-			_calculateItemSize(item, _viewportSize);
-			
-			if(item.src && !item.loadError && !item.loaded) {
-
-				item.loadComplete = function(item) {
-
-					// gallery closed before image finished loading
-					if(!_isOpen) {
-						return;
-					}
-
-					// check if holder hasn't changed while image was loading
-					if(holder && holder.index === index ) {
-						if( _checkForError(item, true) ) {
-							item.loadComplete = item.img = null;
-							_calculateItemSize(item, _viewportSize);
-							_applyZoomPanToItem(item);
-
-							if(holder.index === _currentItemIndex) {
-								// recalculate dimensions
-								self.updateCurrZoomItem();
+			},
+			    _animateProp = function _animateProp(name, b, endProp, d, easingFn, onUpdate, onComplete) {
+				var startAnimTime = _getCurrentTime(),
+				    t;
+				_registerStartAnimation(name);
+
+				var animloop = function animloop() {
+					if (_animations[name]) {
+
+						t = _getCurrentTime() - startAnimTime; // time diff
+						//b - beginning (start prop)
+						//d - anim duration
+
+						if (t >= d) {
+							_stopAnimation(name);
+							onUpdate(endProp);
+							if (onComplete) {
+								onComplete();
 							}
 							return;
 						}
-						if( !item.imageAppended ) {
-							if(_features.transform && (_mainScrollAnimating || _initialZoomRunning) ) {
-								_imagesToAppendPool.push({
-									item:item,
-									baseDiv:baseDiv,
-									img:item.img,
-									index:index,
-									holder:holder,
-									clearPlaceholder:true
-								});
+						onUpdate((endProp - b) * easingFn(t / d) + b);
+
+						_animations[name].raf = _requestAF(animloop);
+					}
+				};
+				animloop();
+			};
+
+			var publicMethods = {
+
+				// make a few local variables and functions public
+				shout: _shout,
+				listen: _listen,
+				viewportSize: _viewportSize,
+				options: _options,
+
+				isMainScrollAnimating: function isMainScrollAnimating() {
+					return _mainScrollAnimating;
+				},
+				getZoomLevel: function getZoomLevel() {
+					return _currZoomLevel;
+				},
+				getCurrentIndex: function getCurrentIndex() {
+					return _currentItemIndex;
+				},
+				isDragging: function isDragging() {
+					return _isDragging;
+				},
+				isZooming: function isZooming() {
+					return _isZooming;
+				},
+				setScrollOffset: function setScrollOffset(x, y) {
+					_offset.x = x;
+					_currentWindowScrollY = _offset.y = y;
+					_shout('updateScrollOffset', _offset);
+				},
+				applyZoomPan: function applyZoomPan(zoomLevel, panX, panY, allowRenderResolution) {
+					_panOffset.x = panX;
+					_panOffset.y = panY;
+					_currZoomLevel = zoomLevel;
+					_applyCurrentZoomPan(allowRenderResolution);
+				},
+
+				init: function init() {
+
+					if (_isOpen || _isDestroying) {
+						return;
+					}
+
+					var i;
+
+					self.framework = framework; // basic functionality
+					self.template = template; // root DOM element of PhotoSwipe
+					self.bg = framework.getChildByClass(template, 'pswp__bg');
+
+					_initalClassName = template.className;
+					_isOpen = true;
+
+					_features = framework.detectFeatures();
+					_requestAF = _features.raf;
+					_cancelAF = _features.caf;
+					_transformKey = _features.transform;
+					_oldIE = _features.oldIE;
+
+					self.scrollWrap = framework.getChildByClass(template, 'pswp__scroll-wrap');
+					self.container = framework.getChildByClass(self.scrollWrap, 'pswp__container');
+
+					_containerStyle = self.container.style; // for fast access
+
+					// Objects that hold slides (there are only 3 in DOM)
+					self.itemHolders = _itemHolders = [{ el: self.container.children[0], wrap: 0, index: -1 }, { el: self.container.children[1], wrap: 0, index: -1 }, { el: self.container.children[2], wrap: 0, index: -1 }];
+
+					// hide nearby item holders until initial zoom animation finishes (to avoid extra Paints)
+					_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'none';
+
+					_setupTransforms();
+
+					// Setup global events
+					_globalEventHandlers = {
+						resize: self.updateSize,
+						scroll: _updatePageScrollOffset,
+						keydown: _onKeyDown,
+						click: _onGlobalClick
+					};
+
+					// disable show/hide effects on old browsers that don't support CSS animations or transforms,
+					// old IOS, Android and Opera mobile. Blackberry seems to work fine, even older models.
+					var oldPhone = _features.isOldIOSPhone || _features.isOldAndroid || _features.isMobileOpera;
+					if (!_features.animationName || !_features.transform || oldPhone) {
+						_options.showAnimationDuration = _options.hideAnimationDuration = 0;
+					}
+
+					// init modules
+					for (i = 0; i < _modules.length; i++) {
+						self['init' + _modules[i]]();
+					}
+
+					// init
+					if (UiClass) {
+						var ui = self.ui = new UiClass(self, framework);
+						ui.init();
+					}
+
+					_shout('firstUpdate');
+					_currentItemIndex = _currentItemIndex || _options.index || 0;
+					// validate index
+					if (isNaN(_currentItemIndex) || _currentItemIndex < 0 || _currentItemIndex >= _getNumItems()) {
+						_currentItemIndex = 0;
+					}
+					self.currItem = _getItemAt(_currentItemIndex);
+
+					if (_features.isOldIOSPhone || _features.isOldAndroid) {
+						_isFixedPosition = false;
+					}
+
+					template.setAttribute('aria-hidden', 'false');
+					if (_options.modal) {
+						if (!_isFixedPosition) {
+							template.style.position = 'absolute';
+							template.style.top = framework.getScrollY() + 'px';
+						} else {
+							template.style.position = 'fixed';
+						}
+					}
+
+					if (_currentWindowScrollY === undefined) {
+						_shout('initialLayout');
+						_currentWindowScrollY = _initalWindowScrollY = framework.getScrollY();
+					}
+
+					// add classes to root element of PhotoSwipe
+					var rootClasses = 'pswp--open ';
+					if (_options.mainClass) {
+						rootClasses += _options.mainClass + ' ';
+					}
+					if (_options.showHideOpacity) {
+						rootClasses += 'pswp--animate_opacity ';
+					}
+					rootClasses += _likelyTouchDevice ? 'pswp--touch' : 'pswp--notouch';
+					rootClasses += _features.animationName ? ' pswp--css_animation' : '';
+					rootClasses += _features.svg ? ' pswp--svg' : '';
+					framework.addClass(template, rootClasses);
+
+					self.updateSize();
+
+					// initial update
+					_containerShiftIndex = -1;
+					_indexDiff = null;
+					for (i = 0; i < NUM_HOLDERS; i++) {
+						_setTranslateX((i + _containerShiftIndex) * _slideSize.x, _itemHolders[i].el.style);
+					}
+
+					if (!_oldIE) {
+						framework.bind(self.scrollWrap, _downEvents, self); // no dragging for old IE
+					}
+
+					_listen('initialZoomInEnd', function () {
+						self.setContent(_itemHolders[0], _currentItemIndex - 1);
+						self.setContent(_itemHolders[2], _currentItemIndex + 1);
+
+						_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'block';
+
+						if (_options.focus) {
+							// focus causes layout,
+							// which causes lag during the animation,
+							// that's why we delay it untill the initial zoom transition ends
+							template.focus();
+						}
+
+						_bindEvents();
+					});
+
+					// set content for center slide (first time)
+					self.setContent(_itemHolders[1], _currentItemIndex);
+
+					self.updateCurrItem();
+
+					_shout('afterInit');
+
+					if (!_isFixedPosition) {
+
+						// On all versions of iOS lower than 8.0, we check size of viewport every second.
+						//
+						// This is done to detect when Safari top & bottom bars appear,
+						// as this action doesn't trigger any events (like resize).
+						//
+						// On iOS8 they fixed this.
+						//
+						// 10 Nov 2014: iOS 7 usage ~40%. iOS 8 usage 56%.
+
+						_updateSizeInterval = setInterval(function () {
+							if (!_numAnimations && !_isDragging && !_isZooming && _currZoomLevel === self.currItem.initialZoomLevel) {
+								self.updateSize();
+							}
+						}, 1000);
+					}
+
+					framework.addClass(template, 'pswp--visible');
+				},
+
+				// Close the gallery, then destroy it
+				close: function close() {
+					if (!_isOpen) {
+						return;
+					}
+
+					_isOpen = false;
+					_isDestroying = true;
+					_shout('close');
+					_unbindEvents();
+
+					_showOrHide(self.currItem, null, true, self.destroy);
+				},
+
+				// destroys the gallery (unbinds events, cleans up intervals and timeouts to avoid memory leaks)
+				destroy: function destroy() {
+					_shout('destroy');
+
+					if (_showOrHideTimeout) {
+						clearTimeout(_showOrHideTimeout);
+					}
+
+					template.setAttribute('aria-hidden', 'true');
+					template.className = _initalClassName;
+
+					if (_updateSizeInterval) {
+						clearInterval(_updateSizeInterval);
+					}
+
+					framework.unbind(self.scrollWrap, _downEvents, self);
+
+					// we unbind scroll event at the end, as closing animation may depend on it
+					framework.unbind(window, 'scroll', self);
+
+					_stopDragUpdateLoop();
+
+					_stopAllAnimations();
+
+					_listeners = null;
+				},
+
+				/**
+	    * Pan image to position
+	    * @param {Number} x
+	    * @param {Number} y
+	    * @param {Boolean} force Will ignore bounds if set to true.
+	    */
+				panTo: function panTo(x, y, force) {
+					if (!force) {
+						if (x > _currPanBounds.min.x) {
+							x = _currPanBounds.min.x;
+						} else if (x < _currPanBounds.max.x) {
+							x = _currPanBounds.max.x;
+						}
+
+						if (y > _currPanBounds.min.y) {
+							y = _currPanBounds.min.y;
+						} else if (y < _currPanBounds.max.y) {
+							y = _currPanBounds.max.y;
+						}
+					}
+
+					_panOffset.x = x;
+					_panOffset.y = y;
+					_applyCurrentZoomPan();
+				},
+
+				handleEvent: function handleEvent(e) {
+					e = e || window.event;
+					if (_globalEventHandlers[e.type]) {
+						_globalEventHandlers[e.type](e);
+					}
+				},
+
+				goTo: function goTo(index) {
+
+					index = _getLoopedId(index);
+
+					var diff = index - _currentItemIndex;
+					_indexDiff = diff;
+
+					_currentItemIndex = index;
+					self.currItem = _getItemAt(_currentItemIndex);
+					_currPositionIndex -= diff;
+
+					_moveMainScroll(_slideSize.x * _currPositionIndex);
+
+					_stopAllAnimations();
+					_mainScrollAnimating = false;
+
+					self.updateCurrItem();
+				},
+				next: function next() {
+					self.goTo(_currentItemIndex + 1);
+				},
+				prev: function prev() {
+					self.goTo(_currentItemIndex - 1);
+				},
+
+				// update current zoom/pan objects
+				updateCurrZoomItem: function updateCurrZoomItem(emulateSetContent) {
+					if (emulateSetContent) {
+						_shout('beforeChange', 0);
+					}
+
+					// itemHolder[1] is middle (current) item
+					if (_itemHolders[1].el.children.length) {
+						var zoomElement = _itemHolders[1].el.children[0];
+						if (framework.hasClass(zoomElement, 'pswp__zoom-wrap')) {
+							_currZoomElementStyle = zoomElement.style;
+						} else {
+							_currZoomElementStyle = null;
+						}
+					} else {
+						_currZoomElementStyle = null;
+					}
+
+					_currPanBounds = self.currItem.bounds;
+					_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
+
+					_panOffset.x = _currPanBounds.center.x;
+					_panOffset.y = _currPanBounds.center.y;
+
+					if (emulateSetContent) {
+						_shout('afterChange');
+					}
+				},
+
+				invalidateCurrItems: function invalidateCurrItems() {
+					_itemsNeedUpdate = true;
+					for (var i = 0; i < NUM_HOLDERS; i++) {
+						if (_itemHolders[i].item) {
+							_itemHolders[i].item.needsUpdate = true;
+						}
+					}
+				},
+
+				updateCurrItem: function updateCurrItem(beforeAnimation) {
+
+					if (_indexDiff === 0) {
+						return;
+					}
+
+					var diffAbs = Math.abs(_indexDiff),
+					    tempHolder;
+
+					if (beforeAnimation && diffAbs < 2) {
+						return;
+					}
+
+					self.currItem = _getItemAt(_currentItemIndex);
+					_renderMaxResolution = false;
+
+					_shout('beforeChange', _indexDiff);
+
+					if (diffAbs >= NUM_HOLDERS) {
+						_containerShiftIndex += _indexDiff + (_indexDiff > 0 ? -NUM_HOLDERS : NUM_HOLDERS);
+						diffAbs = NUM_HOLDERS;
+					}
+					for (var i = 0; i < diffAbs; i++) {
+						if (_indexDiff > 0) {
+							tempHolder = _itemHolders.shift();
+							_itemHolders[NUM_HOLDERS - 1] = tempHolder; // move first to last
+
+							_containerShiftIndex++;
+							_setTranslateX((_containerShiftIndex + 2) * _slideSize.x, tempHolder.el.style);
+							self.setContent(tempHolder, _currentItemIndex - diffAbs + i + 1 + 1);
+						} else {
+							tempHolder = _itemHolders.pop();
+							_itemHolders.unshift(tempHolder); // move last to first
+
+							_containerShiftIndex--;
+							_setTranslateX(_containerShiftIndex * _slideSize.x, tempHolder.el.style);
+							self.setContent(tempHolder, _currentItemIndex + diffAbs - i - 1 - 1);
+						}
+					}
+
+					// reset zoom/pan on previous item
+					if (_currZoomElementStyle && Math.abs(_indexDiff) === 1) {
+
+						var prevItem = _getItemAt(_prevItemIndex);
+						if (prevItem.initialZoomLevel !== _currZoomLevel) {
+							_calculateItemSize(prevItem, _viewportSize);
+							_setImageSize(prevItem);
+							_applyZoomPanToItem(prevItem);
+						}
+					}
+
+					// reset diff after update
+					_indexDiff = 0;
+
+					self.updateCurrZoomItem();
+
+					_prevItemIndex = _currentItemIndex;
+
+					_shout('afterChange');
+				},
+
+				updateSize: function updateSize(force) {
+
+					if (!_isFixedPosition && _options.modal) {
+						var windowScrollY = framework.getScrollY();
+						if (_currentWindowScrollY !== windowScrollY) {
+							template.style.top = windowScrollY + 'px';
+							_currentWindowScrollY = windowScrollY;
+						}
+						if (!force && _windowVisibleSize.x === window.innerWidth && _windowVisibleSize.y === window.innerHeight) {
+							return;
+						}
+						_windowVisibleSize.x = window.innerWidth;
+						_windowVisibleSize.y = window.innerHeight;
+
+						//template.style.width = _windowVisibleSize.x + 'px';
+						template.style.height = _windowVisibleSize.y + 'px';
+					}
+
+					_viewportSize.x = self.scrollWrap.clientWidth;
+					_viewportSize.y = self.scrollWrap.clientHeight;
+
+					_updatePageScrollOffset();
+
+					_slideSize.x = _viewportSize.x + Math.round(_viewportSize.x * _options.spacing);
+					_slideSize.y = _viewportSize.y;
+
+					_moveMainScroll(_slideSize.x * _currPositionIndex);
+
+					_shout('beforeResize'); // even may be used for example to switch image sources
+
+					// don't re-calculate size on inital size update
+					if (_containerShiftIndex !== undefined) {
+
+						var holder, item, hIndex;
+
+						for (var i = 0; i < NUM_HOLDERS; i++) {
+							holder = _itemHolders[i];
+							_setTranslateX((i + _containerShiftIndex) * _slideSize.x, holder.el.style);
+
+							hIndex = _currentItemIndex + i - 1;
+
+							if (_options.loop && _getNumItems() > 2) {
+								hIndex = _getLoopedId(hIndex);
+							}
+
+							// update zoom level on items and refresh source (if needsUpdate)
+							item = _getItemAt(hIndex);
+
+							// re-render gallery item if `needsUpdate`,
+							// or doesn't have `bounds` (entirely new slide object)
+							if (item && (_itemsNeedUpdate || item.needsUpdate || !item.bounds)) {
+
+								self.cleanSlide(item);
+
+								self.setContent(holder, hIndex);
+
+								// if "center" slide
+								if (i === 1) {
+									self.currItem = item;
+									self.updateCurrZoomItem(true);
+								}
+
+								item.needsUpdate = false;
+							} else if (holder.index === -1 && hIndex >= 0) {
+								// add content first time
+								self.setContent(holder, hIndex);
+							}
+							if (item && item.container) {
+								_calculateItemSize(item, _viewportSize);
+								_setImageSize(item);
+								_applyZoomPanToItem(item);
+							}
+						}
+						_itemsNeedUpdate = false;
+					}
+
+					_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
+					_currPanBounds = self.currItem.bounds;
+
+					if (_currPanBounds) {
+						_panOffset.x = _currPanBounds.center.x;
+						_panOffset.y = _currPanBounds.center.y;
+						_applyCurrentZoomPan(true);
+					}
+
+					_shout('resize');
+				},
+
+				// Zoom current item to
+				zoomTo: function zoomTo(destZoomLevel, centerPoint, speed, easingFn, updateFn) {
+					/*
+	    	if(destZoomLevel === 'fit') {
+	    		destZoomLevel = self.currItem.fitRatio;
+	    	} else if(destZoomLevel === 'fill') {
+	    		destZoomLevel = self.currItem.fillRatio;
+	    	}
+	    */
+
+					if (centerPoint) {
+						_startZoomLevel = _currZoomLevel;
+						_midZoomPoint.x = Math.abs(centerPoint.x) - _panOffset.x;
+						_midZoomPoint.y = Math.abs(centerPoint.y) - _panOffset.y;
+						_equalizePoints(_startPanOffset, _panOffset);
+					}
+
+					var destPanBounds = _calculatePanBounds(destZoomLevel, false),
+					    destPanOffset = {};
+
+					_modifyDestPanOffset('x', destPanBounds, destPanOffset, destZoomLevel);
+					_modifyDestPanOffset('y', destPanBounds, destPanOffset, destZoomLevel);
+
+					var initialZoomLevel = _currZoomLevel;
+					var initialPanOffset = {
+						x: _panOffset.x,
+						y: _panOffset.y
+					};
+
+					_roundPoint(destPanOffset);
+
+					var onUpdate = function onUpdate(now) {
+						if (now === 1) {
+							_currZoomLevel = destZoomLevel;
+							_panOffset.x = destPanOffset.x;
+							_panOffset.y = destPanOffset.y;
+						} else {
+							_currZoomLevel = (destZoomLevel - initialZoomLevel) * now + initialZoomLevel;
+							_panOffset.x = (destPanOffset.x - initialPanOffset.x) * now + initialPanOffset.x;
+							_panOffset.y = (destPanOffset.y - initialPanOffset.y) * now + initialPanOffset.y;
+						}
+
+						if (updateFn) {
+							updateFn(now);
+						}
+
+						_applyCurrentZoomPan(now === 1);
+					};
+
+					if (speed) {
+						_animateProp('customZoomTo', 0, 1, speed, easingFn || framework.easing.sine.inOut, onUpdate);
+					} else {
+						onUpdate(1);
+					}
+				}
+
+			};
+
+			/*>>core*/
+
+			/*>>gestures*/
+			/**
+	   * Mouse/touch/pointer event handlers.
+	   *
+	   * separated from @core.js for readability
+	   */
+
+			var MIN_SWIPE_DISTANCE = 30,
+			    DIRECTION_CHECK_OFFSET = 10; // amount of pixels to drag to determine direction of swipe
+
+			var _gestureStartTime,
+			    _gestureCheckSpeedTime,
+
+
+			// pool of objects that are used during dragging of zooming
+			p = {},
+			    // first point
+			p2 = {},
+			    // second point (for zoom gesture)
+			delta = {},
+			    _currPoint = {},
+			    _startPoint = {},
+			    _currPointers = [],
+			    _startMainScrollPos = {},
+			    _releaseAnimData,
+			    _posPoints = [],
+			    // array of points during dragging, used to determine type of gesture
+			_tempPoint = {},
+			    _isZoomingIn,
+			    _verticalDragInitiated,
+			    _oldAndroidTouchEndTimeout,
+			    _currZoomedItemIndex = 0,
+			    _centerPoint = _getEmptyPoint(),
+			    _lastReleaseTime = 0,
+			    _isDragging,
+			    // at least one pointer is down
+			_isMultitouch,
+			    // at least two _pointers are down
+			_zoomStarted,
+			    // zoom level changed during zoom gesture
+			_moved,
+			    _dragAnimFrame,
+			    _mainScrollShifted,
+			    _currentPoints,
+			    // array of current touch points
+			_isZooming,
+			    _currPointsDistance,
+			    _startPointsDistance,
+			    _currPanBounds,
+			    _mainScrollPos = _getEmptyPoint(),
+			    _currZoomElementStyle,
+			    _mainScrollAnimating,
+			    // true, if animation after swipe gesture is running
+			_midZoomPoint = _getEmptyPoint(),
+			    _currCenterPoint = _getEmptyPoint(),
+			    _direction,
+			    _isFirstMove,
+			    _opacityChanged,
+			    _bgOpacity,
+			    _wasOverInitialZoom,
+			    _isEqualPoints = function _isEqualPoints(p1, p2) {
+				return p1.x === p2.x && p1.y === p2.y;
+			},
+			    _isNearbyPoints = function _isNearbyPoints(touch0, touch1) {
+				return Math.abs(touch0.x - touch1.x) < DOUBLE_TAP_RADIUS && Math.abs(touch0.y - touch1.y) < DOUBLE_TAP_RADIUS;
+			},
+			    _calculatePointsDistance = function _calculatePointsDistance(p1, p2) {
+				_tempPoint.x = Math.abs(p1.x - p2.x);
+				_tempPoint.y = Math.abs(p1.y - p2.y);
+				return Math.sqrt(_tempPoint.x * _tempPoint.x + _tempPoint.y * _tempPoint.y);
+			},
+			    _stopDragUpdateLoop = function _stopDragUpdateLoop() {
+				if (_dragAnimFrame) {
+					_cancelAF(_dragAnimFrame);
+					_dragAnimFrame = null;
+				}
+			},
+			    _dragUpdateLoop = function _dragUpdateLoop() {
+				if (_isDragging) {
+					_dragAnimFrame = _requestAF(_dragUpdateLoop);
+					_renderMovement();
+				}
+			},
+			    _canPan = function _canPan() {
+				return !(_options.scaleMode === 'fit' && _currZoomLevel === self.currItem.initialZoomLevel);
+			},
+
+
+			// find the closest parent DOM element
+			_closestElement = function _closestElement(el, fn) {
+				if (!el || el === document) {
+					return false;
+				}
+
+				// don't search elements above pswp__scroll-wrap
+				if (el.getAttribute('class') && el.getAttribute('class').indexOf('pswp__scroll-wrap') > -1) {
+					return false;
+				}
+
+				if (fn(el)) {
+					return el;
+				}
+
+				return _closestElement(el.parentNode, fn);
+			},
+			    _preventObj = {},
+			    _preventDefaultEventBehaviour = function _preventDefaultEventBehaviour(e, isDown) {
+				_preventObj.prevent = !_closestElement(e.target, _options.isClickableElement);
+
+				_shout('preventDragEvent', e, isDown, _preventObj);
+				return _preventObj.prevent;
+			},
+			    _convertTouchToPoint = function _convertTouchToPoint(touch, p) {
+				p.x = touch.pageX;
+				p.y = touch.pageY;
+				p.id = touch.identifier;
+				return p;
+			},
+			    _findCenterOfPoints = function _findCenterOfPoints(p1, p2, pCenter) {
+				pCenter.x = (p1.x + p2.x) * 0.5;
+				pCenter.y = (p1.y + p2.y) * 0.5;
+			},
+			    _pushPosPoint = function _pushPosPoint(time, x, y) {
+				if (time - _gestureCheckSpeedTime > 50) {
+					var o = _posPoints.length > 2 ? _posPoints.shift() : {};
+					o.x = x;
+					o.y = y;
+					_posPoints.push(o);
+					_gestureCheckSpeedTime = time;
+				}
+			},
+			    _calculateVerticalDragOpacityRatio = function _calculateVerticalDragOpacityRatio() {
+				var yOffset = _panOffset.y - self.currItem.initialPosition.y; // difference between initial and current position
+				return 1 - Math.abs(yOffset / (_viewportSize.y / 2));
+			},
+
+
+			// points pool, reused during touch events
+			_ePoint1 = {},
+			    _ePoint2 = {},
+			    _tempPointsArr = [],
+			    _tempCounter,
+			    _getTouchPoints = function _getTouchPoints(e) {
+				// clean up previous points, without recreating array
+				while (_tempPointsArr.length > 0) {
+					_tempPointsArr.pop();
+				}
+
+				if (!_pointerEventEnabled) {
+					if (e.type.indexOf('touch') > -1) {
+
+						if (e.touches && e.touches.length > 0) {
+							_tempPointsArr[0] = _convertTouchToPoint(e.touches[0], _ePoint1);
+							if (e.touches.length > 1) {
+								_tempPointsArr[1] = _convertTouchToPoint(e.touches[1], _ePoint2);
+							}
+						}
+					} else {
+						_ePoint1.x = e.pageX;
+						_ePoint1.y = e.pageY;
+						_ePoint1.id = '';
+						_tempPointsArr[0] = _ePoint1; //_ePoint1;
+					}
+				} else {
+						_tempCounter = 0;
+						// we can use forEach, as pointer events are supported only in modern browsers
+						_currPointers.forEach(function (p) {
+							if (_tempCounter === 0) {
+								_tempPointsArr[0] = p;
+							} else if (_tempCounter === 1) {
+								_tempPointsArr[1] = p;
+							}
+							_tempCounter++;
+						});
+					}
+				return _tempPointsArr;
+			},
+			    _panOrMoveMainScroll = function _panOrMoveMainScroll(axis, delta) {
+
+				var panFriction,
+				    overDiff = 0,
+				    newOffset = _panOffset[axis] + delta[axis],
+				    startOverDiff,
+				    dir = delta[axis] > 0,
+				    newMainScrollPosition = _mainScrollPos.x + delta.x,
+				    mainScrollDiff = _mainScrollPos.x - _startMainScrollPos.x,
+				    newPanPos,
+				    newMainScrollPos;
+
+				// calculate fdistance over the bounds and friction
+				if (newOffset > _currPanBounds.min[axis] || newOffset < _currPanBounds.max[axis]) {
+					panFriction = _options.panEndFriction;
+					// Linear increasing of friction, so at 1/4 of viewport it's at max value.
+					// Looks not as nice as was expected. Left for history.
+					// panFriction = (1 - (_panOffset[axis] + delta[axis] + panBounds.min[axis]) / (_viewportSize[axis] / 4) );
+				} else {
+						panFriction = 1;
+					}
+
+				newOffset = _panOffset[axis] + delta[axis] * panFriction;
+
+				// move main scroll or start panning
+				if (_options.allowPanToNext || _currZoomLevel === self.currItem.initialZoomLevel) {
+
+					if (!_currZoomElementStyle) {
+
+						newMainScrollPos = newMainScrollPosition;
+					} else if (_direction === 'h' && axis === 'x' && !_zoomStarted) {
+
+						if (dir) {
+							if (newOffset > _currPanBounds.min[axis]) {
+								panFriction = _options.panEndFriction;
+								overDiff = _currPanBounds.min[axis] - newOffset;
+								startOverDiff = _currPanBounds.min[axis] - _startPanOffset[axis];
+							}
+
+							// drag right
+							if ((startOverDiff <= 0 || mainScrollDiff < 0) && _getNumItems() > 1) {
+								newMainScrollPos = newMainScrollPosition;
+								if (mainScrollDiff < 0 && newMainScrollPosition > _startMainScrollPos.x) {
+									newMainScrollPos = _startMainScrollPos.x;
+								}
 							} else {
-								_appendImage(index, item, baseDiv, item.img, _mainScrollAnimating || _initialZoomRunning, true);
+								if (_currPanBounds.min.x !== _currPanBounds.max.x) {
+									newPanPos = newOffset;
+								}
 							}
 						} else {
-							// remove preloader & mini-img
-							if(!_initialZoomRunning && item.placeholder) {
+
+							if (newOffset < _currPanBounds.max[axis]) {
+								panFriction = _options.panEndFriction;
+								overDiff = newOffset - _currPanBounds.max[axis];
+								startOverDiff = _startPanOffset[axis] - _currPanBounds.max[axis];
+							}
+
+							if ((startOverDiff <= 0 || mainScrollDiff > 0) && _getNumItems() > 1) {
+								newMainScrollPos = newMainScrollPosition;
+
+								if (mainScrollDiff > 0 && newMainScrollPosition < _startMainScrollPos.x) {
+									newMainScrollPos = _startMainScrollPos.x;
+								}
+							} else {
+								if (_currPanBounds.min.x !== _currPanBounds.max.x) {
+									newPanPos = newOffset;
+								}
+							}
+						}
+
+						//
+					}
+
+					if (axis === 'x') {
+
+						if (newMainScrollPos !== undefined) {
+							_moveMainScroll(newMainScrollPos, true);
+							if (newMainScrollPos === _startMainScrollPos.x) {
+								_mainScrollShifted = false;
+							} else {
+								_mainScrollShifted = true;
+							}
+						}
+
+						if (_currPanBounds.min.x !== _currPanBounds.max.x) {
+							if (newPanPos !== undefined) {
+								_panOffset.x = newPanPos;
+							} else if (!_mainScrollShifted) {
+								_panOffset.x += delta.x * panFriction;
+							}
+						}
+
+						return newMainScrollPos !== undefined;
+					}
+				}
+
+				if (!_mainScrollAnimating) {
+
+					if (!_mainScrollShifted) {
+						if (_currZoomLevel > self.currItem.fitRatio) {
+							_panOffset[axis] += delta[axis] * panFriction;
+						}
+					}
+				}
+			},
+
+
+			// Pointerdown/touchstart/mousedown handler
+			_onDragStart = function _onDragStart(e) {
+
+				// Allow dragging only via left mouse button.
+				// As this handler is not added in IE8 - we ignore e.which
+				//
+				// http://www.quirksmode.org/js/events_properties.html
+				// https://developer.mozilla.org/en-US/docs/Web/API/event.button
+				if (e.type === 'mousedown' && e.button > 0) {
+					return;
+				}
+
+				if (_initialZoomRunning) {
+					e.preventDefault();
+					return;
+				}
+
+				if (_oldAndroidTouchEndTimeout && e.type === 'mousedown') {
+					return;
+				}
+
+				if (_preventDefaultEventBehaviour(e, true)) {
+					e.preventDefault();
+				}
+
+				_shout('pointerDown');
+
+				if (_pointerEventEnabled) {
+					var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
+					if (pointerIndex < 0) {
+						pointerIndex = _currPointers.length;
+					}
+					_currPointers[pointerIndex] = { x: e.pageX, y: e.pageY, id: e.pointerId };
+				}
+
+				var startPointsList = _getTouchPoints(e),
+				    numPoints = startPointsList.length;
+
+				_currentPoints = null;
+
+				_stopAllAnimations();
+
+				// init drag
+				if (!_isDragging || numPoints === 1) {
+
+					_isDragging = _isFirstMove = true;
+					framework.bind(window, _upMoveEvents, self);
+
+					_isZoomingIn = _wasOverInitialZoom = _opacityChanged = _verticalDragInitiated = _mainScrollShifted = _moved = _isMultitouch = _zoomStarted = false;
+
+					_direction = null;
+
+					_shout('firstTouchStart', startPointsList);
+
+					_equalizePoints(_startPanOffset, _panOffset);
+
+					_currPanDist.x = _currPanDist.y = 0;
+					_equalizePoints(_currPoint, startPointsList[0]);
+					_equalizePoints(_startPoint, _currPoint);
+
+					//_equalizePoints(_startMainScrollPos, _mainScrollPos);
+					_startMainScrollPos.x = _slideSize.x * _currPositionIndex;
+
+					_posPoints = [{
+						x: _currPoint.x,
+						y: _currPoint.y
+					}];
+
+					_gestureCheckSpeedTime = _gestureStartTime = _getCurrentTime();
+
+					//_mainScrollAnimationEnd(true);
+					_calculatePanBounds(_currZoomLevel, true);
+
+					// Start rendering
+					_stopDragUpdateLoop();
+					_dragUpdateLoop();
+				}
+
+				// init zoom
+				if (!_isZooming && numPoints > 1 && !_mainScrollAnimating && !_mainScrollShifted) {
+					_startZoomLevel = _currZoomLevel;
+					_zoomStarted = false; // true if zoom changed at least once
+
+					_isZooming = _isMultitouch = true;
+					_currPanDist.y = _currPanDist.x = 0;
+
+					_equalizePoints(_startPanOffset, _panOffset);
+
+					_equalizePoints(p, startPointsList[0]);
+					_equalizePoints(p2, startPointsList[1]);
+
+					_findCenterOfPoints(p, p2, _currCenterPoint);
+
+					_midZoomPoint.x = Math.abs(_currCenterPoint.x) - _panOffset.x;
+					_midZoomPoint.y = Math.abs(_currCenterPoint.y) - _panOffset.y;
+					_currPointsDistance = _startPointsDistance = _calculatePointsDistance(p, p2);
+				}
+			},
+
+
+			// Pointermove/touchmove/mousemove handler
+			_onDragMove = function _onDragMove(e) {
+
+				e.preventDefault();
+
+				if (_pointerEventEnabled) {
+					var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
+					if (pointerIndex > -1) {
+						var p = _currPointers[pointerIndex];
+						p.x = e.pageX;
+						p.y = e.pageY;
+					}
+				}
+
+				if (_isDragging) {
+					var touchesList = _getTouchPoints(e);
+					if (!_direction && !_moved && !_isZooming) {
+
+						if (_mainScrollPos.x !== _slideSize.x * _currPositionIndex) {
+							// if main scroll position is shifted – direction is always horizontal
+							_direction = 'h';
+						} else {
+							var diff = Math.abs(touchesList[0].x - _currPoint.x) - Math.abs(touchesList[0].y - _currPoint.y);
+							// check the direction of movement
+							if (Math.abs(diff) >= DIRECTION_CHECK_OFFSET) {
+								_direction = diff > 0 ? 'h' : 'v';
+								_currentPoints = touchesList;
+							}
+						}
+					} else {
+						_currentPoints = touchesList;
+					}
+				}
+			},
+
+			//
+			_renderMovement = function _renderMovement() {
+
+				if (!_currentPoints) {
+					return;
+				}
+
+				var numPoints = _currentPoints.length;
+
+				if (numPoints === 0) {
+					return;
+				}
+
+				_equalizePoints(p, _currentPoints[0]);
+
+				delta.x = p.x - _currPoint.x;
+				delta.y = p.y - _currPoint.y;
+
+				if (_isZooming && numPoints > 1) {
+					// Handle behaviour for more than 1 point
+
+					_currPoint.x = p.x;
+					_currPoint.y = p.y;
+
+					// check if one of two points changed
+					if (!delta.x && !delta.y && _isEqualPoints(_currentPoints[1], p2)) {
+						return;
+					}
+
+					_equalizePoints(p2, _currentPoints[1]);
+
+					if (!_zoomStarted) {
+						_zoomStarted = true;
+						_shout('zoomGestureStarted');
+					}
+
+					// Distance between two points
+					var pointsDistance = _calculatePointsDistance(p, p2);
+
+					var zoomLevel = _calculateZoomLevel(pointsDistance);
+
+					// slightly over the of initial zoom level
+					if (zoomLevel > self.currItem.initialZoomLevel + self.currItem.initialZoomLevel / 15) {
+						_wasOverInitialZoom = true;
+					}
+
+					// Apply the friction if zoom level is out of the bounds
+					var zoomFriction = 1,
+					    minZoomLevel = _getMinZoomLevel(),
+					    maxZoomLevel = _getMaxZoomLevel();
+
+					if (zoomLevel < minZoomLevel) {
+
+						if (_options.pinchToClose && !_wasOverInitialZoom && _startZoomLevel <= self.currItem.initialZoomLevel) {
+							// fade out background if zooming out
+							var minusDiff = minZoomLevel - zoomLevel;
+							var percent = 1 - minusDiff / (minZoomLevel / 1.2);
+
+							_applyBgOpacity(percent);
+							_shout('onPinchClose', percent);
+							_opacityChanged = true;
+						} else {
+							zoomFriction = (minZoomLevel - zoomLevel) / minZoomLevel;
+							if (zoomFriction > 1) {
+								zoomFriction = 1;
+							}
+							zoomLevel = minZoomLevel - zoomFriction * (minZoomLevel / 3);
+						}
+					} else if (zoomLevel > maxZoomLevel) {
+						// 1.5 - extra zoom level above the max. E.g. if max is x6, real max 6 + 1.5 = 7.5
+						zoomFriction = (zoomLevel - maxZoomLevel) / (minZoomLevel * 6);
+						if (zoomFriction > 1) {
+							zoomFriction = 1;
+						}
+						zoomLevel = maxZoomLevel + zoomFriction * minZoomLevel;
+					}
+
+					if (zoomFriction < 0) {
+						zoomFriction = 0;
+					}
+
+					// distance between touch points after friction is applied
+					_currPointsDistance = pointsDistance;
+
+					// _centerPoint - The point in the middle of two pointers
+					_findCenterOfPoints(p, p2, _centerPoint);
+
+					// paning with two pointers pressed
+					_currPanDist.x += _centerPoint.x - _currCenterPoint.x;
+					_currPanDist.y += _centerPoint.y - _currCenterPoint.y;
+					_equalizePoints(_currCenterPoint, _centerPoint);
+
+					_panOffset.x = _calculatePanOffset('x', zoomLevel);
+					_panOffset.y = _calculatePanOffset('y', zoomLevel);
+
+					_isZoomingIn = zoomLevel > _currZoomLevel;
+					_currZoomLevel = zoomLevel;
+					_applyCurrentZoomPan();
+				} else {
+
+					// handle behaviour for one point (dragging or panning)
+
+					if (!_direction) {
+						return;
+					}
+
+					if (_isFirstMove) {
+						_isFirstMove = false;
+
+						// subtract drag distance that was used during the detection direction
+
+						if (Math.abs(delta.x) >= DIRECTION_CHECK_OFFSET) {
+							delta.x -= _currentPoints[0].x - _startPoint.x;
+						}
+
+						if (Math.abs(delta.y) >= DIRECTION_CHECK_OFFSET) {
+							delta.y -= _currentPoints[0].y - _startPoint.y;
+						}
+					}
+
+					_currPoint.x = p.x;
+					_currPoint.y = p.y;
+
+					// do nothing if pointers position hasn't changed
+					if (delta.x === 0 && delta.y === 0) {
+						return;
+					}
+
+					if (_direction === 'v' && _options.closeOnVerticalDrag) {
+						if (!_canPan()) {
+							_currPanDist.y += delta.y;
+							_panOffset.y += delta.y;
+
+							var opacityRatio = _calculateVerticalDragOpacityRatio();
+
+							_verticalDragInitiated = true;
+							_shout('onVerticalDrag', opacityRatio);
+
+							_applyBgOpacity(opacityRatio);
+							_applyCurrentZoomPan();
+							return;
+						}
+					}
+
+					_pushPosPoint(_getCurrentTime(), p.x, p.y);
+
+					_moved = true;
+					_currPanBounds = self.currItem.bounds;
+
+					var mainScrollChanged = _panOrMoveMainScroll('x', delta);
+					if (!mainScrollChanged) {
+						_panOrMoveMainScroll('y', delta);
+
+						_roundPoint(_panOffset);
+						_applyCurrentZoomPan();
+					}
+				}
+			},
+
+
+			// Pointerup/pointercancel/touchend/touchcancel/mouseup event handler
+			_onDragRelease = function _onDragRelease(e) {
+
+				if (_features.isOldAndroid) {
+
+					if (_oldAndroidTouchEndTimeout && e.type === 'mouseup') {
+						return;
+					}
+
+					// on Android (v4.1, 4.2, 4.3 & possibly older)
+					// ghost mousedown/up event isn't preventable via e.preventDefault,
+					// which causes fake mousedown event
+					// so we block mousedown/up for 600ms
+					if (e.type.indexOf('touch') > -1) {
+						clearTimeout(_oldAndroidTouchEndTimeout);
+						_oldAndroidTouchEndTimeout = setTimeout(function () {
+							_oldAndroidTouchEndTimeout = 0;
+						}, 600);
+					}
+				}
+
+				_shout('pointerUp');
+
+				if (_preventDefaultEventBehaviour(e, false)) {
+					e.preventDefault();
+				}
+
+				var releasePoint;
+
+				if (_pointerEventEnabled) {
+					var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
+
+					if (pointerIndex > -1) {
+						releasePoint = _currPointers.splice(pointerIndex, 1)[0];
+
+						if (navigator.pointerEnabled) {
+							releasePoint.type = e.pointerType || 'mouse';
+						} else {
+							var MSPOINTER_TYPES = {
+								4: 'mouse', // event.MSPOINTER_TYPE_MOUSE
+								2: 'touch', // event.MSPOINTER_TYPE_TOUCH
+								3: 'pen' // event.MSPOINTER_TYPE_PEN
+							};
+							releasePoint.type = MSPOINTER_TYPES[e.pointerType];
+
+							if (!releasePoint.type) {
+								releasePoint.type = e.pointerType || 'mouse';
+							}
+						}
+					}
+				}
+
+				var touchList = _getTouchPoints(e),
+				    gestureType,
+				    numPoints = touchList.length;
+
+				if (e.type === 'mouseup') {
+					numPoints = 0;
+				}
+
+				// Do nothing if there were 3 touch points or more
+				if (numPoints === 2) {
+					_currentPoints = null;
+					return true;
+				}
+
+				// if second pointer released
+				if (numPoints === 1) {
+					_equalizePoints(_startPoint, touchList[0]);
+				}
+
+				// pointer hasn't moved, send "tap release" point
+				if (numPoints === 0 && !_direction && !_mainScrollAnimating) {
+					if (!releasePoint) {
+						if (e.type === 'mouseup') {
+							releasePoint = { x: e.pageX, y: e.pageY, type: 'mouse' };
+						} else if (e.changedTouches && e.changedTouches[0]) {
+							releasePoint = { x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY, type: 'touch' };
+						}
+					}
+
+					_shout('touchRelease', e, releasePoint);
+				}
+
+				// Difference in time between releasing of two last touch points (zoom gesture)
+				var releaseTimeDiff = -1;
+
+				// Gesture completed, no pointers left
+				if (numPoints === 0) {
+					_isDragging = false;
+					framework.unbind(window, _upMoveEvents, self);
+
+					_stopDragUpdateLoop();
+
+					if (_isZooming) {
+						// Two points released at the same time
+						releaseTimeDiff = 0;
+					} else if (_lastReleaseTime !== -1) {
+						releaseTimeDiff = _getCurrentTime() - _lastReleaseTime;
+					}
+				}
+				_lastReleaseTime = numPoints === 1 ? _getCurrentTime() : -1;
+
+				if (releaseTimeDiff !== -1 && releaseTimeDiff < 150) {
+					gestureType = 'zoom';
+				} else {
+					gestureType = 'swipe';
+				}
+
+				if (_isZooming && numPoints < 2) {
+					_isZooming = false;
+
+					// Only second point released
+					if (numPoints === 1) {
+						gestureType = 'zoomPointerUp';
+					}
+					_shout('zoomGestureEnded');
+				}
+
+				_currentPoints = null;
+				if (!_moved && !_zoomStarted && !_mainScrollAnimating && !_verticalDragInitiated) {
+					// nothing to animate
+					return;
+				}
+
+				_stopAllAnimations();
+
+				if (!_releaseAnimData) {
+					_releaseAnimData = _initDragReleaseAnimationData();
+				}
+
+				_releaseAnimData.calculateSwipeSpeed('x');
+
+				if (_verticalDragInitiated) {
+
+					var opacityRatio = _calculateVerticalDragOpacityRatio();
+
+					if (opacityRatio < _options.verticalDragRange) {
+						self.close();
+					} else {
+						var initalPanY = _panOffset.y,
+						    initialBgOpacity = _bgOpacity;
+
+						_animateProp('verticalDrag', 0, 1, 300, framework.easing.cubic.out, function (now) {
+
+							_panOffset.y = (self.currItem.initialPosition.y - initalPanY) * now + initalPanY;
+
+							_applyBgOpacity((1 - initialBgOpacity) * now + initialBgOpacity);
+							_applyCurrentZoomPan();
+						});
+
+						_shout('onVerticalDrag', 1);
+					}
+
+					return;
+				}
+
+				// main scroll
+				if ((_mainScrollShifted || _mainScrollAnimating) && numPoints === 0) {
+					var itemChanged = _finishSwipeMainScrollGesture(gestureType, _releaseAnimData);
+					if (itemChanged) {
+						return;
+					}
+					gestureType = 'zoomPointerUp';
+				}
+
+				// prevent zoom/pan animation when main scroll animation runs
+				if (_mainScrollAnimating) {
+					return;
+				}
+
+				// Complete simple zoom gesture (reset zoom level if it's out of the bounds)
+				if (gestureType !== 'swipe') {
+					_completeZoomGesture();
+					return;
+				}
+
+				// Complete pan gesture if main scroll is not shifted, and it's possible to pan current image
+				if (!_mainScrollShifted && _currZoomLevel > self.currItem.fitRatio) {
+					_completePanGesture(_releaseAnimData);
+				}
+			},
+
+
+			// Returns object with data about gesture
+			// It's created only once and then reused
+			_initDragReleaseAnimationData = function _initDragReleaseAnimationData() {
+				// temp local vars
+				var lastFlickDuration, tempReleasePos;
+
+				// s = this
+				var s = {
+					lastFlickOffset: {},
+					lastFlickDist: {},
+					lastFlickSpeed: {},
+					slowDownRatio: {},
+					slowDownRatioReverse: {},
+					speedDecelerationRatio: {},
+					speedDecelerationRatioAbs: {},
+					distanceOffset: {},
+					backAnimDestination: {},
+					backAnimStarted: {},
+					calculateSwipeSpeed: function calculateSwipeSpeed(axis) {
+
+						if (_posPoints.length > 1) {
+							lastFlickDuration = _getCurrentTime() - _gestureCheckSpeedTime + 50;
+							tempReleasePos = _posPoints[_posPoints.length - 2][axis];
+						} else {
+							lastFlickDuration = _getCurrentTime() - _gestureStartTime; // total gesture duration
+							tempReleasePos = _startPoint[axis];
+						}
+						s.lastFlickOffset[axis] = _currPoint[axis] - tempReleasePos;
+						s.lastFlickDist[axis] = Math.abs(s.lastFlickOffset[axis]);
+						if (s.lastFlickDist[axis] > 20) {
+							s.lastFlickSpeed[axis] = s.lastFlickOffset[axis] / lastFlickDuration;
+						} else {
+							s.lastFlickSpeed[axis] = 0;
+						}
+						if (Math.abs(s.lastFlickSpeed[axis]) < 0.1) {
+							s.lastFlickSpeed[axis] = 0;
+						}
+
+						s.slowDownRatio[axis] = 0.95;
+						s.slowDownRatioReverse[axis] = 1 - s.slowDownRatio[axis];
+						s.speedDecelerationRatio[axis] = 1;
+					},
+
+					calculateOverBoundsAnimOffset: function calculateOverBoundsAnimOffset(axis, speed) {
+						if (!s.backAnimStarted[axis]) {
+
+							if (_panOffset[axis] > _currPanBounds.min[axis]) {
+								s.backAnimDestination[axis] = _currPanBounds.min[axis];
+							} else if (_panOffset[axis] < _currPanBounds.max[axis]) {
+								s.backAnimDestination[axis] = _currPanBounds.max[axis];
+							}
+
+							if (s.backAnimDestination[axis] !== undefined) {
+								s.slowDownRatio[axis] = 0.7;
+								s.slowDownRatioReverse[axis] = 1 - s.slowDownRatio[axis];
+								if (s.speedDecelerationRatioAbs[axis] < 0.05) {
+
+									s.lastFlickSpeed[axis] = 0;
+									s.backAnimStarted[axis] = true;
+
+									_animateProp('bounceZoomPan' + axis, _panOffset[axis], s.backAnimDestination[axis], speed || 300, framework.easing.sine.out, function (pos) {
+										_panOffset[axis] = pos;
+										_applyCurrentZoomPan();
+									});
+								}
+							}
+						}
+					},
+
+					// Reduces the speed by slowDownRatio (per 10ms)
+					calculateAnimOffset: function calculateAnimOffset(axis) {
+						if (!s.backAnimStarted[axis]) {
+							s.speedDecelerationRatio[axis] = s.speedDecelerationRatio[axis] * (s.slowDownRatio[axis] + s.slowDownRatioReverse[axis] - s.slowDownRatioReverse[axis] * s.timeDiff / 10);
+
+							s.speedDecelerationRatioAbs[axis] = Math.abs(s.lastFlickSpeed[axis] * s.speedDecelerationRatio[axis]);
+							s.distanceOffset[axis] = s.lastFlickSpeed[axis] * s.speedDecelerationRatio[axis] * s.timeDiff;
+							_panOffset[axis] += s.distanceOffset[axis];
+						}
+					},
+
+					panAnimLoop: function panAnimLoop() {
+						if (_animations.zoomPan) {
+							_animations.zoomPan.raf = _requestAF(s.panAnimLoop);
+
+							s.now = _getCurrentTime();
+							s.timeDiff = s.now - s.lastNow;
+							s.lastNow = s.now;
+
+							s.calculateAnimOffset('x');
+							s.calculateAnimOffset('y');
+
+							_applyCurrentZoomPan();
+
+							s.calculateOverBoundsAnimOffset('x');
+							s.calculateOverBoundsAnimOffset('y');
+
+							if (s.speedDecelerationRatioAbs.x < 0.05 && s.speedDecelerationRatioAbs.y < 0.05) {
+
+								// round pan position
+								_panOffset.x = Math.round(_panOffset.x);
+								_panOffset.y = Math.round(_panOffset.y);
+								_applyCurrentZoomPan();
+
+								_stopAnimation('zoomPan');
+								return;
+							}
+						}
+					}
+				};
+				return s;
+			},
+			    _completePanGesture = function _completePanGesture(animData) {
+				// calculate swipe speed for Y axis (paanning)
+				animData.calculateSwipeSpeed('y');
+
+				_currPanBounds = self.currItem.bounds;
+
+				animData.backAnimDestination = {};
+				animData.backAnimStarted = {};
+
+				// Avoid acceleration animation if speed is too low
+				if (Math.abs(animData.lastFlickSpeed.x) <= 0.05 && Math.abs(animData.lastFlickSpeed.y) <= 0.05) {
+					animData.speedDecelerationRatioAbs.x = animData.speedDecelerationRatioAbs.y = 0;
+
+					// Run pan drag release animation. E.g. if you drag image and release finger without momentum.
+					animData.calculateOverBoundsAnimOffset('x');
+					animData.calculateOverBoundsAnimOffset('y');
+					return true;
+				}
+
+				// Animation loop that controls the acceleration after pan gesture ends
+				_registerStartAnimation('zoomPan');
+				animData.lastNow = _getCurrentTime();
+				animData.panAnimLoop();
+			},
+			    _finishSwipeMainScrollGesture = function _finishSwipeMainScrollGesture(gestureType, _releaseAnimData) {
+				var itemChanged;
+				if (!_mainScrollAnimating) {
+					_currZoomedItemIndex = _currentItemIndex;
+				}
+
+				var itemsDiff;
+
+				if (gestureType === 'swipe') {
+					var totalShiftDist = _currPoint.x - _startPoint.x,
+					    isFastLastFlick = _releaseAnimData.lastFlickDist.x < 10;
+
+					// if container is shifted for more than MIN_SWIPE_DISTANCE,
+					// and last flick gesture was in right direction
+					if (totalShiftDist > MIN_SWIPE_DISTANCE && (isFastLastFlick || _releaseAnimData.lastFlickOffset.x > 20)) {
+						// go to prev item
+						itemsDiff = -1;
+					} else if (totalShiftDist < -MIN_SWIPE_DISTANCE && (isFastLastFlick || _releaseAnimData.lastFlickOffset.x < -20)) {
+						// go to next item
+						itemsDiff = 1;
+					}
+				}
+
+				var nextCircle;
+
+				if (itemsDiff) {
+
+					_currentItemIndex += itemsDiff;
+
+					if (_currentItemIndex < 0) {
+						_currentItemIndex = _options.loop ? _getNumItems() - 1 : 0;
+						nextCircle = true;
+					} else if (_currentItemIndex >= _getNumItems()) {
+						_currentItemIndex = _options.loop ? 0 : _getNumItems() - 1;
+						nextCircle = true;
+					}
+
+					if (!nextCircle || _options.loop) {
+						_indexDiff += itemsDiff;
+						_currPositionIndex -= itemsDiff;
+						itemChanged = true;
+					}
+				}
+
+				var animateToX = _slideSize.x * _currPositionIndex;
+				var animateToDist = Math.abs(animateToX - _mainScrollPos.x);
+				var finishAnimDuration;
+
+				if (!itemChanged && animateToX > _mainScrollPos.x !== _releaseAnimData.lastFlickSpeed.x > 0) {
+					// "return to current" duration, e.g. when dragging from slide 0 to -1
+					finishAnimDuration = 333;
+				} else {
+					finishAnimDuration = Math.abs(_releaseAnimData.lastFlickSpeed.x) > 0 ? animateToDist / Math.abs(_releaseAnimData.lastFlickSpeed.x) : 333;
+
+					finishAnimDuration = Math.min(finishAnimDuration, 400);
+					finishAnimDuration = Math.max(finishAnimDuration, 250);
+				}
+
+				if (_currZoomedItemIndex === _currentItemIndex) {
+					itemChanged = false;
+				}
+
+				_mainScrollAnimating = true;
+
+				_shout('mainScrollAnimStart');
+
+				_animateProp('mainScroll', _mainScrollPos.x, animateToX, finishAnimDuration, framework.easing.cubic.out, _moveMainScroll, function () {
+					_stopAllAnimations();
+					_mainScrollAnimating = false;
+					_currZoomedItemIndex = -1;
+
+					if (itemChanged || _currZoomedItemIndex !== _currentItemIndex) {
+						self.updateCurrItem();
+					}
+
+					_shout('mainScrollAnimComplete');
+				});
+
+				if (itemChanged) {
+					self.updateCurrItem(true);
+				}
+
+				return itemChanged;
+			},
+			    _calculateZoomLevel = function _calculateZoomLevel(touchesDistance) {
+				return 1 / _startPointsDistance * touchesDistance * _startZoomLevel;
+			},
+
+
+			// Resets zoom if it's out of bounds
+			_completeZoomGesture = function _completeZoomGesture() {
+				var destZoomLevel = _currZoomLevel,
+				    minZoomLevel = _getMinZoomLevel(),
+				    maxZoomLevel = _getMaxZoomLevel();
+
+				if (_currZoomLevel < minZoomLevel) {
+					destZoomLevel = minZoomLevel;
+				} else if (_currZoomLevel > maxZoomLevel) {
+					destZoomLevel = maxZoomLevel;
+				}
+
+				var destOpacity = 1,
+				    onUpdate,
+				    initialOpacity = _bgOpacity;
+
+				if (_opacityChanged && !_isZoomingIn && !_wasOverInitialZoom && _currZoomLevel < minZoomLevel) {
+					//_closedByScroll = true;
+					self.close();
+					return true;
+				}
+
+				if (_opacityChanged) {
+					onUpdate = function onUpdate(now) {
+						_applyBgOpacity((destOpacity - initialOpacity) * now + initialOpacity);
+					};
+				}
+
+				self.zoomTo(destZoomLevel, 0, 200, framework.easing.cubic.out, onUpdate);
+				return true;
+			};
+
+			_registerModule('Gestures', {
+				publicMethods: {
+
+					initGestures: function initGestures() {
+
+						// helper function that builds touch/pointer/mouse events
+						var addEventNames = function addEventNames(pref, down, move, up, cancel) {
+							_dragStartEvent = pref + down;
+							_dragMoveEvent = pref + move;
+							_dragEndEvent = pref + up;
+							if (cancel) {
+								_dragCancelEvent = pref + cancel;
+							} else {
+								_dragCancelEvent = '';
+							}
+						};
+
+						_pointerEventEnabled = _features.pointerEvent;
+						if (_pointerEventEnabled && _features.touch) {
+							// we don't need touch events, if browser supports pointer events
+							_features.touch = false;
+						}
+
+						if (_pointerEventEnabled) {
+							if (navigator.pointerEnabled) {
+								addEventNames('pointer', 'down', 'move', 'up', 'cancel');
+							} else {
+								// IE10 pointer events are case-sensitive
+								addEventNames('MSPointer', 'Down', 'Move', 'Up', 'Cancel');
+							}
+						} else if (_features.touch) {
+							addEventNames('touch', 'start', 'move', 'end', 'cancel');
+							_likelyTouchDevice = true;
+						} else {
+							addEventNames('mouse', 'down', 'move', 'up');
+						}
+
+						_upMoveEvents = _dragMoveEvent + ' ' + _dragEndEvent + ' ' + _dragCancelEvent;
+						_downEvents = _dragStartEvent;
+
+						if (_pointerEventEnabled && !_likelyTouchDevice) {
+							_likelyTouchDevice = navigator.maxTouchPoints > 1 || navigator.msMaxTouchPoints > 1;
+						}
+						// make variable public
+						self.likelyTouchDevice = _likelyTouchDevice;
+
+						_globalEventHandlers[_dragStartEvent] = _onDragStart;
+						_globalEventHandlers[_dragMoveEvent] = _onDragMove;
+						_globalEventHandlers[_dragEndEvent] = _onDragRelease; // the Kraken
+
+						if (_dragCancelEvent) {
+							_globalEventHandlers[_dragCancelEvent] = _globalEventHandlers[_dragEndEvent];
+						}
+
+						// Bind mouse events on device with detected hardware touch support, in case it supports multiple types of input.
+						if (_features.touch) {
+							_downEvents += ' mousedown';
+							_upMoveEvents += ' mousemove mouseup';
+							_globalEventHandlers.mousedown = _globalEventHandlers[_dragStartEvent];
+							_globalEventHandlers.mousemove = _globalEventHandlers[_dragMoveEvent];
+							_globalEventHandlers.mouseup = _globalEventHandlers[_dragEndEvent];
+						}
+
+						if (!_likelyTouchDevice) {
+							// don't allow pan to next slide from zoomed state on Desktop
+							_options.allowPanToNext = false;
+						}
+					}
+
+				}
+			});
+
+			/*>>gestures*/
+
+			/*>>show-hide-transition*/
+			/**
+	   * show-hide-transition.js:
+	   *
+	   * Manages initial opening or closing transition.
+	   *
+	   * If you're not planning to use transition for gallery at all,
+	   * you may set options hideAnimationDuration and showAnimationDuration to 0,
+	   * and just delete startAnimation function.
+	   *
+	   */
+
+			var _showOrHideTimeout,
+			    _showOrHide = function _showOrHide(item, img, out, completeFn) {
+
+				if (_showOrHideTimeout) {
+					clearTimeout(_showOrHideTimeout);
+				}
+
+				_initialZoomRunning = true;
+				_initialContentSet = true;
+
+				// dimensions of small thumbnail {x:,y:,w:}.
+				// Height is optional, as calculated based on large image.
+				var thumbBounds;
+				if (item.initialLayout) {
+					thumbBounds = item.initialLayout;
+					item.initialLayout = null;
+				} else {
+					thumbBounds = _options.getThumbBoundsFn && _options.getThumbBoundsFn(_currentItemIndex);
+				}
+
+				var duration = out ? _options.hideAnimationDuration : _options.showAnimationDuration;
+
+				var onComplete = function onComplete() {
+					_stopAnimation('initialZoom');
+					if (!out) {
+						_applyBgOpacity(1);
+						if (img) {
+							img.style.display = 'block';
+						}
+						framework.addClass(template, 'pswp--animated-in');
+						_shout('initialZoom' + (out ? 'OutEnd' : 'InEnd'));
+					} else {
+						self.template.removeAttribute('style');
+						self.bg.removeAttribute('style');
+					}
+
+					if (completeFn) {
+						completeFn();
+					}
+					_initialZoomRunning = false;
+				};
+
+				// if bounds aren't provided, just open gallery without animation
+				if (!duration || !thumbBounds || thumbBounds.x === undefined) {
+
+					_shout('initialZoom' + (out ? 'Out' : 'In'));
+
+					_currZoomLevel = item.initialZoomLevel;
+					_equalizePoints(_panOffset, item.initialPosition);
+					_applyCurrentZoomPan();
+
+					template.style.opacity = out ? 0 : 1;
+					_applyBgOpacity(1);
+
+					if (duration) {
+						setTimeout(function () {
+							onComplete();
+						}, duration);
+					} else {
+						onComplete();
+					}
+
+					return;
+				}
+
+				var startAnimation = function startAnimation() {
+					var closeWithRaf = _closedByScroll,
+					    fadeEverything = !self.currItem.src || self.currItem.loadError || _options.showHideOpacity;
+
+					// apply hw-acceleration to image
+					if (item.miniImg) {
+						item.miniImg.style.webkitBackfaceVisibility = 'hidden';
+					}
+
+					if (!out) {
+						_currZoomLevel = thumbBounds.w / item.w;
+						_panOffset.x = thumbBounds.x;
+						_panOffset.y = thumbBounds.y - _initalWindowScrollY;
+
+						self[fadeEverything ? 'template' : 'bg'].style.opacity = 0.001;
+						_applyCurrentZoomPan();
+					}
+
+					_registerStartAnimation('initialZoom');
+
+					if (out && !closeWithRaf) {
+						framework.removeClass(template, 'pswp--animated-in');
+					}
+
+					if (fadeEverything) {
+						if (out) {
+							framework[(closeWithRaf ? 'remove' : 'add') + 'Class'](template, 'pswp--animate_opacity');
+						} else {
+							setTimeout(function () {
+								framework.addClass(template, 'pswp--animate_opacity');
+							}, 30);
+						}
+					}
+
+					_showOrHideTimeout = setTimeout(function () {
+
+						_shout('initialZoom' + (out ? 'Out' : 'In'));
+
+						if (!out) {
+
+							// "in" animation always uses CSS transitions (instead of rAF).
+							// CSS transition work faster here,
+							// as developer may also want to animate other things,
+							// like ui on top of sliding area, which can be animated just via CSS
+
+							_currZoomLevel = item.initialZoomLevel;
+							_equalizePoints(_panOffset, item.initialPosition);
+							_applyCurrentZoomPan();
+							_applyBgOpacity(1);
+
+							if (fadeEverything) {
+								template.style.opacity = 1;
+							} else {
+								_applyBgOpacity(1);
+							}
+
+							_showOrHideTimeout = setTimeout(onComplete, duration + 20);
+						} else {
+
+							// "out" animation uses rAF only when PhotoSwipe is closed by browser scroll, to recalculate position
+							var destZoomLevel = thumbBounds.w / item.w,
+							    initialPanOffset = {
+								x: _panOffset.x,
+								y: _panOffset.y
+							},
+							    initialZoomLevel = _currZoomLevel,
+							    initalBgOpacity = _bgOpacity,
+							    onUpdate = function onUpdate(now) {
+
+								if (now === 1) {
+									_currZoomLevel = destZoomLevel;
+									_panOffset.x = thumbBounds.x;
+									_panOffset.y = thumbBounds.y - _currentWindowScrollY;
+								} else {
+									_currZoomLevel = (destZoomLevel - initialZoomLevel) * now + initialZoomLevel;
+									_panOffset.x = (thumbBounds.x - initialPanOffset.x) * now + initialPanOffset.x;
+									_panOffset.y = (thumbBounds.y - _currentWindowScrollY - initialPanOffset.y) * now + initialPanOffset.y;
+								}
+
+								_applyCurrentZoomPan();
+								if (fadeEverything) {
+									template.style.opacity = 1 - now;
+								} else {
+									_applyBgOpacity(initalBgOpacity - now * initalBgOpacity);
+								}
+							};
+
+							if (closeWithRaf) {
+								_animateProp('initialZoom', 0, 1, duration, framework.easing.cubic.out, onUpdate, onComplete);
+							} else {
+								onUpdate(1);
+								_showOrHideTimeout = setTimeout(onComplete, duration + 20);
+							}
+						}
+					}, out ? 25 : 90); // Main purpose of this delay is to give browser time to paint and
+					// create composite layers of PhotoSwipe UI parts (background, controls, caption, arrows).
+					// Which avoids lag at the beginning of scale transition.
+				};
+				startAnimation();
+			};
+
+			/*>>show-hide-transition*/
+
+			/*>>items-controller*/
+			/**
+	  *
+	  * Controller manages gallery items, their dimensions, and their content.
+	  *
+	  */
+
+			var _items,
+			    _tempPanAreaSize = {},
+			    _imagesToAppendPool = [],
+			    _initialContentSet,
+			    _initialZoomRunning,
+			    _controllerDefaultOptions = {
+				index: 0,
+				errorMsg: '<div class="pswp__error-msg"><a href="%url%" target="_blank">The image</a> could not be loaded.</div>',
+				forceProgressiveLoading: false, // TODO
+				preload: [1, 1],
+				getNumItemsFn: function getNumItemsFn() {
+					return _items.length;
+				}
+			};
+
+			var _getItemAt,
+			    _getNumItems,
+			    _initialIsLoop,
+			    _getZeroBounds = function _getZeroBounds() {
+				return {
+					center: { x: 0, y: 0 },
+					max: { x: 0, y: 0 },
+					min: { x: 0, y: 0 }
+				};
+			},
+			    _calculateSingleItemPanBounds = function _calculateSingleItemPanBounds(item, realPanElementW, realPanElementH) {
+				var bounds = item.bounds;
+
+				// position of element when it's centered
+				bounds.center.x = Math.round((_tempPanAreaSize.x - realPanElementW) / 2);
+				bounds.center.y = Math.round((_tempPanAreaSize.y - realPanElementH) / 2) + item.vGap.top;
+
+				// maximum pan position
+				bounds.max.x = realPanElementW > _tempPanAreaSize.x ? Math.round(_tempPanAreaSize.x - realPanElementW) : bounds.center.x;
+
+				bounds.max.y = realPanElementH > _tempPanAreaSize.y ? Math.round(_tempPanAreaSize.y - realPanElementH) + item.vGap.top : bounds.center.y;
+
+				// minimum pan position
+				bounds.min.x = realPanElementW > _tempPanAreaSize.x ? 0 : bounds.center.x;
+				bounds.min.y = realPanElementH > _tempPanAreaSize.y ? item.vGap.top : bounds.center.y;
+			},
+			    _calculateItemSize = function _calculateItemSize(item, viewportSize, zoomLevel) {
+
+				if (item.src && !item.loadError) {
+					var isInitial = !zoomLevel;
+
+					if (isInitial) {
+						if (!item.vGap) {
+							item.vGap = { top: 0, bottom: 0 };
+						}
+						// allows overriding vertical margin for individual items
+						_shout('parseVerticalMargin', item);
+					}
+
+					_tempPanAreaSize.x = viewportSize.x;
+					_tempPanAreaSize.y = viewportSize.y - item.vGap.top - item.vGap.bottom;
+
+					if (isInitial) {
+						var hRatio = _tempPanAreaSize.x / item.w;
+						var vRatio = _tempPanAreaSize.y / item.h;
+
+						item.fitRatio = hRatio < vRatio ? hRatio : vRatio;
+						//item.fillRatio = hRatio > vRatio ? hRatio : vRatio;
+
+						var scaleMode = _options.scaleMode;
+
+						if (scaleMode === 'orig') {
+							zoomLevel = 1;
+						} else if (scaleMode === 'fit') {
+							zoomLevel = item.fitRatio;
+						}
+
+						if (zoomLevel > 1) {
+							zoomLevel = 1;
+						}
+
+						item.initialZoomLevel = zoomLevel;
+
+						if (!item.bounds) {
+							// reuse bounds object
+							item.bounds = _getZeroBounds();
+						}
+					}
+
+					if (!zoomLevel) {
+						return;
+					}
+
+					_calculateSingleItemPanBounds(item, item.w * zoomLevel, item.h * zoomLevel);
+
+					if (isInitial && zoomLevel === item.initialZoomLevel) {
+						item.initialPosition = item.bounds.center;
+					}
+
+					return item.bounds;
+				} else {
+					item.w = item.h = 0;
+					item.initialZoomLevel = item.fitRatio = 1;
+					item.bounds = _getZeroBounds();
+					item.initialPosition = item.bounds.center;
+
+					// if it's not image, we return zero bounds (content is not zoomable)
+					return item.bounds;
+				}
+			},
+			    _appendImage = function _appendImage(index, item, baseDiv, img, preventAnimation, keepPlaceholder) {
+
+				if (item.loadError) {
+					return;
+				}
+
+				if (img) {
+
+					item.imageAppended = true;
+					_setImageSize(item, img, item === self.currItem && _renderMaxResolution);
+
+					baseDiv.appendChild(img);
+
+					if (keepPlaceholder) {
+						setTimeout(function () {
+							if (item && item.loaded && item.placeholder) {
 								item.placeholder.style.display = 'none';
 								item.placeholder = null;
 							}
+						}, 500);
+					}
+				}
+			},
+			    _preloadImage = function _preloadImage(item) {
+				item.loading = true;
+				item.loaded = false;
+				var img = item.img = framework.createEl('pswp__img', 'img');
+				var onComplete = function onComplete() {
+					item.loading = false;
+					item.loaded = true;
+
+					if (item.loadComplete) {
+						item.loadComplete(item);
+					} else {
+						item.img = null; // no need to store image object
+					}
+					img.onload = img.onerror = null;
+					img = null;
+				};
+				img.onload = onComplete;
+				img.onerror = function () {
+					item.loadError = true;
+					onComplete();
+				};
+
+				img.src = item.src; // + '?a=' + Math.random();
+
+				return img;
+			},
+			    _checkForError = function _checkForError(item, cleanUp) {
+				if (item.src && item.loadError && item.container) {
+
+					if (cleanUp) {
+						item.container.innerHTML = '';
+					}
+
+					item.container.innerHTML = _options.errorMsg.replace('%url%', item.src);
+					return true;
+				}
+			},
+			    _setImageSize = function _setImageSize(item, img, maxRes) {
+				if (!item.src) {
+					return;
+				}
+
+				if (!img) {
+					img = item.container.lastChild;
+				}
+
+				var w = maxRes ? item.w : Math.round(item.w * item.fitRatio),
+				    h = maxRes ? item.h : Math.round(item.h * item.fitRatio);
+
+				if (item.placeholder && !item.loaded) {
+					item.placeholder.style.width = w + 'px';
+					item.placeholder.style.height = h + 'px';
+				}
+
+				img.style.width = w + 'px';
+				img.style.height = h + 'px';
+			},
+			    _appendImagesPool = function _appendImagesPool() {
+
+				if (_imagesToAppendPool.length) {
+					var poolItem;
+
+					for (var i = 0; i < _imagesToAppendPool.length; i++) {
+						poolItem = _imagesToAppendPool[i];
+						if (poolItem.holder.index === poolItem.index) {
+							_appendImage(poolItem.index, poolItem.item, poolItem.baseDiv, poolItem.img, false, poolItem.clearPlaceholder);
 						}
 					}
-
-					item.loadComplete = null;
-					item.img = null; // no need to store image element after it's added
-
-					_shout('imageLoadComplete', index, item);
-				};
-
-				if(framework.features.transform) {
-					
-					var placeholderClassName = 'pswp__img pswp__img--placeholder'; 
-					placeholderClassName += (item.msrc ? '' : ' pswp__img--placeholder--blank');
-
-					var placeholder = framework.createEl(placeholderClassName, item.msrc ? 'img' : '');
-					if(item.msrc) {
-						placeholder.src = item.msrc;
-					}
-					
-					_setImageSize(item, placeholder);
-
-					baseDiv.appendChild(placeholder);
-					item.placeholder = placeholder;
-
+					_imagesToAppendPool = [];
 				}
-				
-
-				
-
-				if(!item.loading) {
-					_preloadImage(item);
-				}
-
-
-				if( self.allowProgressiveImg() ) {
-					// just append image
-					if(!_initialContentSet && _features.transform) {
-						_imagesToAppendPool.push({
-							item:item, 
-							baseDiv:baseDiv, 
-							img:item.img, 
-							index:index, 
-							holder:holder
-						});
-					} else {
-						_appendImage(index, item, baseDiv, item.img, true, true);
-					}
-				}
-				
-			} else if(item.src && !item.loadError) {
-				// image object is created every time, due to bugs of image loading & delay when switching images
-				img = framework.createEl('pswp__img', 'img');
-				img.style.opacity = 1;
-				img.src = item.src;
-				_setImageSize(item, img);
-				_appendImage(index, item, baseDiv, img, true);
-			}
-			
-
-			if(!_initialContentSet && index === _currentItemIndex) {
-				_currZoomElementStyle = baseDiv.style;
-				_showOrHide(item, (img ||item.img) );
-			} else {
-				_applyZoomPanToItem(item);
-			}
-
-			holder.el.innerHTML = '';
-			holder.el.appendChild(baseDiv);
-		},
-
-		cleanSlide: function( item ) {
-			if(item.img ) {
-				item.img.onload = item.img.onerror = null;
-			}
-			item.loaded = item.loading = item.img = item.imageAppended = false;
-		}
-
-	}
-});
-
-/*>>items-controller*/
-
-/*>>tap*/
-/**
- * tap.js:
- *
- * Displatches tap and double-tap events.
- * 
- */
-
-var tapTimer,
-	tapReleasePoint = {},
-	_dispatchTapEvent = function(origEvent, releasePoint, pointerType) {		
-		var e = document.createEvent( 'CustomEvent' ),
-			eDetail = {
-				origEvent:origEvent, 
-				target:origEvent.target, 
-				releasePoint: releasePoint, 
-				pointerType:pointerType || 'touch'
 			};
 
-		e.initCustomEvent( 'pswpTap', true, true, eDetail );
-		origEvent.target.dispatchEvent(e);
-	};
+			_registerModule('Controller', {
 
-_registerModule('Tap', {
-	publicMethods: {
-		initTap: function() {
-			_listen('firstTouchStart', self.onTapStart);
-			_listen('touchRelease', self.onTapRelease);
-			_listen('destroy', function() {
-				tapReleasePoint = {};
-				tapTimer = null;
+				publicMethods: {
+
+					lazyLoadItem: function lazyLoadItem(index) {
+						index = _getLoopedId(index);
+						var item = _getItemAt(index);
+
+						if (!item || (item.loaded || item.loading) && !_itemsNeedUpdate) {
+							return;
+						}
+
+						_shout('gettingData', index, item);
+
+						if (!item.src) {
+							return;
+						}
+
+						_preloadImage(item);
+					},
+					initController: function initController() {
+						framework.extend(_options, _controllerDefaultOptions, true);
+						self.items = _items = items;
+						_getItemAt = self.getItemAt;
+						_getNumItems = _options.getNumItemsFn; //self.getNumItems;
+
+						_initialIsLoop = _options.loop;
+						if (_getNumItems() < 3) {
+							_options.loop = false; // disable loop if less then 3 items
+						}
+
+						_listen('beforeChange', function (diff) {
+
+							var p = _options.preload,
+							    isNext = diff === null ? true : diff >= 0,
+							    preloadBefore = Math.min(p[0], _getNumItems()),
+							    preloadAfter = Math.min(p[1], _getNumItems()),
+							    i;
+
+							for (i = 1; i <= (isNext ? preloadAfter : preloadBefore); i++) {
+								self.lazyLoadItem(_currentItemIndex + i);
+							}
+							for (i = 1; i <= (isNext ? preloadBefore : preloadAfter); i++) {
+								self.lazyLoadItem(_currentItemIndex - i);
+							}
+						});
+
+						_listen('initialLayout', function () {
+							self.currItem.initialLayout = _options.getThumbBoundsFn && _options.getThumbBoundsFn(_currentItemIndex);
+						});
+
+						_listen('mainScrollAnimComplete', _appendImagesPool);
+						_listen('initialZoomInEnd', _appendImagesPool);
+
+						_listen('destroy', function () {
+							var item;
+							for (var i = 0; i < _items.length; i++) {
+								item = _items[i];
+								// remove reference to DOM elements, for GC
+								if (item.container) {
+									item.container = null;
+								}
+								if (item.placeholder) {
+									item.placeholder = null;
+								}
+								if (item.img) {
+									item.img = null;
+								}
+								if (item.preloader) {
+									item.preloader = null;
+								}
+								if (item.loadError) {
+									item.loaded = item.loadError = false;
+								}
+							}
+							_imagesToAppendPool = null;
+						});
+					},
+
+					getItemAt: function getItemAt(index) {
+						if (index >= 0) {
+							return _items[index] !== undefined ? _items[index] : false;
+						}
+						return false;
+					},
+
+					allowProgressiveImg: function allowProgressiveImg() {
+						// 1. Progressive image loading isn't working on webkit/blink
+						//    when hw-acceleration (e.g. translateZ) is applied to IMG element.
+						//    That's why in PhotoSwipe parent element gets zoom transform, not image itself.
+						//
+						// 2. Progressive image loading sometimes blinks in webkit/blink when applying animation to parent element.
+						//    That's why it's disabled on touch devices (mainly because of swipe transition)
+						//
+						// 3. Progressive image loading sometimes doesn't work in IE (up to 11).
+
+						// Don't allow progressive loading on non-large touch devices
+						return _options.forceProgressiveLoading || !_likelyTouchDevice || _options.mouseUsed || screen.width > 1200;
+						// 1200 - to eliminate touch devices with large screen (like Chromebook Pixel)
+					},
+
+					setContent: function setContent(holder, index) {
+
+						if (_options.loop) {
+							index = _getLoopedId(index);
+						}
+
+						var prevItem = self.getItemAt(holder.index);
+						if (prevItem) {
+							prevItem.container = null;
+						}
+
+						var item = self.getItemAt(index),
+						    img;
+
+						if (!item) {
+							holder.el.innerHTML = '';
+							return;
+						}
+
+						// allow to override data
+						_shout('gettingData', index, item);
+
+						holder.index = index;
+						holder.item = item;
+
+						// base container DIV is created only once for each of 3 holders
+						var baseDiv = item.container = framework.createEl('pswp__zoom-wrap');
+
+						if (!item.src && item.html) {
+							if (item.html.tagName) {
+								baseDiv.appendChild(item.html);
+							} else {
+								baseDiv.innerHTML = item.html;
+							}
+						}
+
+						_checkForError(item);
+
+						_calculateItemSize(item, _viewportSize);
+
+						if (item.src && !item.loadError && !item.loaded) {
+
+							item.loadComplete = function (item) {
+
+								// gallery closed before image finished loading
+								if (!_isOpen) {
+									return;
+								}
+
+								// check if holder hasn't changed while image was loading
+								if (holder && holder.index === index) {
+									if (_checkForError(item, true)) {
+										item.loadComplete = item.img = null;
+										_calculateItemSize(item, _viewportSize);
+										_applyZoomPanToItem(item);
+
+										if (holder.index === _currentItemIndex) {
+											// recalculate dimensions
+											self.updateCurrZoomItem();
+										}
+										return;
+									}
+									if (!item.imageAppended) {
+										if (_features.transform && (_mainScrollAnimating || _initialZoomRunning)) {
+											_imagesToAppendPool.push({
+												item: item,
+												baseDiv: baseDiv,
+												img: item.img,
+												index: index,
+												holder: holder,
+												clearPlaceholder: true
+											});
+										} else {
+											_appendImage(index, item, baseDiv, item.img, _mainScrollAnimating || _initialZoomRunning, true);
+										}
+									} else {
+										// remove preloader & mini-img
+										if (!_initialZoomRunning && item.placeholder) {
+											item.placeholder.style.display = 'none';
+											item.placeholder = null;
+										}
+									}
+								}
+
+								item.loadComplete = null;
+								item.img = null; // no need to store image element after it's added
+
+								_shout('imageLoadComplete', index, item);
+							};
+
+							if (framework.features.transform) {
+
+								var placeholderClassName = 'pswp__img pswp__img--placeholder';
+								placeholderClassName += item.msrc ? '' : ' pswp__img--placeholder--blank';
+
+								var placeholder = framework.createEl(placeholderClassName, item.msrc ? 'img' : '');
+								if (item.msrc) {
+									placeholder.src = item.msrc;
+								}
+
+								_setImageSize(item, placeholder);
+
+								baseDiv.appendChild(placeholder);
+								item.placeholder = placeholder;
+							}
+
+							if (!item.loading) {
+								_preloadImage(item);
+							}
+
+							if (self.allowProgressiveImg()) {
+								// just append image
+								if (!_initialContentSet && _features.transform) {
+									_imagesToAppendPool.push({
+										item: item,
+										baseDiv: baseDiv,
+										img: item.img,
+										index: index,
+										holder: holder
+									});
+								} else {
+									_appendImage(index, item, baseDiv, item.img, true, true);
+								}
+							}
+						} else if (item.src && !item.loadError) {
+							// image object is created every time, due to bugs of image loading & delay when switching images
+							img = framework.createEl('pswp__img', 'img');
+							img.style.opacity = 1;
+							img.src = item.src;
+							_setImageSize(item, img);
+							_appendImage(index, item, baseDiv, img, true);
+						}
+
+						if (!_initialContentSet && index === _currentItemIndex) {
+							_currZoomElementStyle = baseDiv.style;
+							_showOrHide(item, img || item.img);
+						} else {
+							_applyZoomPanToItem(item);
+						}
+
+						holder.el.innerHTML = '';
+						holder.el.appendChild(baseDiv);
+					},
+
+					cleanSlide: function cleanSlide(item) {
+						if (item.img) {
+							item.img.onload = item.img.onerror = null;
+						}
+						item.loaded = item.loading = item.img = item.imageAppended = false;
+					}
+
+				}
 			});
-		},
-		onTapStart: function(touchList) {
-			if(touchList.length > 1) {
-				clearTimeout(tapTimer);
-				tapTimer = null;
-			}
-		},
-		onTapRelease: function(e, releasePoint) {
-			if(!releasePoint) {
-				return;
-			}
 
-			if(!_moved && !_isMultitouch && !_numAnimations) {
-				var p0 = releasePoint;
-				if(tapTimer) {
-					clearTimeout(tapTimer);
-					tapTimer = null;
+			/*>>items-controller*/
 
-					// Check if taped on the same place
-					if ( _isNearbyPoints(p0, tapReleasePoint) ) {
-						_shout('doubleTap', p0);
-						return;
-					}
-				}
+			/*>>tap*/
+			/**
+	   * tap.js:
+	   *
+	   * Displatches tap and double-tap events.
+	   *
+	   */
 
-				if(releasePoint.type === 'mouse') {
-					_dispatchTapEvent(e, releasePoint, 'mouse');
-					return;
-				}
-
-				var clickedTagName = e.target.tagName.toUpperCase();
-				// avoid double tap delay on buttons and elements that have class pswp__single-tap
-				if(clickedTagName === 'BUTTON' || framework.hasClass(e.target, 'pswp__single-tap') ) {
-					_dispatchTapEvent(e, releasePoint);
-					return;
-				}
-
-				_equalizePoints(tapReleasePoint, p0);
-
-				tapTimer = setTimeout(function() {
-					_dispatchTapEvent(e, releasePoint);
-					tapTimer = null;
-				}, 300);
-			}
-		}
-	}
-});
-
-/*>>tap*/
-
-/*>>desktop-zoom*/
-/**
- *
- * desktop-zoom.js:
- *
- * - Binds mousewheel event for paning zoomed image.
- * - Manages "dragging", "zoomed-in", "zoom-out" classes.
- *   (which are used for cursors and zoom icon)
- * - Adds toggleDesktopZoom function.
- * 
- */
-
-var _wheelDelta;
-	
-_registerModule('DesktopZoom', {
-
-	publicMethods: {
-
-		initDesktopZoom: function() {
-
-			if(_oldIE) {
-				// no zoom for old IE (<=8)
-				return;
-			}
-
-			if(_likelyTouchDevice) {
-				// if detected hardware touch support, we wait until mouse is used,
-				// and only then apply desktop-zoom features
-				_listen('mouseUsed', function() {
-					self.setupDesktopZoom();
-				});
-			} else {
-				self.setupDesktopZoom(true);
-			}
-
-		},
-
-		setupDesktopZoom: function(onInit) {
-
-			_wheelDelta = {};
-
-			var events = 'wheel mousewheel DOMMouseScroll';
-			
-			_listen('bindEvents', function() {
-				framework.bind(template, events,  self.handleMouseWheel);
-			});
-
-			_listen('unbindEvents', function() {
-				if(_wheelDelta) {
-					framework.unbind(template, events, self.handleMouseWheel);
-				}
-			});
-
-			self.mouseZoomedIn = false;
-
-			var hasDraggingClass,
-				updateZoomable = function() {
-					if(self.mouseZoomedIn) {
-						framework.removeClass(template, 'pswp--zoomed-in');
-						self.mouseZoomedIn = false;
-					}
-					if(_currZoomLevel < 1) {
-						framework.addClass(template, 'pswp--zoom-allowed');
-					} else {
-						framework.removeClass(template, 'pswp--zoom-allowed');
-					}
-					removeDraggingClass();
-				},
-				removeDraggingClass = function() {
-					if(hasDraggingClass) {
-						framework.removeClass(template, 'pswp--dragging');
-						hasDraggingClass = false;
-					}
+			var tapTimer,
+			    tapReleasePoint = {},
+			    _dispatchTapEvent = function _dispatchTapEvent(origEvent, releasePoint, pointerType) {
+				var e = document.createEvent('CustomEvent'),
+				    eDetail = {
+					origEvent: origEvent,
+					target: origEvent.target,
+					releasePoint: releasePoint,
+					pointerType: pointerType || 'touch'
 				};
 
-			_listen('resize' , updateZoomable);
-			_listen('afterChange' , updateZoomable);
-			_listen('pointerDown', function() {
-				if(self.mouseZoomedIn) {
-					hasDraggingClass = true;
-					framework.addClass(template, 'pswp--dragging');
+				e.initCustomEvent('pswpTap', true, true, eDetail);
+				origEvent.target.dispatchEvent(e);
+			};
+
+			_registerModule('Tap', {
+				publicMethods: {
+					initTap: function initTap() {
+						_listen('firstTouchStart', self.onTapStart);
+						_listen('touchRelease', self.onTapRelease);
+						_listen('destroy', function () {
+							tapReleasePoint = {};
+							tapTimer = null;
+						});
+					},
+					onTapStart: function onTapStart(touchList) {
+						if (touchList.length > 1) {
+							clearTimeout(tapTimer);
+							tapTimer = null;
+						}
+					},
+					onTapRelease: function onTapRelease(e, releasePoint) {
+						if (!releasePoint) {
+							return;
+						}
+
+						if (!_moved && !_isMultitouch && !_numAnimations) {
+							var p0 = releasePoint;
+							if (tapTimer) {
+								clearTimeout(tapTimer);
+								tapTimer = null;
+
+								// Check if taped on the same place
+								if (_isNearbyPoints(p0, tapReleasePoint)) {
+									_shout('doubleTap', p0);
+									return;
+								}
+							}
+
+							if (releasePoint.type === 'mouse') {
+								_dispatchTapEvent(e, releasePoint, 'mouse');
+								return;
+							}
+
+							var clickedTagName = e.target.tagName.toUpperCase();
+							// avoid double tap delay on buttons and elements that have class pswp__single-tap
+							if (clickedTagName === 'BUTTON' || framework.hasClass(e.target, 'pswp__single-tap')) {
+								_dispatchTapEvent(e, releasePoint);
+								return;
+							}
+
+							_equalizePoints(tapReleasePoint, p0);
+
+							tapTimer = setTimeout(function () {
+								_dispatchTapEvent(e, releasePoint);
+								tapTimer = null;
+							}, 300);
+						}
+					}
 				}
 			});
-			_listen('pointerUp', removeDraggingClass);
 
-			if(!onInit) {
-				updateZoomable();
-			}
-			
-		},
+			/*>>tap*/
 
-		handleMouseWheel: function(e) {
+			/*>>desktop-zoom*/
+			/**
+	   *
+	   * desktop-zoom.js:
+	   *
+	   * - Binds mousewheel event for paning zoomed image.
+	   * - Manages "dragging", "zoomed-in", "zoom-out" classes.
+	   *   (which are used for cursors and zoom icon)
+	   * - Adds toggleDesktopZoom function.
+	   *
+	   */
 
-			if(_currZoomLevel <= self.currItem.fitRatio) {
-				if( _options.modal ) {
+			var _wheelDelta;
 
-					if (!_options.closeOnScroll || _numAnimations || _isDragging) {
-						e.preventDefault();
-					} else if(_transformKey && Math.abs(e.deltaY) > 2) {
-						// close PhotoSwipe
-						// if browser supports transforms & scroll changed enough
-						_closedByScroll = true;
-						self.close();
+			_registerModule('DesktopZoom', {
+
+				publicMethods: {
+
+					initDesktopZoom: function initDesktopZoom() {
+
+						if (_oldIE) {
+							// no zoom for old IE (<=8)
+							return;
+						}
+
+						if (_likelyTouchDevice) {
+							// if detected hardware touch support, we wait until mouse is used,
+							// and only then apply desktop-zoom features
+							_listen('mouseUsed', function () {
+								self.setupDesktopZoom();
+							});
+						} else {
+							self.setupDesktopZoom(true);
+						}
+					},
+
+					setupDesktopZoom: function setupDesktopZoom(onInit) {
+
+						_wheelDelta = {};
+
+						var events = 'wheel mousewheel DOMMouseScroll';
+
+						_listen('bindEvents', function () {
+							framework.bind(template, events, self.handleMouseWheel);
+						});
+
+						_listen('unbindEvents', function () {
+							if (_wheelDelta) {
+								framework.unbind(template, events, self.handleMouseWheel);
+							}
+						});
+
+						self.mouseZoomedIn = false;
+
+						var hasDraggingClass,
+						    updateZoomable = function updateZoomable() {
+							if (self.mouseZoomedIn) {
+								framework.removeClass(template, 'pswp--zoomed-in');
+								self.mouseZoomedIn = false;
+							}
+							if (_currZoomLevel < 1) {
+								framework.addClass(template, 'pswp--zoom-allowed');
+							} else {
+								framework.removeClass(template, 'pswp--zoom-allowed');
+							}
+							removeDraggingClass();
+						},
+						    removeDraggingClass = function removeDraggingClass() {
+							if (hasDraggingClass) {
+								framework.removeClass(template, 'pswp--dragging');
+								hasDraggingClass = false;
+							}
+						};
+
+						_listen('resize', updateZoomable);
+						_listen('afterChange', updateZoomable);
+						_listen('pointerDown', function () {
+							if (self.mouseZoomedIn) {
+								hasDraggingClass = true;
+								framework.addClass(template, 'pswp--dragging');
+							}
+						});
+						_listen('pointerUp', removeDraggingClass);
+
+						if (!onInit) {
+							updateZoomable();
+						}
+					},
+
+					handleMouseWheel: function handleMouseWheel(e) {
+
+						if (_currZoomLevel <= self.currItem.fitRatio) {
+							if (_options.modal) {
+
+								if (!_options.closeOnScroll || _numAnimations || _isDragging) {
+									e.preventDefault();
+								} else if (_transformKey && Math.abs(e.deltaY) > 2) {
+									// close PhotoSwipe
+									// if browser supports transforms & scroll changed enough
+									_closedByScroll = true;
+									self.close();
+								}
+							}
+							return true;
+						}
+
+						// allow just one event to fire
+						e.stopPropagation();
+
+						// https://developer.mozilla.org/en-US/docs/Web/Events/wheel
+						_wheelDelta.x = 0;
+
+						if ('deltaX' in e) {
+							if (e.deltaMode === 1 /* DOM_DELTA_LINE */) {
+									// 18 - average line height
+									_wheelDelta.x = e.deltaX * 18;
+									_wheelDelta.y = e.deltaY * 18;
+								} else {
+								_wheelDelta.x = e.deltaX;
+								_wheelDelta.y = e.deltaY;
+							}
+						} else if ('wheelDelta' in e) {
+							if (e.wheelDeltaX) {
+								_wheelDelta.x = -0.16 * e.wheelDeltaX;
+							}
+							if (e.wheelDeltaY) {
+								_wheelDelta.y = -0.16 * e.wheelDeltaY;
+							} else {
+								_wheelDelta.y = -0.16 * e.wheelDelta;
+							}
+						} else if ('detail' in e) {
+							_wheelDelta.y = e.detail;
+						} else {
+							return;
+						}
+
+						_calculatePanBounds(_currZoomLevel, true);
+
+						var newPanX = _panOffset.x - _wheelDelta.x,
+						    newPanY = _panOffset.y - _wheelDelta.y;
+
+						// only prevent scrolling in nonmodal mode when not at edges
+						if (_options.modal || newPanX <= _currPanBounds.min.x && newPanX >= _currPanBounds.max.x && newPanY <= _currPanBounds.min.y && newPanY >= _currPanBounds.max.y) {
+							e.preventDefault();
+						}
+
+						// TODO: use rAF instead of mousewheel?
+						self.panTo(newPanX, newPanY);
+					},
+
+					toggleDesktopZoom: function toggleDesktopZoom(centerPoint) {
+						centerPoint = centerPoint || { x: _viewportSize.x / 2 + _offset.x, y: _viewportSize.y / 2 + _offset.y };
+
+						var doubleTapZoomLevel = _options.getDoubleTapZoom(true, self.currItem);
+						var zoomOut = _currZoomLevel === doubleTapZoomLevel;
+
+						self.mouseZoomedIn = !zoomOut;
+
+						self.zoomTo(zoomOut ? self.currItem.initialZoomLevel : doubleTapZoomLevel, centerPoint, 333);
+						framework[(!zoomOut ? 'add' : 'remove') + 'Class'](template, 'pswp--zoomed-in');
 					}
 
 				}
-				return true;
-			}
-
-			// allow just one event to fire
-			e.stopPropagation();
-
-			// https://developer.mozilla.org/en-US/docs/Web/Events/wheel
-			_wheelDelta.x = 0;
-
-			if('deltaX' in e) {
-				if(e.deltaMode === 1 /* DOM_DELTA_LINE */) {
-					// 18 - average line height
-					_wheelDelta.x = e.deltaX * 18;
-					_wheelDelta.y = e.deltaY * 18;
-				} else {
-					_wheelDelta.x = e.deltaX;
-					_wheelDelta.y = e.deltaY;
-				}
-			} else if('wheelDelta' in e) {
-				if(e.wheelDeltaX) {
-					_wheelDelta.x = -0.16 * e.wheelDeltaX;
-				}
-				if(e.wheelDeltaY) {
-					_wheelDelta.y = -0.16 * e.wheelDeltaY;
-				} else {
-					_wheelDelta.y = -0.16 * e.wheelDelta;
-				}
-			} else if('detail' in e) {
-				_wheelDelta.y = e.detail;
-			} else {
-				return;
-			}
-
-			_calculatePanBounds(_currZoomLevel, true);
-
-			var newPanX = _panOffset.x - _wheelDelta.x,
-				newPanY = _panOffset.y - _wheelDelta.y;
-
-			// only prevent scrolling in nonmodal mode when not at edges
-			if (_options.modal ||
-				(
-				newPanX <= _currPanBounds.min.x && newPanX >= _currPanBounds.max.x &&
-				newPanY <= _currPanBounds.min.y && newPanY >= _currPanBounds.max.y
-				) ) {
-				e.preventDefault();
-			}
-
-			// TODO: use rAF instead of mousewheel?
-			self.panTo(newPanX, newPanY);
-		},
-
-		toggleDesktopZoom: function(centerPoint) {
-			centerPoint = centerPoint || {x:_viewportSize.x/2 + _offset.x, y:_viewportSize.y/2 + _offset.y };
-
-			var doubleTapZoomLevel = _options.getDoubleTapZoom(true, self.currItem);
-			var zoomOut = _currZoomLevel === doubleTapZoomLevel;
-			
-			self.mouseZoomedIn = !zoomOut;
-
-			self.zoomTo(zoomOut ? self.currItem.initialZoomLevel : doubleTapZoomLevel, centerPoint, 333);
-			framework[ (!zoomOut ? 'add' : 'remove') + 'Class'](template, 'pswp--zoomed-in');
-		}
-
-	}
-});
-
-
-/*>>desktop-zoom*/
-
-/*>>history*/
-/**
- *
- * history.js:
- *
- * - Back button to close gallery.
- * 
- * - Unique URL for each slide: example.com/&pid=1&gid=3
- *   (where PID is picture index, and GID and gallery index)
- *   
- * - Switch URL when slides change.
- * 
- */
-
-
-var _historyDefaultOptions = {
-	history: true,
-	galleryUID: 1
-};
-
-var _historyUpdateTimeout,
-	_hashChangeTimeout,
-	_hashAnimCheckTimeout,
-	_hashChangedByScript,
-	_hashChangedByHistory,
-	_hashReseted,
-	_initialHash,
-	_historyChanged,
-	_closedFromURL,
-	_urlChangedOnce,
-	_windowLoc,
-
-	_supportsPushState,
-
-	_getHash = function() {
-		return _windowLoc.hash.substring(1);
-	},
-	_cleanHistoryTimeouts = function() {
-
-		if(_historyUpdateTimeout) {
-			clearTimeout(_historyUpdateTimeout);
-		}
-
-		if(_hashAnimCheckTimeout) {
-			clearTimeout(_hashAnimCheckTimeout);
-		}
-	},
-
-	// pid - Picture index
-	// gid - Gallery index
-	_parseItemIndexFromURL = function() {
-		var hash = _getHash(),
-			params = {};
-
-		if(hash.length < 5) { // pid=1
-			return params;
-		}
-
-		var i, vars = hash.split('&');
-		for (i = 0; i < vars.length; i++) {
-			if(!vars[i]) {
-				continue;
-			}
-			var pair = vars[i].split('=');	
-			if(pair.length < 2) {
-				continue;
-			}
-			params[pair[0]] = pair[1];
-		}
-		if(_options.galleryPIDs) {
-			// detect custom pid in hash and search for it among the items collection
-			var searchfor = params.pid;
-			params.pid = 0; // if custom pid cannot be found, fallback to the first item
-			for(i = 0; i < _items.length; i++) {
-				if(_items[i].pid === searchfor) {
-					params.pid = i;
-					break;
-				}
-			}
-		} else {
-			params.pid = parseInt(params.pid,10)-1;
-		}
-		if( params.pid < 0 ) {
-			params.pid = 0;
-		}
-		return params;
-	},
-	_updateHash = function() {
-
-		if(_hashAnimCheckTimeout) {
-			clearTimeout(_hashAnimCheckTimeout);
-		}
-
-
-		if(_numAnimations || _isDragging) {
-			// changing browser URL forces layout/paint in some browsers, which causes noticable lag during animation
-			// that's why we update hash only when no animations running
-			_hashAnimCheckTimeout = setTimeout(_updateHash, 500);
-			return;
-		}
-		
-		if(_hashChangedByScript) {
-			clearTimeout(_hashChangeTimeout);
-		} else {
-			_hashChangedByScript = true;
-		}
-
-
-		var pid = (_currentItemIndex + 1);
-		var item = _getItemAt( _currentItemIndex );
-		if(item.hasOwnProperty('pid')) {
-			// carry forward any custom pid assigned to the item
-			pid = item.pid;
-		}
-		var newHash = _initialHash + '&'  +  'gid=' + _options.galleryUID + '&' + 'pid=' + pid;
-
-		if(!_historyChanged) {
-			if(_windowLoc.hash.indexOf(newHash) === -1) {
-				_urlChangedOnce = true;
-			}
-			// first time - add new hisory record, then just replace
-		}
-
-		var newURL = _windowLoc.href.split('#')[0] + '#' +  newHash;
-
-		if( _supportsPushState ) {
-
-			if('#' + newHash !== window.location.hash) {
-				history[_historyChanged ? 'replaceState' : 'pushState']('', document.title, newURL);
-			}
-
-		} else {
-			if(_historyChanged) {
-				_windowLoc.replace( newURL );
-			} else {
-				_windowLoc.hash = newHash;
-			}
-		}
-		
-		
-
-		_historyChanged = true;
-		_hashChangeTimeout = setTimeout(function() {
-			_hashChangedByScript = false;
-		}, 60);
-	};
-
-
-
-	
-
-_registerModule('History', {
-
-	
-
-	publicMethods: {
-		initHistory: function() {
-
-			framework.extend(_options, _historyDefaultOptions, true);
-
-			if( !_options.history ) {
-				return;
-			}
-
-
-			_windowLoc = window.location;
-			_urlChangedOnce = false;
-			_closedFromURL = false;
-			_historyChanged = false;
-			_initialHash = _getHash();
-			_supportsPushState = ('pushState' in history);
-
-
-			if(_initialHash.indexOf('gid=') > -1) {
-				_initialHash = _initialHash.split('&gid=')[0];
-				_initialHash = _initialHash.split('?gid=')[0];
-			}
-			
-
-			_listen('afterChange', self.updateURL);
-			_listen('unbindEvents', function() {
-				framework.unbind(window, 'hashchange', self.onHashChange);
 			});
 
+			/*>>desktop-zoom*/
 
-			var returnToOriginal = function() {
-				_hashReseted = true;
-				if(!_closedFromURL) {
+			/*>>history*/
+			/**
+	   *
+	   * history.js:
+	   *
+	   * - Back button to close gallery.
+	   *
+	   * - Unique URL for each slide: example.com/&pid=1&gid=3
+	   *   (where PID is picture index, and GID and gallery index)
+	   *
+	   * - Switch URL when slides change.
+	   *
+	   */
 
-					if(_urlChangedOnce) {
-						history.back();
+			var _historyDefaultOptions = {
+				history: true,
+				galleryUID: 1
+			};
+
+			var _historyUpdateTimeout,
+			    _hashChangeTimeout,
+			    _hashAnimCheckTimeout,
+			    _hashChangedByScript,
+			    _hashChangedByHistory,
+			    _hashReseted,
+			    _initialHash,
+			    _historyChanged,
+			    _closedFromURL,
+			    _urlChangedOnce,
+			    _windowLoc,
+			    _supportsPushState,
+			    _getHash = function _getHash() {
+				return _windowLoc.hash.substring(1);
+			},
+			    _cleanHistoryTimeouts = function _cleanHistoryTimeouts() {
+
+				if (_historyUpdateTimeout) {
+					clearTimeout(_historyUpdateTimeout);
+				}
+
+				if (_hashAnimCheckTimeout) {
+					clearTimeout(_hashAnimCheckTimeout);
+				}
+			},
+
+
+			// pid - Picture index
+			// gid - Gallery index
+			_parseItemIndexFromURL = function _parseItemIndexFromURL() {
+				var hash = _getHash(),
+				    params = {};
+
+				if (hash.length < 5) {
+					// pid=1
+					return params;
+				}
+
+				var i,
+				    vars = hash.split('&');
+				for (i = 0; i < vars.length; i++) {
+					if (!vars[i]) {
+						continue;
+					}
+					var pair = vars[i].split('=');
+					if (pair.length < 2) {
+						continue;
+					}
+					params[pair[0]] = pair[1];
+				}
+				if (_options.galleryPIDs) {
+					// detect custom pid in hash and search for it among the items collection
+					var searchfor = params.pid;
+					params.pid = 0; // if custom pid cannot be found, fallback to the first item
+					for (i = 0; i < _items.length; i++) {
+						if (_items[i].pid === searchfor) {
+							params.pid = i;
+							break;
+						}
+					}
+				} else {
+					params.pid = parseInt(params.pid, 10) - 1;
+				}
+				if (params.pid < 0) {
+					params.pid = 0;
+				}
+				return params;
+			},
+			    _updateHash = function _updateHash() {
+
+				if (_hashAnimCheckTimeout) {
+					clearTimeout(_hashAnimCheckTimeout);
+				}
+
+				if (_numAnimations || _isDragging) {
+					// changing browser URL forces layout/paint in some browsers, which causes noticable lag during animation
+					// that's why we update hash only when no animations running
+					_hashAnimCheckTimeout = setTimeout(_updateHash, 500);
+					return;
+				}
+
+				if (_hashChangedByScript) {
+					clearTimeout(_hashChangeTimeout);
+				} else {
+					_hashChangedByScript = true;
+				}
+
+				var pid = _currentItemIndex + 1;
+				var item = _getItemAt(_currentItemIndex);
+				if (item.hasOwnProperty('pid')) {
+					// carry forward any custom pid assigned to the item
+					pid = item.pid;
+				}
+				var newHash = _initialHash + '&' + 'gid=' + _options.galleryUID + '&' + 'pid=' + pid;
+
+				if (!_historyChanged) {
+					if (_windowLoc.hash.indexOf(newHash) === -1) {
+						_urlChangedOnce = true;
+					}
+					// first time - add new hisory record, then just replace
+				}
+
+				var newURL = _windowLoc.href.split('#')[0] + '#' + newHash;
+
+				if (_supportsPushState) {
+
+					if ('#' + newHash !== window.location.hash) {
+						history[_historyChanged ? 'replaceState' : 'pushState']('', document.title, newURL);
+					}
+				} else {
+					if (_historyChanged) {
+						_windowLoc.replace(newURL);
 					} else {
+						_windowLoc.hash = newHash;
+					}
+				}
 
-						if(_initialHash) {
-							_windowLoc.hash = _initialHash;
+				_historyChanged = true;
+				_hashChangeTimeout = setTimeout(function () {
+					_hashChangedByScript = false;
+				}, 60);
+			};
+
+			_registerModule('History', {
+
+				publicMethods: {
+					initHistory: function initHistory() {
+
+						framework.extend(_options, _historyDefaultOptions, true);
+
+						if (!_options.history) {
+							return;
+						}
+
+						_windowLoc = window.location;
+						_urlChangedOnce = false;
+						_closedFromURL = false;
+						_historyChanged = false;
+						_initialHash = _getHash();
+						_supportsPushState = 'pushState' in history;
+
+						if (_initialHash.indexOf('gid=') > -1) {
+							_initialHash = _initialHash.split('&gid=')[0];
+							_initialHash = _initialHash.split('?gid=')[0];
+						}
+
+						_listen('afterChange', self.updateURL);
+						_listen('unbindEvents', function () {
+							framework.unbind(window, 'hashchange', self.onHashChange);
+						});
+
+						var returnToOriginal = function returnToOriginal() {
+							_hashReseted = true;
+							if (!_closedFromURL) {
+
+								if (_urlChangedOnce) {
+									history.back();
+								} else {
+
+									if (_initialHash) {
+										_windowLoc.hash = _initialHash;
+									} else {
+										if (_supportsPushState) {
+
+											// remove hash from url without refreshing it or scrolling to top
+											history.pushState('', document.title, _windowLoc.pathname + _windowLoc.search);
+										} else {
+											_windowLoc.hash = '';
+										}
+									}
+								}
+							}
+
+							_cleanHistoryTimeouts();
+						};
+
+						_listen('unbindEvents', function () {
+							if (_closedByScroll) {
+								// if PhotoSwipe is closed by scroll, we go "back" before the closing animation starts
+								// this is done to keep the scroll position
+								returnToOriginal();
+							}
+						});
+						_listen('destroy', function () {
+							if (!_hashReseted) {
+								returnToOriginal();
+							}
+						});
+						_listen('firstUpdate', function () {
+							_currentItemIndex = _parseItemIndexFromURL().pid;
+						});
+
+						var index = _initialHash.indexOf('pid=');
+						if (index > -1) {
+							_initialHash = _initialHash.substring(0, index);
+							if (_initialHash.slice(-1) === '&') {
+								_initialHash = _initialHash.slice(0, -1);
+							}
+						}
+
+						setTimeout(function () {
+							if (_isOpen) {
+								// hasn't destroyed yet
+								framework.bind(window, 'hashchange', self.onHashChange);
+							}
+						}, 40);
+					},
+					onHashChange: function onHashChange() {
+
+						if (_getHash() === _initialHash) {
+
+							_closedFromURL = true;
+							self.close();
+							return;
+						}
+						if (!_hashChangedByScript) {
+
+							_hashChangedByHistory = true;
+							self.goTo(_parseItemIndexFromURL().pid);
+							_hashChangedByHistory = false;
+						}
+					},
+					updateURL: function updateURL() {
+
+						// Delay the update of URL, to avoid lag during transition,
+						// and to not to trigger actions like "refresh page sound" or "blinking favicon" to often
+
+						_cleanHistoryTimeouts();
+
+						if (_hashChangedByHistory) {
+							return;
+						}
+
+						if (!_historyChanged) {
+							_updateHash(); // first time
 						} else {
-							if (_supportsPushState) {
+								_historyUpdateTimeout = setTimeout(_updateHash, 800);
+							}
+					}
 
-								// remove hash from url without refreshing it or scrolling to top
-								history.pushState('', document.title,  _windowLoc.pathname + _windowLoc.search );
+				}
+			});
+
+			/*>>history*/
+			framework.extend(self, publicMethods);
+		};
+		return PhotoSwipe;
+	});
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	/*! PhotoSwipe Default UI - 4.1.1 - 2015-12-24
+	* http://photoswipe.com
+	* Copyright (c) 2015 Dmitry Semenov; */
+	/**
+	*
+	* UI on top of main sliding area (caption, arrows, close button, etc.).
+	* Built just using public methods/properties of PhotoSwipe.
+	*
+	*/
+	(function (root, factory) {
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+			module.exports = factory();
+		} else {
+			root.PhotoSwipeUI_Default = factory();
+		}
+	})(undefined, function () {
+
+		'use strict';
+
+		var PhotoSwipeUI_Default = function PhotoSwipeUI_Default(pswp, framework) {
+
+			var ui = this;
+			var _overlayUIUpdated = false,
+			    _controlsVisible = true,
+			    _fullscrenAPI,
+			    _controls,
+			    _captionContainer,
+			    _fakeCaptionContainer,
+			    _indexIndicator,
+			    _shareButton,
+			    _shareModal,
+			    _shareModalHidden = true,
+			    _initalCloseOnScrollValue,
+			    _isIdle,
+			    _listen,
+			    _loadingIndicator,
+			    _loadingIndicatorHidden,
+			    _loadingIndicatorTimeout,
+			    _galleryHasOneSlide,
+			    _options,
+			    _defaultUIOptions = {
+				barsSize: { top: 44, bottom: 'auto' },
+				closeElClasses: ['item', 'caption', 'zoom-wrap', 'ui', 'top-bar'],
+				timeToIdle: 4000,
+				timeToIdleOutside: 1000,
+				loadingIndicatorDelay: 1000, // 2s
+
+				addCaptionHTMLFn: function addCaptionHTMLFn(item, captionEl /*, isFake */) {
+					if (!item.title) {
+						captionEl.children[0].innerHTML = '';
+						return false;
+					}
+					captionEl.children[0].innerHTML = item.title;
+					return true;
+				},
+
+				closeEl: true,
+				captionEl: true,
+				fullscreenEl: true,
+				zoomEl: true,
+				shareEl: true,
+				counterEl: true,
+				arrowEl: true,
+				preloaderEl: true,
+
+				tapToClose: false,
+				tapToToggleControls: true,
+
+				clickToCloseNonZoomable: true,
+
+				shareButtons: [{ id: 'facebook', label: 'Share on Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u={{url}}' }, { id: 'twitter', label: 'Tweet', url: 'https://twitter.com/intent/tweet?text={{text}}&url={{url}}' }, { id: 'pinterest', label: 'Pin it', url: 'http://www.pinterest.com/pin/create/button/' + '?url={{url}}&media={{image_url}}&description={{text}}' }, { id: 'download', label: 'Download image', url: '{{raw_image_url}}', download: true }],
+				getImageURLForShare: function getImageURLForShare() /* shareButtonData */{
+					return pswp.currItem.src || '';
+				},
+				getPageURLForShare: function getPageURLForShare() /* shareButtonData */{
+					return window.location.href;
+				},
+				getTextForShare: function getTextForShare() /* shareButtonData */{
+					return pswp.currItem.title || '';
+				},
+
+				indexIndicatorSep: ' / ',
+				fitControlsWidth: 1200
+
+			},
+			    _blockControlsTap,
+			    _blockControlsTapTimeout;
+
+			var _onControlsTap = function _onControlsTap(e) {
+				if (_blockControlsTap) {
+					return true;
+				}
+
+				e = e || window.event;
+
+				if (_options.timeToIdle && _options.mouseUsed && !_isIdle) {
+					// reset idle timer
+					_onIdleMouseMove();
+				}
+
+				var target = e.target || e.srcElement,
+				    uiElement,
+				    clickedClass = target.getAttribute('class') || '',
+				    found;
+
+				for (var i = 0; i < _uiElements.length; i++) {
+					uiElement = _uiElements[i];
+					if (uiElement.onTap && clickedClass.indexOf('pswp__' + uiElement.name) > -1) {
+						uiElement.onTap();
+						found = true;
+					}
+				}
+
+				if (found) {
+					if (e.stopPropagation) {
+						e.stopPropagation();
+					}
+					_blockControlsTap = true;
+
+					// Some versions of Android don't prevent ghost click event
+					// when preventDefault() was called on touchstart and/or touchend.
+					//
+					// This happens on v4.3, 4.2, 4.1,
+					// older versions strangely work correctly,
+					// but just in case we add delay on all of them)
+					var tapDelay = framework.features.isOldAndroid ? 600 : 30;
+					_blockControlsTapTimeout = setTimeout(function () {
+						_blockControlsTap = false;
+					}, tapDelay);
+				}
+			},
+			    _fitControlsInViewport = function _fitControlsInViewport() {
+				return !pswp.likelyTouchDevice || _options.mouseUsed || screen.width > _options.fitControlsWidth;
+			},
+			    _togglePswpClass = function _togglePswpClass(el, cName, add) {
+				framework[(add ? 'add' : 'remove') + 'Class'](el, 'pswp__' + cName);
+			},
+
+
+			// add class when there is just one item in the gallery
+			// (by default it hides left/right arrows and 1ofX counter)
+			_countNumItems = function _countNumItems() {
+				var hasOneSlide = _options.getNumItemsFn() === 1;
+
+				if (hasOneSlide !== _galleryHasOneSlide) {
+					_togglePswpClass(_controls, 'ui--one-slide', hasOneSlide);
+					_galleryHasOneSlide = hasOneSlide;
+				}
+			},
+			    _toggleShareModalClass = function _toggleShareModalClass() {
+				_togglePswpClass(_shareModal, 'share-modal--hidden', _shareModalHidden);
+			},
+			    _toggleShareModal = function _toggleShareModal() {
+
+				_shareModalHidden = !_shareModalHidden;
+
+				if (!_shareModalHidden) {
+					_toggleShareModalClass();
+					setTimeout(function () {
+						if (!_shareModalHidden) {
+							framework.addClass(_shareModal, 'pswp__share-modal--fade-in');
+						}
+					}, 30);
+				} else {
+					framework.removeClass(_shareModal, 'pswp__share-modal--fade-in');
+					setTimeout(function () {
+						if (_shareModalHidden) {
+							_toggleShareModalClass();
+						}
+					}, 300);
+				}
+
+				if (!_shareModalHidden) {
+					_updateShareURLs();
+				}
+				return false;
+			},
+			    _openWindowPopup = function _openWindowPopup(e) {
+				e = e || window.event;
+				var target = e.target || e.srcElement;
+
+				pswp.shout('shareLinkClick', e, target);
+
+				if (!target.href) {
+					return false;
+				}
+
+				if (target.hasAttribute('download')) {
+					return true;
+				}
+
+				window.open(target.href, 'pswp_share', 'scrollbars=yes,resizable=yes,toolbar=no,' + 'location=yes,width=550,height=420,top=100,left=' + (window.screen ? Math.round(screen.width / 2 - 275) : 100));
+
+				if (!_shareModalHidden) {
+					_toggleShareModal();
+				}
+
+				return false;
+			},
+			    _updateShareURLs = function _updateShareURLs() {
+				var shareButtonOut = '',
+				    shareButtonData,
+				    shareURL,
+				    image_url,
+				    page_url,
+				    share_text;
+
+				for (var i = 0; i < _options.shareButtons.length; i++) {
+					shareButtonData = _options.shareButtons[i];
+
+					image_url = _options.getImageURLForShare(shareButtonData);
+					page_url = _options.getPageURLForShare(shareButtonData);
+					share_text = _options.getTextForShare(shareButtonData);
+
+					shareURL = shareButtonData.url.replace('{{url}}', encodeURIComponent(page_url)).replace('{{image_url}}', encodeURIComponent(image_url)).replace('{{raw_image_url}}', image_url).replace('{{text}}', encodeURIComponent(share_text));
+
+					shareButtonOut += '<a href="' + shareURL + '" target="_blank" ' + 'class="pswp__share--' + shareButtonData.id + '"' + (shareButtonData.download ? 'download' : '') + '>' + shareButtonData.label + '</a>';
+
+					if (_options.parseShareButtonOut) {
+						shareButtonOut = _options.parseShareButtonOut(shareButtonData, shareButtonOut);
+					}
+				}
+				_shareModal.children[0].innerHTML = shareButtonOut;
+				_shareModal.children[0].onclick = _openWindowPopup;
+			},
+			    _hasCloseClass = function _hasCloseClass(target) {
+				for (var i = 0; i < _options.closeElClasses.length; i++) {
+					if (framework.hasClass(target, 'pswp__' + _options.closeElClasses[i])) {
+						return true;
+					}
+				}
+			},
+			    _idleInterval,
+			    _idleTimer,
+			    _idleIncrement = 0,
+			    _onIdleMouseMove = function _onIdleMouseMove() {
+				clearTimeout(_idleTimer);
+				_idleIncrement = 0;
+				if (_isIdle) {
+					ui.setIdle(false);
+				}
+			},
+			    _onMouseLeaveWindow = function _onMouseLeaveWindow(e) {
+				e = e ? e : window.event;
+				var from = e.relatedTarget || e.toElement;
+				if (!from || from.nodeName === 'HTML') {
+					clearTimeout(_idleTimer);
+					_idleTimer = setTimeout(function () {
+						ui.setIdle(true);
+					}, _options.timeToIdleOutside);
+				}
+			},
+			    _setupFullscreenAPI = function _setupFullscreenAPI() {
+				if (_options.fullscreenEl && !framework.features.isOldAndroid) {
+					if (!_fullscrenAPI) {
+						_fullscrenAPI = ui.getFullscreenAPI();
+					}
+					if (_fullscrenAPI) {
+						framework.bind(document, _fullscrenAPI.eventK, ui.updateFullscreen);
+						ui.updateFullscreen();
+						framework.addClass(pswp.template, 'pswp--supports-fs');
+					} else {
+						framework.removeClass(pswp.template, 'pswp--supports-fs');
+					}
+				}
+			},
+			    _setupLoadingIndicator = function _setupLoadingIndicator() {
+				// Setup loading indicator
+				if (_options.preloaderEl) {
+
+					_toggleLoadingIndicator(true);
+
+					_listen('beforeChange', function () {
+
+						clearTimeout(_loadingIndicatorTimeout);
+
+						// display loading indicator with delay
+						_loadingIndicatorTimeout = setTimeout(function () {
+
+							if (pswp.currItem && pswp.currItem.loading) {
+
+								if (!pswp.allowProgressiveImg() || pswp.currItem.img && !pswp.currItem.img.naturalWidth) {
+									// show preloader if progressive loading is not enabled,
+									// or image width is not defined yet (because of slow connection)
+									_toggleLoadingIndicator(false);
+									// items-controller.js function allowProgressiveImg
+								}
 							} else {
-								_windowLoc.hash = '';
+									_toggleLoadingIndicator(true); // hide preloader
+								}
+						}, _options.loadingIndicatorDelay);
+					});
+					_listen('imageLoadComplete', function (index, item) {
+						if (pswp.currItem === item) {
+							_toggleLoadingIndicator(true);
+						}
+					});
+				}
+			},
+			    _toggleLoadingIndicator = function _toggleLoadingIndicator(hide) {
+				if (_loadingIndicatorHidden !== hide) {
+					_togglePswpClass(_loadingIndicator, 'preloader--active', !hide);
+					_loadingIndicatorHidden = hide;
+				}
+			},
+			    _applyNavBarGaps = function _applyNavBarGaps(item) {
+				var gap = item.vGap;
+
+				if (_fitControlsInViewport()) {
+
+					var bars = _options.barsSize;
+					if (_options.captionEl && bars.bottom === 'auto') {
+						if (!_fakeCaptionContainer) {
+							_fakeCaptionContainer = framework.createEl('pswp__caption pswp__caption--fake');
+							_fakeCaptionContainer.appendChild(framework.createEl('pswp__caption__center'));
+							_controls.insertBefore(_fakeCaptionContainer, _captionContainer);
+							framework.addClass(_controls, 'pswp__ui--fit');
+						}
+						if (_options.addCaptionHTMLFn(item, _fakeCaptionContainer, true)) {
+
+							var captionSize = _fakeCaptionContainer.clientHeight;
+							gap.bottom = parseInt(captionSize, 10) || 44;
+						} else {
+							gap.bottom = bars.top; // if no caption, set size of bottom gap to size of top
+						}
+					} else {
+							gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
+						}
+
+					// height of top bar is static, no need to calculate it
+					gap.top = bars.top;
+				} else {
+					gap.top = gap.bottom = 0;
+				}
+			},
+			    _setupIdle = function _setupIdle() {
+				// Hide controls when mouse is used
+				if (_options.timeToIdle) {
+					_listen('mouseUsed', function () {
+
+						framework.bind(document, 'mousemove', _onIdleMouseMove);
+						framework.bind(document, 'mouseout', _onMouseLeaveWindow);
+
+						_idleInterval = setInterval(function () {
+							_idleIncrement++;
+							if (_idleIncrement === 2) {
+								ui.setIdle(true);
+							}
+						}, _options.timeToIdle / 2);
+					});
+				}
+			},
+			    _setupHidingControlsDuringGestures = function _setupHidingControlsDuringGestures() {
+
+				// Hide controls on vertical drag
+				_listen('onVerticalDrag', function (now) {
+					if (_controlsVisible && now < 0.95) {
+						ui.hideControls();
+					} else if (!_controlsVisible && now >= 0.95) {
+						ui.showControls();
+					}
+				});
+
+				// Hide controls when pinching to close
+				var pinchControlsHidden;
+				_listen('onPinchClose', function (now) {
+					if (_controlsVisible && now < 0.9) {
+						ui.hideControls();
+						pinchControlsHidden = true;
+					} else if (pinchControlsHidden && !_controlsVisible && now > 0.9) {
+						ui.showControls();
+					}
+				});
+
+				_listen('zoomGestureEnded', function () {
+					pinchControlsHidden = false;
+					if (pinchControlsHidden && !_controlsVisible) {
+						ui.showControls();
+					}
+				});
+			};
+
+			var _uiElements = [{
+				name: 'caption',
+				option: 'captionEl',
+				onInit: function onInit(el) {
+					_captionContainer = el;
+				}
+			}, {
+				name: 'share-modal',
+				option: 'shareEl',
+				onInit: function onInit(el) {
+					_shareModal = el;
+				},
+				onTap: function onTap() {
+					_toggleShareModal();
+				}
+			}, {
+				name: 'button--share',
+				option: 'shareEl',
+				onInit: function onInit(el) {
+					_shareButton = el;
+				},
+				onTap: function onTap() {
+					_toggleShareModal();
+				}
+			}, {
+				name: 'button--zoom',
+				option: 'zoomEl',
+				onTap: pswp.toggleDesktopZoom
+			}, {
+				name: 'counter',
+				option: 'counterEl',
+				onInit: function onInit(el) {
+					_indexIndicator = el;
+				}
+			}, {
+				name: 'button--close',
+				option: 'closeEl',
+				onTap: pswp.close
+			}, {
+				name: 'button--arrow--left',
+				option: 'arrowEl',
+				onTap: pswp.prev
+			}, {
+				name: 'button--arrow--right',
+				option: 'arrowEl',
+				onTap: pswp.next
+			}, {
+				name: 'button--fs',
+				option: 'fullscreenEl',
+				onTap: function onTap() {
+					if (_fullscrenAPI.isFullscreen()) {
+						_fullscrenAPI.exit();
+					} else {
+						_fullscrenAPI.enter();
+					}
+				}
+			}, {
+				name: 'preloader',
+				option: 'preloaderEl',
+				onInit: function onInit(el) {
+					_loadingIndicator = el;
+				}
+			}];
+
+			var _setupUIElements = function _setupUIElements() {
+				var item, classAttr, uiElement;
+
+				var loopThroughChildElements = function loopThroughChildElements(sChildren) {
+					if (!sChildren) {
+						return;
+					}
+
+					var l = sChildren.length;
+					for (var i = 0; i < l; i++) {
+						item = sChildren[i];
+						classAttr = item.className;
+
+						for (var a = 0; a < _uiElements.length; a++) {
+							uiElement = _uiElements[a];
+
+							if (classAttr.indexOf('pswp__' + uiElement.name) > -1) {
+
+								if (_options[uiElement.option]) {
+									// if element is not disabled from options
+
+									framework.removeClass(item, 'pswp__element--disabled');
+									if (uiElement.onInit) {
+										uiElement.onInit(item);
+									}
+
+									//item.style.display = 'block';
+								} else {
+										framework.addClass(item, 'pswp__element--disabled');
+										//item.style.display = 'none';
+									}
 							}
 						}
 					}
-					
-				}
+				};
+				loopThroughChildElements(_controls.children);
 
-				_cleanHistoryTimeouts();
+				var topBar = framework.getChildByClass(_controls, 'pswp__top-bar');
+				if (topBar) {
+					loopThroughChildElements(topBar.children);
+				}
 			};
 
-
-			_listen('unbindEvents', function() {
-				if(_closedByScroll) {
-					// if PhotoSwipe is closed by scroll, we go "back" before the closing animation starts
-					// this is done to keep the scroll position
-					returnToOriginal();
-				}
-			});
-			_listen('destroy', function() {
-				if(!_hashReseted) {
-					returnToOriginal();
-				}
-			});
-			_listen('firstUpdate', function() {
-				_currentItemIndex = _parseItemIndexFromURL().pid;
-			});
-
-			
-
-			
-			var index = _initialHash.indexOf('pid=');
-			if(index > -1) {
-				_initialHash = _initialHash.substring(0, index);
-				if(_initialHash.slice(-1) === '&') {
-					_initialHash = _initialHash.slice(0, -1);
-				}
-			}
-			
-
-			setTimeout(function() {
-				if(_isOpen) { // hasn't destroyed yet
-					framework.bind(window, 'hashchange', self.onHashChange);
-				}
-			}, 40);
-			
-		},
-		onHashChange: function() {
-
-			if(_getHash() === _initialHash) {
-
-				_closedFromURL = true;
-				self.close();
-				return;
-			}
-			if(!_hashChangedByScript) {
-
-				_hashChangedByHistory = true;
-				self.goTo( _parseItemIndexFromURL().pid );
-				_hashChangedByHistory = false;
-			}
-			
-		},
-		updateURL: function() {
-
-			// Delay the update of URL, to avoid lag during transition, 
-			// and to not to trigger actions like "refresh page sound" or "blinking favicon" to often
-			
-			_cleanHistoryTimeouts();
-			
-
-			if(_hashChangedByHistory) {
-				return;
-			}
-
-			if(!_historyChanged) {
-				_updateHash(); // first time
-			} else {
-				_historyUpdateTimeout = setTimeout(_updateHash, 800);
-			}
-		}
-	
-	}
-});
-
-
-/*>>history*/
-	framework.extend(self, publicMethods); };
-	return PhotoSwipe;
-});
-},{}],25:[function(require,module,exports){
-(function (global){
-/*! https://mths.be/punycode v1.4.1 by @mathias */
-;(function(root) {
-
-	/** Detect free variables */
-	var freeExports = typeof exports == 'object' && exports &&
-		!exports.nodeType && exports;
-	var freeModule = typeof module == 'object' && module &&
-		!module.nodeType && module;
-	var freeGlobal = typeof global == 'object' && global;
-	if (
-		freeGlobal.global === freeGlobal ||
-		freeGlobal.window === freeGlobal ||
-		freeGlobal.self === freeGlobal
-	) {
-		root = freeGlobal;
-	}
-
-	/**
-	 * The `punycode` object.
-	 * @name punycode
-	 * @type Object
-	 */
-	var punycode,
-
-	/** Highest positive signed 32-bit float value */
-	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
-
-	/** Bootstring parameters */
-	base = 36,
-	tMin = 1,
-	tMax = 26,
-	skew = 38,
-	damp = 700,
-	initialBias = 72,
-	initialN = 128, // 0x80
-	delimiter = '-', // '\x2D'
-
-	/** Regular expressions */
-	regexPunycode = /^xn--/,
-	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
-	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
-
-	/** Error messages */
-	errors = {
-		'overflow': 'Overflow: input needs wider integers to process',
-		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
-		'invalid-input': 'Invalid input'
-	},
-
-	/** Convenience shortcuts */
-	baseMinusTMin = base - tMin,
-	floor = Math.floor,
-	stringFromCharCode = String.fromCharCode,
-
-	/** Temporary variable */
-	key;
-
-	/*--------------------------------------------------------------------------*/
-
-	/**
-	 * A generic error utility function.
-	 * @private
-	 * @param {String} type The error type.
-	 * @returns {Error} Throws a `RangeError` with the applicable error message.
-	 */
-	function error(type) {
-		throw new RangeError(errors[type]);
-	}
-
-	/**
-	 * A generic `Array#map` utility function.
-	 * @private
-	 * @param {Array} array The array to iterate over.
-	 * @param {Function} callback The function that gets called for every array
-	 * item.
-	 * @returns {Array} A new array of values returned by the callback function.
-	 */
-	function map(array, fn) {
-		var length = array.length;
-		var result = [];
-		while (length--) {
-			result[length] = fn(array[length]);
-		}
-		return result;
-	}
-
-	/**
-	 * A simple `Array#map`-like wrapper to work with domain name strings or email
-	 * addresses.
-	 * @private
-	 * @param {String} domain The domain name or email address.
-	 * @param {Function} callback The function that gets called for every
-	 * character.
-	 * @returns {Array} A new string of characters returned by the callback
-	 * function.
-	 */
-	function mapDomain(string, fn) {
-		var parts = string.split('@');
-		var result = '';
-		if (parts.length > 1) {
-			// In email addresses, only the domain name should be punycoded. Leave
-			// the local part (i.e. everything up to `@`) intact.
-			result = parts[0] + '@';
-			string = parts[1];
-		}
-		// Avoid `split(regex)` for IE8 compatibility. See #17.
-		string = string.replace(regexSeparators, '\x2E');
-		var labels = string.split('.');
-		var encoded = map(labels, fn).join('.');
-		return result + encoded;
-	}
-
-	/**
-	 * Creates an array containing the numeric code points of each Unicode
-	 * character in the string. While JavaScript uses UCS-2 internally,
-	 * this function will convert a pair of surrogate halves (each of which
-	 * UCS-2 exposes as separate characters) into a single code point,
-	 * matching UTF-16.
-	 * @see `punycode.ucs2.encode`
-	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
-	 * @memberOf punycode.ucs2
-	 * @name decode
-	 * @param {String} string The Unicode input string (UCS-2).
-	 * @returns {Array} The new array of code points.
-	 */
-	function ucs2decode(string) {
-		var output = [],
-		    counter = 0,
-		    length = string.length,
-		    value,
-		    extra;
-		while (counter < length) {
-			value = string.charCodeAt(counter++);
-			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
-				// high surrogate, and there is a next character
-				extra = string.charCodeAt(counter++);
-				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
-				} else {
-					// unmatched surrogate; only append this code unit, in case the next
-					// code unit is the high surrogate of a surrogate pair
-					output.push(value);
-					counter--;
-				}
-			} else {
-				output.push(value);
-			}
-		}
-		return output;
-	}
-
-	/**
-	 * Creates a string based on an array of numeric code points.
-	 * @see `punycode.ucs2.decode`
-	 * @memberOf punycode.ucs2
-	 * @name encode
-	 * @param {Array} codePoints The array of numeric code points.
-	 * @returns {String} The new Unicode string (UCS-2).
-	 */
-	function ucs2encode(array) {
-		return map(array, function(value) {
-			var output = '';
-			if (value > 0xFFFF) {
-				value -= 0x10000;
-				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-				value = 0xDC00 | value & 0x3FF;
-			}
-			output += stringFromCharCode(value);
-			return output;
-		}).join('');
-	}
-
-	/**
-	 * Converts a basic code point into a digit/integer.
-	 * @see `digitToBasic()`
-	 * @private
-	 * @param {Number} codePoint The basic numeric code point value.
-	 * @returns {Number} The numeric value of a basic code point (for use in
-	 * representing integers) in the range `0` to `base - 1`, or `base` if
-	 * the code point does not represent a value.
-	 */
-	function basicToDigit(codePoint) {
-		if (codePoint - 48 < 10) {
-			return codePoint - 22;
-		}
-		if (codePoint - 65 < 26) {
-			return codePoint - 65;
-		}
-		if (codePoint - 97 < 26) {
-			return codePoint - 97;
-		}
-		return base;
-	}
-
-	/**
-	 * Converts a digit/integer into a basic code point.
-	 * @see `basicToDigit()`
-	 * @private
-	 * @param {Number} digit The numeric value of a basic code point.
-	 * @returns {Number} The basic code point whose value (when used for
-	 * representing integers) is `digit`, which needs to be in the range
-	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
-	 * used; else, the lowercase form is used. The behavior is undefined
-	 * if `flag` is non-zero and `digit` has no uppercase form.
-	 */
-	function digitToBasic(digit, flag) {
-		//  0..25 map to ASCII a..z or A..Z
-		// 26..35 map to ASCII 0..9
-		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
-	}
-
-	/**
-	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * https://tools.ietf.org/html/rfc3492#section-3.4
-	 * @private
-	 */
-	function adapt(delta, numPoints, firstTime) {
-		var k = 0;
-		delta = firstTime ? floor(delta / damp) : delta >> 1;
-		delta += floor(delta / numPoints);
-		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
-			delta = floor(delta / baseMinusTMin);
-		}
-		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
-	}
-
-	/**
-	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
-	 * symbols.
-	 * @memberOf punycode
-	 * @param {String} input The Punycode string of ASCII-only symbols.
-	 * @returns {String} The resulting string of Unicode symbols.
-	 */
-	function decode(input) {
-		// Don't use UCS-2
-		var output = [],
-		    inputLength = input.length,
-		    out,
-		    i = 0,
-		    n = initialN,
-		    bias = initialBias,
-		    basic,
-		    j,
-		    index,
-		    oldi,
-		    w,
-		    k,
-		    digit,
-		    t,
-		    /** Cached calculation results */
-		    baseMinusT;
-
-		// Handle the basic code points: let `basic` be the number of input code
-		// points before the last delimiter, or `0` if there is none, then copy
-		// the first basic code points to the output.
-
-		basic = input.lastIndexOf(delimiter);
-		if (basic < 0) {
-			basic = 0;
-		}
-
-		for (j = 0; j < basic; ++j) {
-			// if it's not a basic code point
-			if (input.charCodeAt(j) >= 0x80) {
-				error('not-basic');
-			}
-			output.push(input.charCodeAt(j));
-		}
-
-		// Main decoding loop: start just after the last delimiter if any basic code
-		// points were copied; start at the beginning otherwise.
-
-		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
-
-			// `index` is the index of the next character to be consumed.
-			// Decode a generalized variable-length integer into `delta`,
-			// which gets added to `i`. The overflow checking is easier
-			// if we increase `i` as we go, then subtract off its starting
-			// value at the end to obtain `delta`.
-			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
-
-				if (index >= inputLength) {
-					error('invalid-input');
-				}
-
-				digit = basicToDigit(input.charCodeAt(index++));
-
-				if (digit >= base || digit > floor((maxInt - i) / w)) {
-					error('overflow');
-				}
-
-				i += digit * w;
-				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-
-				if (digit < t) {
-					break;
-				}
-
-				baseMinusT = base - t;
-				if (w > floor(maxInt / baseMinusT)) {
-					error('overflow');
-				}
-
-				w *= baseMinusT;
-
-			}
-
-			out = output.length + 1;
-			bias = adapt(i - oldi, out, oldi == 0);
-
-			// `i` was supposed to wrap around from `out` to `0`,
-			// incrementing `n` each time, so we'll fix that now:
-			if (floor(i / out) > maxInt - n) {
-				error('overflow');
-			}
-
-			n += floor(i / out);
-			i %= out;
-
-			// Insert `n` at position `i` of the output
-			output.splice(i++, 0, n);
-
-		}
-
-		return ucs2encode(output);
-	}
-
-	/**
-	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
-	 * Punycode string of ASCII-only symbols.
-	 * @memberOf punycode
-	 * @param {String} input The string of Unicode symbols.
-	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
-	 */
-	function encode(input) {
-		var n,
-		    delta,
-		    handledCPCount,
-		    basicLength,
-		    bias,
-		    j,
-		    m,
-		    q,
-		    k,
-		    t,
-		    currentValue,
-		    output = [],
-		    /** `inputLength` will hold the number of code points in `input`. */
-		    inputLength,
-		    /** Cached calculation results */
-		    handledCPCountPlusOne,
-		    baseMinusT,
-		    qMinusT;
-
-		// Convert the input in UCS-2 to Unicode
-		input = ucs2decode(input);
-
-		// Cache the length
-		inputLength = input.length;
-
-		// Initialize the state
-		n = initialN;
-		delta = 0;
-		bias = initialBias;
-
-		// Handle the basic code points
-		for (j = 0; j < inputLength; ++j) {
-			currentValue = input[j];
-			if (currentValue < 0x80) {
-				output.push(stringFromCharCode(currentValue));
-			}
-		}
-
-		handledCPCount = basicLength = output.length;
-
-		// `handledCPCount` is the number of code points that have been handled;
-		// `basicLength` is the number of basic code points.
-
-		// Finish the basic string - if it is not empty - with a delimiter
-		if (basicLength) {
-			output.push(delimiter);
-		}
-
-		// Main encoding loop:
-		while (handledCPCount < inputLength) {
-
-			// All non-basic code points < n have been handled already. Find the next
-			// larger one:
-			for (m = maxInt, j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-				if (currentValue >= n && currentValue < m) {
-					m = currentValue;
-				}
-			}
-
-			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
-			// but guard against overflow
-			handledCPCountPlusOne = handledCPCount + 1;
-			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
-				error('overflow');
-			}
-
-			delta += (m - n) * handledCPCountPlusOne;
-			n = m;
-
-			for (j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-
-				if (currentValue < n && ++delta > maxInt) {
-					error('overflow');
-				}
-
-				if (currentValue == n) {
-					// Represent delta as a generalized variable-length integer
-					for (q = delta, k = base; /* no condition */; k += base) {
-						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-						if (q < t) {
-							break;
-						}
-						qMinusT = q - t;
-						baseMinusT = base - t;
-						output.push(
-							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
-						);
-						q = floor(qMinusT / baseMinusT);
+			ui.init = function () {
+
+				// extend options
+				framework.extend(pswp.options, _defaultUIOptions, true);
+
+				// create local link for fast access
+				_options = pswp.options;
+
+				// find pswp__ui element
+				_controls = framework.getChildByClass(pswp.scrollWrap, 'pswp__ui');
+
+				// create local link
+				_listen = pswp.listen;
+
+				_setupHidingControlsDuringGestures();
+
+				// update controls when slides change
+				_listen('beforeChange', ui.update);
+
+				// toggle zoom on double-tap
+				_listen('doubleTap', function (point) {
+					var initialZoomLevel = pswp.currItem.initialZoomLevel;
+					if (pswp.getZoomLevel() !== initialZoomLevel) {
+						pswp.zoomTo(initialZoomLevel, point, 333);
+					} else {
+						pswp.zoomTo(_options.getDoubleTapZoom(false, pswp.currItem), point, 333);
+					}
+				});
+
+				// Allow text selection in caption
+				_listen('preventDragEvent', function (e, isDown, preventObj) {
+					var t = e.target || e.srcElement;
+					if (t && t.getAttribute('class') && e.type.indexOf('mouse') > -1 && (t.getAttribute('class').indexOf('__caption') > 0 || /(SMALL|STRONG|EM)/i.test(t.tagName))) {
+						preventObj.prevent = false;
+					}
+				});
+
+				// bind events for UI
+				_listen('bindEvents', function () {
+					framework.bind(_controls, 'pswpTap click', _onControlsTap);
+					framework.bind(pswp.scrollWrap, 'pswpTap', ui.onGlobalTap);
+
+					if (!pswp.likelyTouchDevice) {
+						framework.bind(pswp.scrollWrap, 'mouseover', ui.onMouseOver);
+					}
+				});
+
+				// unbind events for UI
+				_listen('unbindEvents', function () {
+					if (!_shareModalHidden) {
+						_toggleShareModal();
 					}
 
-					output.push(stringFromCharCode(digitToBasic(q, 0)));
-					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
-					delta = 0;
-					++handledCPCount;
+					if (_idleInterval) {
+						clearInterval(_idleInterval);
+					}
+					framework.unbind(document, 'mouseout', _onMouseLeaveWindow);
+					framework.unbind(document, 'mousemove', _onIdleMouseMove);
+					framework.unbind(_controls, 'pswpTap click', _onControlsTap);
+					framework.unbind(pswp.scrollWrap, 'pswpTap', ui.onGlobalTap);
+					framework.unbind(pswp.scrollWrap, 'mouseover', ui.onMouseOver);
+
+					if (_fullscrenAPI) {
+						framework.unbind(document, _fullscrenAPI.eventK, ui.updateFullscreen);
+						if (_fullscrenAPI.isFullscreen()) {
+							_options.hideAnimationDuration = 0;
+							_fullscrenAPI.exit();
+						}
+						_fullscrenAPI = null;
+					}
+				});
+
+				// clean up things when gallery is destroyed
+				_listen('destroy', function () {
+					if (_options.captionEl) {
+						if (_fakeCaptionContainer) {
+							_controls.removeChild(_fakeCaptionContainer);
+						}
+						framework.removeClass(_captionContainer, 'pswp__caption--empty');
+					}
+
+					if (_shareModal) {
+						_shareModal.children[0].onclick = null;
+					}
+					framework.removeClass(_controls, 'pswp__ui--over-close');
+					framework.addClass(_controls, 'pswp__ui--hidden');
+					ui.setIdle(false);
+				});
+
+				if (!_options.showAnimationDuration) {
+					framework.removeClass(_controls, 'pswp__ui--hidden');
 				}
-			}
+				_listen('initialZoomIn', function () {
+					if (_options.showAnimationDuration) {
+						framework.removeClass(_controls, 'pswp__ui--hidden');
+					}
+				});
+				_listen('initialZoomOut', function () {
+					framework.addClass(_controls, 'pswp__ui--hidden');
+				});
 
-			++delta;
-			++n;
+				_listen('parseVerticalMargin', _applyNavBarGaps);
 
-		}
-		return output.join('');
-	}
+				_setupUIElements();
+
+				if (_options.shareEl && _shareButton && _shareModal) {
+					_shareModalHidden = true;
+				}
+
+				_countNumItems();
+
+				_setupIdle();
+
+				_setupFullscreenAPI();
+
+				_setupLoadingIndicator();
+			};
+
+			ui.setIdle = function (isIdle) {
+				_isIdle = isIdle;
+				_togglePswpClass(_controls, 'ui--idle', isIdle);
+			};
+
+			ui.update = function () {
+				// Don't update UI if it's hidden
+				if (_controlsVisible && pswp.currItem) {
+
+					ui.updateIndexIndicator();
+
+					if (_options.captionEl) {
+						_options.addCaptionHTMLFn(pswp.currItem, _captionContainer);
+
+						_togglePswpClass(_captionContainer, 'caption--empty', !pswp.currItem.title);
+					}
+
+					_overlayUIUpdated = true;
+				} else {
+					_overlayUIUpdated = false;
+				}
+
+				if (!_shareModalHidden) {
+					_toggleShareModal();
+				}
+
+				_countNumItems();
+			};
+
+			ui.updateFullscreen = function (e) {
+
+				if (e) {
+					// some browsers change window scroll position during the fullscreen
+					// so PhotoSwipe updates it just in case
+					setTimeout(function () {
+						pswp.setScrollOffset(0, framework.getScrollY());
+					}, 50);
+				}
+
+				// toogle pswp--fs class on root element
+				framework[(_fullscrenAPI.isFullscreen() ? 'add' : 'remove') + 'Class'](pswp.template, 'pswp--fs');
+			};
+
+			ui.updateIndexIndicator = function () {
+				if (_options.counterEl) {
+					_indexIndicator.innerHTML = pswp.getCurrentIndex() + 1 + _options.indexIndicatorSep + _options.getNumItemsFn();
+				}
+			};
+
+			ui.onGlobalTap = function (e) {
+				e = e || window.event;
+				var target = e.target || e.srcElement;
+
+				if (_blockControlsTap) {
+					return;
+				}
+
+				if (e.detail && e.detail.pointerType === 'mouse') {
+
+					// close gallery if clicked outside of the image
+					if (_hasCloseClass(target)) {
+						pswp.close();
+						return;
+					}
+
+					if (framework.hasClass(target, 'pswp__img')) {
+						if (pswp.getZoomLevel() === 1 && pswp.getZoomLevel() <= pswp.currItem.fitRatio) {
+							if (_options.clickToCloseNonZoomable) {
+								pswp.close();
+							}
+						} else {
+							pswp.toggleDesktopZoom(e.detail.releasePoint);
+						}
+					}
+				} else {
+
+					// tap anywhere (except buttons) to toggle visibility of controls
+					if (_options.tapToToggleControls) {
+						if (_controlsVisible) {
+							ui.hideControls();
+						} else {
+							ui.showControls();
+						}
+					}
+
+					// tap to close gallery
+					if (_options.tapToClose && (framework.hasClass(target, 'pswp__img') || _hasCloseClass(target))) {
+						pswp.close();
+						return;
+					}
+				}
+			};
+			ui.onMouseOver = function (e) {
+				e = e || window.event;
+				var target = e.target || e.srcElement;
+
+				// add class when mouse is over an element that should close the gallery
+				_togglePswpClass(_controls, 'ui--over-close', _hasCloseClass(target));
+			};
+
+			ui.hideControls = function () {
+				framework.addClass(_controls, 'pswp__ui--hidden');
+				_controlsVisible = false;
+			};
+
+			ui.showControls = function () {
+				_controlsVisible = true;
+				if (!_overlayUIUpdated) {
+					ui.update();
+				}
+				framework.removeClass(_controls, 'pswp__ui--hidden');
+			};
+
+			ui.supportsFullscreen = function () {
+				var d = document;
+				return !!(d.exitFullscreen || d.mozCancelFullScreen || d.webkitExitFullscreen || d.msExitFullscreen);
+			};
+
+			ui.getFullscreenAPI = function () {
+				var dE = document.documentElement,
+				    api,
+				    tF = 'fullscreenchange';
+
+				if (dE.requestFullscreen) {
+					api = {
+						enterK: 'requestFullscreen',
+						exitK: 'exitFullscreen',
+						elementK: 'fullscreenElement',
+						eventK: tF
+					};
+				} else if (dE.mozRequestFullScreen) {
+					api = {
+						enterK: 'mozRequestFullScreen',
+						exitK: 'mozCancelFullScreen',
+						elementK: 'mozFullScreenElement',
+						eventK: 'moz' + tF
+					};
+				} else if (dE.webkitRequestFullscreen) {
+					api = {
+						enterK: 'webkitRequestFullscreen',
+						exitK: 'webkitExitFullscreen',
+						elementK: 'webkitFullscreenElement',
+						eventK: 'webkit' + tF
+					};
+				} else if (dE.msRequestFullscreen) {
+					api = {
+						enterK: 'msRequestFullscreen',
+						exitK: 'msExitFullscreen',
+						elementK: 'msFullscreenElement',
+						eventK: 'MSFullscreenChange'
+					};
+				}
+
+				if (api) {
+					api.enter = function () {
+						// disable close-on-scroll in fullscreen
+						_initalCloseOnScrollValue = _options.closeOnScroll;
+						_options.closeOnScroll = false;
+
+						if (this.enterK === 'webkitRequestFullscreen') {
+							pswp.template[this.enterK](Element.ALLOW_KEYBOARD_INPUT);
+						} else {
+							return pswp.template[this.enterK]();
+						}
+					};
+					api.exit = function () {
+						_options.closeOnScroll = _initalCloseOnScrollValue;
+
+						return document[this.exitK]();
+					};
+					api.isFullscreen = function () {
+						return document[this.elementK];
+					};
+				}
+
+				return api;
+			};
+		};
+		return PhotoSwipeUI_Default;
+	});
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	/**
-	 * Converts a Punycode string representing a domain name or an email address
-	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
-	 * it doesn't matter if you call it on a string that has already been
-	 * converted to Unicode.
-	 * @memberOf punycode
-	 * @param {String} input The Punycoded domain name or email address to
-	 * convert to Unicode.
-	 * @returns {String} The Unicode representation of the given Punycode
-	 * string.
+	 * Gestion de l'affichage des notifications
 	 */
-	function toUnicode(input) {
-		return mapDomain(input, function(string) {
-			return regexPunycode.test(string)
-				? decode(string.slice(4).toLowerCase())
-				: string;
-		});
-	}
+
+	var Notification = function () {
+	    function Notification(container) {
+	        var _this = this;
+
+	        _classCallCheck(this, Notification);
+
+	        this.options = {
+	            timeBeforeClose: 10000
+	        };
+
+	        this.container = container;
+
+	        setTimeout(function () {
+	            return _this.close;
+	        }, this.options.timeBeforeClose);
+	    }
+
+	    /**
+	     * Femerture de la notification
+	     */
+
+
+	    _createClass(Notification, [{
+	        key: "close",
+	        value: function close() {
+	            this.container.parentNode.removeChild(this.container);
+	        }
+	    }]);
+
+	    return Notification;
+	}();
+
+	exports.default = Notification;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	/**
-	 * Converts a Unicode string representing a domain name or an email address to
-	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
-	 * i.e. it doesn't matter if you call it with a domain that's already in
-	 * ASCII.
-	 * @memberOf punycode
-	 * @param {String} input The domain name or email address to convert, as a
-	 * Unicode string.
-	 * @returns {String} The Punycode representation of the given domain name or
-	 * email address.
+	 * Gère l'affichage de la cookiebar
 	 */
-	function toASCII(input) {
-		return mapDomain(input, function(string) {
-			return regexNonASCII.test(string)
-				? 'xn--' + encode(string)
-				: string;
-		});
-	}
 
-	/*--------------------------------------------------------------------------*/
+	var CookieBar = function () {
+	    function CookieBar(container) {
+	        _classCallCheck(this, CookieBar);
 
-	/** Define the public API */
-	punycode = {
-		/**
-		 * A string representing the current Punycode.js version number.
-		 * @memberOf punycode
-		 * @type String
-		 */
-		'version': '1.4.1',
-		/**
-		 * An object of methods to convert from JavaScript's internal character
-		 * representation (UCS-2) to Unicode code points, and back.
-		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
-		 * @memberOf punycode
-		 * @type Object
-		 */
-		'ucs2': {
-			'decode': ucs2decode,
-			'encode': ucs2encode
-		},
-		'decode': decode,
-		'encode': encode,
-		'toASCII': toASCII,
-		'toUnicode': toUnicode
+	        this.options = {
+	            containerOpenClass: 'bab-CookieBar--open',
+	            cookieName: 'bab-accept-cookies',
+	            cookieValue: 'true',
+	            cookieDuration: 365
+	        };
+
+	        this.container = container;
+	        this.button = this.container.querySelector('.js-cookie-bar-button');
+
+	        // On récupère le cookie, et si il ne vaut pas la valeur attendue,
+	        // cela veut dire que les cookies n'ont pas été acceptés, donc
+	        // on affiche la cookiebar
+	        var cookie = this.getCookie(this.options.cookieName);
+
+	        if (cookie !== this.options.cookieValue) {
+	            this.open();
+	        }
+
+	        this.initEvents();
+	    }
+
+	    _createClass(CookieBar, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            this.button.addEventListener('click', function () {
+	                return _this.accept();
+	            });
+	        }
+
+	        /**
+	         * Ajoute un cookie avec la valeur attendue et ferme la cookiebar
+	         */
+
+	    }, {
+	        key: 'accept',
+	        value: function accept() {
+	            this.close();
+
+	            this.setCookie(this.options.cookieName, this.options.cookieValue, this.options.cookieDuration);
+	        }
+
+	        /**
+	         * Affiche la cookiebar
+	         */
+
+	    }, {
+	        key: 'open',
+	        value: function open() {
+	            this.container.classList.add(this.options.containerOpenClass);
+	        }
+
+	        /**
+	         * Ferme la cookiebar
+	         */
+
+	    }, {
+	        key: 'close',
+	        value: function close() {
+	            this.container.classList.remove(this.options.containerOpenClass);
+	        }
+
+	        /**
+	         * Récupère la valeur d'un cookie
+	         */
+
+	    }, {
+	        key: 'getCookie',
+	        value: function getCookie(name) {
+	            var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	            return v ? v[2] : null;
+	        }
+
+	        /**
+	         * Attribue une valeur à un cookie pour un nombre de jours donné
+	         */
+
+	    }, {
+	        key: 'setCookie',
+	        value: function setCookie(name, value, days) {
+	            var d = new Date();
+	            d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
+	            document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
+	        }
+	    }]);
+
+	    return CookieBar;
+	}();
+
+	exports.default = CookieBar;
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _domDelegate = __webpack_require__(4);
+
+	var _domDelegate2 = _interopRequireDefault(_domDelegate);
+
+	var _closest = __webpack_require__(47);
+
+	var _closest2 = _interopRequireDefault(_closest);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Gère le touch sur les grilles d'articles
+	 */
+
+	var ArticlesGrid = function () {
+	    function ArticlesGrid(container) {
+	        _classCallCheck(this, ArticlesGrid);
+
+	        this.container = container;
+	        this.containerDelegate = (0, _domDelegate2.default)(this.container);
+
+	        this.initEvents();
+	    }
+
+	    _createClass(ArticlesGrid, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            if (window.feature.touch) {
+	                // Au click sur un lien, on empêche la propagation de l'event aux parents
+	                this.containerDelegate.on('click', '.js-articles-grid-item a', function (event) {
+	                    return event.stopPropagation();
+	                });
+
+	                // Au click sur un item, on toggle le panneau de détail
+	                this.containerDelegate.on('click', '.js-articles-grid-item', function (event) {
+	                    var item = (0, _closest2.default)(event.target, '.js-articles-grid-item', true);
+
+	                    _this.toggleDetails(item);
+	                });
+	            }
+	        }
+
+	        /**
+	         * Toggle la classe "hover" sur un item de la grille
+	         */
+
+	    }, {
+	        key: 'toggleDetails',
+	        value: function toggleDetails(item) {
+	            item.classList.toggle('hover');
+	        }
+	    }]);
+
+	    return ArticlesGrid;
+	}();
+
+	exports.default = ArticlesGrid;
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var matches = __webpack_require__(48);
+
+	module.exports = function (element, selector, checkYoSelf) {
+	  var parent = checkYoSelf ? element : element.parentNode;
+
+	  while (parent && parent !== document) {
+	    if (matches(parent, selector)) return parent;
+	    parent = parent.parentNode;
+	  }
 	};
 
-	/** Expose `punycode` */
-	// Some AMD build optimizers, like r.js, check for specific condition patterns
-	// like the following:
-	if (
-		typeof define == 'function' &&
-		typeof define.amd == 'object' &&
-		define.amd
-	) {
-		define('punycode', function() {
-			return punycode;
-		});
-	} else if (freeExports && freeModule) {
-		if (module.exports == freeExports) {
-			// in Node.js, io.js, or RingoJS v0.8.0+
-			freeModule.exports = punycode;
-		} else {
-			// in Narwhal or RingoJS v0.7.0-
-			for (key in punycode) {
-				punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
-			}
-		}
-	} else {
-		// in Rhino or a web browser
-		root.punycode = punycode;
+/***/ },
+/* 48 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Element prototype.
+	 */
+
+	var proto = Element.prototype;
+
+	/**
+	 * Vendor function.
+	 */
+
+	var vendor = proto.matchesSelector || proto.webkitMatchesSelector || proto.mozMatchesSelector || proto.msMatchesSelector || proto.oMatchesSelector;
+
+	/**
+	 * Expose `match()`.
+	 */
+
+	module.exports = match;
+
+	/**
+	 * Match `el` to `selector`.
+	 *
+	 * @param {Element} el
+	 * @param {String} selector
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function match(el, selector) {
+	  if (vendor) return vendor.call(el, selector);
+	  var nodes = el.parentNode.querySelectorAll(selector);
+	  for (var i = 0; i < nodes.length; ++i) {
+	    if (nodes[i] == el) return true;
+	  }
+	  return false;
 	}
 
-}(this));
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],26:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
-
-// If obj.hasOwnProperty has been overridden, then calling
-// obj.hasOwnProperty(prop) will break.
-// See: https://github.com/joyent/node/issues/1707
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
-
-module.exports = function(qs, sep, eq, options) {
-  sep = sep || '&';
-  eq = eq || '=';
-  var obj = {};
-
-  if (typeof qs !== 'string' || qs.length === 0) {
-    return obj;
-  }
-
-  var regexp = /\+/g;
-  qs = qs.split(sep);
-
-  var maxKeys = 1000;
-  if (options && typeof options.maxKeys === 'number') {
-    maxKeys = options.maxKeys;
-  }
-
-  var len = qs.length;
-  // maxKeys <= 0 means that we should not limit keys count
-  if (maxKeys > 0 && len > maxKeys) {
-    len = maxKeys;
-  }
-
-  for (var i = 0; i < len; ++i) {
-    var x = qs[i].replace(regexp, '%20'),
-        idx = x.indexOf(eq),
-        kstr, vstr, k, v;
-
-    if (idx >= 0) {
-      kstr = x.substr(0, idx);
-      vstr = x.substr(idx + 1);
-    } else {
-      kstr = x;
-      vstr = '';
-    }
-
-    k = decodeURIComponent(kstr);
-    v = decodeURIComponent(vstr);
-
-    if (!hasOwnProperty(obj, k)) {
-      obj[k] = v;
-    } else if (isArray(obj[k])) {
-      obj[k].push(v);
-    } else {
-      obj[k] = [obj[k], v];
-    }
-  }
-
-  return obj;
-};
-
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
-};
-
-},{}],27:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-'use strict';
-
-var stringifyPrimitive = function(v) {
-  switch (typeof v) {
-    case 'string':
-      return v;
-
-    case 'boolean':
-      return v ? 'true' : 'false';
-
-    case 'number':
-      return isFinite(v) ? v : '';
-
-    default:
-      return '';
-  }
-};
-
-module.exports = function(obj, sep, eq, name) {
-  sep = sep || '&';
-  eq = eq || '=';
-  if (obj === null) {
-    obj = undefined;
-  }
-
-  if (typeof obj === 'object') {
-    return map(objectKeys(obj), function(k) {
-      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-      if (isArray(obj[k])) {
-        return map(obj[k], function(v) {
-          return ks + encodeURIComponent(stringifyPrimitive(v));
-        }).join(sep);
-      } else {
-        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
-      }
-    }).join(sep);
-
-  }
-
-  if (!name) return '';
-  return encodeURIComponent(stringifyPrimitive(name)) + eq +
-         encodeURIComponent(stringifyPrimitive(obj));
-};
-
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
-};
-
-function map (xs, f) {
-  if (xs.map) return xs.map(f);
-  var res = [];
-  for (var i = 0; i < xs.length; i++) {
-    res.push(f(xs[i], i));
-  }
-  return res;
-}
-
-var objectKeys = Object.keys || function (obj) {
-  var res = [];
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
-  }
-  return res;
-};
-
-},{}],28:[function(require,module,exports){
-'use strict';
-
-exports.decode = exports.parse = require('./decode');
-exports.encode = exports.stringify = require('./encode');
-
-},{"./decode":26,"./encode":27}],29:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var punycode = require('punycode');
-
-exports.parse = urlParse;
-exports.resolve = urlResolve;
-exports.resolveObject = urlResolveObject;
-exports.format = urlFormat;
-
-exports.Url = Url;
-
-function Url() {
-  this.protocol = null;
-  this.slashes = null;
-  this.auth = null;
-  this.host = null;
-  this.port = null;
-  this.hostname = null;
-  this.hash = null;
-  this.search = null;
-  this.query = null;
-  this.pathname = null;
-  this.path = null;
-  this.href = null;
-}
-
-// Reference: RFC 3986, RFC 1808, RFC 2396
-
-// define these here so at least they only have to be
-// compiled once on the first module load.
-var protocolPattern = /^([a-z0-9.+-]+:)/i,
-    portPattern = /:[0-9]*$/,
-
-    // RFC 2396: characters reserved for delimiting URLs.
-    // We actually just auto-escape these.
-    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
-
-    // RFC 2396: characters not allowed for various reasons.
-    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
-
-    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
-    autoEscape = ['\''].concat(unwise),
-    // Characters that are never ever allowed in a hostname.
-    // Note that any invalid chars are also handled, but these
-    // are the ones that are *expected* to be seen, so we fast-path
-    // them.
-    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
-    hostEndingChars = ['/', '?', '#'],
-    hostnameMaxLen = 255,
-    hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/,
-    hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/,
-    // protocols that can allow "unsafe" and "unwise" chars.
-    unsafeProtocol = {
-      'javascript': true,
-      'javascript:': true
-    },
-    // protocols that never have a hostname.
-    hostlessProtocol = {
-      'javascript': true,
-      'javascript:': true
-    },
-    // protocols that always contain a // bit.
-    slashedProtocol = {
-      'http': true,
-      'https': true,
-      'ftp': true,
-      'gopher': true,
-      'file': true,
-      'http:': true,
-      'https:': true,
-      'ftp:': true,
-      'gopher:': true,
-      'file:': true
-    },
-    querystring = require('querystring');
-
-function urlParse(url, parseQueryString, slashesDenoteHost) {
-  if (url && isObject(url) && url instanceof Url) return url;
-
-  var u = new Url;
-  u.parse(url, parseQueryString, slashesDenoteHost);
-  return u;
-}
-
-Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
-  if (!isString(url)) {
-    throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
-  }
-
-  var rest = url;
-
-  // trim before proceeding.
-  // This is to support parse stuff like "  http://foo.com  \n"
-  rest = rest.trim();
-
-  var proto = protocolPattern.exec(rest);
-  if (proto) {
-    proto = proto[0];
-    var lowerProto = proto.toLowerCase();
-    this.protocol = lowerProto;
-    rest = rest.substr(proto.length);
-  }
-
-  // figure out if it's got a host
-  // user@server is *always* interpreted as a hostname, and url
-  // resolution will treat //foo/bar as host=foo,path=bar because that's
-  // how the browser resolves relative URLs.
-  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
-    var slashes = rest.substr(0, 2) === '//';
-    if (slashes && !(proto && hostlessProtocol[proto])) {
-      rest = rest.substr(2);
-      this.slashes = true;
-    }
-  }
-
-  if (!hostlessProtocol[proto] &&
-      (slashes || (proto && !slashedProtocol[proto]))) {
-
-    // there's a hostname.
-    // the first instance of /, ?, ;, or # ends the host.
-    //
-    // If there is an @ in the hostname, then non-host chars *are* allowed
-    // to the left of the last @ sign, unless some host-ending character
-    // comes *before* the @-sign.
-    // URLs are obnoxious.
-    //
-    // ex:
-    // http://a@b@c/ => user:a@b host:c
-    // http://a@b?@c => user:a host:c path:/?@c
-
-    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
-    // Review our test case against browsers more comprehensively.
-
-    // find the first instance of any hostEndingChars
-    var hostEnd = -1;
-    for (var i = 0; i < hostEndingChars.length; i++) {
-      var hec = rest.indexOf(hostEndingChars[i]);
-      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
-        hostEnd = hec;
-    }
-
-    // at this point, either we have an explicit point where the
-    // auth portion cannot go past, or the last @ char is the decider.
-    var auth, atSign;
-    if (hostEnd === -1) {
-      // atSign can be anywhere.
-      atSign = rest.lastIndexOf('@');
-    } else {
-      // atSign must be in auth portion.
-      // http://a@b/c@d => host:b auth:a path:/c@d
-      atSign = rest.lastIndexOf('@', hostEnd);
-    }
-
-    // Now we have a portion which is definitely the auth.
-    // Pull that off.
-    if (atSign !== -1) {
-      auth = rest.slice(0, atSign);
-      rest = rest.slice(atSign + 1);
-      this.auth = decodeURIComponent(auth);
-    }
-
-    // the host is the remaining to the left of the first non-host char
-    hostEnd = -1;
-    for (var i = 0; i < nonHostChars.length; i++) {
-      var hec = rest.indexOf(nonHostChars[i]);
-      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
-        hostEnd = hec;
-    }
-    // if we still have not hit it, then the entire thing is a host.
-    if (hostEnd === -1)
-      hostEnd = rest.length;
-
-    this.host = rest.slice(0, hostEnd);
-    rest = rest.slice(hostEnd);
-
-    // pull out port.
-    this.parseHost();
-
-    // we've indicated that there is a hostname,
-    // so even if it's empty, it has to be present.
-    this.hostname = this.hostname || '';
-
-    // if hostname begins with [ and ends with ]
-    // assume that it's an IPv6 address.
-    var ipv6Hostname = this.hostname[0] === '[' &&
-        this.hostname[this.hostname.length - 1] === ']';
-
-    // validate a little.
-    if (!ipv6Hostname) {
-      var hostparts = this.hostname.split(/\./);
-      for (var i = 0, l = hostparts.length; i < l; i++) {
-        var part = hostparts[i];
-        if (!part) continue;
-        if (!part.match(hostnamePartPattern)) {
-          var newpart = '';
-          for (var j = 0, k = part.length; j < k; j++) {
-            if (part.charCodeAt(j) > 127) {
-              // we replace non-ASCII char with a temporary placeholder
-              // we need this to make sure size of hostname is not
-              // broken by replacing non-ASCII by nothing
-              newpart += 'x';
-            } else {
-              newpart += part[j];
-            }
-          }
-          // we test again with ASCII char only
-          if (!newpart.match(hostnamePartPattern)) {
-            var validParts = hostparts.slice(0, i);
-            var notHost = hostparts.slice(i + 1);
-            var bit = part.match(hostnamePartStart);
-            if (bit) {
-              validParts.push(bit[1]);
-              notHost.unshift(bit[2]);
-            }
-            if (notHost.length) {
-              rest = '/' + notHost.join('.') + rest;
-            }
-            this.hostname = validParts.join('.');
-            break;
-          }
-        }
-      }
-    }
-
-    if (this.hostname.length > hostnameMaxLen) {
-      this.hostname = '';
-    } else {
-      // hostnames are always lower case.
-      this.hostname = this.hostname.toLowerCase();
-    }
-
-    if (!ipv6Hostname) {
-      // IDNA Support: Returns a puny coded representation of "domain".
-      // It only converts the part of the domain name that
-      // has non ASCII characters. I.e. it dosent matter if
-      // you call it with a domain that already is in ASCII.
-      var domainArray = this.hostname.split('.');
-      var newOut = [];
-      for (var i = 0; i < domainArray.length; ++i) {
-        var s = domainArray[i];
-        newOut.push(s.match(/[^A-Za-z0-9_-]/) ?
-            'xn--' + punycode.encode(s) : s);
-      }
-      this.hostname = newOut.join('.');
-    }
-
-    var p = this.port ? ':' + this.port : '';
-    var h = this.hostname || '';
-    this.host = h + p;
-    this.href += this.host;
-
-    // strip [ and ] from the hostname
-    // the host field still retains them, though
-    if (ipv6Hostname) {
-      this.hostname = this.hostname.substr(1, this.hostname.length - 2);
-      if (rest[0] !== '/') {
-        rest = '/' + rest;
-      }
-    }
-  }
-
-  // now rest is set to the post-host stuff.
-  // chop off any delim chars.
-  if (!unsafeProtocol[lowerProto]) {
-
-    // First, make 100% sure that any "autoEscape" chars get
-    // escaped, even if encodeURIComponent doesn't think they
-    // need to be.
-    for (var i = 0, l = autoEscape.length; i < l; i++) {
-      var ae = autoEscape[i];
-      var esc = encodeURIComponent(ae);
-      if (esc === ae) {
-        esc = escape(ae);
-      }
-      rest = rest.split(ae).join(esc);
-    }
-  }
-
-
-  // chop off from the tail first.
-  var hash = rest.indexOf('#');
-  if (hash !== -1) {
-    // got a fragment string.
-    this.hash = rest.substr(hash);
-    rest = rest.slice(0, hash);
-  }
-  var qm = rest.indexOf('?');
-  if (qm !== -1) {
-    this.search = rest.substr(qm);
-    this.query = rest.substr(qm + 1);
-    if (parseQueryString) {
-      this.query = querystring.parse(this.query);
-    }
-    rest = rest.slice(0, qm);
-  } else if (parseQueryString) {
-    // no query string, but parseQueryString still requested
-    this.search = '';
-    this.query = {};
-  }
-  if (rest) this.pathname = rest;
-  if (slashedProtocol[lowerProto] &&
-      this.hostname && !this.pathname) {
-    this.pathname = '/';
-  }
-
-  //to support http.request
-  if (this.pathname || this.search) {
-    var p = this.pathname || '';
-    var s = this.search || '';
-    this.path = p + s;
-  }
-
-  // finally, reconstruct the href based on what has been validated.
-  this.href = this.format();
-  return this;
-};
-
-// format a parsed object into a url string
-function urlFormat(obj) {
-  // ensure it's an object, and not a string url.
-  // If it's an obj, this is a no-op.
-  // this way, you can call url_format() on strings
-  // to clean up potentially wonky urls.
-  if (isString(obj)) obj = urlParse(obj);
-  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
-  return obj.format();
-}
-
-Url.prototype.format = function() {
-  var auth = this.auth || '';
-  if (auth) {
-    auth = encodeURIComponent(auth);
-    auth = auth.replace(/%3A/i, ':');
-    auth += '@';
-  }
-
-  var protocol = this.protocol || '',
-      pathname = this.pathname || '',
-      hash = this.hash || '',
-      host = false,
-      query = '';
-
-  if (this.host) {
-    host = auth + this.host;
-  } else if (this.hostname) {
-    host = auth + (this.hostname.indexOf(':') === -1 ?
-        this.hostname :
-        '[' + this.hostname + ']');
-    if (this.port) {
-      host += ':' + this.port;
-    }
-  }
-
-  if (this.query &&
-      isObject(this.query) &&
-      Object.keys(this.query).length) {
-    query = querystring.stringify(this.query);
-  }
-
-  var search = this.search || (query && ('?' + query)) || '';
-
-  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
-
-  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
-  // unless they had them to begin with.
-  if (this.slashes ||
-      (!protocol || slashedProtocol[protocol]) && host !== false) {
-    host = '//' + (host || '');
-    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
-  } else if (!host) {
-    host = '';
-  }
-
-  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
-  if (search && search.charAt(0) !== '?') search = '?' + search;
-
-  pathname = pathname.replace(/[?#]/g, function(match) {
-    return encodeURIComponent(match);
-  });
-  search = search.replace('#', '%23');
-
-  return protocol + host + pathname + search + hash;
-};
-
-function urlResolve(source, relative) {
-  return urlParse(source, false, true).resolve(relative);
-}
-
-Url.prototype.resolve = function(relative) {
-  return this.resolveObject(urlParse(relative, false, true)).format();
-};
-
-function urlResolveObject(source, relative) {
-  if (!source) return relative;
-  return urlParse(source, false, true).resolveObject(relative);
-}
-
-Url.prototype.resolveObject = function(relative) {
-  if (isString(relative)) {
-    var rel = new Url();
-    rel.parse(relative, false, true);
-    relative = rel;
-  }
-
-  var result = new Url();
-  Object.keys(this).forEach(function(k) {
-    result[k] = this[k];
-  }, this);
-
-  // hash is always overridden, no matter what.
-  // even href="" will remove it.
-  result.hash = relative.hash;
-
-  // if the relative url is empty, then there's nothing left to do here.
-  if (relative.href === '') {
-    result.href = result.format();
-    return result;
-  }
-
-  // hrefs like //foo/bar always cut to the protocol.
-  if (relative.slashes && !relative.protocol) {
-    // take everything except the protocol from relative
-    Object.keys(relative).forEach(function(k) {
-      if (k !== 'protocol')
-        result[k] = relative[k];
-    });
-
-    //urlParse appends trailing / to urls like http://www.example.com
-    if (slashedProtocol[result.protocol] &&
-        result.hostname && !result.pathname) {
-      result.path = result.pathname = '/';
-    }
-
-    result.href = result.format();
-    return result;
-  }
-
-  if (relative.protocol && relative.protocol !== result.protocol) {
-    // if it's a known url protocol, then changing
-    // the protocol does weird things
-    // first, if it's not file:, then we MUST have a host,
-    // and if there was a path
-    // to begin with, then we MUST have a path.
-    // if it is file:, then the host is dropped,
-    // because that's known to be hostless.
-    // anything else is assumed to be absolute.
-    if (!slashedProtocol[relative.protocol]) {
-      Object.keys(relative).forEach(function(k) {
-        result[k] = relative[k];
-      });
-      result.href = result.format();
-      return result;
-    }
-
-    result.protocol = relative.protocol;
-    if (!relative.host && !hostlessProtocol[relative.protocol]) {
-      var relPath = (relative.pathname || '').split('/');
-      while (relPath.length && !(relative.host = relPath.shift()));
-      if (!relative.host) relative.host = '';
-      if (!relative.hostname) relative.hostname = '';
-      if (relPath[0] !== '') relPath.unshift('');
-      if (relPath.length < 2) relPath.unshift('');
-      result.pathname = relPath.join('/');
-    } else {
-      result.pathname = relative.pathname;
-    }
-    result.search = relative.search;
-    result.query = relative.query;
-    result.host = relative.host || '';
-    result.auth = relative.auth;
-    result.hostname = relative.hostname || relative.host;
-    result.port = relative.port;
-    // to support http.request
-    if (result.pathname || result.search) {
-      var p = result.pathname || '';
-      var s = result.search || '';
-      result.path = p + s;
-    }
-    result.slashes = result.slashes || relative.slashes;
-    result.href = result.format();
-    return result;
-  }
-
-  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
-      isRelAbs = (
-          relative.host ||
-          relative.pathname && relative.pathname.charAt(0) === '/'
-      ),
-      mustEndAbs = (isRelAbs || isSourceAbs ||
-                    (result.host && relative.pathname)),
-      removeAllDots = mustEndAbs,
-      srcPath = result.pathname && result.pathname.split('/') || [],
-      relPath = relative.pathname && relative.pathname.split('/') || [],
-      psychotic = result.protocol && !slashedProtocol[result.protocol];
-
-  // if the url is a non-slashed url, then relative
-  // links like ../.. should be able
-  // to crawl up to the hostname, as well.  This is strange.
-  // result.protocol has already been set by now.
-  // Later on, put the first path part into the host field.
-  if (psychotic) {
-    result.hostname = '';
-    result.port = null;
-    if (result.host) {
-      if (srcPath[0] === '') srcPath[0] = result.host;
-      else srcPath.unshift(result.host);
-    }
-    result.host = '';
-    if (relative.protocol) {
-      relative.hostname = null;
-      relative.port = null;
-      if (relative.host) {
-        if (relPath[0] === '') relPath[0] = relative.host;
-        else relPath.unshift(relative.host);
-      }
-      relative.host = null;
-    }
-    mustEndAbs = mustEndAbs && (relPath[0] === '' || srcPath[0] === '');
-  }
-
-  if (isRelAbs) {
-    // it's absolute.
-    result.host = (relative.host || relative.host === '') ?
-                  relative.host : result.host;
-    result.hostname = (relative.hostname || relative.hostname === '') ?
-                      relative.hostname : result.hostname;
-    result.search = relative.search;
-    result.query = relative.query;
-    srcPath = relPath;
-    // fall through to the dot-handling below.
-  } else if (relPath.length) {
-    // it's relative
-    // throw away the existing file, and take the new path instead.
-    if (!srcPath) srcPath = [];
-    srcPath.pop();
-    srcPath = srcPath.concat(relPath);
-    result.search = relative.search;
-    result.query = relative.query;
-  } else if (!isNullOrUndefined(relative.search)) {
-    // just pull out the search.
-    // like href='?foo'.
-    // Put this after the other two cases because it simplifies the booleans
-    if (psychotic) {
-      result.hostname = result.host = srcPath.shift();
-      //occationaly the auth can get stuck only in host
-      //this especialy happens in cases like
-      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-      var authInHost = result.host && result.host.indexOf('@') > 0 ?
-                       result.host.split('@') : false;
-      if (authInHost) {
-        result.auth = authInHost.shift();
-        result.host = result.hostname = authInHost.shift();
-      }
-    }
-    result.search = relative.search;
-    result.query = relative.query;
-    //to support http.request
-    if (!isNull(result.pathname) || !isNull(result.search)) {
-      result.path = (result.pathname ? result.pathname : '') +
-                    (result.search ? result.search : '');
-    }
-    result.href = result.format();
-    return result;
-  }
-
-  if (!srcPath.length) {
-    // no path at all.  easy.
-    // we've already handled the other stuff above.
-    result.pathname = null;
-    //to support http.request
-    if (result.search) {
-      result.path = '/' + result.search;
-    } else {
-      result.path = null;
-    }
-    result.href = result.format();
-    return result;
-  }
-
-  // if a url ENDs in . or .., then it must get a trailing slash.
-  // however, if it ends in anything else non-slashy,
-  // then it must NOT get a trailing slash.
-  var last = srcPath.slice(-1)[0];
-  var hasTrailingSlash = (
-      (result.host || relative.host) && (last === '.' || last === '..') ||
-      last === '');
-
-  // strip single dots, resolve double dots to parent dir
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = srcPath.length; i >= 0; i--) {
-    last = srcPath[i];
-    if (last == '.') {
-      srcPath.splice(i, 1);
-    } else if (last === '..') {
-      srcPath.splice(i, 1);
-      up++;
-    } else if (up) {
-      srcPath.splice(i, 1);
-      up--;
-    }
-  }
-
-  // if the path is allowed to go above the root, restore leading ..s
-  if (!mustEndAbs && !removeAllDots) {
-    for (; up--; up) {
-      srcPath.unshift('..');
-    }
-  }
-
-  if (mustEndAbs && srcPath[0] !== '' &&
-      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
-    srcPath.unshift('');
-  }
-
-  if (hasTrailingSlash && (srcPath.join('/').substr(-1) !== '/')) {
-    srcPath.push('');
-  }
-
-  var isAbsolute = srcPath[0] === '' ||
-      (srcPath[0] && srcPath[0].charAt(0) === '/');
-
-  // put the host back
-  if (psychotic) {
-    result.hostname = result.host = isAbsolute ? '' :
-                                    srcPath.length ? srcPath.shift() : '';
-    //occationaly the auth can get stuck only in host
-    //this especialy happens in cases like
-    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-    var authInHost = result.host && result.host.indexOf('@') > 0 ?
-                     result.host.split('@') : false;
-    if (authInHost) {
-      result.auth = authInHost.shift();
-      result.host = result.hostname = authInHost.shift();
-    }
-  }
-
-  mustEndAbs = mustEndAbs || (result.host && srcPath.length);
-
-  if (mustEndAbs && !isAbsolute) {
-    srcPath.unshift('');
-  }
-
-  if (!srcPath.length) {
-    result.pathname = null;
-    result.path = null;
-  } else {
-    result.pathname = srcPath.join('/');
-  }
-
-  //to support request.http
-  if (!isNull(result.pathname) || !isNull(result.search)) {
-    result.path = (result.pathname ? result.pathname : '') +
-                  (result.search ? result.search : '');
-  }
-  result.auth = relative.auth || result.auth;
-  result.slashes = result.slashes || relative.slashes;
-  result.href = result.format();
-  return result;
-};
-
-Url.prototype.parseHost = function() {
-  var host = this.host;
-  var port = portPattern.exec(host);
-  if (port) {
-    port = port[0];
-    if (port !== ':') {
-      this.port = port.substr(1);
-    }
-    host = host.substr(0, host.length - port.length);
-  }
-  if (host) this.hostname = host;
-};
-
-function isString(arg) {
-  return typeof arg === "string";
-}
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-
-function isNull(arg) {
-  return arg === null;
-}
-function isNullOrUndefined(arg) {
-  return  arg == null;
-}
-
-},{"punycode":25,"querystring":28}]},{},[1]);
+/***/ }
+/******/ ]);
