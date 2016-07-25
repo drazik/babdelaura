@@ -2678,9 +2678,9 @@
 			/**
 	   *
 	   * Set of generic functions used by gallery.
-	   *
+	   * 
 	   * You're free to modify anything here as long as functionality is kept.
-	   *
+	   * 
 	   */
 			var framework = {
 				features: null,
@@ -2785,16 +2785,16 @@
 				},
 
 				/**
-	    *
+	    * 
 	    * @return {object}
-	    *
+	    * 
 	    * {
 	    *  raf : request animation frame function
 	    *  caf : cancel animation frame function
 	    *  transfrom : transform property key (with vendor), or null if not supported
 	    *  oldIE : IE8 or below
 	    * }
-	    *
+	    * 
 	    */
 				detectFeatures: function detectFeatures() {
 					if (framework.features) {
@@ -3631,8 +3631,8 @@
 
 				/**
 	    * Pan image to position
-	    * @param {Number} x
-	    * @param {Number} y
+	    * @param {Number} x     
+	    * @param {Number} y     
 	    * @param {Boolean} force Will ignore bounds if set to true.
 	    */
 				panTo: function panTo(x, y, force) {
@@ -3937,7 +3937,7 @@
 			/*>>gestures*/
 			/**
 	   * Mouse/touch/pointer event handlers.
-	   *
+	   * 
 	   * separated from @core.js for readability
 	   */
 
@@ -4463,7 +4463,7 @@
 					if (_isFirstMove) {
 						_isFirstMove = false;
 
-						// subtract drag distance that was used during the detection direction
+						// subtract drag distance that was used during the detection direction 
 
 						if (Math.abs(delta.x) >= DIRECTION_CHECK_OFFSET) {
 							delta.x -= _currentPoints[0].x - _startPoint.x;
@@ -4685,7 +4685,7 @@
 					return;
 				}
 
-				// Complete simple zoom gesture (reset zoom level if it's out of the bounds)
+				// Complete simple zoom gesture (reset zoom level if it's out of the bounds) 
 				if (gestureType !== 'swipe') {
 					_completeZoomGesture();
 					return;
@@ -5037,7 +5037,7 @@
 	   * If you're not planning to use transition for gallery at all,
 	   * you may set options hideAnimationDuration and showAnimationDuration to 0,
 	   * and just delete startAnimation function.
-	   *
+	   * 
 	   */
 
 			var _showOrHideTimeout,
@@ -5212,7 +5212,7 @@
 			/**
 	  *
 	  * Controller manages gallery items, their dimensions, and their content.
-	  *
+	  * 
 	  */
 
 			var _items,
@@ -5505,10 +5505,10 @@
 						// 1. Progressive image loading isn't working on webkit/blink
 						//    when hw-acceleration (e.g. translateZ) is applied to IMG element.
 						//    That's why in PhotoSwipe parent element gets zoom transform, not image itself.
-						//
+						//   
 						// 2. Progressive image loading sometimes blinks in webkit/blink when applying animation to parent element.
 						//    That's why it's disabled on touch devices (mainly because of swipe transition)
-						//
+						//   
 						// 3. Progressive image loading sometimes doesn't work in IE (up to 11).
 
 						// Don't allow progressive loading on non-large touch devices
@@ -5677,7 +5677,7 @@
 	   * tap.js:
 	   *
 	   * Displatches tap and double-tap events.
-	   *
+	   * 
 	   */
 
 			var tapTimer,
@@ -5763,7 +5763,7 @@
 	   * - Manages "dragging", "zoomed-in", "zoom-out" classes.
 	   *   (which are used for cursors and zoom icon)
 	   * - Adds toggleDesktopZoom function.
-	   *
+	   * 
 	   */
 
 			var _wheelDelta;
@@ -5927,12 +5927,12 @@
 	   * history.js:
 	   *
 	   * - Back button to close gallery.
-	   *
+	   * 
 	   * - Unique URL for each slide: example.com/&pid=1&gid=3
 	   *   (where PID is picture index, and GID and gallery index)
-	   *
+	   *   
 	   * - Switch URL when slides change.
-	   *
+	   * 
 	   */
 
 			var _historyDefaultOptions = {
@@ -6204,7 +6204,7 @@
 	*
 	* UI on top of main sliding area (caption, arrows, close button, etc.).
 	* Built just using public methods/properties of PhotoSwipe.
-	*
+	* 
 	*/
 	(function (root, factory) {
 		if (true) {
@@ -6323,7 +6323,7 @@
 					//
 					// This happens on v4.3, 4.2, 4.1,
 					// older versions strangely work correctly,
-					// but just in case we add delay on all of them)
+					// but just in case we add delay on all of them)	
 					var tapDelay = framework.features.isOldAndroid ? 600 : 30;
 					_blockControlsTapTimeout = setTimeout(function () {
 						_blockControlsTap = false;

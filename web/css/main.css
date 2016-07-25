@@ -2812,7 +2812,7 @@ th {
 
 */
 /*
-
+	
 	1. Buttons
 
  */
@@ -3057,7 +3057,7 @@ a.pswp__share--download:hover {
   padding: 0 10px; }
 
 /*
-
+	
 	4. Caption
 
  */
@@ -3138,8 +3138,8 @@ a.pswp__share--download:hover {
   margin: 0; }
 
 .pswp--css_animation .pswp__preloader__cut {
-  /*
-			The idea of animating inner circle is based on Polymer ("material") loading indicator
+  /* 
+			The idea of animating inner circle is based on Polymer ("material") loading indicator 
 			 by Keanu Lee https://blog.keanulee.com/2014/10/20/the-tale-of-three-spinners.html
 		*/
   position: relative;
@@ -3209,7 +3209,7 @@ a.pswp__share--download:hover {
             transform: rotate(0); } }
 
 /*
-
+	
 	6. Additional styles
 
  */
@@ -3567,7 +3567,7 @@ body {
 
 .bab-Sidebar-title {
     margin-top: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     font-size: 1.5em;
     color: #7f8c8d;
 }
@@ -3577,6 +3577,45 @@ body {
     text-align: center;
     color: #fff;
     margin-top: 2em;
+}
+
+.bab-Footer_links {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.bab-Footer_linkContainer {
+    display: inline-block;
+}
+
+.bab-Footer_linkContainer:not(:first-child) {
+    margin-left: 3px;
+}
+
+.bab-Footer_linkContainer:not(:first-child)::before {
+    content: '';
+
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-right: 3px;
+
+    vertical-align: middle;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.bab-Footer_link {
+    font-size: 14px;
+
+    color: #fff;
+    text-decoration: none;
+}
+
+.bab-Footer_link:hover,
+.bab-Footer_link:focus,
+.bab-Footer_link:visited {
+    color: #fff;
 }
 .form-group {
     position: relative;
@@ -3723,6 +3762,23 @@ td {
     height: auto !important;
     margin: 1.5em auto;
     transform: rotate(.0001deg);
+}
+
+.bab-Article-content table {
+    width: calc(100% + 10px);
+    margin-left: -5px;
+    margin-right: -5px;
+
+    table-layout: fixed;
+}
+
+.bab-Article-content table td {
+    border: 0;
+    padding: 5px;
+}
+
+.bab-Article-content td img {
+    margin: 0;
 }
 
 .bab-Article-content--gallery img {
@@ -4085,6 +4141,10 @@ td {
     background-position: 0 -160px;
 }
 
+.bab-Social-icon--rss {
+    background-position: 0 -192px;
+}
+
 .social-share-item {
     display: inline-block;
     vertical-align: middle;
@@ -4342,4 +4402,43 @@ div.spoiler div.spoiler-content {
 	border-radius: 3px;
 	background: none repeat scroll 0 0 #F5F5F5;
 	padding: 4px 10px;
+}
+.bab-Searchbar {
+    position: relative;
+
+    font-size: 0; /* inline-block container */
+}
+
+.bab-Searchbar-input,
+.bab-Searchbar-submit {
+    font-size: 1rem;
+}
+
+.bab-Searchbar-input {
+    display: block;
+    width: 100%;
+    padding: 8px 30px 8px 15px;
+    border: 1px solid #eee;
+
+    text-overflow: ellipsis;
+    box-shadow: 0 0 5px 0 transparent;
+    transition: box-shadow 0.3s;
+    border-radius: 2px;
+}
+
+.bab-Searchbar-input:focus {
+    border: 1px solid #16a085;
+    box-shadow: 0 0 5px 0 #16a085;
+}
+
+.bab-Searchbar-submit {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+
+    padding: 0;
+    border-width: 0;
+
+    background-color: transparent;
+    transform: translateY(-50%);
 }
