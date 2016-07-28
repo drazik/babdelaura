@@ -4,7 +4,7 @@ namespace Babdelaura\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategorieType extends AbstractType
 {
@@ -19,15 +19,15 @@ class CategorieType extends AbstractType
             ->add('visible','checkbox', array('required' => false))
             ->add('parent', 'entity', array(
                   'class'    => 'BabdelauraBlogBundle:Categorie',
-                  'property' => 'nom',
+                  'choice_label' => 'nom',
                   'required' => false))
         ;
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Babdelaura\BlogBundle\Entity\Categorie'
