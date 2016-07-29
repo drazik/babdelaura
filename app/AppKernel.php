@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new Babdelaura\BlogBundle\BabdelauraBlogBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Babdelaura\UserBundle\BabdelauraUserBundle(),
-            new Oh\InstagramBundle\OhInstagramBundle(),
+            //new Oh\InstagramBundle\OhInstagramBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
         );

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "05bac5946acc982cd6df1b73e76f8b17",
-    "content-hash": "e342e0890918b072bfa8ef740c3b2092",
+    "hash": "b45d5e16cafde75f52aa22afe07d26b5",
+    "content-hash": "d4d8a6a95f68fe50bba36edb56b0dab3",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -816,21 +816,21 @@
         },
         {
             "name": "excelwebzone/recaptcha-bundle",
-            "version": "2.3.x-dev",
+            "version": "2.6.x-dev",
             "target-dir": "EWZ/Bundle/RecaptchaBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/excelwebzone/EWZRecaptchaBundle.git",
-                "reference": "6bb253a48f7d601d4b1191dbf43091e294f2436e"
+                "reference": "da2138e23d0338a4679deac96a59d970896c4bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/6bb253a48f7d601d4b1191dbf43091e294f2436e",
-                "reference": "6bb253a48f7d601d4b1191dbf43091e294f2436e",
+                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/da2138e23d0338a4679deac96a59d970896c4bda",
+                "reference": "da2138e23d0338a4679deac96a59d970896c4bda",
                 "shasum": ""
             },
             "require": {
-                "symfony/framework-bundle": "2.*"
+                "symfony/framework-bundle": "~2.6"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -854,7 +854,7 @@
             "keywords": [
                 "recaptcha"
             ],
-            "time": "2015-01-21 15:08:30"
+            "time": "2016-04-28 18:13:58"
         },
         {
             "name": "gedmo/doctrine-extensions",

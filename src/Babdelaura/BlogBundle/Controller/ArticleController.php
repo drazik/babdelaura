@@ -116,7 +116,7 @@ class ArticleController extends Controller
         $articleSuivant = $repository->getSuivant($article->getId());
         $articleSuivant = array_shift($articleSuivant);
 
-        $form = $this->createForm(new CommentaireType, new Commentaire);
+        $form = $this->createForm(CommentaireType::class, new Commentaire());
 
         return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig',array(
           'article' => $article,
