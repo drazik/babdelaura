@@ -5,7 +5,11 @@ namespace Babdelaura\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True as RecaptchaTrue;
 
 class CommentaireType extends AbstractType
 {
@@ -22,16 +26,15 @@ class CommentaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('auteur','text')
-            ->add('email','email', array('required' => false))
-            ->add('site','text', array('required' => false))
-            ->add('contenu','textarea');
+            ->add('auteur', TextType::class)
+            ->add('email', EmailType::class, array('required' => false))
+            ->add('site', TextType::class, array('required' => false))
+            ->add('contenu', TextareaType::class);
 
         if (!$this->isAdmin) {
-            $builder->add('recaptcha', 'ewz_recaptcha', array(
+            $builder->add('recaptcha', RecaptchaType::class, array(
                 'mapped'      => false,
-                'constraints' => array(
-                    new True() )
+                'constraints' => array(new RecaptchaTrue())
             ));
         }
 
@@ -50,7 +53,7 @@ class CommentaireType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'babdelaura_blogbundle_commentaire';
     }

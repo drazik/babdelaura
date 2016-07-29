@@ -4,8 +4,12 @@ namespace Babdelaura\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True as RecaptchaTrue;
 
 class ContactType extends AbstractType
 {
@@ -16,13 +20,12 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('nom', 'text')
-                ->add('email', 'email')
-                ->add('contenu', 'textarea')
-                ->add('recaptcha', 'ewz_recaptcha', array(
+        $builder->add('nom', TextType::class)
+                ->add('email', EmailType::class)
+                ->add('contenu', TextareaType::class)
+                ->add('recaptcha', RecaptchaType::class, array(
                 'mapped'      => false,
-                'constraints' => array(
-                    new True() )
+                'constraints' => array(new RecaptchaTrue())
             ));
     }
 
@@ -31,13 +34,13 @@ class ContactType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        
+
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'babdelaura_blogbundle_contact';
     }
@@ -45,4 +48,3 @@ class ContactType extends AbstractType
 }
 
 ?>
-
