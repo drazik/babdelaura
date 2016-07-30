@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Ajout d'un article</h1>
-    <form method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         <div class="form-group">
             {{ form_label(form.titre, "Titre") }}
             {{ form_errors(form.titre)}}
@@ -53,10 +53,8 @@
             {{ form_errors(form.publication)}}
         </div>
 
-        {{ form_rest(form) }}
-
         <button class="bab-Button" id="submit-btn" type="submit">Enregistrer l'article</button>
-    </form>
+    {{ form_end(form) }}
 
     <div class="bab-Modal js-preview-modal-image-picker" id="choose-main-image" data-preview-element="#image-preview" data-input="#babdelaura_blogbundle_article_imageTemp">
         <div class="bab-Modal-shadow"></div>

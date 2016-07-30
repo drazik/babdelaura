@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Ajout d'une page</h1>
-    <form method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         <div class="form-group">
             {{ form_label(form.titre, "Titre") }}
             {{ form_errors(form.titre)}}
@@ -36,9 +36,8 @@
             {{ form_errors(form.inFooter)}}
         </div>
 
-        {{ form_rest(form) }}
         <button class="bab-Button" type="submit">Enregistrer la page</button>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}
 
 {% block javascripts %}

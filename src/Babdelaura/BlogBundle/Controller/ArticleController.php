@@ -7,6 +7,8 @@ namespace Babdelaura\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Babdelaura\BlogBundle\Entity\Article;
 use Babdelaura\BlogBundle\Form\ArticleType;
 use Babdelaura\BlogBundle\Entity\Commentaire;
@@ -217,23 +219,24 @@ class ArticleController extends Controller
 
     public function listerTousArticlesAdminAction(Request $request) {
         $form = $this->createFormBuilder()
-                     ->add('categories', 'entity', array(
+                     ->add('categories', EntityType::class, array(
                         'class'    => 'BabdelauraBlogBundle:Categorie',
-                        'property' => 'nom',
+                        'choice_label' => 'nom',
                         'multiple' => false,
                         'required'    => false,
-                        'empty_value' => 'Toutes',
+                        'placeholder' => 'Toutes',
                         'empty_data'  => null
                         ))
-                     ->add('publication', 'choice', array(
-                         'choices' => array(
-                             true => 'Publiés',
-                             false => 'Brouillons'
-                         ),
-                         'required'    => false,
-                         'empty_value' => 'Tous',
-                         'empty_data'  => null
-                         ))
+                     ->add('publication', ChoiceType::class, array(
+                        'choices' => array(
+                            'Publiés' => true,
+                            'Brouillons' => false
+                        ),
+                        'choices_as_values' => true,
+                        'required'    => false,
+                        'placeholder' => 'Tous',
+                        'empty_data'  => null
+                        ))
                      ->getForm();
 
 
