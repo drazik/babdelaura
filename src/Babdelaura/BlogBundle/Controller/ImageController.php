@@ -15,7 +15,7 @@ use Babdelaura\BlogBundle\Form\ImageType;
 class ImageController extends Controller
 {
     public function afficherGallerieAction() {
-        $form = $this->createForm(new ImageType());
+        $form = $this->createForm(ImageType::class);
 
         return $this->render('BabdelauraBlogBundle:Admin/Image:gallerie.html.twig', array(
           'form' => $form->createView(),
@@ -53,8 +53,7 @@ class ImageController extends Controller
         return new JsonResponse($data);
     }
 
-    public function uploadAction() {
-        $request = $this->get('request');
+    public function uploadAction(Request $request) {
         $file = $request->files->get('babdelaura_blogbundle_image')['file'];
         $watermark = isset($request->request->get('babdelaura_blogbundle_image')['watermark']);
 
