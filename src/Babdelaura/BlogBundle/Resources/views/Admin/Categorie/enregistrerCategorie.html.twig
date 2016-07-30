@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>Ajout d'une catégorie</h1>
-    <form method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         <div class="form-group">
             {{ form_label(form.nom, "Nom") }}
             {{ form_errors(form.nom)}}
@@ -18,7 +18,6 @@
             {{ form_label(form.visible, "Visible dans le menu") }}
             {{ form_errors(form.visible)}}
         </div>
-        {{ form_rest(form) }}
         <button class="bab-Button" type="submit">Enregistrer la catégorie</button>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

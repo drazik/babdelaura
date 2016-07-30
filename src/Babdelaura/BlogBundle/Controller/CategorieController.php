@@ -5,6 +5,7 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Babdelaura\BlogBundle\Entity\Categorie;
@@ -12,8 +13,7 @@ use Babdelaura\BlogBundle\Form\CategorieType;
 
 class CategorieController extends Controller
 {
-     public function enregistrerCategorieAction($slug = null){
-
+     public function enregistrerCategorieAction(Request $request, $slug = null) {
         $em = $this->getDoctrine()->getManager();
 
         if ($slug == null) {
@@ -23,12 +23,10 @@ class CategorieController extends Controller
             $categorie = $em->getRepository('BabdelauraBlogBundle:Categorie')->findOneBySlug($slug);
         }
 
-        $form = $this->createForm(new CategorieType, $categorie);
-
-        $request = $this->get('request');
+        $form = $this->createForm(CategorieType::class, $categorie);
 
         if($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if($form->isValid()) {
                 $em->persist($categorie);
@@ -44,7 +42,6 @@ class CategorieController extends Controller
      }
 
      public function listerToutesCategoriesAction() {
-
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Categorie');
@@ -67,17 +64,17 @@ class CategorieController extends Controller
         $result = array();
         foreach ($listeCategories as $categorie) {
            if ($parent == $categorie->getParent()) {
-              $result[] = array(                 
+              $result[] = array(
                  'categorie' => $categorie,
                  'niveau' => $niveau,
                  'enfants' => $this->listerEnfants($categorie, $niveau + 1, $listeCategories)
-              );      
+              );
            }
         }
         return $result;
     }
 
-    public function supprimerCategorieAction($slug)
+    public function supprimerCategorieAction(Request $request, $slug)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -87,9 +84,8 @@ class CategorieController extends Controller
         // Cela permet de protéger la suppression de categorie contre cette faille
         $form = $this->createFormBuilder()->getForm();
 
-        $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
-          $form->bind($request);
+          $form->handleRequest($request);
 
           if ($form->isValid()) {
             // On supprime la categorie

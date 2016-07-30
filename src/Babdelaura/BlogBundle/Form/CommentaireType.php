@@ -4,43 +4,37 @@ namespace Babdelaura\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\True;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 class CommentaireType extends AbstractType
 {
-    private $isAdmin;
-
-    public function __construct($isAdmin = false) {
-        $this->isAdmin = $isAdmin;
-    }
-
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('auteur','text')
-            ->add('email','email', array('required' => false))
-            ->add('site','text', array('required' => false))
-            ->add('contenu','textarea');
-
-        if (!$this->isAdmin) {
-            $builder->add('recaptcha', 'ewz_recaptcha', array(
+            ->add('auteur', TextType::class)
+            ->add('email', EmailType::class, array('required' => false))
+            ->add('site', TextType::class, array('required' => false))
+            ->add('contenu', TextareaType::class)
+            ->add('recaptcha', RecaptchaType::class, array(
                 'mapped'      => false,
-                'constraints' => array(
-                    new True() )
-            ));
-        }
-
+                'constraints' => array(new RecaptchaTrue())
+            ))
+        ;
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Babdelaura\BlogBundle\Entity\Commentaire'
@@ -50,7 +44,7 @@ class CommentaireType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'babdelaura_blogbundle_commentaire';
     }

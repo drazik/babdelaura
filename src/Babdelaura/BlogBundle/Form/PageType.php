@@ -4,7 +4,10 @@ namespace Babdelaura\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class PageType extends AbstractType
 {
@@ -15,18 +18,18 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre', 'text')
-            ->add('contenu', 'textarea')
-            ->add('publication', 'checkbox', array('required' => false))
-            ->add('inMenu', 'checkbox', array('required' => false))
-            ->add('inFooter', 'checkbox', array('required' => false))
+            ->add('titre', TextType::class)
+            ->add('contenu', TextareaType::class)
+            ->add('publication', CheckboxType::class, array('required' => false))
+            ->add('inMenu', CheckboxType::class, array('required' => false))
+            ->add('inFooter', CheckboxType::class, array('required' => false))
         ;
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Babdelaura\BlogBundle\Entity\Page'
@@ -36,7 +39,7 @@ class PageType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'babdelaura_blogbundle_page';
     }

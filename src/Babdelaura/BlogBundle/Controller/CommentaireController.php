@@ -5,23 +5,23 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Babdelaura\BlogBundle\Entity\Commentaire;
 use Babdelaura\BlogBundle\Form\CommentaireType;
 
 class CommentaireController extends Controller
 {
-    public function enregistrerCommentaireAction($slug) {
-        $commentaire = new Commentaire;
+    public function enregistrerCommentaireAction(Request $request, $slug) {
+        $commentaire = new Commentaire();
 
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('BabdelauraBlogBundle:Article');
         $article = $repository->findOneBySlug($slug);
 
-        $form = $this->createForm(new CommentaireType, $commentaire);
-        $request = $this->get('request');
+        $form = $this->createForm(CommentaireType::class, $commentaire);
 
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if($form->isValid()) {
                 if($commentaire->getSite()){
@@ -40,19 +40,19 @@ class CommentaireController extends Controller
                     ->setFrom($this->container->getParameter('mail_notifications'))
                     ->setTo($this->container->getParameter('mail_contact'))
                     ->setBody(
-                        $this->renderView(                            
+                        $this->renderView(
                             'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
                             array('commentaire' => $commentaire, 'article' => $article)
                         ),
                         'text/html'
-                );                    
+                );
                 $mailer->send($message);
 
                 $this->get('session')->getFlashBag()->add(
                             'notice',
                             'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
                 );
-                $form = $this->createForm(new CommentaireType, new Commentaire);
+                $form = $this->createForm(CommentaireType::class, new Commentaire());
 
             }
 
@@ -71,18 +71,17 @@ class CommentaireController extends Controller
 
     }
 
-    public function enregistrerCommentaireAdminAction($slug) {
-        $commentaire = new Commentaire;
+    public function enregistrerCommentaireAdminAction(Request $request, $slug) {
+        $commentaire = new Commentaire();
         $commentaire->setValide(true);
 
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
 
-        $form = $this->createForm(new CommentaireType(true), $commentaire);
-        $request = $this->get('request');
+        $form = $this->createForm(CommentaireType::class, $commentaire);
 
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if($form->isValid()) {
                 if($commentaire->getSite()){
@@ -94,7 +93,7 @@ class CommentaireController extends Controller
                 $em->persist($article);
 
                 $em->flush();
-                $form = $this->createForm(new CommentaireType(true), new Commentaire);
+                $form = $this->createForm(CommentaireType::class, new Commentaire);
             }
 
             return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig', array(
@@ -118,17 +117,17 @@ class CommentaireController extends Controller
 
     }
 
-    public function listerCommentairesNonValidesAction() {
+    public function listerCommentairesNonValidesAction(Request $request) {
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Commentaire');
 
         $query = $repository->findBy(array('valide' => false),array('datePublication' => 'desc'));
 
-        $request = $this->get('request')->query;
+        $requestQuery = $request->query;
         $session = $this->get('session');
 
-        $numPage = $request->get('page') == '' ? 1 : $request->get('page');
+        $numPage = $requestQuery->get('page') == '' ? 1 : $requestQuery->get('page');
 
         $session->set('url', $this->generateUrl('babdelaurablog_admin_listerCommentairesNonValides') . '?page=' . $numPage);
 
@@ -136,7 +135,7 @@ class CommentaireController extends Controller
         $paginator  = $this->get('knp_paginator');
         $listeCommentaires = $paginator->paginate(
             $query,
-            $request->get('page', 1),
+            $requestQuery->get('page', 1),
             $nbCommentairesParPage
         );
         $listeCommentaires->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
@@ -144,9 +143,8 @@ class CommentaireController extends Controller
         return $this->render('BabdelauraBlogBundle:Admin/Commentaire:listerCommentairesNonValides.html.twig', array('listeCommentaires' => $listeCommentaires));
     }
 
-    public function supprimerCommentaireAction($idCom)
+    public function supprimerCommentaireAction(Request $request, $idCom)
     {
-
         $em = $this->getDoctrine()->getManager();
         $commentaire = $em->getRepository('BabdelauraBlogBundle:Commentaire')->findOneById($idCom);
 
@@ -154,9 +152,8 @@ class CommentaireController extends Controller
         // Cela permet de protéger la suppression de commentaire contre cette faille
         $form = $this->createFormBuilder()->getForm();
 
-        $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
-          $form->bind($request);
+          $form->handleRequest($request);
 
           if ($form->isValid()) {
             // On supprime le commentaire

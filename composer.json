@@ -8,7 +8,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.5.*",
+        "symfony/symfony": "2.8.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
@@ -22,7 +22,7 @@
         "oh/instagram-bundle" : "dev-master",
         "knplabs/knp-paginator-bundle": "~2.4",
         "imagine/imagine": "0.6.*",
-        "excelwebzone/recaptcha-bundle": "2.3.*@dev"
+        "excelwebzone/recaptcha-bundle": "2.6.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

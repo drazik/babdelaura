@@ -5,22 +5,23 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Babdelaura\BlogBundle\Entity\Article;
 use Babdelaura\BlogBundle\Form\ArticleType;
 use Babdelaura\BlogBundle\Entity\Commentaire;
 use Babdelaura\BlogBundle\Form\CommentaireType;
 use Babdelaura\BlogBundle\Form\ImageType;
 
-
-
 class ArticleController extends Controller
 {
-    public function listerTousArticlesBlogAction() {
+    public function listerTousArticlesBlogAction(Request $request) {
 
         $repository = $this->getDoctrine()
                            ->getManager()
-                            ->getRepository('BabdelauraBlogBundle:Article');
+                           ->getRepository('BabdelauraBlogBundle:Article');
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
@@ -28,7 +29,7 @@ class ArticleController extends Controller
         $paginator  = $this->get('knp_paginator');
         $listeArticles = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1),
+            $request->query->get('page', 1),
             $nbArticlesParPage
         );
         $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
@@ -37,8 +38,7 @@ class ArticleController extends Controller
         return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles));
     }
 
-    public function listerArticlesCategorieAction($slug) {
-
+    public function listerArticlesCategorieAction(Request $request, $slug) {
         $categorieRepository = $this->getDoctrine()
                                     ->getManager()
                                     ->getRepository('BabdelauraBlogBundle:Categorie');
@@ -59,7 +59,7 @@ class ArticleController extends Controller
         $paginator  = $this->get('knp_paginator');
         $listeArticles = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1),
+            $request->query->get('page', 1),
             $nbArticlesParPage
         );
         $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
@@ -72,8 +72,7 @@ class ArticleController extends Controller
 
     }
 
-    public function listerArticlesDateAction($annee, $mois, $jour) {
-
+    public function listerArticlesDateAction(Request $request, $annee, $mois, $jour) {
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
@@ -84,7 +83,7 @@ class ArticleController extends Controller
         $paginator  = $this->get('knp_paginator');
         $listeArticles = $paginator->paginate(
             $query,
-            $this->get('request')->query->get('page', 1),
+            $request->query->get('page', 1),
             $nbArticlesParPage
         );
         $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
@@ -116,7 +115,7 @@ class ArticleController extends Controller
         $articleSuivant = $repository->getSuivant($article->getId());
         $articleSuivant = array_shift($articleSuivant);
 
-        $form = $this->createForm(new CommentaireType, new Commentaire);
+        $form = $this->createForm(CommentaireType::class, new Commentaire());
 
         return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig',array(
           'article' => $article,
@@ -128,7 +127,7 @@ class ArticleController extends Controller
 
     // ADMIN
 
-    public function enregistrerArticleAction($slug = null){
+    public function enregistrerArticleAction(Request $request, $slug = null){
         //on récupère l'entity manager
         $em = $this->getDoctrine()->getManager();
 
@@ -140,12 +139,11 @@ class ArticleController extends Controller
             $article->setImageTemp($article->getImage()->getId());
         }
 
-        $form = $this->createForm(new ArticleType(), $article);
-        $uploadImageForm = $this->createForm(new ImageType());
-        $request = $this->get('request');
+        $form = $this->createForm(ArticleType::class, $article);
+        $uploadImageForm = $this->createForm(ImageType::class);
 
         if($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if($form->isValid()) {
 
@@ -167,9 +165,8 @@ class ArticleController extends Controller
     }
 
 
-    public function supprimerArticleAction($slug)
+    public function supprimerArticleAction(Request $request, $slug)
     {
-
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('BabdelauraBlogBundle:Article')->findOneBySlug($slug);
 
@@ -177,9 +174,8 @@ class ArticleController extends Controller
         // Cela permet de protéger la suppression d'article contre cette faille
         $form = $this->createFormBuilder()->getForm();
 
-        $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
-          $form->bind($request);
+          $form->handleRequest($request);
 
           if ($form->isValid()) {
             // On supprime l'article
@@ -221,26 +217,26 @@ class ArticleController extends Controller
     }
 
 
-    public function listerTousArticlesAdminAction() {
-
+    public function listerTousArticlesAdminAction(Request $request) {
         $form = $this->createFormBuilder()
-                     ->add('categories', 'entity', array(
+                     ->add('categories', EntityType::class, array(
                         'class'    => 'BabdelauraBlogBundle:Categorie',
-                        'property' => 'nom',
+                        'choice_label' => 'nom',
                         'multiple' => false,
                         'required'    => false,
-                        'empty_value' => 'Toutes',
+                        'placeholder' => 'Toutes',
                         'empty_data'  => null
                         ))
-                     ->add('publication', 'choice', array(
-                         'choices' => array(
-                             true => 'Publiés',
-                             false => 'Brouillons'
-                         ),
-                         'required'    => false,
-                         'empty_value' => 'Tous',
-                         'empty_data'  => null
-                         ))
+                     ->add('publication', ChoiceType::class, array(
+                        'choices' => array(
+                            'Publiés' => true,
+                            'Brouillons' => false
+                        ),
+                        'choices_as_values' => true,
+                        'required'    => false,
+                        'placeholder' => 'Tous',
+                        'empty_data'  => null
+                        ))
                      ->getForm();
 
 
@@ -250,8 +246,6 @@ class ArticleController extends Controller
 
         $nbArticlesParPage = $this->container->getParameter('nbElementsParPageAdmin');
 
-        $request = $this->get('request');
-
         $session = $this->get('session');
 
         $numPage = $request->get('page') == '' ? 1 : $request->get('page');
@@ -259,7 +253,7 @@ class ArticleController extends Controller
 
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->handleRequest($request);
             $data = $form->getData();
             // return new Response(var_dump($data));
             $publication = $data['publication'] === null ? null : (boolean) $data['publication'];
@@ -305,11 +299,11 @@ class ArticleController extends Controller
         $session->set('url', $this->generateUrl('babdelaurablog_admin_afficherArticle', array('slug' => $slug)));
 
 
-        $commentaire = new Commentaire;
+        $commentaire = new Commentaire();
         $commentaire->setAuteur('Laura');
         $commentaire->setEmail('bab-de-laura@hotmail.fr');
         $commentaire->setSite('http://www.bricabrac-de-laura.fr');
-        $form = $this->createForm(new CommentaireType(true) , $commentaire);
+        $form = $this->createForm(CommentaireType::class , $commentaire);
 
         return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig',array('article' => $article,'form' => $form->createView()));
     }
