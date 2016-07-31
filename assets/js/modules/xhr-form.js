@@ -15,8 +15,6 @@ class XHRForm {
         this.url = this.container.getAttribute('action');
         this.submitButton = this.container.querySelector('[type="submit"]');
 
-        console.log(this.url);
-
         this.initEvents();
     }
 

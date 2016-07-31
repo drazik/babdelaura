@@ -25,6 +25,8 @@
 .bab-Grid--inlineBlock .bab-Grid-cell {
     display: inline-block;
     margin-bottom: var(--grid-vertical-gutter);
+
+    float: none;
 }
 
 .bab-Grid-cell--1-1 {
