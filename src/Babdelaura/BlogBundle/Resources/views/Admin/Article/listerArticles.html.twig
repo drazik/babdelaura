@@ -4,7 +4,7 @@
 
 <h1>Liste des articles</h1>
 
-<form method="post" {{ form_enctype(form) }}>
+{{ form_start(form) }}
     {{ form_label(form.categories, "Catégories") }}
     {{ form_errors(form.categories)}}
     {{ form_widget(form.categories) }}
@@ -15,7 +15,7 @@
 
     {{ form_rest(form) }}
     <button class="bab-Button bab-Button--small" type="submit">Filtrer </button>
-</form>
+{{ form_end(form) }}
 
 <table class="table table-stripped">
     <thead>

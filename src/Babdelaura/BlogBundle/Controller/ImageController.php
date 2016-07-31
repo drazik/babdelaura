@@ -15,7 +15,9 @@ use Babdelaura\BlogBundle\Form\ImageType;
 class ImageController extends Controller
 {
     public function afficherGallerieAction() {
-        $form = $this->createForm(ImageType::class);
+        $form = $this->createForm(ImageType::class, null, [
+            'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
+        ]);
 
         return $this->render('BabdelauraBlogBundle:Admin/Image:gallerie.html.twig', array(
           'form' => $form->createView(),

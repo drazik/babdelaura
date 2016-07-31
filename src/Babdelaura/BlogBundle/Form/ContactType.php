@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use EWZ\Bundle\RecaptchaBundle\Form\Type\RecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 class ContactType extends AbstractType
@@ -23,7 +23,7 @@ class ContactType extends AbstractType
         $builder->add('nom', TextType::class)
                 ->add('email', EmailType::class)
                 ->add('contenu', TextareaType::class)
-                ->add('recaptcha', RecaptchaType::class, array(
+                ->add('recaptcha', EWZRecaptchaType::class, array(
                 'mapped'      => false,
                 'constraints' => array(new RecaptchaTrue())
             ));
