@@ -15,7 +15,6 @@ framework:
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        # assets_version: %assets_version%
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -91,6 +90,6 @@ services:
             - { name: twig.extension }
 
 ewz_recaptcha:
-    public_key:  %recaptcha_public_key%
-    private_key: %recaptcha_private_key%
-    locale_key:  %kernel.default_locale%
+    public_key:  "%recaptcha_public_key%"
+    private_key: "%recaptcha_private_key%"
+    locale_key:  "%kernel.default_locale%"

@@ -8,8 +8,8 @@ framework:
     profiler: { only_exceptions: false }
 
 web_profiler:
-    toolbar: %debug_toolbar%
-    intercept_redirects: %debug_redirects%
+    toolbar: "%debug_toolbar%"
+    intercept_redirects: "%debug_redirects%"
 
 monolog:
     handlers:
@@ -33,7 +33,7 @@ monolog:
 #    delivery_address: me@example.com
 
 ewz_recaptcha:
-    public_key:  %recaptcha_public_key%
-    private_key: %recaptcha_private_key%
-    locale_key:  %kernel.default_locale%
+    public_key:  "%recaptcha_public_key%"
+    private_key: "%recaptcha_private_key%"
+    locale_key:  "%kernel.default_locale%"
     #enabled: false
