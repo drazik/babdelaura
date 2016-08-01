@@ -1,17 +1,21 @@
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var postcss = require('gulp-postcss');
-var atImport = require('postcss-import');
-var customMedia = require('postcss-custom-media');
+import gulp from 'gulp'
+import plumber from 'gulp-plumber'
+import postcss from 'gulp-postcss'
+import atImport from 'postcss-import'
+import customMedia from 'postcss-custom-media'
 
-module.exports = function() {
-    var processors = [
+function styles() {
+    const processors = [
         atImport(),
         customMedia()
-    ];
+    ]
 
     return gulp.src('assets/css/*.css')
         .pipe(plumber())
         .pipe(postcss(processors))
-        .pipe(gulp.dest('web/css'));
-};
+        .pipe(gulp.dest('web/css'))
+}
+
+styles.description = 'Compile styles'
+
+export default styles

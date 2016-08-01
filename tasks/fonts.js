@@ -1,12 +1,16 @@
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var newer = require('gulp-newer');
-var fontmin = require('gulp-fontmin');
+import gulp from 'gulp'
+import plumber from 'gulp-plumber'
+import newer from 'gulp-newer'
+import fontmin from 'gulp-fontmin'
 
-module.exports = function() {
+function fonts() {
     return gulp.src('assets/fonts/**/*')
         .pipe(plumber())
         .pipe(newer('web/fonts'))
         .pipe(fontmin())
-        .pipe(gulp.dest('web/fonts'));
-};
+        .pipe(gulp.dest('web/fonts'))
+}
+
+fonts.description = 'Compress and convert fonts into multiple formats'
+
+export default fonts
