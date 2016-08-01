@@ -1,8 +1,7 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var webpack = require('webpack');
+import gutil from 'gulp-util'
+import webpack from 'webpack'
 
-module.exports = function(callback) {
+function scripts(done) {
     webpack({
         entry: {
             app: './assets/js/app.js',
@@ -36,10 +35,14 @@ module.exports = function(callback) {
         }
     }, function(err, stats) {
         if (err) {
-            throw new gutil.PluginError('webpack', err);
+            throw new gutil.PluginError('webpack', err)
         }
 
-        gutil.log('[webpack]', stats.toString());
-        callback();
-    });
-};
+        gutil.log('[webpack]', stats.toString())
+        done()
+    })
+}
+
+scripts.description = 'Bundles javascript'
+
+export default scripts
