@@ -76,9 +76,11 @@
             </ul>
         </div>
     </nav>
-    <div class="content-inner bab-Wrapper row">
-        <div class="twelve columns">
-            {% block content %}{% endblock %}
+    <div class="content-inner bab-Wrapper">
+        <div class="bab-Grid">
+            <div class="bab-Grid-cell bab-Grid-cell--1-1">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
     <footer class="bab-Footer">
