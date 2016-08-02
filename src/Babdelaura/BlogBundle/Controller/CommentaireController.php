@@ -18,7 +18,9 @@ class CommentaireController extends Controller
         $repository = $em->getRepository('BabdelauraBlogBundle:Article');
         $article = $repository->findOneBySlug($slug);
 
-        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form = $this->createForm(CommentaireType::class, $commentaire, array(
+            'recaptcha' => true
+        ));
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -52,7 +54,9 @@ class CommentaireController extends Controller
                             'notice',
                             'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
                 );
-                $form = $this->createForm(CommentaireType::class, new Commentaire());
+                $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
+                    'recaptcha' => true
+                ));
 
             }
 

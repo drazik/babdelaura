@@ -23,12 +23,14 @@ class CommentaireType extends AbstractType
             ->add('auteur', TextType::class)
             ->add('email', EmailType::class, array('required' => false))
             ->add('site', TextType::class, array('required' => false))
-            ->add('contenu', TextareaType::class)
-            ->add('recaptcha', EWZRecaptchaType::class, array(
+            ->add('contenu', TextareaType::class);
+
+        if ($options['recaptcha']) {
+            $builder->add('recaptcha', EWZRecaptchaType::class, array(
                 'mapped'      => false,
                 'constraints' => array(new RecaptchaTrue())
-            ))
-        ;
+            ));
+        }
     }
 
     /**
@@ -37,7 +39,8 @@ class CommentaireType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Babdelaura\BlogBundle\Entity\Commentaire'
+            'data_class' => 'Babdelaura\BlogBundle\Entity\Commentaire',
+            'recaptcha' => false
         ));
     }
 
