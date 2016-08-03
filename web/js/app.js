@@ -48,25 +48,25 @@
 
 	__webpack_require__(1);
 
-	__webpack_require__(33);
+	__webpack_require__(38);
 
 	var _nav = __webpack_require__(2);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _imagesSlideshow = __webpack_require__(34);
+	var _imagesSlideshow = __webpack_require__(39);
 
 	var _imagesSlideshow2 = _interopRequireDefault(_imagesSlideshow);
 
-	var _notification = __webpack_require__(44);
+	var _notification = __webpack_require__(49);
 
 	var _notification2 = _interopRequireDefault(_notification);
 
-	var _cookieBar = __webpack_require__(45);
+	var _cookieBar = __webpack_require__(50);
 
 	var _cookieBar2 = _interopRequireDefault(_cookieBar);
 
-	var _articlesGrid = __webpack_require__(46);
+	var _articlesGrid = __webpack_require__(51);
 
 	var _articlesGrid2 = _interopRequireDefault(_articlesGrid);
 
@@ -336,7 +336,6 @@
 	/**
 	 * Gestion de l'affichage du menu en mobile
 	 */
-
 	var Nav = function () {
 	    function Nav(container) {
 	        _classCallCheck(this, Nav);
@@ -587,15 +586,15 @@
 
 	    // Compile a matcher for the given selector
 	  } else if (/^[a-z]+$/i.test(selector)) {
-	      matcherParam = selector;
-	      matcher = matchesTag;
-	    } else if (/^#[a-z0-9\-_]+$/i.test(selector)) {
-	      matcherParam = selector.slice(1);
-	      matcher = matchesId;
-	    } else {
-	      matcherParam = selector;
-	      matcher = matches;
-	    }
+	    matcherParam = selector;
+	    matcher = matchesTag;
+	  } else if (/^#[a-z0-9\-_]+$/i.test(selector)) {
+	    matcherParam = selector.slice(1);
+	    matcher = matchesId;
+	  } else {
+	    matcherParam = selector;
+	    matcher = matches;
+	  }
 
 	  // Add to the list of listeners
 	  listenerMap[eventType].push({
@@ -887,7 +886,12 @@
 /* 30 */,
 /* 31 */,
 /* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1113,7 +1117,7 @@
 	})(window, document);
 
 /***/ },
-/* 34 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1124,13 +1128,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _url = __webpack_require__(35);
+	var _url = __webpack_require__(40);
 
-	var _photoswipe = __webpack_require__(42);
+	var _photoswipe = __webpack_require__(47);
 
 	var _photoswipe2 = _interopRequireDefault(_photoswipe);
 
-	var _photoswipeUiDefault = __webpack_require__(43);
+	var _photoswipeUiDefault = __webpack_require__(48);
 
 	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
 
@@ -1147,7 +1151,6 @@
 	/**
 	 * Slideshow d'images
 	 */
-
 	var ImagesSlideshow = function () {
 	    function ImagesSlideshow(container) {
 	        _classCallCheck(this, ImagesSlideshow);
@@ -1232,7 +1235,7 @@
 	exports.default = ImagesSlideshow;
 
 /***/ },
-/* 35 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1260,7 +1263,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(36);
+	var punycode = __webpack_require__(41);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1339,7 +1342,7 @@
 	  'gopher:': true,
 	  'file:': true
 	},
-	    querystring = __webpack_require__(39);
+	    querystring = __webpack_require__(44);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1773,37 +1776,37 @@
 	    srcPath = relPath;
 	    // fall through to the dot-handling below.
 	  } else if (relPath.length) {
-	      // it's relative
-	      // throw away the existing file, and take the new path instead.
-	      if (!srcPath) srcPath = [];
-	      srcPath.pop();
-	      srcPath = srcPath.concat(relPath);
-	      result.search = relative.search;
-	      result.query = relative.query;
-	    } else if (!isNullOrUndefined(relative.search)) {
-	      // just pull out the search.
-	      // like href='?foo'.
-	      // Put this after the other two cases because it simplifies the booleans
-	      if (psychotic) {
-	        result.hostname = result.host = srcPath.shift();
-	        //occationaly the auth can get stuck only in host
-	        //this especialy happens in cases like
-	        //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-	        var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
-	        if (authInHost) {
-	          result.auth = authInHost.shift();
-	          result.host = result.hostname = authInHost.shift();
-	        }
+	    // it's relative
+	    // throw away the existing file, and take the new path instead.
+	    if (!srcPath) srcPath = [];
+	    srcPath.pop();
+	    srcPath = srcPath.concat(relPath);
+	    result.search = relative.search;
+	    result.query = relative.query;
+	  } else if (!isNullOrUndefined(relative.search)) {
+	    // just pull out the search.
+	    // like href='?foo'.
+	    // Put this after the other two cases because it simplifies the booleans
+	    if (psychotic) {
+	      result.hostname = result.host = srcPath.shift();
+	      //occationaly the auth can get stuck only in host
+	      //this especialy happens in cases like
+	      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+	      var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
+	      if (authInHost) {
+	        result.auth = authInHost.shift();
+	        result.host = result.hostname = authInHost.shift();
 	      }
-	      result.search = relative.search;
-	      result.query = relative.query;
-	      //to support http.request
-	      if (!isNull(result.pathname) || !isNull(result.search)) {
-	        result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
-	      }
-	      result.href = result.format();
-	      return result;
 	    }
+	    result.search = relative.search;
+	    result.query = relative.query;
+	    //to support http.request
+	    if (!isNull(result.pathname) || !isNull(result.search)) {
+	      result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
+	    }
+	    result.href = result.format();
+	    return result;
+	  }
 
 	  if (!srcPath.length) {
 	    // no path at all.  easy.
@@ -1923,7 +1926,7 @@
 	}
 
 /***/ },
-/* 36 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
@@ -2436,7 +2439,7 @@
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
-		if ("function" == 'function' && _typeof(__webpack_require__(38)) == 'object' && __webpack_require__(38)) {
+		if ("function" == 'function' && _typeof(__webpack_require__(43)) == 'object' && __webpack_require__(43)) {
 			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return punycode;
 			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2455,10 +2458,10 @@
 			root.punycode = punycode;
 		}
 	})(undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)(module), (function() { return this; }())))
 
 /***/ },
-/* 37 */
+/* 42 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2475,7 +2478,7 @@
 	};
 
 /***/ },
-/* 38 */
+/* 43 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -2483,16 +2486,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 39 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(40);
-	exports.encode = exports.stringify = __webpack_require__(41);
+	exports.decode = exports.parse = __webpack_require__(45);
+	exports.encode = exports.stringify = __webpack_require__(46);
 
 /***/ },
-/* 40 */
+/* 45 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2581,7 +2584,7 @@
 	};
 
 /***/ },
-/* 41 */
+/* 46 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2650,7 +2653,7 @@
 	};
 
 /***/ },
-/* 42 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -2826,7 +2829,7 @@
 
 						// Detect if device is iPhone or iPod and if it's older than iOS 8
 						// http://stackoverflow.com/a/14223920
-						//
+						// 
 						// This detection is made because of buggy top/bottom toolbars
 						// that don't trigger window.resize event.
 						// For more info refer to _isFixedPosition variable in core.js
@@ -3473,7 +3476,7 @@
 						click: _onGlobalClick
 					};
 
-					// disable show/hide effects on old browsers that don't support CSS animations or transforms,
+					// disable show/hide effects on old browsers that don't support CSS animations or transforms, 
 					// old IOS, Android and Opera mobile. Blackberry seems to work fine, even older models.
 					var oldPhone = _features.isOldIOSPhone || _features.isOldAndroid || _features.isMobileOpera;
 					if (!_features.animationName || !_features.transform || oldPhone) {
@@ -3551,8 +3554,8 @@
 						_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'block';
 
 						if (_options.focus) {
-							// focus causes layout,
-							// which causes lag during the animation,
+							// focus causes layout, 
+							// which causes lag during the animation, 
 							// that's why we delay it untill the initial zoom transition ends
 							template.focus();
 						}
@@ -3570,12 +3573,12 @@
 					if (!_isFixedPosition) {
 
 						// On all versions of iOS lower than 8.0, we check size of viewport every second.
-						//
-						// This is done to detect when Safari top & bottom bars appear,
-						// as this action doesn't trigger any events (like resize).
-						//
+						// 
+						// This is done to detect when Safari top & bottom bars appear, 
+						// as this action doesn't trigger any events (like resize). 
+						// 
 						// On iOS8 they fixed this.
-						//
+						// 
 						// 10 Nov 2014: iOS 7 usage ~40%. iOS 8 usage 56%.
 
 						_updateSizeInterval = setInterval(function () {
@@ -3815,6 +3818,7 @@
 					_moveMainScroll(_slideSize.x * _currPositionIndex);
 
 					_shout('beforeResize'); // even may be used for example to switch image sources
+
 
 					// don't re-calculate size on inital size update
 					if (_containerShiftIndex !== undefined) {
@@ -4098,17 +4102,17 @@
 						_tempPointsArr[0] = _ePoint1; //_ePoint1;
 					}
 				} else {
-						_tempCounter = 0;
-						// we can use forEach, as pointer events are supported only in modern browsers
-						_currPointers.forEach(function (p) {
-							if (_tempCounter === 0) {
-								_tempPointsArr[0] = p;
-							} else if (_tempCounter === 1) {
-								_tempPointsArr[1] = p;
-							}
-							_tempCounter++;
-						});
-					}
+					_tempCounter = 0;
+					// we can use forEach, as pointer events are supported only in modern browsers
+					_currPointers.forEach(function (p) {
+						if (_tempCounter === 0) {
+							_tempPointsArr[0] = p;
+						} else if (_tempCounter === 1) {
+							_tempPointsArr[1] = p;
+						}
+						_tempCounter++;
+					});
+				}
 				return _tempPointsArr;
 			},
 			    _panOrMoveMainScroll = function _panOrMoveMainScroll(axis, delta) {
@@ -4126,12 +4130,12 @@
 				// calculate fdistance over the bounds and friction
 				if (newOffset > _currPanBounds.min[axis] || newOffset < _currPanBounds.max[axis]) {
 					panFriction = _options.panEndFriction;
-					// Linear increasing of friction, so at 1/4 of viewport it's at max value.
+					// Linear increasing of friction, so at 1/4 of viewport it's at max value. 
 					// Looks not as nice as was expected. Left for history.
 					// panFriction = (1 - (_panOffset[axis] + delta[axis] + panBounds.min[axis]) / (_viewportSize[axis] / 4) );
 				} else {
-						panFriction = 1;
-					}
+					panFriction = 1;
+				}
 
 				newOffset = _panOffset[axis] + delta[axis] * panFriction;
 
@@ -4224,7 +4228,7 @@
 
 				// Allow dragging only via left mouse button.
 				// As this handler is not added in IE8 - we ignore e.which
-				//
+				// 
 				// http://www.quirksmode.org/js/events_properties.html
 				// https://developer.mozilla.org/en-US/docs/Web/API/event.button
 				if (e.type === 'mousedown' && e.button > 0) {
@@ -4354,7 +4358,7 @@
 				}
 			},
 
-			//
+			// 
 			_renderMovement = function _renderMovement() {
 
 				if (!_currentPoints) {
@@ -4463,7 +4467,7 @@
 					if (_isFirstMove) {
 						_isFirstMove = false;
 
-						// subtract drag distance that was used during the detection direction 
+						// subtract drag distance that was used during the detection direction  
 
 						if (Math.abs(delta.x) >= DIRECTION_CHECK_OFFSET) {
 							delta.x -= _currentPoints[0].x - _startPoint.x;
@@ -4523,7 +4527,7 @@
 						return;
 					}
 
-					// on Android (v4.1, 4.2, 4.3 & possibly older)
+					// on Android (v4.1, 4.2, 4.3 & possibly older) 
 					// ghost mousedown/up event isn't preventable via e.preventDefault,
 					// which causes fake mousedown event
 					// so we block mousedown/up for 600ms
@@ -4554,7 +4558,7 @@
 						} else {
 							var MSPOINTER_TYPES = {
 								4: 'mouse', // event.MSPOINTER_TYPE_MOUSE
-								2: 'touch', // event.MSPOINTER_TYPE_TOUCH
+								2: 'touch', // event.MSPOINTER_TYPE_TOUCH 
 								3: 'pen' // event.MSPOINTER_TYPE_PEN
 							};
 							releasePoint.type = MSPOINTER_TYPES[e.pointerType];
@@ -4671,7 +4675,7 @@
 					return;
 				}
 
-				// main scroll
+				// main scroll 
 				if ((_mainScrollShifted || _mainScrollAnimating) && numPoints === 0) {
 					var itemChanged = _finishSwipeMainScrollGesture(gestureType, _releaseAnimData);
 					if (itemChanged) {
@@ -4685,7 +4689,7 @@
 					return;
 				}
 
-				// Complete simple zoom gesture (reset zoom level if it's out of the bounds) 
+				// Complete simple zoom gesture (reset zoom level if it's out of the bounds)  
 				if (gestureType !== 'swipe') {
 					_completeZoomGesture();
 					return;
@@ -4845,7 +4849,7 @@
 					var totalShiftDist = _currPoint.x - _startPoint.x,
 					    isFastLastFlick = _releaseAnimData.lastFlickDist.x < 10;
 
-					// if container is shifted for more than MIN_SWIPE_DISTANCE,
+					// if container is shifted for more than MIN_SWIPE_DISTANCE, 
 					// and last flick gesture was in right direction
 					if (totalShiftDist > MIN_SWIPE_DISTANCE && (isFastLastFlick || _releaseAnimData.lastFlickOffset.x > 20)) {
 						// go to prev item
@@ -5146,8 +5150,8 @@
 						if (!out) {
 
 							// "in" animation always uses CSS transitions (instead of rAF).
-							// CSS transition work faster here,
-							// as developer may also want to animate other things,
+							// CSS transition work faster here, 
+							// as developer may also want to animate other things, 
 							// like ui on top of sliding area, which can be animated just via CSS
 
 							_currZoomLevel = item.initialZoomLevel;
@@ -5441,6 +5445,7 @@
 						_getItemAt = self.getItemAt;
 						_getNumItems = _options.getNumItemsFn; //self.getNumItems;
 
+
 						_initialIsLoop = _options.loop;
 						if (_getNumItems() < 3) {
 							_options.loop = false; // disable loop if less then 3 items
@@ -5502,13 +5507,13 @@
 					},
 
 					allowProgressiveImg: function allowProgressiveImg() {
-						// 1. Progressive image loading isn't working on webkit/blink
+						// 1. Progressive image loading isn't working on webkit/blink 
 						//    when hw-acceleration (e.g. translateZ) is applied to IMG element.
 						//    That's why in PhotoSwipe parent element gets zoom transform, not image itself.
-						//   
+						//    
 						// 2. Progressive image loading sometimes blinks in webkit/blink when applying animation to parent element.
 						//    That's why it's disabled on touch devices (mainly because of swipe transition)
-						//   
+						//    
 						// 3. Progressive image loading sometimes doesn't work in IE (up to 11).
 
 						// Don't allow progressive loading on non-large touch devices
@@ -6164,7 +6169,7 @@
 					},
 					updateURL: function updateURL() {
 
-						// Delay the update of URL, to avoid lag during transition,
+						// Delay the update of URL, to avoid lag during transition, 
 						// and to not to trigger actions like "refresh page sound" or "blinking favicon" to often
 
 						_cleanHistoryTimeouts();
@@ -6176,8 +6181,8 @@
 						if (!_historyChanged) {
 							_updateHash(); // first time
 						} else {
-								_historyUpdateTimeout = setTimeout(_updateHash, 800);
-							}
+							_historyUpdateTimeout = setTimeout(_updateHash, 800);
+						}
 					}
 
 				}
@@ -6190,7 +6195,7 @@
 	});
 
 /***/ },
-/* 43 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -6318,11 +6323,11 @@
 					}
 					_blockControlsTap = true;
 
-					// Some versions of Android don't prevent ghost click event
+					// Some versions of Android don't prevent ghost click event 
 					// when preventDefault() was called on touchstart and/or touchend.
-					//
-					// This happens on v4.3, 4.2, 4.1,
-					// older versions strangely work correctly,
+					// 
+					// This happens on v4.3, 4.2, 4.1, 
+					// older versions strangely work correctly, 
 					// but just in case we add delay on all of them)	
 					var tapDelay = framework.features.isOldAndroid ? 600 : 30;
 					_blockControlsTapTimeout = setTimeout(function () {
@@ -6481,14 +6486,14 @@
 							if (pswp.currItem && pswp.currItem.loading) {
 
 								if (!pswp.allowProgressiveImg() || pswp.currItem.img && !pswp.currItem.img.naturalWidth) {
-									// show preloader if progressive loading is not enabled,
+									// show preloader if progressive loading is not enabled, 
 									// or image width is not defined yet (because of slow connection)
 									_toggleLoadingIndicator(false);
 									// items-controller.js function allowProgressiveImg
 								}
 							} else {
-									_toggleLoadingIndicator(true); // hide preloader
-								}
+								_toggleLoadingIndicator(true); // hide preloader
+							}
 						}, _options.loadingIndicatorDelay);
 					});
 					_listen('imageLoadComplete', function (index, item) {
@@ -6525,8 +6530,8 @@
 							gap.bottom = bars.top; // if no caption, set size of bottom gap to size of top
 						}
 					} else {
-							gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
-						}
+						gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
+					}
 
 					// height of top bar is static, no need to calculate it
 					gap.top = bars.top;
@@ -6673,9 +6678,9 @@
 
 									//item.style.display = 'block';
 								} else {
-										framework.addClass(item, 'pswp__element--disabled');
-										//item.style.display = 'none';
-									}
+									framework.addClass(item, 'pswp__element--disabled');
+									//item.style.display = 'none';
+								}
 							}
 						}
 					}
@@ -6988,7 +6993,7 @@
 	});
 
 /***/ },
-/* 44 */
+/* 49 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7004,7 +7009,6 @@
 	/**
 	 * Gestion de l'affichage des notifications
 	 */
-
 	var Notification = function () {
 	    function Notification(container) {
 	        var _this = this;
@@ -7040,7 +7044,7 @@
 	exports.default = Notification;
 
 /***/ },
-/* 45 */
+/* 50 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -7056,7 +7060,6 @@
 	/**
 	 * Gère l'affichage de la cookiebar
 	 */
-
 	var CookieBar = function () {
 	    function CookieBar(container) {
 	        _classCallCheck(this, CookieBar);
@@ -7155,7 +7158,7 @@
 	exports.default = CookieBar;
 
 /***/ },
-/* 46 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7170,7 +7173,7 @@
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
-	var _closest = __webpack_require__(47);
+	var _closest = __webpack_require__(52);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
@@ -7181,7 +7184,6 @@
 	/**
 	 * Gère le touch sur les grilles d'articles
 	 */
-
 	var ArticlesGrid = function () {
 	    function ArticlesGrid(container) {
 	        _classCallCheck(this, ArticlesGrid);
@@ -7229,12 +7231,12 @@
 	exports.default = ArticlesGrid;
 
 /***/ },
-/* 47 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(48);
+	var matches = __webpack_require__(53);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -7246,7 +7248,7 @@
 	};
 
 /***/ },
-/* 48 */
+/* 53 */
 /***/ function(module, exports) {
 
 	"use strict";

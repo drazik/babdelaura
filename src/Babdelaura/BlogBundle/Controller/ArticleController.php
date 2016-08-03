@@ -142,7 +142,9 @@ class ArticleController extends Controller
         }
 
         $form = $this->createForm(ArticleType::class, $article);
-        $uploadImageForm = $this->createForm(ImageType::class);
+        $uploadImageForm = $this->createForm(ImageType::class, null, array(
+            'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
+        ));
 
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
