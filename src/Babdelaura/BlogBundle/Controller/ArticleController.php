@@ -288,8 +288,10 @@ class ArticleController extends Controller
         $listeArticles = $repository->getArticles($nbArticlesParPage, true);
 
 
-        return $this->render('BabdelauraBlogBundle:Admin/Article:listerArticlesGrille.html.twig', array('listeArticles' => $listeArticles));
-
+        return $this->render('BabdelauraBlogBundle:Admin/Article:listerArticlesGrille.html.twig', array(
+            'listeArticles' => $listeArticles,
+            'admin' => true
+        ));
     }
 
     public function afficherArticleAdminAction($slug) {

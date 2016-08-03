@@ -1,15 +1,22 @@
 <ul class="bab-Grid bab-Grid--inlineBlock list-unstyled js-articles-grid">
     {% for article in listeArticles %}
         {% set nbCommentaires = article.getNbCommentaires(true) %}
+
+        {% if admin is defined and admin %}
+            {% set articleUrl = path('babdelaurablog_admin_afficherArticle', {'slug': article.slug}) %}
+        {% else %}
+            {% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
+        {% endif %}
+
         <li class="bab-Grid-cell bab-Grid-cell--1-2 bab-Grid-cell--1-1@small">
             <figure class="bab-Article--grid js-articles-grid-item" itemscope itemtype="http://schema.org/BlogPosting">
                 <img class="bab-Article-image" src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}">
                 <figcaption class="bab-Article-infos">
                     <h2 class="bab-Article-title" itemprop="name">
-                        <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}">{{article.titre|truncate(30,true)}}</a>
+                        <a href="{{ articleUrl }}">{{article.titre|truncate(30,true)}}</a>
                     </h2>
 
-                    <a href="{{ path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}#commentaires">
+                    <a href="{{ articleUrl }}#commentaires">
                     {{nbCommentaires}}
                     {% if nbCommentaires <= 1 %}
                       commentaire
@@ -18,13 +25,7 @@
                     {% endif %}
                     </a>
 
-                    {% if modeAdmin %}
-                        {% set href = path('babdelaurablog_admin_afficherArticle', {'slug': article.slug})  %}
-                    {% else %}
-                        {% set href = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")})  %}
-                    {% endif %}
-
-                    <a class="bab-Button" href="{{ href }}">
+                    <a class="bab-Button" href="{{ articleUrl }}">
                         Lire l'article
                     </a>
                 </figcaption>
