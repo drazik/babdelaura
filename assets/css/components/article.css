@@ -100,7 +100,7 @@
 }
 
 .bab-Article--grid .bab-Article-image {
-    max-width: 100%;
+    width: 100%;
     display: block;
     position: relative;
     transform: translateX(0);
