@@ -31,13 +31,8 @@ body {
 }
 
 @media (--small-viewport) {
-    .main-content,
-    .sidebar {
-        display: block;
-        width: 100%;
-    }
-
-    .sidebar {
-        margin-top: 2em;
+    .bab-Wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
