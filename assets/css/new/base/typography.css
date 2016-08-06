@@ -1,0 +1,38 @@
+body {
+    font-family: serif;
+    color: var(--text-color);
+}
+
+p {
+
+}
+
+a,
+a:visited {
+
+}
+
+a:hover,
+a:focus,
+a:active {
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child,
+p:first-child {
+    margin-top: 0;
+}

@@ -1,4 +1,5 @@
 .bab-Grid {
+    width: calc(100% + var(--grid-horizontal-gutter));
     margin: 0 calc(-1 * var(--grid-horizontal-gutter) / 2);
 }
 
@@ -38,7 +39,6 @@
 
 .bab-Grid--inlineBlock .bab-Grid-cell {
     display: inline-block;
-    margin-bottom: var(--grid-vertical-gutter);
 
     float: none;
 }
@@ -53,6 +53,14 @@
 
 .bab-Grid-cell--1-3 {
     width: 33.33333%;
+}
+
+.bab-Grid-cell--2-3 {
+    width: 66.66666%;
+}
+
+.bab-Grid-cell--1-6 {
+    width: 16.66667%;
 }
 
 .bab-Grid-cell--1-10 {
