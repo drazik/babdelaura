@@ -1,34 +1,3 @@
 @import 'normalize.css';
-@import 'font-awesome';
-@import 'photoswipe/dist/photoswipe.css';
-@import 'photoswipe/dist/default-skin/default-skin.css';
 
-@import 'legacy/helpers/utils';
-@import 'legacy/helpers/variables';
-
-@import 'legacy/base/fonts';
-@import 'legacy/base/typography';
-
-@import 'legacy/layout/layout';
-@import 'legacy/layout/grid';
-@import 'legacy/layout/header';
-@import 'legacy/layout/sidebar';
-@import 'legacy/layout/footer';
-@import 'legacy/layout/forms';
-@import 'legacy/layout/tables';
-
-@import 'legacy/components/article';
-@import 'legacy/components/buttons';
-@import 'legacy/components/comments';
-@import 'legacy/components/instagram';
-@import 'legacy/components/navigation';
-@import 'legacy/components/social';
-@import 'legacy/components/badge';
-@import 'legacy/components/image-gallery';
-@import 'legacy/components/alert';
-@import 'legacy/components/pagination';
-@import 'legacy/components/modal';
-@import 'legacy/components/notification';
-@import 'legacy/components/cookie-bar';
-@import 'legacy/components/spoiler';
-@import 'legacy/components/searchbar';
+@import 'new/helpers/variables.css';

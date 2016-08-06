@@ -1,0 +1,14 @@
+:root {
+    /* Colors */
+    --main-color: #8fd0da;
+    --title-color: #4a4949;
+    --text-color: #444;
+    --text-light-color: #898c8c;
+
+    /* Grid */
+    --grid-horizontal-gutter: 30px;
+    --grid-vertical-gutter: 35px;
+
+    --grid-horizontal-gutter-small: 6px;
+    --grid-horizontal-gutter-x-small: 3px;
+}
