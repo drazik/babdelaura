@@ -434,6 +434,9 @@ textarea {
 
     --grid-horizontal-gutter-small: 6px;
     --grid-horizontal-gutter-x-small: 3px;
+
+    /* z-index scale */
+    --zi-header-layer: 100;
 }
 
 body {
@@ -583,6 +586,7 @@ body {
     background-size: 100% 1px;
     background-repeat: no-repeat;
     background-color: #fff;
+    z-index: var(--zi-header-layer);
 }
 
 .bab-Main {

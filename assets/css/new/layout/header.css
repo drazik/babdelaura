@@ -11,4 +11,5 @@
     background-size: 100% 1px;
     background-repeat: no-repeat;
     background-color: #fff;
+    z-index: var(--zi-header-layer);
 }

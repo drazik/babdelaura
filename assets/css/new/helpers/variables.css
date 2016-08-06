@@ -11,4 +11,7 @@
 
     --grid-horizontal-gutter-small: 6px;
     --grid-horizontal-gutter-x-small: 3px;
+
+    /* z-index scale */
+    --zi-header-layer: 100;
 }
