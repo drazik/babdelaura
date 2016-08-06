@@ -486,6 +486,8 @@ body {
 }
 
 body {
+    padding-top: 85px;
+
     overflow-x: hidden;
 }
 
@@ -570,6 +572,7 @@ body {
     background-image: linear-gradient(to right, #b6b6b6, #b6b6b6 100%);
     background-size: 100% 1px;
     background-repeat: no-repeat;
+    background-color: #fff;
 }
 
 .bab-Wrapper {
@@ -597,4 +600,13 @@ body {
 
 .bab-Navigation-item--odd {
     color: var(--main-color);
+}
+
+.bab-Logo {
+    display: block;
+    width: 393px;
+    height: 235px;
+    margin: 0 auto;
+
+    background-image: url('../images/new/logo.png');
 }

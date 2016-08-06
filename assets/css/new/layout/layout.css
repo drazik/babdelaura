@@ -9,5 +9,7 @@ body {
 }
 
 body {
+    padding-top: 85px;
+
     overflow-x: hidden;
 }

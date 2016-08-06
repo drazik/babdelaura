@@ -1,0 +1,8 @@
+.bab-Logo {
+    display: block;
+    width: 393px;
+    height: 235px;
+    margin: 0 auto;
+
+    background-image: url('../images/new/logo.png');
+}
