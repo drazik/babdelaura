@@ -1,8 +1,8 @@
 @import 'normalize.css';
 
-@import 'helpers/utils';
+@import 'legacy/helpers/utils';
 
-@import 'base/typography';
+@import 'legacy/base/typography';
 
 p {
     text-align: justify;
