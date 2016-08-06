@@ -22,60 +22,19 @@
         {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
     </head>
     <body>
-        <header class="bab-Header">
-            <div class="bab-Wrapper">
-                <div class="bab-Grid">
-                    <div class="bab-Grid-cell bab-Grid-cell--1-6">&nbsp;</div>
-                    <div class="bab-Grid-cell bab-Grid-cell--2-3">
-                        <nav class="bab-Navigation">
-                            <a class="bab-Navigation-item" href="#">
-                                Bijoux
-                            </a>
-                            <a class="bab-Navigation-item" href="#">
-                                Nail art
-                            </a>
-                            <a class="bab-Navigation-item" href="#">
-                                Divers
-                            </a>
-                            <a class="bab-Navigation-item" href="#">
-                                Qui suis-je ?
-                            </a>
-                            <a class="bab-Navigation-item bab-Navigation-item--odd" href="#">
-                                Boutique
-                            </a>
-                            <a class="bab-Navigation-item" href="#">
-                                Contact
-                            </a>
-                        </nav>
-                    </div>
-                    <div class="bab-Grid-cell bab-Grid-cell--1-6">&nbsp;</div>
-                </div>
-            </div>
-        </header>
+        {% include 'BabdelauraBlogBundle:Layout:header.html.twig' %}
 
         <a class="bab-Logo" href="#" title="Revenir à l'accueil"></a>
 
-        <main class="bab-Main"></main>
+        <div class="bab-Wrapper">
+            <main class="bab-Main"></main>
 
-        <footer class="bab-Footer">
-            <ul class="bab-Footer-pagesContainer">
-                <li class="bab-Footer-page">
-                    <a class="bab-Footer-pageLink" href="#">
-                        Mentions légales
-                    </a>
-                </li>
-                <li class="bab-Footer-page">
-                    <a class="bab-Footer-pageLink" href="#">
-                        Contact
-                    </a>
-                </li>
-            </ul>
-            <p>
-                2014 - 2016 (c) Bric à Brac de Laura<br />
-                Design by Bric à Brac de Laura &amp; Jesmo Drazik<br />
-                Logo by Odile Sacoche
-            </p>
-        </footer>
+            {% include 'BabdelauraBlogBundle:Layout:instagram.html.twig' %}
+
+            {% include 'BabdelauraBlogBundle:Components:separator.html.twig' %}
+        </div>
+
+        {% include 'BabdelauraBlogBundle:Layout:footer.html.twig' %}
 
         {% block javascripts %}
             <script src="{{ asset('js/app.js') }}"></script>
