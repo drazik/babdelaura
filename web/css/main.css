@@ -518,10 +518,12 @@ body {
 }
 
 .bab-Grid--smallGutters {
+    width: calc(100% + var(--grid-horizontal-gutter-small));
     margin: 0 calc(-1 * var(--grid-horizontal-gutter-small) / 2);
 }
 
-.bab-Grid-xSmallGutters {
+.bab-Grid--xSmallGutters {
+    width: calc(100% + var(--grid-horizontal-gutter-x-small));
     margin: 0 calc(-1 * var(--grid-horizontal-gutter-x-small) / 2);
 }
 
