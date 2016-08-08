@@ -3,8 +3,7 @@
 {% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %} %}
 
 <article class="bab-ArticlePreview">
-    <header class="bab-ArticlePreview-header">
-        <img class="bab-ArticlePreview-image" src="{{ asset(image) }}" alt="" />
+    <header class="bab-ArticlePreview-header" style="background-image: url('{{ asset(article.image.webPath) }}');">
         <a class="bab-ArticlePreview-readMore bab-Button" href="{{ articleUrl }}">
             Lire la suite
         </a>
