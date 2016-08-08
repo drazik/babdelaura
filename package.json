@@ -41,6 +41,7 @@
     "imagemin-pngquant": "^5.0.0",
     "minimist": "^1.1.1",
     "postcss-custom-media": "^5.0.1",
+    "postcss-custom-properties": "^5.0.1",
     "postcss-import": "^8.0.2",
     "webpack": "^1.13.1"
   },

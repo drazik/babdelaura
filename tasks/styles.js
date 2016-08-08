@@ -3,11 +3,13 @@ import plumber from 'gulp-plumber'
 import postcss from 'gulp-postcss'
 import atImport from 'postcss-import'
 import customMedia from 'postcss-custom-media'
+import customProperties from 'postcss-custom-properties'
 
 function styles() {
     const processors = [
         atImport(),
-        customMedia()
+        customMedia(),
+        customProperties()
     ]
 
     return gulp.src('assets/css/*.css')

@@ -4086,11 +4086,6 @@ a.pswp__share--download:hover {
     transform: rotate(90deg);
 }
 
-:root {
-    --grid-horizontal-gutter: 30px;
-    --grid-vertical-gutter: 30px;
-}
-
 @font-face {
     font-family: 'Lobster';
     src: url('../fonts/lobster/lobster_1.4-webfont.eot');
@@ -4188,8 +4183,8 @@ body {
 }
 
 .bab-Grid {
-    margin-left: calc(-1 * var(--grid-horizontal-gutter) / 2);
-    margin-right: calc(-1 * var(--grid-horizontal-gutter) / 2);
+    margin-left: calc(-1 * 30px / 2);
+    margin-right: calc(-1 * 30px / 2);
 }
 
 .bab-Grid::after {
@@ -4205,15 +4200,15 @@ body {
 }
 
 .bab-Grid-cell {
-    padding-left: calc(var(--grid-horizontal-gutter) / 2);
-    padding-right: calc(var(--grid-horizontal-gutter) / 2);
+    padding-left: calc(30px / 2);
+    padding-right: calc(30px / 2);
 
     float: left;
 }
 
 .bab-Grid--inlineBlock .bab-Grid-cell {
     display: inline-block;
-    margin-bottom: var(--grid-vertical-gutter);
+    margin-bottom: 30px;
 
     float: none;
 }
@@ -4244,7 +4239,7 @@ body {
     }
 
     .bab-Grid-cell--1-1\@small + .bab-Grid-cell--1-1\@small {
-        margin-top: calc(var(--grid-horizontal-gutter) / 2);
+        margin-top: calc(30px / 2);
     }
 }
 
