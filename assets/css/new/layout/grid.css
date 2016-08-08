@@ -39,8 +39,17 @@
 
 .bab-Grid--inlineBlock .bab-Grid-cell {
     display: inline-block;
+    margin-bottom: var(--grid-horizontal-gutter);
 
     float: none;
+}
+
+.bab-Grid--inlineBlock.bab-Grid-cell--smallGutter .bab-Grid-cell {
+    margin-bottom: var(--grid-horizontal-gutter-small);
+}
+
+.bab-Grid--inlineBlock.bab-Grid-cell--xSmallGutter .bab-Grid-cell {
+    margin-bottom: var(--grid-horizontal-gutter-x-small);
 }
 
 .bab-Grid-cell--1-1 {

@@ -27,7 +27,7 @@
         <a class="bab-Logo" href="#" title="Revenir à l'accueil"></a>
 
         <div class="bab-Wrapper">
-            <main class="bab-Main"></main>
+            <main class="bab-Main">{% block content %}{% endblock %}</main>
 
             {% include 'BabdelauraBlogBundle:Layout:instagram.html.twig' %}
 
@@ -43,7 +43,7 @@
                 <script src="{{ asset('js/google-analytics.js') }}" async></script>
             {% endif %}
 
-            <script type="text/javascript" async defer data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>
+            {#<script type="text/javascript" async defer data-pin-hover="true" src="//assets.pinterest.com/js/pinit.js"></script>#}
         {% endblock %}
     </body>
 </html>

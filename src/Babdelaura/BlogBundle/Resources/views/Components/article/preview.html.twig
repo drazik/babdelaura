@@ -1,0 +1,27 @@
+{# FIXME remplacer par la vrai image #}
+{% set image = 'images/new/tmp/article/preview/small-0' ~ (random(2) + 1) ~ '.jpg' %}
+{% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %} %}
+
+<article class="bab-ArticlePreview">
+    <header class="bab-ArticlePreview-header">
+        <img class="bab-ArticlePreview-image" src="{{ asset(image) }}" alt="" />
+        <a class="bab-ArticlePreview-readMore bab-Button" href="{{ articleUrl }}">
+            Lire la suite
+        </a>
+    </header>
+    <h1 class="bab-ArticlePreview-title">
+        <a href="{{ articleUrl }}">
+            {{ article.titre }}
+        </a>
+    </h1>
+    <aside class="bab-ArticlePreview-infos">
+        <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categories[0].slug}) }}">
+            {{ article.categories[0].nom }}
+        </a>
+        <time datetime="2016-05-22" pubdate>22 mai 2016</time>
+        <a href="{{ articleUrl }}#commentaires">
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
+            124
+        </a>
+    </aside>
+</article>

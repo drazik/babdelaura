@@ -27,15 +27,17 @@ class ArticleController extends Controller
 
         $query = $repository->getArticlesPaginator(null, true);
         $paginator  = $this->get('knp_paginator');
-        $listeArticles = $paginator->paginate(
+        $articles = $paginator->paginate(
             $query,
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
+        $articles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
 
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles));
+        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
+            'articles' => $articles
+        ));
     }
 
     public function listerArticlesCategorieAction(Request $request, $slug) {
