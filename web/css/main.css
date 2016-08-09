@@ -834,3 +834,29 @@ body {
     width: 12px;
     height: 12px;
 }
+
+.bab-Icon--16 {
+    width: 16px;
+    height: 16px;
+}
+
+.bab-Icon--20 {
+    width: 20px;
+    height: 20px;
+}
+
+.bab-Socials {
+    padding-top: 8px;
+}
+
+.bab-Social {
+    display: inline-block;
+
+    text-decoration: none;
+    color: #4fafb9;
+    vertical-align: middle;
+}
+
+.bab-Social:not(:first-child) {
+    margin-left: 5px;
+}

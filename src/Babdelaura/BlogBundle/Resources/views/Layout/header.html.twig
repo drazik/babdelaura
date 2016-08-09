@@ -1,28 +1,11 @@
 <header class="bab-Header">
     <div class="bab-Wrapper">
         <div class="bab-Grid">
-            <div class="bab-Grid-cell bab-Grid-cell--1-6">&nbsp;</div>
+            <div class="bab-Grid-cell bab-Grid-cell--1-6">
+                {% include 'BabdelauraBlogBundle:Layout:socials.html.twig' %}
+            </div>
             <div class="bab-Grid-cell bab-Grid-cell--2-3">
-                <nav class="bab-Navigation">
-                    <a class="bab-Navigation-item" href="#">
-                        Bijoux
-                    </a>
-                    <a class="bab-Navigation-item" href="#">
-                        Nail art
-                    </a>
-                    <a class="bab-Navigation-item" href="#">
-                        Divers
-                    </a>
-                    <a class="bab-Navigation-item" href="#">
-                        Qui suis-je ?
-                    </a>
-                    <a class="bab-Navigation-item bab-Navigation-item--odd" href="#">
-                        Boutique
-                    </a>
-                    <a class="bab-Navigation-item" href="#">
-                        Contact
-                    </a>
-                </nav>
+                {% include 'BabdelauraBlogBundle:Layout:navigation.html.twig' %}
             </div>
             <div class="bab-Grid-cell bab-Grid-cell--1-6">&nbsp;</div>
         </div>

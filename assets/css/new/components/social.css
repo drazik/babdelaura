@@ -1,0 +1,15 @@
+.bab-Socials {
+    padding-top: 8px;
+}
+
+.bab-Social {
+    display: inline-block;
+
+    text-decoration: none;
+    color: var(--main-color);
+    vertical-align: middle;
+}
+
+.bab-Social:not(:first-child) {
+    margin-left: 5px;
+}
