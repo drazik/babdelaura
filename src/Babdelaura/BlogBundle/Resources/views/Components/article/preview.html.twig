@@ -22,7 +22,7 @@
         </time>
         <a href="{{ articleUrl }}#commentaires">
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
-            124
+            {{ article.commentaires|length }}
         </a>
     </aside>
 </article>
