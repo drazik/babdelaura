@@ -429,6 +429,10 @@ textarea {
     /* z-index scale */
 }
 
+.align-center {
+    text-align: center;
+}
+
 body {
     font-family: serif;
     color: #444;

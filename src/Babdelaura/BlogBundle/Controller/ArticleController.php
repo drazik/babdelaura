@@ -32,7 +32,7 @@ class ArticleController extends Controller
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $articles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
+        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
 
 
         return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
