@@ -37,6 +37,9 @@
     font-weight: normal;
 
     color: var(--title-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bab-ArticlePreview-title a {

@@ -766,6 +766,9 @@ body {
     font-weight: normal;
 
     color: #4a4949;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bab-ArticlePreview-title a {
