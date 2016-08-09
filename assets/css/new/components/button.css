@@ -1,11 +1,15 @@
 .bab-Button {
     display: inline-block;
-    padding: 15px 13px;
+    padding: 0.75em 0.65em;
 
-    font-size: 20px;
+    font-size: 18px;
 
     color: #fff;
     text-decoration: none;
     background-color: var(--main-color);
     box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
+}
+
+.bab-Button--large {
+    font-size: 20px;
 }
