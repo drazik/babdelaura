@@ -1,5 +1,3 @@
-{# FIXME remplacer par la vrai image #}
-{% set image = 'images/new/tmp/article/preview/small-0' ~ (random(2) + 1) ~ '.jpg' %}
 {% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %} %}
 
 <article class="bab-ArticlePreview">
