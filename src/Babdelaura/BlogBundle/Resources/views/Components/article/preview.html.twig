@@ -17,7 +17,9 @@
         <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categories[0].slug}) }}">
             {{ article.categories[0].nom }}
         </a>
-        <time datetime="2016-05-22" pubdate>22 mai 2016</time>
+        <time datetime="2016-05-22" pubdate>
+            {{ article.datePublication|localizeddate('medium', 'none') }}
+        </time>
         <a href="{{ articleUrl }}#commentaires">
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
             124
