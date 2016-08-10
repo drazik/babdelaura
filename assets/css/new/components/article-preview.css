@@ -80,6 +80,11 @@
     text-overflow: ellipsis;
 }
 
+.bab-ArticlePreview:hover .bab-ArticlePreview-title {
+    opacity: 0.8;
+}
+
+
 .bab-ArticlePreview--featured .bab-ArticlePreview-title {
     margin-bottom: 15px;
 
