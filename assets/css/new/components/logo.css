@@ -4,5 +4,7 @@
     height: 235px;
     margin: 0 auto;
 
-    background-image: url('../images/new/logo.png');
+    background-image: url('../images/new/logo.svg');
+    background-size: cover;
+    background-position: center;
 }
