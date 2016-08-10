@@ -13,6 +13,22 @@
     background-position: center;
 }
 
+.bab-ArticlePreview-shadow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.bab-ArticlePreview:hover .bab-ArticlePreview-shadow {
+    opacity: 1;
+}
+
 .bab-ArticlePreview-header {
     position: relative;
 

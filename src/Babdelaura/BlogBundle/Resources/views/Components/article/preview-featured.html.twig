@@ -1,6 +1,7 @@
 {% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
 
 <article class="bab-ArticlePreview bab-ArticlePreview--featured" style="background-image: url('{{ asset(article.image.webPath) }}');">
+    <div class="bab-ArticlePreview-shadow"></div>
     <div class="bab-ArticlePreview-infos">
         <h1 class="bab-ArticlePreview-title">
             {{ article.titre }}
