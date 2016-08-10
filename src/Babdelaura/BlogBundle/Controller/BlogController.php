@@ -18,11 +18,11 @@ class BlogController extends Controller
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
 
-        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPageHome');
 
-        $listeArticles = $repository->getArticles($nbArticlesParPage);
+        $articles = $repository->getArticles($nbArticlesParPage);
 
-        return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('listeArticles' => $listeArticles));
+        return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('articles' => $articles));
     }
 
     public function mainMenuAction() {
