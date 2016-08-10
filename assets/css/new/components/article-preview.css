@@ -8,6 +8,9 @@
     position: relative;
 
     height: 375px;
+
+    background-size: cover;
+    background-position: center;
 }
 
 .bab-ArticlePreview-header {
