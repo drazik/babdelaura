@@ -433,6 +433,10 @@ textarea {
     text-align: center;
 }
 
+.align-right {
+    text-align: right;
+}
+
 body {
     font-family: serif;
     color: #444;
@@ -929,4 +933,15 @@ body {
 
 .bab-Social:not(:first-child) {
     margin-left: 5px;
+}
+
+.bab-Search {
+    padding-top: 8px;
+}
+
+.bab-Search-opener {
+    border-width: 0;
+
+    background-color: transparent;
+    cursor: pointer;
 }

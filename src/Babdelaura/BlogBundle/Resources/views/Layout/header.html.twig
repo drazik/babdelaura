@@ -7,7 +7,13 @@
             <div class="bab-Grid-cell bab-Grid-cell--2-3">
                 {% include 'BabdelauraBlogBundle:Layout:navigation.html.twig' %}
             </div>
-            <div class="bab-Grid-cell bab-Grid-cell--1-6">&nbsp;</div>
+            <div class="bab-Grid-cell bab-Grid-cell--1-6 align-right">
+                <div class="bab-Search">
+                    <button class="bab-Search-opener" type="button">
+                        {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'search', 'size': 16} only %}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </header>

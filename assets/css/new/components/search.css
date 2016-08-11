@@ -1,0 +1,10 @@
+.bab-Search {
+    padding-top: 8px;
+}
+
+.bab-Search-opener {
+    border-width: 0;
+
+    background-color: transparent;
+    cursor: pointer;
+}
