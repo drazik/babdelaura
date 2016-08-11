@@ -595,8 +595,7 @@ body {
 }
 
 .bab-Main {
-    margin-top: 85px;
-    margin-bottom: 70px;
+    margin: 70px 0;
 }
 
 .bab-Footer {
@@ -809,6 +808,10 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.bab-ArticlePreview:hover .bab-ArticlePreview-title {
+    opacity: 0.8;
 }
 
 .bab-ArticlePreview--featured .bab-ArticlePreview-title {
