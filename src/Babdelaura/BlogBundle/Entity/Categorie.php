@@ -50,17 +50,6 @@ class Categorie implements DescriptionEntite
     private $articles;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", inversedBy="enfants")
-    * @ORM\JoinColumn(nullable=true)
-    */
-    private $parent;
-
-    /**
-    * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", mappedBy="parent")
-    */
-    private $enfants;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -195,79 +184,5 @@ class Categorie implements DescriptionEntite
     public function getPrefixeType() {
         return "la ";
     }
-
-    /**
-     * Set parent
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $parent
-     * @return Categorie
-     */
-    public function setParent(\Babdelaura\BlogBundle\Entity\Categorie $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \Babdelaura\BlogBundle\Entity\Categorie
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * Add enfants
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $enfants
-     * @return Categorie
-     */
-    public function addEnfant(\Babdelaura\BlogBundle\Entity\Categorie $enfants)
-    {
-        $this->enfants[] = $enfants;
-
-        return $this;
-    }
-
-    /**
-     * Remove enfants
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $enfants
-     */
-    public function removeEnfant(\Babdelaura\BlogBundle\Entity\Categorie $enfants)
-    {
-        $this->enfants->removeElement($enfants);
-    }
-
-    /**
-     * Get enfants
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEnfants()
-    {
-        return $this->enfants;
-    }
-
-    /**
-     * Get enfants visibles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEnfantsVisibles()
-    {
-        $enfantsVisibles = array();
-
-        foreach ($this->enfants as $enfant) {
-            if($enfant->getVisible()) {
-                $enfantsVisibles[] = $enfant;
-            }
-        }
-        return $enfantsVisibles;
-    }
-
 
 }

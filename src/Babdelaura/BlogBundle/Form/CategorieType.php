@@ -20,10 +20,6 @@ class CategorieType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('visible', CheckboxType::class, array('required' => false))
-            ->add('parent', EntityType::class, array(
-                  'class'    => 'BabdelauraBlogBundle:Categorie',
-                  'choice_label' => 'nom',
-                  'required' => false))
         ;
     }
 

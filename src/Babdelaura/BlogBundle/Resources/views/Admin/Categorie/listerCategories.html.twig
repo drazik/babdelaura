@@ -1,38 +1,5 @@
 {% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
 
-{% macro afficherCategorie(categorie) %}
-    <tr>
-        <td class="offset-{{ categorie.niveau }}">
-            {% if categorie.niveau > 0 %}
-                <i class="fa fa-level-up rotate-90"></i>
-            {% endif %}
-            {{ categorie.categorie.nom }}
-        </td>
-        <td class="text-centered">
-            <a href="{{ path('babdelaurablog_admin_changerVisibiliteCategorie', {'slug' : categorie.categorie.slug}) }}">
-                {% if categorie.categorie.visible %}
-                    <i class="fa fa-check" onmouseover="this.className = 'fa fa-times';" onmouseout="this.className = 'fa fa-check';"></i>
-                {% else %}
-                    <i class="fa fa-times" onmouseout="this.className = 'fa fa-times';" onmouseover="this.className = 'fa fa-check';"></i>
-                {% endif %}
-            </a>
-        </td>
-        <td>
-            <ul class="actions">
-                <li class="action">
-                    <a href="{{ path('babdelaurablog_admin_modifierCategorie', {'slug' : categorie.categorie.slug}) }}"><i class="fa fa-edit"></i></a>
-                </li>
-                <li class="action">
-                    <a href="{{ path('babdelaurablog_admin_supprimerCategorie', {'slug' : categorie.categorie.slug}) }}"><i class="fa fa-trash-o"></i></a>
-                </li>
-            </ul>
-        </td>
-    </tr>
-    {% for enfant in categorie.enfants %}
-        {{ _self.afficherCategorie(enfant) }}
-    {% endfor %}
-{% endmacro %}
-
 {% block content %}
     <h1>Liste des catégories</h1>
     <table class="table table-stripped">
@@ -45,7 +12,31 @@
         </thead>
         <tbody>
             {% for categorie in listeCategories %}
-                {{ _self.afficherCategorie(categorie) }}
+                <tr>
+                    <td>
+                        
+                        {{ categorie.nom }}
+                    </td>
+                    <td class="text-centered">
+                        <a href="{{ path('babdelaurablog_admin_changerVisibiliteCategorie', {'slug' : categorie.slug}) }}">
+                            {% if categorie.visible %}
+                                <i class="fa fa-check" onmouseover="this.className = 'fa fa-times';" onmouseout="this.className = 'fa fa-check';"></i>
+                            {% else %}
+                                <i class="fa fa-times" onmouseout="this.className = 'fa fa-times';" onmouseover="this.className = 'fa fa-check';"></i>
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td>
+                        <ul class="actions">
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_modifierCategorie', {'slug' : categorie.slug}) }}"><i class="fa fa-edit"></i></a>
+                            </li>
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_supprimerCategorie', {'slug' : categorie.slug}) }}"><i class="fa fa-trash-o"></i></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

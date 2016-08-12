@@ -6,22 +6,9 @@
 
     {% for categorie in listeCategories %}
         <li class="bab-MainNav-item">
-            {% set enfants = categorie.enfantsVisibles %}
             <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}" title="{{categorie.nom}}">
                 {{categorie.nom}}
-                {% if enfants|length %}
-                    <i class="fa fa-caret-down"></i>
-                {% endif %}
             </a>
-            {% if enfants|length >  0 %}
-                <ul class="bab-MainNav-submenu">
-                    {% for categorieEnfant in enfants %}
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path('babdelaurablog_categorie', {'slug' : categorieEnfant.slug}) }}" title="{{categorieEnfant.nom}}">{{categorieEnfant.nom}}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
         </li>
     {% endfor %}
 
