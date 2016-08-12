@@ -30,7 +30,7 @@ class BlogController extends Controller
                    ->getManager();
 
         $repositoryCategorie = $em->getRepository('BabdelauraBlogBundle:Categorie');
-        $listeCategories = $repositoryCategorie->findBy(array('visible' => true, 'parent' => null));
+        $listeCategories = $repositoryCategorie->findBy(array('visible' => true));
 
         $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
         $listePages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true));
