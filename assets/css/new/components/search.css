@@ -1,0 +1,33 @@
+.bab-Search {
+    position: relative;
+
+    padding-top: 8px;
+}
+
+.bab-Search-opener {
+    border-width: 0;
+
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.bab-Search-form {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+
+    opacity: 1;
+    visibility: visible;
+}
+
+.bab-Search-form--hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.bab-Search-input {
+    padding: 10px;
+    border: 1px solid;
+
+    font-size: 18px;
+}

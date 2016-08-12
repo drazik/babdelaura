@@ -1,11 +1,11 @@
 import 'classlist-polyfill';
 
-import Nav from './modules/nav';
-import Modal from './modules/modal';
-import ImageUploadList from './modules/image-upload-list';
-import PreviewModalImagePicker from './modules/preview-modal-image-picker';
-import WYSIWYGEditor from './modules/wysiwyg-editor';
-import ImagePicker from './modules/image-picker';
+import Nav from './legacy/modules/nav';
+import Modal from './legacy/modules/modal';
+import ImageUploadList from './legacy/modules/image-upload-list';
+import PreviewModalImagePicker from './legacy/modules/preview-modal-image-picker';
+import WYSIWYGEditor from './legacy/modules/wysiwyg-editor';
+import ImagePicker from './legacy/modules/image-picker';
 
 const navContainer = document.querySelector('.js-nav');
 new Nav(navContainer);

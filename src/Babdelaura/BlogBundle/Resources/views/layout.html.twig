@@ -24,7 +24,7 @@
     <body>
         {% include 'BabdelauraBlogBundle:Layout:header.html.twig' %}
 
-        <a class="bab-Logo" href="#" title="Revenir à l'accueil"></a>
+        <a class="bab-Logo" href="{{ path('babdelaurablog_accueil') }}" title="Revenir à l'accueil"></a>
 
         <div class="bab-Wrapper">
             <main class="bab-Main">{% block content %}{% endblock %}</main>
