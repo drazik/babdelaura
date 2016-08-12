@@ -1,4 +1,6 @@
 .bab-Search {
+    position: relative;
+
     padding-top: 8px;
 }
 
@@ -7,4 +9,22 @@
 
     background-color: transparent;
     cursor: pointer;
+}
+
+.bab-Search-form {
+    position: absolute;
+
+    transition: all 0.2s;
+}
+
+.bab-Search-form--hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.bab-Search-input {
+    padding: 10px;
+    border: 1px solid;
+
+    font-size: 18px;
 }
