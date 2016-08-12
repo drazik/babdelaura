@@ -1,8 +1,8 @@
-<div class="bab-Search">
-    <button class="bab-Search-opener" type="button">
+<div class="bab-Search js-search">
+    <button class="bab-Search-opener js-search-opener" type="button">
         {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'search', 'size': 16} only %}
     </button>
-    <form class="bab-Search-form bab-Search-form--hidden" method="get" action="{{ path('babdelaurablog_recherche') }}">
-        <input class="bab-Search-input" name="motscles" placeholder="Recherche..." />
+    <form class="bab-Search-form bab-Search-form--hidden js-search-form" method="get" action="{{ path('babdelaurablog_recherche') }}">
+        <input class="bab-Search-input js-search-input" name="motscles" placeholder="Recherche..." />
     </form>
 </div>

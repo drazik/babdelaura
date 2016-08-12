@@ -40,16 +40,30 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	__webpack_require__(1);
 
+	var _search = __webpack_require__(38);
+
+	var _search2 = _interopRequireDefault(_search);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var searchContainer = document.querySelector('.js-search');
+
+	if (searchContainer) {
+	    new _search2.default(searchContainer);
+	}
+
 /***/ },
-/* 1 */
+
+/***/ 1:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -272,5 +286,60 @@
 	  }
 	}
 
+/***/ },
+
+/***/ 38:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Search = function () {
+	    function Search(container) {
+	        _classCallCheck(this, Search);
+
+	        this.options = {
+	            formHiddenClass: 'bab-Search-form--hidden'
+	        };
+
+	        this.opener = container.querySelector('.js-search-opener');
+	        this.form = container.querySelector('.js-search-form');
+	        this.input = this.form.querySelector('.js-search-input');
+
+	        this.initEvents();
+	    }
+
+	    _createClass(Search, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            this.opener.addEventListener('click', this.toggle.bind(this));
+	        }
+	    }, {
+	        key: 'toggle',
+	        value: function toggle() {
+	            this.form.classList.toggle(this.options.formHiddenClass);
+
+	            this.input.focus();
+	        }
+	    }, {
+	        key: 'isHidden',
+	        value: function isHidden() {
+	            return this.form.classList.contains(this.options.formHiddenClass);
+	        }
+	    }]);
+
+	    return Search;
+	}();
+
+	exports.default = Search;
+
 /***/ }
-/******/ ]);
+
+/******/ });

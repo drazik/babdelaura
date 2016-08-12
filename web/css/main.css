@@ -950,8 +950,11 @@ body {
 
 .bab-Search-form {
     position: absolute;
+    top: 15px;
+    right: 30px;
 
-    transition: all 0.2s;
+    opacity: 1;
+    visibility: visible;
 }
 
 .bab-Search-form--hidden {
