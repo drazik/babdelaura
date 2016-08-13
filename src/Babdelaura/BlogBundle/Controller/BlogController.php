@@ -65,15 +65,18 @@ class BlogController extends Controller
 
         $query = $repository->rechercher($motsCles);
         $paginator  = $this->get('knp_paginator');
-        $listeArticles = $paginator->paginate(
+        $articles = $paginator->paginate(
             $query,
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
+        $articles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
 
 
-        return $this->render('BabdelauraBlogBundle:Article:resultatsRecherche.html.twig', array('listeArticles' => $listeArticles, 'motsCles' => $motsCles));
+        return $this->render('BabdelauraBlogBundle:Article:resultatsRecherche.html.twig', array(
+            'articles' => $articles,
+            'motsCles' => $motsCles
+        ));
     }
 
     public function feedRssAction() {
