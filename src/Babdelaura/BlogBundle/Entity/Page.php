@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Page
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Page implements DescriptionEntite
@@ -83,6 +83,13 @@ class Page implements DescriptionEntite
      * @ORM\Column(name="inFooter", type="boolean")
      */
     private $inFooter;
+
+    /**
+     * @var integer
+     * @Gedmo\SortablePosition()
+     * @ORM\Column(type="integer")
+     */
+    public $position;
 
 
     public function __construct(){
@@ -309,5 +316,29 @@ class Page implements DescriptionEntite
     public function getInFooter()
     {
         return $this->inFooter;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Page
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

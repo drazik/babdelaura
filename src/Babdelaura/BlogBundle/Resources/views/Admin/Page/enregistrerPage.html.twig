@@ -36,6 +36,13 @@
             {{ form_errors(form.inFooter)}}
         </div>
 
+        <div class="form-group">
+            {{ form_label(form.position, "Position") }}
+            {{ form_errors(form.position)}}
+            {{ form_widget(form.position) }}
+        </div>
+
+
         <button class="bab-Button" type="submit">Enregistrer la page</button>
     {{ form_end(form) }}
 {% endblock %}
