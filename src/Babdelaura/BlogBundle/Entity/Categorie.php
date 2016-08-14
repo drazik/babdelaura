@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Categorie
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  */
 class Categorie implements DescriptionEntite
 {
@@ -48,6 +48,13 @@ class Categorie implements DescriptionEntite
     * @ORM\ManyToMany(targetEntity="Babdelaura\BlogBundle\Entity\Article", mappedBy="categories")
     */
     private $articles;
+
+    /**
+     * @var integer
+     * @Gedmo\SortablePosition()
+     * @ORM\Column(type="integer")
+     */
+    public $position;
 
     /**
      * Constructor
@@ -185,4 +192,28 @@ class Categorie implements DescriptionEntite
         return "la ";
     }
 
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Categorie
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
 }
