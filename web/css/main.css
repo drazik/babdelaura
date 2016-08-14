@@ -437,6 +437,22 @@ textarea {
     text-align: right;
 }
 
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.clearfix::after {
+    content: '';
+
+    display: table;
+
+    clear: both;
+}
+
 body {
     font-family: serif;
     color: #444;
@@ -969,7 +985,9 @@ body {
     font-size: 18px;
 }
 
-.bab-Article {}
+.bab-Article {
+    margin-bottom: 50px;
+}
 
 .bab-Article-header {
     text-align: center;

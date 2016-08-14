@@ -15,6 +15,15 @@
 
 {% block content %}
     {% include 'BabdelauraBlogBundle:Components/article:entry.html.twig' with {'article': article} only %}
+
+    <nav class="clearfix">
+        <a class="bab-Button pull-left" href="{{ urlArticleSuivant }}">
+            &lt; Article plus récent
+        </a>
+        <a class="bab-Button pull-right" href="{{ urlArticlePrecedent }}">
+            Article plus ancien &gt;
+        </a>
+    </nav>
 {% endblock %}
 
 {% block mainContent %}
