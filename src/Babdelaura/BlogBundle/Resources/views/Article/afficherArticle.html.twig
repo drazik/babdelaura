@@ -13,6 +13,9 @@
 
 {% block pageTitle %}{{article.titre}} | {% endblock %}
 
+{% block content %}
+    {% include 'BabdelauraBlogBundle:Components/article:entry.html.twig' with {'article': article} only %}
+{% endblock %}
 
 {% block mainContent %}
 
