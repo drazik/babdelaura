@@ -1,6 +1,8 @@
-{% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %} %}
+{% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
 
-<article class="bab-ArticlePreview">
+{% set small = small|default(false) %}
+
+<article class="bab-ArticlePreview {% if small %}bab-ArticlePreview--small{% endif %}">
     <header class="bab-ArticlePreview-header" style="background-image: url('{{ asset(article.image.webPath) }}');">
         <div class="bab-ArticlePreview-shadow"></div>
         <a class="bab-ArticlePreview-readMore bab-Button bab-Button--large" href="{{ articleUrl }}" tabindex="-1">

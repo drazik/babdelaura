@@ -129,6 +129,9 @@ class ArticleController extends Controller
             'jour' => $articleSuivant->getDatePublication()->format('d')
         ));
 
+        // TODO remplacer ce tableau par les vrais articles similaires
+        $articlesSimilaires = array($article, $article, $article, $article);
+
         $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
             'recaptcha' => true
         ));
@@ -137,7 +140,8 @@ class ArticleController extends Controller
           'article' => $article,
           'form' => $form->createView(),
           'urlArticlePrecedent' => $urlArticlePrecedent,
-          'urlArticleSuivant' => $urlArticleSuivant
+          'urlArticleSuivant' => $urlArticleSuivant,
+          'articlesSimilaires' => $articlesSimilaires
         ));
     }
 

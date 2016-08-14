@@ -47,3 +47,7 @@
 .bab-Article-content a {
     color: var(--main-color);
 }
+
+.bab-Article-similars {
+    margin-top: 45px;
+}
