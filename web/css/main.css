@@ -968,3 +968,51 @@ body {
 
     font-size: 18px;
 }
+
+.bab-Article {}
+
+.bab-Article-header {
+    text-align: center;
+}
+
+.bab-Article-pubdate {
+    font-size: 14px;
+
+    color: #898c8c;
+}
+
+.bab-Article-title {
+    margin: 8px 0;
+
+    font-family: sans-serif;
+    font-size: 30px;
+
+    text-transform: uppercase;
+    color: #4a4949;
+}
+
+.bab-Article-category {
+    font-size: 14px;
+
+    text-transform: uppercase;
+    color: #4fafb9;
+}
+
+.bab-Article-content {
+    color: #444;
+}
+
+.bab-Article-content p {
+    margin: 25px 0;
+}
+
+.bab-Article-content img {
+    display: block;
+    max-width: 100%;
+    height: auto !important;
+    margin: 25px auto;
+}
+
+.bab-Article-content a {
+    color: #4fafb9;
+}

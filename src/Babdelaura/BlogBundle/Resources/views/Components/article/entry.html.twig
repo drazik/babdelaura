@@ -1,0 +1,16 @@
+<article class="bab-Article">
+    <header class="bab-Article-header">
+        <time class="bab-Article-pubdate" datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
+            {{ article.datePublication|localizeddate('medium', 'none') }}
+        </time>
+        <h1 class="bab-Article-title">
+            {{ article.titre  }}
+        </h1>
+        <span class="bab-Article-category">
+            {{ article.categories[0].nom }}
+        </span>
+    </header>
+    <div class="bab-Article-content">
+        {{ article.contenu|raw }}
+    </div>
+</article>
