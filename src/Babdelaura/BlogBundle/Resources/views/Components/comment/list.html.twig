@@ -1,0 +1,10 @@
+<section>
+    {% for comment in comments %}
+        {% if loop.index == 2 %}
+            {% set offset = true %}
+        {% else %}
+            {% set offset = false %}
+        {% endif %}
+        {% include 'BabdelauraBlogBundle:Components/comment:entry.html.twig' with {'comment': comment, 'offset': offset} only %}
+    {% endfor %}
+</section>

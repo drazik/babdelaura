@@ -1,0 +1,25 @@
+{% set className = 'bab-Comment' %}
+
+{% if offset %}
+    {% set className = className ~ ' bab-Comment--offset' %}
+{% endif %}
+
+<article class="{{ className }}">
+    <header class="bab-Comment-header">
+        {% if comment.site %}
+        <a class="bab-Comment-author" href="{{ comment.site }}">{{ comment.auteur }}</a>,
+        {% else %}
+        <span class="bab-Comment-author">{{ comment.auteur }}</span>,
+        {% endif %}
+        le
+        <time datetime="{{ comment.datePublication|date('Y-m-d H:i') }}" pubdate>
+            {{ comment.datePublication|date('d/m/Y') }} à {{ comment.datePublication|date('H:i') }}
+        </time>
+        <button class="bab-Comment-answerButton" type="button">
+            Répondre
+        </button>
+    </header>
+    <div class="bab-Comment-content">
+        {{ comment.contenu }}
+    </div>
+</article>

@@ -1046,3 +1046,28 @@ body {
 .bab-Article-similars {
     margin-top: 45px;
 }
+
+.bab-Comment {
+    font-size: 18px;
+}
+
+.bab-Comment + .bab-Comment {
+    margin-top: 15px;
+}
+
+.bab-Comment--offset {
+    padding-left: 60px;
+}
+
+a.bab-Comment-author {
+    color: #4fafb9;
+    text-decoration: none;
+}
+
+.bab-Comment-answerButton {
+    padding: 0px 5px;
+    border-width: 0;
+
+    background-color: #4fafb9;
+    color: #fff;
+}

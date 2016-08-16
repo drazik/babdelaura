@@ -27,7 +27,7 @@
 
     {% include 'BabdelauraBlogBundle:Components/article:similars.html.twig' with {'articles': articlesSimilaires} only %}
 
-    {#{% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.commentaires} only %}#}
+    {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.commentaires} only %}
 {% endblock %}
 
 {% block javascripts %}
