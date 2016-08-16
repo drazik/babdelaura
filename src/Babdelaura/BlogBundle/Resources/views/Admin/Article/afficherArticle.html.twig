@@ -61,9 +61,12 @@
                             {{ commentaire.auteur }}
                         {% endif %}
                         <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
+                        
+                        <a href="{{path('babdelaurablog_admin_supprimerCommentaire', {'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-trash-o"></i> Supprimer</a>
                         {% if commentaire.valide == false %}
                             <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
                         {% endif %}
+
                     </header>
                     <div class="bab-Comment-content">
                         {{ commentaire.contenu }}
