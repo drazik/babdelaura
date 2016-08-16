@@ -39,6 +39,10 @@
     background-position: center;
 }
 
+.bab-ArticlePreview--small .bab-ArticlePreview-header {
+    height: 160px;
+}
+
 .bab-ArticlePreview-readMore {
     position: absolute;
     top: 50%;

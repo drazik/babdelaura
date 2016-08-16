@@ -113,9 +113,24 @@ class ArticleController extends Controller
 
         $articlePrecedent = $repository->getPrecedent($article->getId());
         $articlePrecedent = array_shift($articlePrecedent);
+        $urlArticlePrecedent = $this->generateUrl('babdelaurablog_article', array(
+            'slug' => $articlePrecedent->getSlug(),
+            'annee' => $articlePrecedent->getDatePublication()->format('Y'),
+            'mois' => $articlePrecedent->getDatePublication()->format('m'),
+            'jour' => $articlePrecedent->getDatePublication()->format('d')
+        ));
 
         $articleSuivant = $repository->getSuivant($article->getId());
         $articleSuivant = array_shift($articleSuivant);
+        $urlArticleSuivant = $this->generateUrl('babdelaurablog_article', array(
+            'slug' => $articleSuivant->getSlug(),
+            'annee' => $articleSuivant->getDatePublication()->format('Y'),
+            'mois' => $articleSuivant->getDatePublication()->format('m'),
+            'jour' => $articleSuivant->getDatePublication()->format('d')
+        ));
+
+        // TODO remplacer ce tableau par les vrais articles similaires
+        $articlesSimilaires = array($article, $article, $article, $article);
 
         $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
             'recaptcha' => true
@@ -124,8 +139,9 @@ class ArticleController extends Controller
         return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig',array(
           'article' => $article,
           'form' => $form->createView(),
-          'articlePrecedent' => $articlePrecedent,
-          'articleSuivant' => $articleSuivant
+          'urlArticlePrecedent' => $urlArticlePrecedent,
+          'urlArticleSuivant' => $urlArticleSuivant,
+          'articlesSimilaires' => $articlesSimilaires
         ));
     }
 

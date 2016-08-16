@@ -1,6 +1,8 @@
-{% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %} %}
+{% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
 
-<article class="bab-ArticlePreview">
+{% set small = small|default(false) %}
+
+<article class="bab-ArticlePreview {% if small %}bab-ArticlePreview--small{% endif %}">
     <header class="bab-ArticlePreview-header" style="background-image: url('{{ asset(article.image.webPath) }}');">
         <div class="bab-ArticlePreview-shadow"></div>
         <a class="bab-ArticlePreview-readMore bab-Button bab-Button--large" href="{{ articleUrl }}" tabindex="-1">
@@ -16,7 +18,7 @@
         <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categories[0].slug}) }}" title="Voir les articles de la catégorie {{ article.categories[0].nom }}">
             {{ article.categories[0].nom }}
         </a>
-        <time datetime="2016-05-22" pubdate>
+        <time datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
             {{ article.datePublication|localizeddate('medium', 'none') }}
         </time>
         <a href="{{ articleUrl }}#commentaires" title="Lire les commentaires à propos de {{ article.titre }}">
