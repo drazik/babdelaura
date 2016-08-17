@@ -30,13 +30,15 @@ class BlogController extends Controller
                    ->getManager();
 
         $repositoryCategorie = $em->getRepository('BabdelauraBlogBundle:Categorie');
-        $listeCategories = $repositoryCategorie->findBy(array('visible' => true),array('position' => 'ASC'));
+        $categories = $repositoryCategorie->findBy(array('visible' => true),array('position' => 'ASC'));
 
         $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-        $listePages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true),array('position' => 'ASC'));
+        $pages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true),array('position' => 'ASC'));
 
-        return $this->render('BabdelauraBlogBundle:Blog:mainMenu.html.twig', array('listeCategories' => $listeCategories, 'listePages' => $listePages));
-
+        return $this->render('BabdelauraBlogBundle:Layout:navigation.html.twig', array(
+            'categories' => $categories,
+            'pages' => $pages
+        ));
     }
 
     public function footerAction() {
@@ -44,9 +46,11 @@ class BlogController extends Controller
                    ->getManager();
 
        $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-       $listePages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true),array('position' => 'ASC'));
+       $pages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true),array('position' => 'ASC'));
 
-       return $this->render('BabdelauraBlogBundle:Blog:footer.html.twig', array('listePages' => $listePages));
+       return $this->render('BabdelauraBlogBundle:Layout:footer.html.twig', array(
+           'pages' => $pages
+       ));
     }
 
     public function formulaireRechercheAction() {

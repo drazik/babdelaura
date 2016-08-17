@@ -1,20 +1,13 @@
 <nav class="bab-Navigation">
-    <a class="bab-Navigation-item" href="#">
-        Bijoux
+    {% for category in categories %}
+    <a class="bab-Navigation-item" href="{{ path('babdelaurablog_categorie', {'slug': category.slug}) }}">
+        {{ category.nom }}
     </a>
-    <a class="bab-Navigation-item" href="#">
-        Nail art
+    {% endfor %}
+
+    {% for page in pages %}
+    <a class="bab-Navigation-item" href="{{ path('babdelaurablog_page', {'slug': page.slug}) }}">
+        {{ page.titre }}
     </a>
-    <a class="bab-Navigation-item" href="#">
-        Divers
-    </a>
-    <a class="bab-Navigation-item" href="#">
-        Qui suis-je ?
-    </a>
-    <a class="bab-Navigation-item bab-Navigation-item--odd" href="#">
-        Boutique
-    </a>
-    <a class="bab-Navigation-item" href="#">
-        Contact
-    </a>
+    {% endfor %}
 </nav>

@@ -34,7 +34,7 @@
             {% include 'BabdelauraBlogBundle:Components:separator.html.twig' %}
         </div>
 
-        {% include 'BabdelauraBlogBundle:Layout:footer.html.twig' %}
+        {{ render(controller('BabdelauraBlogBundle:Blog:footer')) }}
 
         {% block javascripts %}
             <script src="{{ asset('js/app.js') }}"></script>
