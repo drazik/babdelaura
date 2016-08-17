@@ -45,7 +45,7 @@ class Categorie implements DescriptionEntite
     private $slug;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Babdelaura\BlogBundle\Entity\Article", mappedBy="categories")
+    * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Article", mappedBy="categorie")
     */
     private $articles;
 
@@ -121,39 +121,6 @@ class Categorie implements DescriptionEntite
     }
 
     /**
-     * Add articles
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Article $articles
-     * @return Categorie
-     */
-    public function addArticle(\Babdelaura\BlogBundle\Entity\Article $articles)
-    {
-        $this->articles[] = $articles;
-
-        return $this;
-    }
-
-    /**
-     * Remove articles
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Article $articles
-     */
-    public function removeArticle(\Babdelaura\BlogBundle\Entity\Article $articles)
-    {
-        $this->articles->removeElement($articles);
-    }
-
-    /**
-     * Get articles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArticles()
-    {
-        return $this->articles;
-    }
-
-    /**
      * Set slug
      *
      * @param string $slug
@@ -215,5 +182,39 @@ class Categorie implements DescriptionEntite
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Add article
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Article $article
+     *
+     * @return Categorie
+     */
+    public function addArticle(\Babdelaura\BlogBundle\Entity\Article $article)
+    {
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove article
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Article $article
+     */
+    public function removeArticle(\Babdelaura\BlogBundle\Entity\Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

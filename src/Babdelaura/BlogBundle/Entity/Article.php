@@ -78,10 +78,10 @@ class Article implements DescriptionEntite
     private $image;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", cascade={"persist"}, inversedBy="articles")
+    * @ORM\ManyToOne(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", cascade={"persist"}, inversedBy="articles")
     *
     */
-    private $categories;
+    private $categorie;
 
     /**
     * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Commentaire", cascade={"persist"}, mappedBy="article")
@@ -93,7 +93,6 @@ class Article implements DescriptionEntite
     public function __construct(){
         $this->datePublication = new \DateTime;
         $this->publication = false;
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -278,39 +277,6 @@ class Article implements DescriptionEntite
     }
 
     /**
-     * Add categories
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $categories
-     * @return Article
-     */
-    public function addCategorie(\Babdelaura\BlogBundle\Entity\Categorie $categories)
-    {
-        $this->categories[] = $categories;
-        $categories->addArticle($this);
-        return $this;
-    }
-
-    /**
-     * Remove categories
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $categories
-     */
-    public function removeCategorie(\Babdelaura\BlogBundle\Entity\Categorie $categories)
-    {
-        $this->categories->removeElement($categories);
-    }
-
-    /**
-     * Get categories
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
      * Add commentaires
      *
      * @param \Babdelaura\BlogBundle\Entity\Commentaire $commentaires
@@ -382,29 +348,6 @@ class Article implements DescriptionEntite
         }
     }
 
-    /**
-     * Add categories
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $categories
-     * @return Article
-     */
-    public function addCategory(\Babdelaura\BlogBundle\Entity\Categorie $categories)
-    {
-        $this->categories[] = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Remove categories
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $categories
-     */
-    public function removeCategory(\Babdelaura\BlogBundle\Entity\Categorie $categories)
-    {
-        $this->categories->removeElement($categories);
-    }
-
     public function getImageTemp() {
         return $this->imageTemp;
     }
@@ -429,5 +372,29 @@ class Article implements DescriptionEntite
 
     public function getPrefixeType() {
         return "l'";
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Categorie $categorie
+     *
+     * @return Article
+     */
+    public function setCategorie(\Babdelaura\BlogBundle\Entity\Categorie $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Babdelaura\BlogBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
     }
 }
