@@ -23,9 +23,7 @@
                     Le {{ article.datePublication|date("d/m/Y à H:i") }} -
                     <a href="#commentaires">{{nbCommentaires}} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %} {% if nbCommentairesNonValides > 0 %} (dont {{nbCommentairesNonValides}} à valider){% endif %}</a>
                     <ul class="bab-Article-categories">
-                        {% for categorie in article.categories %}
-                            <li class="bab-Article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
-                        {% endfor %}
+                            <li class="bab-Article-category"><a href="#">{{article.categorie.nom}}</a></li>
                     </ul>
                 </aside>
             </header>

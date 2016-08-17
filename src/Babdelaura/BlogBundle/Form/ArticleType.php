@@ -24,10 +24,9 @@ class ArticleType extends AbstractType
             ->add('contenu', TextareaType::class)
             ->add('publication', CheckboxType::class, array('required' => false))
             ->add('imageTemp', TextType::class, array('attr' => array('class' =>'hidden-image-path')))
-            ->add('categories', EntityType::class, array(
+            ->add('categorie', EntityType::class, array(
                   'class'    => 'BabdelauraBlogBundle:Categorie',
-                  'choice_label' => 'nom',
-                  'multiple' => true))
+                  'choice_label' => 'nom'))
             ->add('datePublication', DateTimeType::class)
             ;
     }

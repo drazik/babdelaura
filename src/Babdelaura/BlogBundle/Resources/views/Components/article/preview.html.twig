@@ -15,8 +15,8 @@
         </a>
     </h1>
     <aside class="bab-ArticlePreview-infos">
-        <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categories[0].slug}) }}" title="Voir les articles de la catégorie {{ article.categories[0].nom }}">
-            {{ article.categories[0].nom }}
+        <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
+            {{ article.categorie.nom }}
         </a>
         <time datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
             {{ article.datePublication|localizeddate('medium', 'none') }}

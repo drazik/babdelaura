@@ -16,10 +16,10 @@ class ArticleRepository extends EntityRepository {
                       ->addSelect('i');
 
         if ($categorie) {
-            $query = $query->innerJoin('a.categories', 'cat', 'WITH', 'cat=:categorie')
+            $query = $query->innerJoin('a.categorie', 'cat', 'WITH', 'cat=:categorie')
                            ->setParameter('categorie', $categorie);
         } else {
-            $query = $query->innerJoin('a.categories', 'cat')
+            $query = $query->innerJoin('a.categorie', 'cat')
                            ->addSelect('cat');
         }
 
