@@ -52,7 +52,7 @@ class Categorie implements DescriptionEntite
     /**
      * @var integer
      * @Gedmo\SortablePosition()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",options={"default" : -1})
      */
     public $position;
 

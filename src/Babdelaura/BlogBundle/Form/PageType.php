@@ -24,7 +24,7 @@ class PageType extends AbstractType
             ->add('publication', CheckboxType::class, array('required' => false))
             ->add('inMenu', CheckboxType::class, array('required' => false))
             ->add('inFooter', CheckboxType::class, array('required' => false))
-            ->add('position', IntegerType::class)
+            ->add('position', IntegerType::class, array('required' => false))
         ;
     }
 

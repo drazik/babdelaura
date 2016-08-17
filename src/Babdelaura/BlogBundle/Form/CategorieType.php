@@ -21,7 +21,7 @@ class CategorieType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('visible', CheckboxType::class, array('required' => false))            
-            ->add('position', IntegerType::class)
+            ->add('position', IntegerType::class, array('required' => false))
         ;
     }
 
