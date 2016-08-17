@@ -1,6 +1,16 @@
 {% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
 
 {% block content %}
+    {% for flashMessage in app.session.flashbag.get('info') %}
+        <div class="bab-Notification bab-Notification--success">
+            <div class="bab-Notification-content">{{ flashMessage }}</div>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="bab-Notification bab-Notification--error">
+            <div class="bab-Notification-content">{{ flashMessage }}</div>
+        </div>
+    {% endfor %}
     <h1>Liste des catégories</h1>
     <table class="table table-stripped">
         <thead>

@@ -64,6 +64,12 @@ class CategorieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categorie = $em->getRepository('BabdelauraBlogBundle:Categorie')->findOneBySlug($slug);
 
+        if (!$categorie->getArticles()->isEmpty()) {
+            $this->get('session')->getFlashBag()
+                ->add('error', 'Impossible de supprimer : la catégorie est liée à des articles');
+            return $this->redirect($this->generateUrl('babdelaurablog_admin_listerCategories', array('numPage' => 1)));
+        }
+
         // On crée un formulaire vide, qui ne contiendra que le champ CSRF
         // Cela permet de protéger la suppression de categorie contre cette faille
         $form = $this->createFormBuilder()->getForm();
@@ -78,7 +84,7 @@ class CategorieController extends Controller
             $em->flush();
 
             // On définit un message flash
-            $this->get('session')->getFlashBag()->add('info', 'Catégorie bien supprimée');
+            $this->get('session')->getFlashBag()->add('info', 'La catégorie a bien été supprimée');
 
 
             return $this->redirect($this->generateUrl('babdelaurablog_admin_listerCategories', array('numPage' => 1)));
