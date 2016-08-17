@@ -33,7 +33,7 @@ class BlogController extends Controller
         $listeCategories = $repositoryCategorie->findBy(array('visible' => true));
 
         $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-        $listePages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true));
+        $listePages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true),array('position' => 'ASC'));
 
         return $this->render('BabdelauraBlogBundle:Blog:mainMenu.html.twig', array('listeCategories' => $listeCategories, 'listePages' => $listePages));
 
@@ -44,7 +44,7 @@ class BlogController extends Controller
                    ->getManager();
 
        $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-       $listePages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true));
+       $listePages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true),array('position' => 'ASC'));
 
        return $this->render('BabdelauraBlogBundle:Blog:footer.html.twig', array('listePages' => $listePages));
     }

@@ -76,7 +76,7 @@ class PageController extends Controller
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Page');
 
-        $query = $repository->findAll();
+        $query = $repository->findBy(array(),array('position' => 'ASC'));
 
         $session = $this->get('session');
 
