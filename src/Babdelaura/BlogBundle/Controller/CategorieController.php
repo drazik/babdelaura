@@ -48,7 +48,7 @@ class CategorieController extends Controller
 
 
 
-        $listeCategories = $repository->findAll();
+        $listeCategories = $repository->findBy(array(),array('position' => 'ASC'));
 
         $session = $this->get('session');
         $session->set('url', $this->generateUrl('babdelaurablog_admin_listerCategories'));
