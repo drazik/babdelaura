@@ -4,7 +4,8 @@
     {% include 'BabdelauraBlogBundle:Components/article:list.html.twig' with {'articles': articles, 'featured': true} only %}
     <div class="align-center">
         <a class="bab-Button" href="{{ path('babdelaurablog_tousLesArticles') }}?page=2">
-            Articles plus anciens >
+            Articles plus anciens
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
         </a>
     </div>
 {% endblock %}

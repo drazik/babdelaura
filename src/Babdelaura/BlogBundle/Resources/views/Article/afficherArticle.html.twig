@@ -19,13 +19,15 @@
     <nav class="clearfix">
         {% if urlArticleSuivant is not null %}
         <a class="bab-Button pull-left" href="{{ urlArticleSuivant }}">
-            &lt; Article plus récent
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronLeft'} only %}
+            Article plus récent
         </a>
         {% endif %}
 
         {% if urlArticlePrecedent is not null %}
         <a class="bab-Button pull-right" href="{{ urlArticlePrecedent }}">
-            Article plus ancien &gt;
+            Article plus ancien
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
         </a>
         {% endif %}
     </nav>

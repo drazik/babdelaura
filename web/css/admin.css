@@ -5042,6 +5042,11 @@ td {
     color: #fff;
 }
 
+.bab-Notification--error {
+    background-color: #ca3e3e;
+    color: #fff;
+}
+
 .bab-Notification-close {
     border-width: 0;
     background-color: transparent;
