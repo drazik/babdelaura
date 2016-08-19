@@ -17,12 +17,17 @@
     {% include 'BabdelauraBlogBundle:Components/article:entry.html.twig' with {'article': article} only %}
 
     <nav class="clearfix">
+        {% if urlArticleSuivant is not null %}
         <a class="bab-Button pull-left" href="{{ urlArticleSuivant }}">
             &lt; Article plus récent
         </a>
+        {% endif %}
+
+        {% if urlArticlePrecedent is not null %}
         <a class="bab-Button pull-right" href="{{ urlArticlePrecedent }}">
             Article plus ancien &gt;
         </a>
+        {% endif %}
     </nav>
 
     {% include 'BabdelauraBlogBundle:Components/article:similars.html.twig' with {'articles': articlesSimilaires} only %}

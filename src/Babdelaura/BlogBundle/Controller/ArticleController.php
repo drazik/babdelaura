@@ -113,21 +113,29 @@ class ArticleController extends Controller
 
         $articlePrecedent = $repository->getPrecedent($article->getId());
         $articlePrecedent = array_shift($articlePrecedent);
-        $urlArticlePrecedent = $this->generateUrl('babdelaurablog_article', array(
-            'slug' => $articlePrecedent->getSlug(),
-            'annee' => $articlePrecedent->getDatePublication()->format('Y'),
-            'mois' => $articlePrecedent->getDatePublication()->format('m'),
-            'jour' => $articlePrecedent->getDatePublication()->format('d')
-        ));
+        $urlArticlePrecedent = null;
+
+        if ($articlePrecedent != null) {
+            $urlArticlePrecedent = $this->generateUrl('babdelaurablog_article', array(
+                'slug' => $articlePrecedent->getSlug(),
+                'annee' => $articlePrecedent->getDatePublication()->format('Y'),
+                'mois' => $articlePrecedent->getDatePublication()->format('m'),
+                'jour' => $articlePrecedent->getDatePublication()->format('d')
+            ));
+        }
 
         $articleSuivant = $repository->getSuivant($article->getId());
         $articleSuivant = array_shift($articleSuivant);
-        $urlArticleSuivant = $this->generateUrl('babdelaurablog_article', array(
-            'slug' => $articleSuivant->getSlug(),
-            'annee' => $articleSuivant->getDatePublication()->format('Y'),
-            'mois' => $articleSuivant->getDatePublication()->format('m'),
-            'jour' => $articleSuivant->getDatePublication()->format('d')
-        ));
+        $urlArticleSuivant = null;
+
+        if ($articleSuivant != null) {
+            $urlArticleSuivant = $this->generateUrl('babdelaurablog_article', array(
+                'slug' => $articleSuivant->getSlug(),
+                'annee' => $articleSuivant->getDatePublication()->format('Y'),
+                'mois' => $articleSuivant->getDatePublication()->format('m'),
+                'jour' => $articleSuivant->getDatePublication()->format('d')
+            ));
+        }
 
         // TODO remplacer ce tableau par les vrais articles similaires
         $articlesSimilaires = array($article, $article, $article, $article);
