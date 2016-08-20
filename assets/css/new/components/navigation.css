@@ -16,6 +16,6 @@
     margin-left: 15px;
 }
 
-.bab-Navigation-item--odd {
+.bab-Navigation-item--highlight {
     color: var(--main-color);
 }
