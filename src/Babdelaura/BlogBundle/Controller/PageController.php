@@ -9,11 +9,42 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Babdelaura\BlogBundle\Entity\Page;
 use Babdelaura\BlogBundle\Form\PageInterneType;
+use Babdelaura\BlogBundle\Form\PageExterneType;
 
 class PageController extends Controller
 {
-     public function enregistrerPageInterneAction(Request $request, $slug = null) {
+    public function enregistrerPageInterneAction(Request $request, $slug = null) {
         //on récupère l'entity manager
+        $em = $this->getDoctrine()->getManager();
+
+        if ($slug == null) {
+          $page = new Page;
+        }
+        else {
+          $page = $em->getRepository('BabdelauraBlogBundle:Page')->findOneBySlug($slug);
+        }
+
+        $form = $this->createForm(PageInterneType::class, $page);
+
+        if($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if($form->isValid()) {
+                $page->setDatePublication(new \DateTime());
+
+                $em->persist($page);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('babdelaurablog_admin_afficherPage', array('slug' => $page->getSlug())));
+            }
+
+        }
+
+        return $this->render('BabdelauraBlogBundle:Admin/Page:enregistrerPageInterne.html.twig', array('form' => $form->createView()));
+    }     
+
+    public function enregistrerPageExterneAction(Request $request, $slug = null) {
+      //on récupère l'entity manager
       $em = $this->getDoctrine()->getManager();
 
       if ($slug == null) {
@@ -23,23 +54,24 @@ class PageController extends Controller
         $page = $em->getRepository('BabdelauraBlogBundle:Page')->findOneBySlug($slug);
       }
 
-      $form = $this->createForm(PageInterneType::class, $page);
+      $form = $this->createForm(PageExterneType::class, $page);
 
       if($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
           if($form->isValid()) {
               $page->setDatePublication(new \DateTime());
+              $page->setIsExterne(true);
 
               $em->persist($page);
               $em->flush();
 
-              return $this->redirect($this->generateUrl('babdelaurablog_admin_afficherPage', array('slug' => $page->getSlug())));
+              return $this->redirect($this->generateUrl('babdelaurablog_admin_listerPages'));
           }
 
-        }
+      }
 
-        return $this->render('BabdelauraBlogBundle:Admin/Page:enregistrerPageInterne.html.twig', array('form' => $form->createView()));
+      return $this->render('BabdelauraBlogBundle:Admin/Page:enregistrerPageExterne.html.twig', array('form' => $form->createView()));
     }
 
     public function publierPageAction($slug) {

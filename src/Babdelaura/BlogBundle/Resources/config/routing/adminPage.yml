@@ -21,3 +21,11 @@ babdelaurablog_admin_publierPage:
 babdelaurablog_admin_supprimerPage:
     path: /admin/supprimerPage/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Page:supprimerPage}
+
+babdelaurablog_admin_ajouterPageExterne:
+    path: /admin/ajouterPageExterne
+    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageExterne}
+
+babdelaurablog_admin_modifierPageExterne:
+    path: /admin/modifierPageExterne/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageExterne}

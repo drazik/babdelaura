@@ -43,8 +43,7 @@ class Page implements DescriptionEntite
     /**
      * @var string
      *
-     * @Assert\NotBlank(message="Le contenu de l'article ne peut pas être vide")
-     * @ORM\Column(name="contenu", type="text")
+     * @ORM\Column(name="contenu", type="text", nullable=true)
      */
     private $contenu;
 
@@ -91,10 +90,24 @@ class Page implements DescriptionEntite
      */
     public $position;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isExterne", type="boolean")
+     */
+    private $isExterne;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lienExterne", type="string", length=255, nullable=true)
+     */
+    private $lienExterne;
 
     public function __construct(){
         $this->datePublication = new \DateTime;
         $this->publication = false;
+        $this->isExterne = false;
     }
 
     /**
@@ -340,5 +353,53 @@ class Page implements DescriptionEntite
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set isExterne
+     *
+     * @param boolean $isExterne
+     *
+     * @return Page
+     */
+    public function setIsExterne($isExterne)
+    {
+        $this->isExterne = $isExterne;
+
+        return $this;
+    }
+
+    /**
+     * Get isExterne
+     *
+     * @return boolean
+     */
+    public function getIsExterne()
+    {
+        return $this->isExterne;
+    }
+
+    /**
+     * Set lienExterne
+     *
+     * @param string $lienExterne
+     *
+     * @return Page
+     */
+    public function setLienExterne($lienExterne)
+    {
+        $this->lienExterne = $lienExterne;
+
+        return $this;
+    }
+
+    /**
+     * Get lienExterne
+     *
+     * @return string
+     */
+    public function getLienExterne()
+    {
+        return $this->lienExterne;
     }
 }
