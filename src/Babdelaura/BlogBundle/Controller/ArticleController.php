@@ -66,9 +66,11 @@ class ArticleController extends Controller
         );
         $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
 
+        $title = 'Articles de la catégorie ' . $categorie->getNom();
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
-            'articles' => $articles
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
+            'articles' => $articles,
+            'title' => $title
         ));
     }
 
@@ -95,8 +97,19 @@ class ArticleController extends Controller
             throw $this->createNotFoundException('Aucun article ne correspond à cette date');
         }
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
-            'articles' => $articles
+        $title = 'Articles ';
+
+        if ($mois == null && $jour == null) {
+            $title .= 'de l\'année ' . $annee;
+        } elseif ($jour == null) {
+            $title .= 'du ' . $mois . '/' . $annee;
+        } else {
+            $title .= 'du ' . $jour . '/' . $mois . '/' . $annee;
+        }
+
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
+            'articles' => $articles,
+            'title' => $title
         ));
     }
 
@@ -116,10 +129,11 @@ class ArticleController extends Controller
         );
         $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
 
+        $title = 'Recherche "' . $motsCles . '"';
 
-        return $this->render('BabdelauraBlogBundle:Article:resultatsRecherche.html.twig', array(
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
             'articles' => $articles,
-            'motsCles' => $motsCles
+            'title' => $title
         ));
     }
 
