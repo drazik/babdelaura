@@ -68,8 +68,7 @@ class ArticleController extends Controller
 
 
         return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
-            'articles' => $articles,
-            'categorie' => $categorie
+            'articles' => $articles
         ));
     }
 
@@ -82,19 +81,23 @@ class ArticleController extends Controller
 
         $query = $repository->getArticlesDate($annee, $mois, $jour);
         $paginator  = $this->get('knp_paginator');
-        $listeArticles = $paginator->paginate(
+        $articles = $paginator->paginate(
             $query,
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
 
-        $countArticle = $listeArticles->getTotalItemCount();
-        if ($countArticle == 0) {
+        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+
+        $nbArticles = $articles->getTotalItemCount();
+
+        if ($nbArticles == 0) {
             throw $this->createNotFoundException('Aucun article ne correspond à cette date');
         }
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles));
+        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
+            'articles' => $articles
+        ));
     }
 
 
