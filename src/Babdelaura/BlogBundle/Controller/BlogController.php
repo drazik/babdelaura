@@ -53,29 +53,6 @@ class BlogController extends Controller
        ));
     }
 
-    public function rechercherAction(Request $request) {
-        $motsCles = $request->query->get('motscles');
-
-        $repository = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Article');
-
-        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
-
-        $query = $repository->rechercher($motsCles);
-        $paginator  = $this->get('knp_paginator');
-        $articles = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            $nbArticlesParPage
-        );
-        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
-
-
-        return $this->render('BabdelauraBlogBundle:Article:resultatsRecherche.html.twig', array(
-            'articles' => $articles,
-            'motsCles' => $motsCles
-        ));
-    }
-
     public function feedRssAction() {
         $repository = $this->getDoctrine()
                            ->getManager()
