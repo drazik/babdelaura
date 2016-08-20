@@ -12,7 +12,7 @@ use Babdelaura\BlogBundle\Form\PageInterneType;
 
 class PageController extends Controller
 {
-     public function enregistrerPageAction(Request $request, $slug = null) {
+     public function enregistrerPageInterneAction(Request $request, $slug = null) {
         //on récupère l'entity manager
       $em = $this->getDoctrine()->getManager();
 
@@ -39,7 +39,7 @@ class PageController extends Controller
 
         }
 
-        return $this->render('BabdelauraBlogBundle:Admin/Page:enregistrerPage.html.twig', array('form' => $form->createView()));
+        return $this->render('BabdelauraBlogBundle:Admin/Page:enregistrerPageInterne.html.twig', array('form' => $form->createView()));
     }
 
     public function publierPageAction($slug) {

@@ -1,14 +1,14 @@
-babdelaurablog_admin_ajouterPage:
-    path: /admin/ajouterPage
-    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPage}
+babdelaurablog_admin_ajouterPageInterne:
+    path: /admin/ajouterPageInterne
+    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageInterne}
 
 babdelaurablog_admin_afficherPage:
     path: /admin/page/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Page:afficherPageAdmin}
 
-babdelaurablog_admin_modifierPage:
-    path: /admin/modifierPage/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPage}
+babdelaurablog_admin_modifierPageInterne:
+    path: /admin/modifierPageInterne/{slug}
+    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageInterne}
 
 babdelaurablog_admin_listerPages:
     path: /admin/pages
