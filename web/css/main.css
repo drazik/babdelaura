@@ -427,6 +427,8 @@ textarea {
     /* Grid */
 
     /* z-index scale */
+
+    /* Fonts */
 }
 
 .align-center {
@@ -454,32 +456,23 @@ textarea {
 }
 
 body {
-    font-family: serif;
+    font-family: 'Vollkorn', serif;
     color: #444;
 }
 
 p {
-
+    line-height: 1.5;
 }
 
-a,
-a:visited {
-
+a {
+    color: #4fafb9;
 }
 
 a:hover,
 a:focus,
 a:active {
-
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-
+    /* TODO constraster la couleur par rapport à celle de base */
+    color: #4fafb9;
 }
 
 h1:first-child,
@@ -619,7 +612,7 @@ body {
 }
 
 .bab-Main {
-    margin: 70px 0;
+    margin: 70px 0 35px;
 }
 
 .bab-Footer {
@@ -805,6 +798,7 @@ body {
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.2s;
+    color: #fff !important;
 }
 
 .bab-ArticlePreview:hover .bab-ArticlePreview-readMore {
@@ -827,10 +821,11 @@ body {
 }
 
 .bab-ArticlePreview-title {
-    margin: 10px 0;
+    margin: 10px 0 3px;
 
-    font-size: 24px;
+    font-size: 32px;
     font-weight: normal;
+    font-family: 'Amatic SC', cursive;
 
     color: #4a4949;
     white-space: nowrap;
@@ -891,12 +886,16 @@ body {
 }
 
 .bab-ArticlePreview-infos :not(:first-child)::before {
-    content: '¤';
+    content: '';
 
     display: inline-block;
-    margin-right: 3px;
+    width: 5px;
+    height: 5px;
+    margin: 0 3px;
 
-    color: #4fafb9;
+    border-radius: 50%;
+    background-color: #4fafb9;
+    vertical-align: middle;
 }
 
 .bab-Button {
@@ -905,7 +904,7 @@ body {
 
     font-size: 18px;
 
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
     background-color: #4fafb9;
     box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
@@ -993,25 +992,16 @@ body {
     font-size: 18px;
 }
 
-.bab-Article {
-    margin-bottom: 50px;
-}
-
 .bab-Article-header {
     text-align: center;
-}
-
-.bab-Article-pubdate {
-    font-size: 14px;
-
-    color: #898c8c;
 }
 
 .bab-Article-title {
     margin: 8px 0;
 
-    font-family: sans-serif;
-    font-size: 30px;
+    font-family: 'Amatic SC', cursive;
+    font-size: 48px;
+    font-weight: normal;
 
     text-transform: uppercase;
     color: #4a4949;
@@ -1020,8 +1010,39 @@ body {
 .bab-Article-category {
     font-size: 14px;
 
-    text-transform: uppercase;
     color: #4fafb9;
+    text-decoration: none;
+}
+
+.bab-Article-pubdate {
+    font-size: 14px;
+
+    color: #898c8c;
+}
+
+.bab-Article-pubdate::before,
+.bab-Article-nbComments::before {
+    content: '';
+
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin: 0 3px;
+
+    border-radius: 50%;
+    background-color: #4fafb9;
+    vertical-align: middle;
+}
+
+.bab-Article-nbComments {
+    font-size: 14px;
+
+    color: #4fafb9;
+    text-decoration: none;
+}
+
+.bab-Article-nbComments svg {
+    vertical-align: middle;
 }
 
 .bab-Article-content {
@@ -1034,17 +1055,13 @@ body {
 
 .bab-Article-content img {
     display: block;
-    max-width: 100%;
+    max-width: 75%;
     height: auto !important;
     margin: 25px auto;
 }
 
 .bab-Article-content a {
     color: #4fafb9;
-}
-
-.bab-Article-similars {
-    margin-top: 45px;
 }
 
 .bab-Comment {
@@ -1070,4 +1087,24 @@ a.bab-Comment-author {
 
     background-color: #4fafb9;
     color: #fff;
+}
+
+.bab-Section {
+    padding: 35px 0;
+}
+
+.bab-Section:first-child {
+    padding-top: 0;
+}
+
+.bab-Section:last-child {
+    padding-bottom: 0;
+}
+
+.bab-Section-title {
+    font-family: 'Amatic SC', cursive;
+    font-weight: normal;
+    font-size: 36px;
+
+    text-transform: uppercase;
 }

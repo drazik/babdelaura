@@ -14,4 +14,8 @@
 
     /* z-index scale */
     --zi-header-layer: 100;
+
+    /* Fonts */
+    --base-font-stack: 'Vollkorn', serif;
+    --title-font-stack: 'Amatic SC', cursive;
 }

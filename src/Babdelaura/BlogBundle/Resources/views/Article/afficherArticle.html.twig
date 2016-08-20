@@ -14,9 +14,11 @@
 {% block pageTitle %}{{article.titre}} | {% endblock %}
 
 {% block content %}
-    {% include 'BabdelauraBlogBundle:Components/article:entry.html.twig' with {'article': article} only %}
+    <section class="bab-Section">
+        {% include 'BabdelauraBlogBundle:Components/article:entry.html.twig' with {'article': article} only %}
+    </section>
 
-    <nav class="clearfix">
+    <nav class="bab-Section clearfix">
         {% if urlArticleSuivant is not null %}
         <a class="bab-Button pull-left" href="{{ urlArticleSuivant }}">
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronLeft'} only %}
@@ -32,9 +34,20 @@
         {% endif %}
     </nav>
 
-    {% include 'BabdelauraBlogBundle:Components/article:similars.html.twig' with {'articles': articlesSimilaires} only %}
+    <section class="bab-Section">
+        <div class="bab-Grid bab-Grid--smallGutters">
+            {% set nbArticles = articlesSimilaires|length %}
+            {% for article in articlesSimilaires %}
+            <div class="bab-Grid-cell bab-Grid-cell--1-{{ nbArticles }}">
+                {% include 'BabdelauraBlogBundle:Components/article:preview.html.twig' with {'article': article, 'small': true} only %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
-    {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.commentaires} only %}
+    <section class="bab-Section">
+        {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.commentaires} only %}
+    </section>
 {% endblock %}
 
 {% block javascripts %}

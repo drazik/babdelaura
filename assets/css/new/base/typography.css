@@ -1,30 +1,21 @@
 body {
-    font-family: serif;
+    font-family: var(--base-font-stack);
     color: var(--text-color);
 }
 
 p {
-
+    line-height: 1.5;
 }
 
-a,
-a:visited {
-
+a {
+    color: var(--main-color);
 }
 
 a:hover,
 a:focus,
 a:active {
-
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-
+    /* TODO constraster la couleur par rapport à celle de base */
+    color: var(--main-color);
 }
 
 h1:first-child,
