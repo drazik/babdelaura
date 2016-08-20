@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class PageType extends AbstractType
+class PageInterneType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder

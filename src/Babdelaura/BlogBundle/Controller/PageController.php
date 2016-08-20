@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Babdelaura\BlogBundle\Entity\Page;
-use Babdelaura\BlogBundle\Form\PageType;
+use Babdelaura\BlogBundle\Form\PageInterneType;
 
 class PageController extends Controller
 {
@@ -23,7 +23,7 @@ class PageController extends Controller
         $page = $em->getRepository('BabdelauraBlogBundle:Page')->findOneBySlug($slug);
       }
 
-      $form = $this->createForm(PageType::class, $page);
+      $form = $this->createForm(PageInterneType::class, $page);
 
       if($request->getMethod() == 'POST') {
           $form->handleRequest($request);
