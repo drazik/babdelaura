@@ -108,7 +108,15 @@ class Page implements DescriptionEntite
         $this->datePublication = new \DateTime;
         $this->publication = false;
         $this->isExterne = false;
+        $this->mettreEnAvant = false;
     }
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="mettreEnAvant", type="boolean")
+     */
+    public $mettreEnAvant;
 
     /**
      * Get id
@@ -401,5 +409,29 @@ class Page implements DescriptionEntite
     public function getLienExterne()
     {
         return $this->lienExterne;
+    }
+
+    /**
+     * Set mettreEnAvant
+     *
+     * @param boolean $mettreEnAvant
+     *
+     * @return Page
+     */
+    public function setMettreEnAvant($mettreEnAvant)
+    {
+        $this->mettreEnAvant = $mettreEnAvant;
+
+        return $this;
+    }
+
+    /**
+     * Get mettreEnAvant
+     *
+     * @return boolean
+     */
+    public function getMettreEnAvant()
+    {
+        return $this->mettreEnAvant;
     }
 }

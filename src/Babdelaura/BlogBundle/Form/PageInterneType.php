@@ -25,6 +25,7 @@ class PageInterneType extends AbstractType
             ->add('inMenu', CheckboxType::class, array('required' => false))
             ->add('inFooter', CheckboxType::class, array('required' => false))
             ->add('position', IntegerType::class, array('required' => false))
+            ->add('mettreEnAvant', CheckboxType::class, array('required' => false))
         ;
     }
 

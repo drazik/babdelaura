@@ -35,6 +35,12 @@
             {{ form_label(form.inFooter, "Afficher dans le footer") }}
             {{ form_errors(form.inFooter)}}
         </div>
+        
+        <div class="checkbox">
+            {{ form_widget(form.mettreEnAvant) }}
+            {{ form_label(form.mettreEnAvant, "Mettre en avant") }}
+            {{ form_errors(form.mettreEnAvant)}}
+        </div>
 
         <div class="form-group">
             {{ form_label(form.position, "Position") }}
