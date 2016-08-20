@@ -66,10 +66,11 @@ class ArticleController extends Controller
         );
         $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
 
+        $title = 'Articles de la catégorie ' . $categorie->getNom();
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
             'articles' => $articles,
-            'categorie' => $categorie
+            'title' => $title
         ));
     }
 
@@ -82,19 +83,58 @@ class ArticleController extends Controller
 
         $query = $repository->getArticlesDate($annee, $mois, $jour);
         $paginator  = $this->get('knp_paginator');
-        $listeArticles = $paginator->paginate(
+        $articles = $paginator->paginate(
             $query,
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
 
-        $countArticle = $listeArticles->getTotalItemCount();
-        if ($countArticle == 0) {
+        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+
+        $nbArticles = $articles->getTotalItemCount();
+
+        if ($nbArticles == 0) {
             throw $this->createNotFoundException('Aucun article ne correspond à cette date');
         }
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles));
+        $title = 'Articles ';
+
+        if ($mois == null && $jour == null) {
+            $title .= 'de l\'année ' . $annee;
+        } elseif ($jour == null) {
+            $title .= 'du ' . $mois . '/' . $annee;
+        } else {
+            $title .= 'du ' . $jour . '/' . $mois . '/' . $annee;
+        }
+
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
+            'articles' => $articles,
+            'title' => $title
+        ));
+    }
+
+    public function rechercherAction(Request $request) {
+        $motsCles = $request->query->get('motscles');
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Article');
+
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+
+        $query = $repository->rechercher($motsCles);
+        $paginator  = $this->get('knp_paginator');
+        $articles = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            $nbArticlesParPage
+        );
+        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+
+        $title = 'Recherche "' . $motsCles . '"';
+
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
+            'articles' => $articles,
+            'title' => $title
+        ));
     }
 
 

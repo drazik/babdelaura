@@ -51,7 +51,7 @@ babdelaurablog_articlesAnnee:
 
 babdelaurablog_recherche:
     path: /rechercher
-    defaults: {_controller: BabdelauraBlogBundle:Blog:rechercher}
+    defaults: {_controller: BabdelauraBlogBundle:Article:rechercher}
 
 babdelaurablog_ajouterCommentaire:
     path: /{annee}/{mois}/{jour}/{slug}

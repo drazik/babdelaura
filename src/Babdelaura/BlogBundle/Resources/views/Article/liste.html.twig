@@ -1,0 +1,26 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% if title is defined %}
+  {% set metaDescription = title %}
+{% else %}
+  {% set metaDescription = 'Tous les articles' %}
+{% endif %}
+
+{% block facebookMetas %}
+    {% set ogTitle = metaDescription %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <section class="bab-Section">
+        {% if title is defined %}
+        <h1 class="bab-Section-title">
+            {{ title }}
+        </h1>
+        {% endif %}
+
+        {% include 'BabdelauraBlogBundle:Components/article:list.html.twig' with {'articles': articles} only %}
+        {{ knp_pagination_render(articles) }}
+    </section>
+{% endblock %}
