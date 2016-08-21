@@ -10,10 +10,10 @@
 @import 'new/layout/header.css';
 @import 'new/layout/main.css';
 @import 'new/layout/footer.css';
+@import 'new/layout/logo.css';
 
 @import 'new/components/wrapper.css';
 @import 'new/components/navigation.css';
-@import 'new/components/logo.css';
 @import 'new/components/instagram-photo.css';
 @import 'new/components/separator.css';
 @import 'new/components/article-preview.css';

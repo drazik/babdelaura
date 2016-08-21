@@ -34,7 +34,8 @@
 
         {% include 'BabdelauraBlogBundle:Layout:header.html.twig' %}
 
-        <a class="bab-Logo" href="{{ path('babdelaurablog_accueil') }}" title="Revenir à l'accueil"></a>
+        {% set isHome = app.request.attributes.get('_route') == 'babdelaurablog_accueil' %}
+        {% include 'BabdelauraBlogBundle:Layout:logo.html.twig' with {'isMainTitle': isHome} %}
 
         <div class="bab-Wrapper">
             <main class="bab-Main">{% block content %}{% endblock %}</main>

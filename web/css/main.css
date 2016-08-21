@@ -655,6 +655,19 @@ body {
     color: inherit;
 }
 
+.bab-Logo {
+    display: block;
+    width: 393px;
+    height: 235px;
+    margin: 0 auto;
+
+    font-size: 0;
+
+    background-image: url('../images/new/logo.svg');
+    background-size: cover;
+    background-position: center;
+}
+
 .bab-Wrapper {
     max-width: 1100px;
     margin: 0 auto;
@@ -680,17 +693,6 @@ body {
 
 .bab-Navigation-item--highlight {
     color: #4fafb9;
-}
-
-.bab-Logo {
-    display: block;
-    width: 393px;
-    height: 235px;
-    margin: 0 auto;
-
-    background-image: url('../images/new/logo.svg');
-    background-size: cover;
-    background-position: center;
 }
 
 .InstagramPhoto {

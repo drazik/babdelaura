@@ -1,0 +1,11 @@
+{% if isMainTitle is defined and isMainTitle %}
+    <h1>
+        <a class="bab-Logo" href="{{ path('babdelaurablog_accueil') }}" title="Revenir à l'accueil">
+            Bric à Brac de Laura
+        </a>
+    </h1>
+{% else %}
+    <a class="bab-Logo" href="{{ path('babdelaurablog_accueil') }}" title="Revenir à l'accueil">
+        Bric à Brac de Laura
+    </a>
+{% endif %}
