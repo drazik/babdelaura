@@ -9,11 +9,11 @@
             Lire la suite
         </a>
     </header>
-    <h1 class="bab-ArticlePreview-title">
+    <h2 class="bab-ArticlePreview-title">
         <a href="{{ articleUrl }}">
             {{ article.titre }}
         </a>
-    </h1>
+    </h2>
     <aside class="bab-ArticlePreview-infos">
         <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
             {{ article.categorie.nom }}
