@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 use Babdelaura\BlogBundle\Entity\Categorie;
+use Babdelaura\BlogBundle\Entity\Article;
 
 class ArticleRepository extends EntityRepository {
 
@@ -167,5 +168,21 @@ class ArticleRepository extends EntityRepository {
                ->getSingleScalarResult();
 
       return $query;
+    }
+
+    public function getArticlesSimilaires(Article $article) {
+      $query = $this->createQueryBuilder('a');
+      $expr = $query->expr();
+
+      $query = $query->innerJoin('a.categorie', 'cat', 'WITH', 'cat=:categorie')
+                     ->setParameter('categorie', $article->getCategorie())
+                     ->where('a.publication = true')
+                     ->andwhere($expr->neq('a.id', $article->getId()));
+
+      $result = $query->getQuery()->getResult();
+
+      shuffle($result);
+      
+      return array_slice($result,0,4);
     }
   }
