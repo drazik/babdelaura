@@ -42,7 +42,7 @@
             {% set nbArticles = articlesSimilaires|length %}
             {% for article in articlesSimilaires %}
             <div class="bab-Grid-cell bab-Grid-cell--1-{{ nbArticles }}">
-                {% include 'BabdelauraBlogBundle:Components/article:preview.html.twig' with {'article': article, 'small': true} only %}
+                {% include 'BabdelauraBlogBundle:Components/article:preview.html.twig' with {'article': article, 'small': true, 'titleElement': 'h3'} only %}
             </div>
             {% endfor %}
         </div>

@@ -1,11 +1,13 @@
 {% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
 
+{% set titleElement = titleElement|default('h2') %}
+
 <article class="bab-ArticlePreview bab-ArticlePreview--featured" style="background-image: url('{{ asset(article.image.webPath) }}');">
     <div class="bab-ArticlePreview-shadow"></div>
     <div class="bab-ArticlePreview-infos">
-        <h2 class="bab-ArticlePreview-title">
+        <{{ titleElement }} class="bab-ArticlePreview-title">
             {{ article.titre }}
-        </h2>
+        </{{ titleElement }}>
         <a class="bab-ArticlePreview-readMore bab-Button bab-Button--large" href="{{ articleUrl }}">
             Lire la suite
         </a>

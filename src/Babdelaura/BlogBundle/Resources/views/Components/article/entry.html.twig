@@ -1,8 +1,8 @@
 <article class="bab-Article">
     <header class="bab-Article-header">
-        <h1 class="bab-Article-title">
+        <h2 class="bab-Article-title">
             {{ article.titre  }}
-        </h1>
+        </h2>
         <div>
             <a class="bab-Article-category" href="{{ path('babdelaurablog_categorie', {'slug': article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
                 {{ article.categorie.nom }}

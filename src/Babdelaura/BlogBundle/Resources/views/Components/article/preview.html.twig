@@ -1,5 +1,7 @@
 {% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
 
+{% set titleElement = titleElement|default('h2') %}
+
 {% set small = small|default(false) %}
 
 <article class="bab-ArticlePreview {% if small %}bab-ArticlePreview--small{% endif %}">
@@ -9,11 +11,11 @@
             Lire la suite
         </a>
     </header>
-    <h2 class="bab-ArticlePreview-title">
+    <{{ titleElement }} class="bab-ArticlePreview-title">
         <a href="{{ articleUrl }}">
             {{ article.titre }}
         </a>
-    </h2>
+    </{{ titleElement }}>
     <aside class="bab-ArticlePreview-infos">
         <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
             {{ article.categorie.nom }}
