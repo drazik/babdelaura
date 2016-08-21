@@ -35,6 +35,9 @@
     </nav>
 
     <section class="bab-Section">
+        <h2 class="bab-Section-title">
+            Articles similaires
+        </h2>
         <div class="bab-Grid bab-Grid--smallGutters">
             {% set nbArticles = articlesSimilaires|length %}
             {% for article in articlesSimilaires %}
@@ -46,6 +49,9 @@
     </section>
 
     <section class="bab-Section" id="commentaires">
+        <h2 class="bab-Section-title">
+            Laisser un commentaire
+        </h2>
         {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.commentaires} only %}
     </section>
 {% endblock %}

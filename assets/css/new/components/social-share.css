@@ -1,5 +1,7 @@
 .bab-SocialShare {
     display: inline-block;
+    height: 20px;
 
-    vertical-align: top;
+    vertical-align: middle;
+    overflow: hidden;
 }
