@@ -35,7 +35,7 @@ class ArticleController extends Controller
         $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
 
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array(
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
             'articles' => $articles
         ));
     }
