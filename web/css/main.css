@@ -1108,3 +1108,9 @@ a.bab-Comment-author {
 
     text-transform: uppercase;
 }
+
+.bab-SocialShare {
+    display: inline-block;
+
+    vertical-align: top;
+}
