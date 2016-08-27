@@ -25,12 +25,12 @@ class Tag
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255, unique=true)
+     * @ORM\Column(name="nom", type="string", length=255, unique=true)
      */
-    private $titre;
+    private $nom;
 
     /**
-     * @Gedmo\Slug(fields={"titre"})
+     * @Gedmo\Slug(fields={"nom"})
      *
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
@@ -51,31 +51,30 @@ class Tag
     {
         return $this->id;
     }
-
+    
     /**
-     * Set titre
+     * Set nom
      *
-     * @param string $titre
+     * @param string $nom
      *
      * @return Tag
      */
-    public function setTitre($titre)
+    public function setNom($nom)
     {
-        $this->titre = $titre;
+        $this->nom = $nom;
 
         return $this;
     }
 
     /**
-     * Get titre
+     * Get nom
      *
      * @return string
      */
-    public function getTitre()
+    public function getNom()
     {
-        return $this->titre;
+        return $this->nom;
     }
-
     /**
      * Set slug
      *
@@ -140,4 +139,5 @@ class Tag
     {
         return $this->articles;
     }
+
 }
