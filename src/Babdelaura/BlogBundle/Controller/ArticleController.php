@@ -176,7 +176,6 @@ class ArticleController extends Controller
             ));
         }
 
-        // TODO remplacer ce tableau par les vrais articles similaires
         $articlesSimilaires = $repository->getArticlesSimilaires($article);
 
         $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
