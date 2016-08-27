@@ -309,6 +309,19 @@ class Article implements DescriptionEntite
         return $this->commentaires;
     }
 
+    public function getRootCommentairesValides()
+    {
+        $commentaires = array();
+
+        foreach ($this->commentaires as $commentaire) {
+            if ($commentaire->getValide() && $commentaire->getParent() == null) {
+                $commentaires[] = $commentaire;
+            }
+        }
+
+        return $commentaires;
+    }
+
 
     public function getNbCommentaires($valide = null)
     {
@@ -327,7 +340,7 @@ class Article implements DescriptionEntite
     }
 
 
-
+    // TODO simplifier ça en utilisant la méthode getNbCommentaires()
     public function getNbCommentairesNonValides()
     {
         $compteur = 0;

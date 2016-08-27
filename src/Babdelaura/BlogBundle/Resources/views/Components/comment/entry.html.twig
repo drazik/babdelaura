@@ -4,7 +4,7 @@
     {% set className = className ~ ' bab-Comment--offset' %}
 {% endif %}
 
-<article class="{{ className }}">
+<article class="{{ className }}" data-id="{{ comment.id }}" {% if comment.parent is not null %}data-parent-id="{{ comment.parent.id }}"{% endif %}>
     <header class="bab-Comment-header">
         {% if comment.site %}
         <a class="bab-Comment-author" href="{{ comment.site }}">{{ comment.auteur }}</a>,

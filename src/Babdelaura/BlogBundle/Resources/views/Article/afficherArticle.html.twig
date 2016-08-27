@@ -52,7 +52,9 @@
         <h2 class="bab-Section-title">
             Laisser un commentaire
         </h2>
-        {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.commentaires} only %}
+        <section>
+            {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.rootCommentairesValides} only %}
+        </section>
     </section>
 {% endblock %}
 
