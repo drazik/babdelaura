@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
@@ -23,7 +24,13 @@ class CommentaireType extends AbstractType
             ->add('auteur', TextType::class)
             ->add('email', EmailType::class, array('required' => false))
             ->add('site', TextType::class, array('required' => false))
-            ->add('contenu', TextareaType::class);
+            ->add('contenu', TextareaType::class)
+            ->add('parent', EntityType::class, array(
+                'required' => false,
+                'class' => 'BabdelauraBlogBundle:Commentaire',
+                'choice_label' => 'id',
+                'choices' => $options['comments']
+            ));
 
         if ($options['recaptcha']) {
             $builder->add('recaptcha', EWZRecaptchaType::class, array(
@@ -40,7 +47,8 @@ class CommentaireType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Babdelaura\BlogBundle\Entity\Commentaire',
-            'recaptcha' => false
+            'recaptcha' => false,
+            'comments' => array()
         ));
     }
 

@@ -179,7 +179,8 @@ class ArticleController extends Controller
         $articlesSimilaires = $repository->getArticlesSimilaires($article);
 
         $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
-            'recaptcha' => true
+            'recaptcha' => true,
+            'comments' => $article->getRootCommentairesValides()
         ));
 
         return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig',array(
