@@ -9,9 +9,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Tag
  *
  * @ORM\Table(name="tag")
- * @ORM\Entity(repositoryClass="Babdelaura\BlogBundle\Repository\TagRepository")
+ * @ORM\Entity
  */
-class Tag
+class Tag implements DescriptionEntite
 {
     /**
      * @var int
@@ -42,6 +42,22 @@ class Tag
     private $articles;
 
 
+    public function getType() {
+        return 'tag';
+    }
+
+    public function getPathList() {
+        return 'babdelaurablog_admin_listerTags';
+    }
+
+    public function getDescription() {
+        return $this->nom;
+    }
+
+    public function getPrefixeType() {
+        return "le ";
+    }
+
     /**
      * Get id
      *
@@ -51,7 +67,7 @@ class Tag
     {
         return $this->id;
     }
-    
+
     /**
      * Set nom
      *
