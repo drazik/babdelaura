@@ -286,6 +286,7 @@ class Commentaire implements DescriptionEntite
     public function setParent(\Babdelaura\BlogBundle\Entity\Commentaire $parent = null)
     {
         $this->parent = $parent;
+        $parent->addEnfant($this);
 
         return $this;
     }
@@ -322,6 +323,7 @@ class Commentaire implements DescriptionEntite
     public function removeEnfant(\Babdelaura\BlogBundle\Entity\Commentaire $enfant)
     {
         $this->enfants->removeElement($enfant);
+        $enfant->setParent(null);
     }
 
     /**
