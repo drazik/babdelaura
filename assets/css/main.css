@@ -3,6 +3,7 @@
 @import 'new/helpers/variables.css';
 @import 'new/helpers/utils.css';
 
+@import 'new/base/base.css';
 @import 'new/base/typography.css';
 
 @import 'new/layout/layout.css';
@@ -25,3 +26,4 @@
 @import 'new/components/comment.css';
 @import 'new/components/section.css';
 @import 'new/components/social-share.css';
+@import 'new/components/comment-form.css';
