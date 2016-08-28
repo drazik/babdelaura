@@ -19,7 +19,8 @@ class CommentaireController extends Controller
         $article = $repository->findOneBySlug($slug);
 
         $form = $this->createForm(CommentaireType::class, $commentaire, array(
-            'recaptcha' => true
+            'recaptcha' => true,
+            'comments' => $article->getRootCommentairesValides()
         ));
 
         if ($request->getMethod() == 'POST') {
@@ -54,23 +55,50 @@ class CommentaireController extends Controller
                             'notice',
                             'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
                 );
-                $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
-                    'recaptcha' => true
-                ));
 
+                return $this->redirectToRoute('babdelaurablog_article', array(
+                    'slug' => $article->getSlug(),
+                    'annee' => $article->getDatePublication()->format('Y'),
+                    'mois' => $article->getDatePublication()->format('m'),
+                    'jour' => $article->getDatePublication()->format('d')
+                ));
             }
 
             $articlePrecedent = $repository->getPrecedent($article->getId());
             $articlePrecedent = array_shift($articlePrecedent);
+            $urlArticlePrecedent = null;
+
+            if ($articlePrecedent != null) {
+                $urlArticlePrecedent = $this->generateUrl('babdelaurablog_article', array(
+                    'slug' => $articlePrecedent->getSlug(),
+                    'annee' => $articlePrecedent->getDatePublication()->format('Y'),
+                    'mois' => $articlePrecedent->getDatePublication()->format('m'),
+                    'jour' => $articlePrecedent->getDatePublication()->format('d')
+                ));
+            }
 
             $articleSuivant = $repository->getSuivant($article->getId());
             $articleSuivant = array_shift($articleSuivant);
+            $urlArticleSuivant = null;
+
+            if ($articleSuivant != null) {
+                $urlArticleSuivant = $this->generateUrl('babdelaurablog_article', array(
+                    'slug' => $articleSuivant->getSlug(),
+                    'annee' => $articleSuivant->getDatePublication()->format('Y'),
+                    'mois' => $articleSuivant->getDatePublication()->format('m'),
+                    'jour' => $articleSuivant->getDatePublication()->format('d')
+                ));
+            }
+
+            $articlesSimilaires = $repository->getArticlesSimilaires($article);
 
             return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig', array(
                 'article' => $article,
                 'form' => $form->createView(),
-                'articlePrecedent' => $articlePrecedent,
-                'articleSuivant' => $articleSuivant));
+                'urlArticlePrecedent' => $urlArticlePrecedent,
+                'urlArticleSuivant' => $urlArticleSuivant,
+                'articlesSimilaires' => $articlesSimilaires
+            ));
         }
 
     }
