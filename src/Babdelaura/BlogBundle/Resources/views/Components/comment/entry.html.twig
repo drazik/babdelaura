@@ -1,10 +1,16 @@
-{% set className = 'bab-Comment' %}
+{% set className = 'bab-Comment js-comment' %}
 
 {% if offset %}
     {% set className = className ~ ' bab-Comment--offset' %}
 {% endif %}
 
-<article class="{{ className }}" data-id="{{ comment.id }}" {% if comment.parent is not null %}data-parent-id="{{ comment.parent.id }}"{% endif %}>
+{% if comment.parent is not null %}
+    {% set parentId = comment.parent.id %}
+{% else %}
+    {% set parentId = comment.id %}
+{% endif %}
+
+<article class="{{ className }}" data-parent-id="{{ parentId }}">
     <header class="bab-Comment-header">
         {% if comment.site %}
         <a class="bab-Comment-author" href="{{ comment.site }}">{{ comment.auteur }}</a>,
@@ -15,7 +21,7 @@
         <time datetime="{{ comment.datePublication|date('Y-m-d H:i') }}" pubdate>
             {{ comment.datePublication|date('d/m/Y') }} à {{ comment.datePublication|date('H:i') }}
         </time>
-        <button class="bab-Comment-answerButton" type="button">
+        <button class="bab-Comment-answerButton js-comment-answer" type="button">
             Répondre
         </button>
     </header>

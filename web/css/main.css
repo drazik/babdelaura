@@ -920,6 +920,11 @@ body {
     text-decoration: none;
     background-color: #4fafb9;
     box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+}
+
+.bab-Button[disabled] {
+    cursor: default;
 }
 
 .bab-Button + .bab-Button {
@@ -1099,6 +1104,11 @@ a.bab-Comment-author {
 
     background-color: #4fafb9;
     color: #fff;
+    cursor: pointer;
+}
+
+.bab-Comment-answerButton--answering {
+    background-color: #444;
 }
 
 .bab-Section {

@@ -55,7 +55,7 @@
         <section class="js-comment-form">
             {% include 'BabdelauraBlogBundle:Components/comment:form.html.twig' with {'form': form} only %}
         </section>
-        <section>
+        <section class="js-comments" data-comments-form=".js-comment-form">
             {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.rootCommentairesValides} only %}
         </section>
     </section>

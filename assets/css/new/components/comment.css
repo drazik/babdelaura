@@ -21,4 +21,9 @@ a.bab-Comment-author {
 
     background-color: var(--main-color);
     color: #fff;
+    cursor: pointer;
+}
+
+.bab-Comment-answerButton--answering {
+    background-color: var(--text-color);
 }
