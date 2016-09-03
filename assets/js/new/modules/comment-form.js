@@ -47,10 +47,17 @@ class CommentForm {
 
     onSuccess(data) {
         const {
+            success,
             errors
         } = data
 
-        this.setErrors(errors)
+        if (!success) {
+            this.setErrors(errors)
+            return
+        }
+
+        this.form.reset()
+
         /*this.notification.hide()
 
         if (data.success) {

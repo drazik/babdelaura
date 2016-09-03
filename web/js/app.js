@@ -2439,10 +2439,17 @@
 	    }, {
 	        key: 'onSuccess',
 	        value: function onSuccess(data) {
+	            var success = data.success;
 	            var errors = data.errors;
 
 
-	            this.setErrors(errors);
+	            if (!success) {
+	                this.setErrors(errors);
+	                return;
+	            }
+
+	            this.form.reset();
+
 	            /*this.notification.hide()
 	              if (data.success) {
 	                this.notification.setText(data.successMessage)
@@ -2587,9 +2594,7 @@
 
 	                throw new Error('error');
 	            }).then(function (data) {
-	                _this2.container.reset();
-
-	                onSuccess(data);
+	                return onSuccess(data);
 	            }).catch(function (error) {
 	                _this2.submitButton.disabled = false;
 

@@ -35,7 +35,7 @@ class CommentaireController extends Controller
                 }
             }
 
-            /*$article->addCommentaire($commentaire);
+            $article->addCommentaire($commentaire);
 
             $em->persist($article);
             $em->flush();
@@ -52,7 +52,7 @@ class CommentaireController extends Controller
                     ),
                     'text/html'
             );
-            $mailer->send($message);*/
+            $mailer->send($message);
         }
 
         return new JsonResponse(array(

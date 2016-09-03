@@ -55,11 +55,7 @@ class XHRForm {
 
                 throw new Error('error')
             })
-            .then(data => {
-                this.container.reset()
-
-                onSuccess(data)
-            })
+            .then(data => onSuccess(data))
             .catch(error => {
                 this.submitButton.disabled = false
 
