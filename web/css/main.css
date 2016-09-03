@@ -626,9 +626,9 @@ body {
 
 .bab-Footer {
     margin-top: 50px;
-    padding: 35px 0;
+    padding: 8px 0;
 
-    font-size: 18px;
+    font-size: 14px;
 
     /* FIXME dissocier de --title-color */
     background-color: #4a4949;
@@ -1003,10 +1003,10 @@ body {
 }
 
 .bab-Search-input {
-    padding: 10px;
+    padding: 5px;
     border: 1px solid;
 
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .bab-Article-header {
