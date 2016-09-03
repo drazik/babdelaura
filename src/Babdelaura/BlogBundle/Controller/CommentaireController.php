@@ -28,6 +28,11 @@ class CommentaireController extends Controller
 
         $isValid = $form->isValid();
 
+        $responseData = [
+            'success' => $isValid,
+            'errors' => $this->getErrorMessages($form)
+        ];
+
         if ($isValid) {
             if ($commentaire->getSite()) {
                 if (!preg_match('#^http://#', $commentaire->getSite())) {
@@ -39,6 +44,8 @@ class CommentaireController extends Controller
 
             $em->persist($article);
             $em->flush();
+
+            $responseData['message'] = 'Merci pour votre commentaire ' . $commentaire->getAuteur() . '. Celui-ci est en cours de validation et apparaitra bientôt.';
 
             $mailer = $this->get('mailer');
             $message = $mailer->createMessage()
@@ -55,10 +62,7 @@ class CommentaireController extends Controller
             $mailer->send($message);
         }
 
-        return new JsonResponse(array(
-            'success' => $isValid,
-            'errors' => $this->getErrorMessages($form)
-        ));
+        return new JsonResponse($responseData);
     }
 
     private function getErrorMessages(\Symfony\Component\Form\Form $form)

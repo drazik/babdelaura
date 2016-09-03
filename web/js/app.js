@@ -2289,11 +2289,11 @@
 
 	var _commentForm2 = _interopRequireDefault(_commentForm);
 
-	var _comment = __webpack_require__(42);
+	var _comment = __webpack_require__(43);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
-	var _closest = __webpack_require__(43);
+	var _closest = __webpack_require__(44);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
@@ -2374,13 +2374,15 @@
 
 	var _xhrForm2 = _interopRequireDefault(_xhrForm);
 
+	var _notification = __webpack_require__(42);
+
+	var _notification2 = _interopRequireDefault(_notification);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	//import Notification from './notification'
 
 	var CommentForm = function () {
 	    function CommentForm(container) {
@@ -2400,7 +2402,7 @@
 
 	        var notificationContainerSelector = container.getAttribute('data-comment-form-notification');
 	        var notificationContainer = document.querySelector(notificationContainerSelector);
-	        this.notification = new Notification(notificationContainer);
+	        this.notification = new _notification2.default(notificationContainer);
 	    }
 
 	    _createClass(CommentForm, [{
@@ -2441,6 +2443,7 @@
 	        value: function onSuccess(data) {
 	            var success = data.success;
 	            var errors = data.errors;
+	            var message = data.message;
 
 
 	            if (!success) {
@@ -2450,15 +2453,10 @@
 
 	            this.form.reset();
 
-	            /*this.notification.hide()
-	              if (data.success) {
-	                this.notification.setText(data.successMessage)
-	                this.notification.setType('success')
-	            } else {
-	                this.notification.setText('Erreur')
-	                this.notification.setType('error')
-	            }
-	              this.notification.show()*/
+	            this.notification.hide();
+	            this.notification.setText(message);
+	            this.notification.setType('success');
+	            this.notification.show();
 	        }
 	    }, {
 	        key: 'onError',
@@ -2624,6 +2622,94 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	var Notification = function () {
+	    function Notification(container) {
+	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	        _classCallCheck(this, Notification);
+
+	        this.options = _extends({
+	            baseClassName: 'bab-Notification',
+	            visibleClassName: 'bab-Notification--visible',
+	            type: 'neutral',
+	            isVisible: false
+	        }, options);
+
+	        this.container = container;
+	        this.closer = container.querySelector('.js-notification-closer');
+	        this.content = container.querySelector('.js-notification-content');
+
+	        this.type = this.options.type;
+	        this.isVisible = this.options.isVisible;
+
+	        this.updateClassName();
+
+	        this.initEvents();
+	    }
+
+	    _createClass(Notification, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            this.closer.addEventListener('click', this.hide.bind(this));
+	        }
+	    }, {
+	        key: 'setText',
+	        value: function setText(text) {
+	            this.content.textContent = text;
+	        }
+	    }, {
+	        key: 'setType',
+	        value: function setType(type) {
+	            this.type = type;
+
+	            this.updateClassName();
+	        }
+	    }, {
+	        key: 'updateClassName',
+	        value: function updateClassName() {
+	            var className = this.options.baseClassName + ' bab-Notification--' + this.type;
+
+	            if (this.isVisible) {
+	                className += ' ' + this.options.visibleClassName;
+	            }
+
+	            this.container.className = className;
+	        }
+	    }, {
+	        key: 'hide',
+	        value: function hide() {
+	            this.isVisible = false;
+	            this.updateClassName();
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            this.isVisible = true;
+	            this.updateClassName();
+	        }
+	    }]);
+
+	    return Notification;
+	}();
+
+	exports.default = Notification;
+
+/***/ },
+/* 43 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	var Comment = function () {
 	    function Comment(container) {
 	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
@@ -2664,12 +2750,12 @@
 	exports.default = Comment;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(44);
+	var matches = __webpack_require__(45);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -2681,7 +2767,7 @@
 	};
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	"use strict";

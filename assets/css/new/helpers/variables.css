@@ -4,6 +4,8 @@
     --title-color: #4a4949;
     --text-color: #444;
     --text-light-color: #898c8c;
+    --success-color: #2ecc71;
+    --error-color: #c0392b;
 
     /* Grid */
     --grid-horizontal-gutter: 30px;
@@ -14,6 +16,7 @@
 
     /* z-index scale */
     --zi-header-layer: 100;
+    --zi-notification-layer: 200;
 
     /* Fonts */
     --base-font-stack: 'Vollkorn', serif;

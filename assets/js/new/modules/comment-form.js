@@ -1,5 +1,5 @@
 import XHRForm from './xhr-form'
-//import Notification from './notification'
+import Notification from './notification'
 
 class CommentForm {
     constructor(container) {
@@ -48,7 +48,8 @@ class CommentForm {
     onSuccess(data) {
         const {
             success,
-            errors
+            errors,
+            message
         } = data
 
         if (!success) {
@@ -58,17 +59,10 @@ class CommentForm {
 
         this.form.reset()
 
-        /*this.notification.hide()
-
-        if (data.success) {
-            this.notification.setText(data.successMessage)
-            this.notification.setType('success')
-        } else {
-            this.notification.setText('Erreur')
-            this.notification.setType('error')
-        }
-
-        this.notification.show()*/
+        this.notification.hide()
+        this.notification.setText(message)
+        this.notification.setType('success')
+        this.notification.show()
     }
 
     onError(error) {

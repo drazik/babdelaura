@@ -1,0 +1,50 @@
+.bab-Notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 10px 30px 10px;
+
+    transform: translateY(-100%);
+    transition: transform 0.2s ease-in-out;
+    z-index: var(--zi-notification-layer);
+    text-align: center;
+}
+
+.bab-Notification--visible {
+    transform: translateY(0);
+}
+
+.bab-Notification--neutral {
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+.bab-Notification--success {
+    background-color: var(--success-color);
+    color: #fff;
+}
+
+.bab-Notification--error {
+    background-color: var(--error-color);
+    color: #fff;
+}
+
+.bab-Notification-close {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+
+    padding: 0;
+    border-width: 0;
+
+    background-color: transparent;
+    transform: translateY(-50%);
+    color: inherit;
+    cursor: pointer;
+}
+
+.bab-Notification-content {
+    margin: 0;
+}

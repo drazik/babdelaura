@@ -52,13 +52,20 @@
         <h2 class="bab-Section-title">
             Laisser un commentaire
         </h2>
-        <section class="js-comment-form">
+        <section class="js-comment-form" data-comment-form-notification="#comment-form-notification">
             {% include 'BabdelauraBlogBundle:Components/comment:form.html.twig' with {'form': form} only %}
         </section>
         <section class="js-comments" data-comments-form=".js-comment-form">
             {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.rootCommentairesValides} only %}
         </section>
     </section>
+
+    <div class="bab-Notification" id="comment-form-notification">
+        <button class="bab-Notification-close js-notification-closer" type="button">
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'cross'} only %}
+        </button>
+        <p class="bab-Notification-content js-notification-content"></p>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

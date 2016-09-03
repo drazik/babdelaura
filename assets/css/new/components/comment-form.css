@@ -22,6 +22,6 @@
 .CommentForm_error {
     display: block;
 
-    color: #c0392b;
+    color: var(--error-color);
     line-height: 1.5;
 }
