@@ -1159,3 +1159,10 @@ a.bab-Comment-author {
 
     resize: vertical;
 }
+
+.CommentForm_error {
+    display: block;
+
+    color: #c0392b;
+    line-height: 1.5;
+}

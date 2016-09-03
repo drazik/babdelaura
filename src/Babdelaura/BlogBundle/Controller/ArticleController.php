@@ -179,6 +179,12 @@ class ArticleController extends Controller
         $articlesSimilaires = $repository->getArticlesSimilaires($article);
 
         $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
+            'action' => $this->generateUrl('babdelaurablog_ajouterCommentaire', array(
+                'slug' => $article->getSlug(),
+                'annee' => $article->getDatePublication()->format('Y'),
+                'mois' => $article->getDatePublication()->format('m'),
+                'jour' => $article->getDatePublication()->format('d')
+            )),
             'recaptcha' => true,
             'comments' => $article->getRootCommentairesValides()
         ));

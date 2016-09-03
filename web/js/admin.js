@@ -2668,7 +2668,7 @@
 	    }, {
 	        key: 'getImages',
 	        value: function getImages(page) {
-	            return _axios2.default.get(this.url + ('?page=' + page)).then(function (response) {
+	            return _axios2.default.post(this.url + ('?page=' + page)).then(function (response) {
 	                return response.data;
 	            }).catch(function (error) {
 	                throw new Error(error);

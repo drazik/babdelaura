@@ -22,8 +22,8 @@ class CommentaireType extends AbstractType
     {
         $builder
             ->add('auteur', TextType::class)
-            ->add('email', EmailType::class, array('required' => false))
-            ->add('site', TextType::class, array('required' => false))
+            ->add('email', EmailType::class)
+            ->add('site', TextType::class)
             ->add('contenu', TextareaType::class)
             ->add('parent', EntityType::class, array(
                 'required' => false,
@@ -35,7 +35,9 @@ class CommentaireType extends AbstractType
         if ($options['recaptcha']) {
             $builder->add('recaptcha', EWZRecaptchaType::class, array(
                 'mapped'      => false,
-                'constraints' => array(new RecaptchaTrue())
+                'constraints' => array(
+                    new RecaptchaTrue()
+                )
             ));
         }
     }

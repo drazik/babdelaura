@@ -6,6 +6,7 @@ namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Babdelaura\BlogBundle\Entity\Commentaire;
 use Babdelaura\BlogBundle\Form\CommentaireType;
 
@@ -23,84 +24,58 @@ class CommentaireController extends Controller
             'comments' => $article->getRootCommentairesValides()
         ));
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if($form->isValid()) {
-                if($commentaire->getSite()){
-                    if(!preg_match('#^http://#', $commentaire->getSite())) {
-                        $commentaire->setSite('http://'.$commentaire->getSite());
-                    }
+        $isValid = $form->isValid();
+
+        if ($isValid) {
+            if ($commentaire->getSite()) {
+                if (!preg_match('#^http://#', $commentaire->getSite())) {
+                    $commentaire->setSite('http://' . $commentaire->getSite());
                 }
-                $article->addCommentaire($commentaire);
-                $em->persist($article);
-
-                $em->flush();
-
-                $mailer = $this->get('mailer');
-                $message = $mailer->createMessage()
-                    ->setSubject('Un nouveau commentaire a été posté')
-                    ->setFrom($this->container->getParameter('mail_notifications'))
-                    ->setTo($this->container->getParameter('mail_contact'))
-                    ->setBody(
-                        $this->renderView(
-                            'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
-                            array('commentaire' => $commentaire, 'article' => $article)
-                        ),
-                        'text/html'
-                );
-                $mailer->send($message);
-
-                $this->get('session')->getFlashBag()->add(
-                            'notice',
-                            'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
-                );
-
-                return $this->redirectToRoute('babdelaurablog_article', array(
-                    'slug' => $article->getSlug(),
-                    'annee' => $article->getDatePublication()->format('Y'),
-                    'mois' => $article->getDatePublication()->format('m'),
-                    'jour' => $article->getDatePublication()->format('d')
-                ));
             }
 
-            $articlePrecedent = $repository->getPrecedent($article->getId());
-            $articlePrecedent = array_shift($articlePrecedent);
-            $urlArticlePrecedent = null;
+            /*$article->addCommentaire($commentaire);
 
-            if ($articlePrecedent != null) {
-                $urlArticlePrecedent = $this->generateUrl('babdelaurablog_article', array(
-                    'slug' => $articlePrecedent->getSlug(),
-                    'annee' => $articlePrecedent->getDatePublication()->format('Y'),
-                    'mois' => $articlePrecedent->getDatePublication()->format('m'),
-                    'jour' => $articlePrecedent->getDatePublication()->format('d')
-                ));
-            }
+            $em->persist($article);
+            $em->flush();
 
-            $articleSuivant = $repository->getSuivant($article->getId());
-            $articleSuivant = array_shift($articleSuivant);
-            $urlArticleSuivant = null;
-
-            if ($articleSuivant != null) {
-                $urlArticleSuivant = $this->generateUrl('babdelaurablog_article', array(
-                    'slug' => $articleSuivant->getSlug(),
-                    'annee' => $articleSuivant->getDatePublication()->format('Y'),
-                    'mois' => $articleSuivant->getDatePublication()->format('m'),
-                    'jour' => $articleSuivant->getDatePublication()->format('d')
-                ));
-            }
-
-            $articlesSimilaires = $repository->getArticlesSimilaires($article);
-
-            return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig', array(
-                'article' => $article,
-                'form' => $form->createView(),
-                'urlArticlePrecedent' => $urlArticlePrecedent,
-                'urlArticleSuivant' => $urlArticleSuivant,
-                'articlesSimilaires' => $articlesSimilaires
-            ));
+            $mailer = $this->get('mailer');
+            $message = $mailer->createMessage()
+                ->setSubject('Un nouveau commentaire a été posté')
+                ->setFrom($this->container->getParameter('mail_notifications'))
+                ->setTo($this->container->getParameter('mail_contact'))
+                ->setBody(
+                    $this->renderView(
+                        'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
+                        array('commentaire' => $commentaire, 'article' => $article)
+                    ),
+                    'text/html'
+            );
+            $mailer->send($message);*/
         }
 
+        return new JsonResponse(array(
+            'success' => $isValid,
+            'errors' => $this->getErrorMessages($form)
+        ));
+    }
+
+    private function getErrorMessages(\Symfony\Component\Form\Form $form)
+    {
+        $errors = array();
+
+        foreach ($form->getErrors() as $key => $error) {
+            $errors[] = $error->getMessage();
+        }
+
+        foreach ($form->all() as $child) {
+            if (!$child->isValid()) {
+                $errors[$child->getName()] = $this->getErrorMessages($child);
+            }
+        }
+
+        return $errors;
     }
 
     public function enregistrerCommentaireAdminAction(Request $request, $slug) {
