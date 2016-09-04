@@ -34,6 +34,12 @@ class CommentForm {
     appendTo(comment) {
         comment.container.appendChild(this.form)
         this.setParent(comment.parentId)
+
+        setTimeout(() => {
+            const {offsetTop} = comment.container
+
+            window.scrollTo(0, offsetTop)
+        }, 500)
     }
 
     restoreInOriginalContainer() {

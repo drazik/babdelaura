@@ -2426,6 +2426,13 @@
 	        value: function appendTo(comment) {
 	            comment.container.appendChild(this.form);
 	            this.setParent(comment.parentId);
+
+	            setTimeout(function () {
+	                var offsetTop = comment.container.offsetTop;
+
+
+	                window.scrollTo(0, offsetTop);
+	            }, 500);
 	        }
 	    }, {
 	        key: 'restoreInOriginalContainer',
