@@ -618,6 +618,11 @@ body {
     background-repeat: no-repeat;
     background-color: #fff;
     z-index: 100;
+    transition: transform 0.25s ease-in-out;
+}
+
+.bab-Header--hidden {
+    transform: translateY(-100%);
 }
 
 .bab-Main {
