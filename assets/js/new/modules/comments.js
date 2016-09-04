@@ -4,13 +4,13 @@ import Comment from './comment'
 import getParent from 'closest'
 
 class Comments {
-    constructor(container) {
+    constructor(container, header) {
         this.container = container
         this.containerDelegate = delegate(container)
 
         const formSelector = container.getAttribute('data-comments-form')
         const formContainer = document.querySelector(formSelector)
-        this.form = new CommentForm(formContainer)
+        this.form = new CommentForm(formContainer, header)
 
         const commentContainers = [...container.querySelectorAll('.js-comment')]
         this.comments = commentContainers.map(container => new Comment(container))

@@ -10,15 +10,13 @@ if (searchContainer) {
     new Search(searchContainer)
 }
 
+
+const headerContainer = document.querySelector('.js-header')
+const header = new Header(headerContainer)
+
+
 const commentsContainer = document.querySelector('.js-comments')
 
 if (commentsContainer) {
-    new Comments(commentsContainer)
-}
-
-
-const headerContainer = document.querySelector('.js-header')
-
-if (headerContainer) {
-    new Header(headerContainer)
+    new Comments(commentsContainer, header)
 }

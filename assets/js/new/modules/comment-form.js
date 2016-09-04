@@ -1,9 +1,16 @@
 import XHRForm from './xhr-form'
 import Notification from './notification'
+import {scrollTop} from 'natural-scroll'
 
 class CommentForm {
-    constructor(container) {
+    constructor(container, header, options = {}) {
+        this.options = {
+            scrollTopDelta: 10,
+            ...options
+        }
+
         this.container = container
+        this.header = header
 
         this.form = container.querySelector('form')
         this.xhrForm = new XHRForm(this.form, {
@@ -37,8 +44,12 @@ class CommentForm {
 
         setTimeout(() => {
             const {offsetTop} = comment.container
+            const {offsetHeight} = this.header.container
 
-            window.scrollTo(0, offsetTop)
+            const scrollTopLevel = offsetTop - offsetHeight - this.options.scrollTopDelta
+
+            scrollTop(document.documentElement, scrollTopLevel)
+            scrollTop(document.body, scrollTopLevel)
         }, 500)
     }
 
