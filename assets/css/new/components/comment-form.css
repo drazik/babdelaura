@@ -18,3 +18,10 @@
 
     resize: vertical;
 }
+
+.CommentForm_error {
+    display: block;
+
+    color: var(--error-color);
+    line-height: 1.5;
+}

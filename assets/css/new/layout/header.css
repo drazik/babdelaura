@@ -12,4 +12,9 @@
     background-repeat: no-repeat;
     background-color: #fff;
     z-index: var(--zi-header-layer);
+    transition: transform 0.25s ease-in-out;
+}
+
+.bab-Header--hidden {
+    transform: translateY(-100%);
 }

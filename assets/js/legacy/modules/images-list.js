@@ -60,7 +60,7 @@ class ImagesList {
     }
 
     getImages(page) {
-        return axios.get(this.url + `?page=${page}`)
+        return axios.post(this.url + `?page=${page}`)
             .then((response) => response.data)
             .catch((error) => { throw new Error(error) });
     }
