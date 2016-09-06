@@ -754,11 +754,33 @@ body {
 }
 
 .bab-Separator {
-    width: 191px;
-    height: 76px;
-    margin: 20px auto;
+	text-align: center;
+}
 
-    background-image: url('../images/new/separator.png');
+.bab-Separator-element {
+	display: inline-block;
+	width: 36px;
+    height: 63px;
+    margin: 0 5px;
+
+    background-image: url('../images/new/separator.svg');
+    background-size: cover;
+	vertical-align: middle;
+}
+
+.bab-Separator-element--medium {
+	width: calc(36px * 0.75);
+    height: calc(63px * 0.75);
+
+    opacity: 0.75;
+}
+
+.bab-Separator-element--small {
+	width: calc(36px * 0.6);
+    height: calc(63px * 0.6);
+
+    opacity: 0.6;
+
 }
 
 .bab-ArticlePreview {

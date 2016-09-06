@@ -21,4 +21,7 @@
     /* Fonts */
     --base-font-stack: 'Vollkorn', serif;
     --title-font-stack: 'Amatic SC', cursive;
+
+    --separator-element-width: 36px;
+    --separator-element-height: 63px;
 }
