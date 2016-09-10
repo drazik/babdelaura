@@ -682,6 +682,10 @@ body {
     background-position: center;
 }
 
+.bab-Logo-container {
+	margin: 0;
+}
+
 .bab-Wrapper {
     max-width: 1100px;
     margin: 0 auto;
