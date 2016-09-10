@@ -1461,40 +1461,25 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout() {
-	    throw new Error('clearTimeout has not been defined');
-	}
 	(function () {
 	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
+	        cachedSetTimeout = setTimeout;
 	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
+	        cachedSetTimeout = function cachedSetTimeout() {
+	            throw new Error('setTimeout is not defined');
+	        };
 	    }
 	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
+	        cachedClearTimeout = clearTimeout;
 	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
+	        cachedClearTimeout = function cachedClearTimeout() {
+	            throw new Error('clearTimeout is not defined');
+	        };
 	    }
 	})();
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -1513,11 +1498,6 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -2492,6 +2472,8 @@
 	    }, {
 	        key: 'onSuccess',
 	        value: function onSuccess(data) {
+	            var _this2 = this;
+
 	            var success = data.success;
 	            var errors = data.errors;
 	            var message = data.message;
@@ -2504,15 +2486,22 @@
 
 	            this.form.reset();
 
-	            this.notification.hide();
-	            this.notification.setText(message);
-	            this.notification.setType('success');
-	            this.notification.show();
+	            this.notification.hide().then(function () {
+	                _this2.notification.setText(message);
+	                _this2.notification.setType('success');
+	                _this2.notification.show();
+	            });
 	        }
 	    }, {
 	        key: 'onError',
-	        value: function onError(error) {
-	            console.log('Error', error);
+	        value: function onError() {
+	            var _this3 = this;
+
+	            this.notification.hide().then(function () {
+	                _this3.notification.setText('Une erreur innatendue est survenue');
+	                _this3.notification.setType('error');
+	                _this3.notification.show();
+	            });
 	        }
 	    }, {
 	        key: 'setErrors',
@@ -2533,12 +2522,12 @@
 	    }, {
 	        key: 'resetErrors',
 	        value: function resetErrors() {
-	            var _this2 = this;
+	            var _this4 = this;
 
 	            var errorContainers = [].concat(_toConsumableArray(this.container.querySelectorAll('[id^="error-"]')));
 
 	            errorContainers.forEach(function (container) {
-	                return _this2.resetError(container);
+	                return _this4.resetError(container);
 	            });
 	        }
 	    }, {
@@ -2683,7 +2672,8 @@
 	            baseClassName: 'bab-Notification',
 	            visibleClassName: 'bab-Notification--visible',
 	            type: 'neutral',
-	            isVisible: false
+	            isVisible: false,
+	            animationDuration: 200
 	        }, options);
 
 	        this.container = container;
@@ -2729,14 +2719,26 @@
 	    }, {
 	        key: 'hide',
 	        value: function hide() {
+	            var _this = this;
+
 	            this.isVisible = false;
 	            this.updateClassName();
+
+	            return new Promise(function (resolve) {
+	                return setTimeout(resolve, _this.options.animationDuration);
+	            });
 	        }
 	    }, {
 	        key: 'show',
 	        value: function show() {
+	            var _this2 = this;
+
 	            this.isVisible = true;
 	            this.updateClassName();
+
+	            return new Promise(function (resolve) {
+	                return setTimeout(resolve, _this2.options.animationDuration);
+	            });
 	        }
 	    }]);
 
@@ -2903,7 +2905,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _bloodyScrollDirection = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"bloody-scroll-direction\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _bloodyScrollDirection = __webpack_require__(48);
 
 	var _bloodyScrollDirection2 = _interopRequireDefault(_bloodyScrollDirection);
 
@@ -2959,6 +2961,440 @@
 	}();
 
 	exports.default = Header;
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var events = __webpack_require__(49);
+
+	function getOffset() {
+	  var offset = window.pageYOffset;
+	  if (typeof offset == "number") {
+	    return offset;
+	  }
+	  return document.documentElement.scrollTop;
+	}
+
+	module.exports = events.extend({
+	  constructor: function constructor() {
+	    var listener = this.accessor("listener");
+	    events.constructor.call(this);
+	    if (window.addEventListener) {
+	      window.addEventListener("scroll", listener, false);
+	      return;
+	    }
+	    window.attachEvent("onscroll", listener);
+	  },
+	  destructor: function destructor() {
+	    var listener = this.accessor("listener");
+	    events.destructor.call(this);
+	    if (window.removeEventListener) {
+	      window.removeEventListener("scroll", listener, false);
+	      return;
+	    }
+	    window.detachEvent("onscroll", listener);
+	  },
+	  _lastOffset: getOffset(),
+	  _direction: 1,
+	  listener: function listener() {
+	    var offset = getOffset();
+	    var diff = offset - this._lastOffset;
+	    var direction = Math.abs(diff) / diff;
+	    this._lastOffset = offset;
+	    if (direction == this._direction) {
+	      return;
+	    }
+	    this.emit("change", { direction: direction, offset: offset });
+	    this._direction = direction;
+	  }
+	});
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var klass = __webpack_require__(50);
+	var store = __webpack_require__(58);
+	var slice = [].slice;
+
+	module.exports = klass.extend({
+	  constructor: function constructor() {
+	    this._events = store.create();
+	  },
+	  destructor: function destructor() {
+	    this._events.destroy();
+	  },
+	  on: function on(type, listener) {
+	    this._events.push(type, listener);
+	    return this;
+	  },
+	  once: function once(type, listener) {
+	    this._events.push(type, listener, true);
+	    return this;
+	  },
+	  off: function off() {
+	    this._events.remove.apply(this._events, arguments);
+	    return this;
+	  },
+	  emit: function emit(type) {
+	    return this._events.loop(type, slice.call(arguments, 1));
+	  }
+	});
+
+/***/ },
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var each = __webpack_require__(51);
+	var mixinDontEnum = {
+	  constructor: 1,
+	  destructor: 1
+	};
+	var _extend = function _extend(object, source, isMixin) {
+	  each(source, function (item, key) {
+	    if (isMixin && mixinDontEnum[key]) {
+	      return;
+	    }
+	    object[key] = item;
+	  });
+	};
+	var hasMethod = __webpack_require__(56);
+	var _create = __webpack_require__(57);
+	var K = function K() {};
+
+	module.exports = {
+	  extend: function extend(object) {
+	    var subKlass = _create(this);
+	    _extend(subKlass, object);
+	    each(subKlass.mixins, function (mixin) {
+	      _extend(this, mixin, true);
+	    }, subKlass);
+	    return subKlass;
+	  },
+	  mixins: [],
+	  create: function create() {
+	    var instance = _create(this);
+	    var args = arguments;
+	    each(this.mixins, function (mixin) {
+	      if (hasMethod(mixin, "constructor")) {
+	        mixin.constructor.apply(instance, args);
+	      }
+	    }, this);
+	    instance._accessors = {};
+	    if (hasMethod(instance, "constructor")) {
+	      instance.constructor.apply(instance, arguments);
+	    }
+	    return instance;
+	  },
+	  destroy: function destroy() {
+	    var args = arguments;
+	    if (hasMethod(this, "destructor")) {
+	      this.destructor.apply(this, arguments);
+	    }
+	    each(this.mixins, function (mixin) {
+	      if (hasMethod(mixin, "destructor")) {
+	        mixin.destructor.apply(this, args);
+	      }
+	    }, this);
+	    this._accessors = {};
+	  },
+	  accessor: function accessor(methodName) {
+	    var thisValue = this;
+	    if (this._accessors.hasOwnProperty(methodName)) {
+	      return this._accessors[methodName];
+	    }
+	    return this._accessors[methodName] = function () {
+	      return thisValue[methodName].apply(thisValue, arguments);
+	    };
+	  },
+	  constructor: K,
+	  destructor: K
+	};
+
+/***/ },
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var getKeys = __webpack_require__(52),
+	    createCallback = __webpack_require__(53),
+	    isArrayLike = __webpack_require__(55);
+
+	module.exports = function (collection, fn, thisValue) {
+	  var index = -1,
+	      length,
+	      keys,
+	      key,
+	      callback = createCallback(fn, thisValue, 3);
+	  if (!collection) return;
+	  if (isArrayLike(collection)) {
+	    length = collection.length;
+	    while (++index < length) {
+	      if (callback(collection[index], index, collection) === false) break;
+	    }
+	    return;
+	  }
+	  keys = getKeys(collection);
+	  length = keys.length;
+	  while (++index < length) {
+	    key = keys[index];
+	    if (callback(collection[key], key, collection) === false) break;
+	  }
+	};
+
+/***/ },
+/* 52 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var objectPrototype = Object.prototype,
+	    enumBugProperties = ["constructor", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable",, "toLocaleString", "toString", "valueOf"],
+	    hasEnumBug = !objectPrototype.propertyIsEnumerable.call({ constructor: 1 }, "constructor"),
+	    _hasOwnProperty = objectPrototype.hasOwnProperty,
+	    hasObjectKeys = typeof Object.keys == "function",
+	    objectKeys = Object.keys;
+
+	module.exports = function (object) {
+	  var index, keys, length, enumKey;
+
+	  if (object == null) return [];
+	  if (hasObjectKeys) return objectKeys(object);
+	  keys = [];
+	  for (index in object) {
+	    if (_hasOwnProperty.call(object, index)) keys.push(index);
+	  }
+	  if (hasEnumBug) {
+	    index = -1;
+	    length = enumBugProperties.length;
+	    while (++index < length) {
+	      enumKey = enumBugProperties[index];
+	      if (_hasOwnProperty.call(object, enumKey)) {
+	        keys.push(enumKey);
+	      }
+	    }
+	  }
+	  return keys;
+	};
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var callbacks = __webpack_require__(54);
+
+	module.exports = function (fn, thisValue, length) {
+	  if (thisValue === void 0) {
+	    return fn;
+	  }
+	  if (length in callbacks) {
+	    return callbacks[length](fn, thisValue);
+	  }
+	  return callbacks[callbacks.length - 1](fn, thisValue);
+	};
+
+/***/ },
+/* 54 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = [function (fn, thisValue) {
+	  return function () {
+	    return fn.call(thisValue);
+	  };
+	}, function (fn, thisValue) {
+	  return function (a) {
+	    return fn.call(thisValue, a);
+	  };
+	}, function (fn, thisValue) {
+	  return function (a, b) {
+	    return fn.call(thisValue, a, b);
+	  };
+	}, function (fn, thisValue) {
+	  return function (a, b, c) {
+	    return fn.call(thisValue, a, b, c);
+	  };
+	}, function (fn, thisValue) {
+	  return function (a, b, c, d) {
+	    return fn.call(thisValue, a, b, c, d);
+	  };
+	}, function (fn, thisValue) {
+	  return function () {
+	    return fn.apply(thisValue, arguments);
+	  };
+	}];
+
+/***/ },
+/* 55 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _hasOwnProperty = {}.hasOwnProperty;
+
+	module.exports = function (object) {
+	  var length;
+	  return object && parseInt(length = object.length, 10) === length && !length || _hasOwnProperty.call(object, length - 1);
+	};
+
+/***/ },
+/* 56 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function (object, property) {
+	  return typeof object[property] == "function";
+	};
+
+/***/ },
+/* 57 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// from lodash
+	var toString = Object.prototype.toString;
+	var isNativeRE = RegExp('^' + String(toString).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/toString| for [^\]]+/g, '.*?') + '$');
+
+	if (Object.create && isNativeRE.test(Object.create)) {
+	  module.exports = Object.create;
+	} else {
+	  module.exports = function (object) {
+	    function F() {}
+	    F.prototype = object;
+	    return new F();
+	  };
+	}
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var klass = __webpack_require__(50);
+	var handleEventTypes = {
+	  "object": 1,
+	  "function": 1
+	};
+
+	module.exports = klass.extend({
+	  constructor: function constructor() {
+	    this.store = {};
+	  },
+	  destructor: function destructor() {
+	    this.store = {};
+	  },
+	  getTypeStore: function getTypeStore(type) {
+	    if (this.store[type]) {
+	      return this.store[type];
+	    }
+	    return this.store[type] = [];
+	  },
+	  indexOf: function indexOf(type, listener) {
+	    var index = -1;
+	    var store = this.getTypeStore(type);
+	    var length = store.length;
+	    var item;
+	    while (++index < length) {
+	      item = store[index];
+	      if (listener.listener == item.listener) {
+	        return index;
+	      }
+	    }
+	    return -1;
+	  },
+	  has: function has(type, listener) {
+	    return this.indexOf(type, listener) != -1;
+	  },
+	  push: function push(type, listener, once) {
+	    var normalised = this.normalise(listener, once);
+	    if (this.has(type, normalised)) {
+	      return;
+	    }
+	    this.getTypeStore(type).push(normalised);
+	  },
+	  remove: function remove(type, listener) {
+	    var normalised;
+	    var index;
+	    if (arguments.length == 0) {
+	      this.destroy();
+	      return;
+	    }
+	    if (arguments.length == 1) {
+	      this.getTypeStore(type).length = 0;
+	      return;
+	    }
+	    normalised = this.normalise(listener);
+	    index = this.indexOf(type, normalised);
+	    if (index == -1) {
+	      return;
+	    }
+	    this.getTypeStore(type).splice(index, 1);
+	  },
+	  loop: function loop(type, args) {
+	    var store = this.getTypeStore(type);
+	    var index = -1;
+	    var length = store.length;
+	    var toRemove = [];
+	    var listener;
+	    var ran = false;
+	    while (++index < length) {
+	      listener = store[index];
+	      if (--listener.remaining < 0) {
+	        toRemove.push(index);
+	        continue;
+	      }
+	      if (_typeof(listener.callback) == "object") {
+	        if (typeof listener.callback[type] == "function") {
+	          listener.callback[type].apply(listener.thisValue, args);
+	          ran = true;
+	        }
+	      } else {
+	        listener.callback.apply(listener.thisValue, args);
+	        ran = true;
+	      }
+	    }
+	    while (index = toRemove.pop()) {
+	      store.splice(index, 1);
+	    }
+	    return ran;
+	  },
+	  normalise: function normalise(listener) {
+	    var callback;
+	    var handleEvent;
+	    var representation;
+	    if (typeof listener == "function") {
+	      callback = listener;
+	    }
+	    if (listener != null) {
+	      handleEvent = listener.handleEvent;
+	      if (handleEvent != null && handleEventTypes[typeof handleEvent === "undefined" ? "undefined" : _typeof(handleEvent)]) {
+	        callback = listener.handleEvent;
+	      }
+	    }
+	    return {
+	      listener: listener,
+	      callback: callback,
+	      thisValue: callback == listener ? null : listener,
+	      remaining: arguments[1] ? 1 : Infinity
+	    };
+	  }
+	});
 
 /***/ }
 /******/ ]);
