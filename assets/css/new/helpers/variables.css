@@ -22,6 +22,10 @@
     --base-font-stack: 'Vollkorn', serif;
     --title-font-stack: 'Amatic SC', cursive;
 
+    /* Separator */
     --separator-element-width: 36px;
     --separator-element-height: 63px;
 }
+
+@custom-media --small-viewport screen and (max-width: 400px);
+@custom-media --medium-viewport screen and (max-width: 790px);

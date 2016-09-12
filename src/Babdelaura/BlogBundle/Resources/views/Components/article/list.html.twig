@@ -7,7 +7,7 @@
         {% include 'BabdelauraBlogBundle:Components/article:preview-featured.html.twig' with {'article': article, 'titleElement': previewTitleElement} only %}
     </div>
 {% else %}
-    <div class="bab-Grid-cell bab-Grid-cell--1-3">
+    <div class="bab-Grid-cell bab-Grid-cell--1-3 bab-Grid-cell--1-2@medium bab-Grid-cell--1-1@small">
         {% include 'BabdelauraBlogBundle:Components/article:preview.html.twig' with {'article': article, 'titleElement': previewTitleElement} only %}
     </div>
 {% endif %}

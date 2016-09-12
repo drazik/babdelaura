@@ -429,6 +429,8 @@ textarea {
     /* z-index scale */
 
     /* Fonts */
+
+    /* Separator */
 }
 
 .align-center {
@@ -568,11 +570,11 @@ body {
     float: none;
 }
 
-.bab-Grid--inlineBlock.bab-Grid-cell--smallGutter .bab-Grid-cell {
+.bab-Grid--inlineBlock.bab-Grid--smallGutters .bab-Grid-cell {
     margin-bottom: 6px;
 }
 
-.bab-Grid--inlineBlock.bab-Grid-cell--xSmallGutter .bab-Grid-cell {
+.bab-Grid--inlineBlock.bab-Grid--xSmallGutters .bab-Grid-cell {
     margin-bottom: 3px;
 }
 
@@ -604,6 +606,29 @@ body {
     width: 10%;
 }
 
+@media screen and (max-width: 790px) {
+    .bab-Grid-cell--1-1\@medium {
+        width: 100%;
+    }
+
+    .bab-Grid-cell--1-2\@medium {
+        width: 50%;
+    }
+
+    .bab-Grid-cell--1-5\@medium {
+        width: 20%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .bab-Grid-cell--1-1\@small {
+        width: 100%;
+    }
+    .bab-Grid-cell--1-2\@small {
+        width: 50%;
+    }
+}
+
 .bab-Header {
     position: fixed;
     top: 0;
@@ -623,6 +648,12 @@ body {
 
 .bab-Header--hidden {
     transform: translateY(-100%);
+}
+
+@media screen and (max-width: 790px) {
+    .bab-Header {
+        display: none;
+    }
 }
 
 .bab-Main {
@@ -671,8 +702,7 @@ body {
 
 .bab-Logo {
     display: block;
-    width: 500px;
-    height: 250px;
+    max-width: 500px;
     margin: 0 auto;
 
     font-size: 0;
@@ -686,9 +716,22 @@ body {
 	margin: 0;
 }
 
+.bab-Logo::before {
+    content: '';
+
+    display: block;
+    padding-top: 50%;
+}
+
 .bab-Wrapper {
     max-width: 1100px;
     margin: 0 auto;
+}
+
+@media screen and (max-width: 790px) {
+    .bab-Wrapper {
+        width: 90%;
+    }
 }
 
 .bab-Navigation {
@@ -1112,6 +1155,12 @@ body {
     color: #4fafb9;
 }
 
+@media screen and (max-width: 790px) {
+    .bab-Article-content img {
+        max-width: 100%;
+    }
+}
+
 .bab-Comment {
     font-size: 18px;
 }
@@ -1140,6 +1189,12 @@ a.bab-Comment-author {
 
 .bab-Comment-answerButton--answering {
     background-color: #444;
+}
+
+@media screen and (max-width: 400px) {
+    .bab-Comment--offset {
+        padding-left: 20px;
+    }
 }
 
 .bab-Section {
