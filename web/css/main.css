@@ -607,6 +607,10 @@ body {
 }
 
 @media screen and (max-width: 790px) {
+    .bab-Grid-cell--1-1\@medium {
+        width: 100%;
+    }
+
     .bab-Grid-cell--1-2\@medium {
         width: 50%;
     }
@@ -1147,6 +1151,12 @@ body {
     color: #4fafb9;
 }
 
+@media screen and (max-width: 790px) {
+    .bab-Article-content img {
+        max-width: 100%;
+    }
+}
+
 .bab-Comment {
     font-size: 18px;
 }
@@ -1175,6 +1185,12 @@ a.bab-Comment-author {
 
 .bab-Comment-answerButton--answering {
     background-color: #444;
+}
+
+@media screen and (max-width: 400px) {
+    .bab-Comment--offset {
+        padding-left: 20px;
+    }
 }
 
 .bab-Section {

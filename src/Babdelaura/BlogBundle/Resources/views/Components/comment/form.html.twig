@@ -3,17 +3,17 @@
         {{ form_widget(form.parent) }}
     </div>
     <fieldset class="bab-Grid bab-Grid--smallGutters">
-        <div class="bab-Grid-cell bab-Grid-cell--1-3">
+        <div class="bab-Grid-cell bab-Grid-cell--1-3 bab-Grid-cell--1-1@medium">
             {{ form_label(form.auteur, 'Nom') }}
             {{ form_widget(form.auteur) }}
             <span class="CommentForm_error" id="error-auteur"></span>
         </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-3">
+        <div class="bab-Grid-cell bab-Grid-cell--1-3 bab-Grid-cell--1-1@medium">
             {{ form_label(form.email, 'Adresse email') }}
             {{ form_widget(form.email) }}
             <span class="CommentForm_error" id="error-email"></span>
         </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-3">
+        <div class="bab-Grid-cell bab-Grid-cell--1-3 bab-Grid-cell--1-1@medium">
             {{ form_label(form.site, 'Site web') }}
             {{ form_widget(form.site) }}
             <span class="CommentForm_error" id="error-site"></span>

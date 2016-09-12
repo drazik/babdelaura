@@ -87,6 +87,10 @@
 }
 
 @media (--medium-viewport) {
+    .bab-Grid-cell--1-1\@medium {
+        width: 100%;
+    }
+
     .bab-Grid-cell--1-2\@medium {
         width: 50%;
     }

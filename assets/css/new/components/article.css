@@ -69,3 +69,9 @@
 .bab-Article-content a {
     color: var(--main-color);
 }
+
+@media (--medium-viewport) {
+    .bab-Article-content img {
+        max-width: 100%;
+    }
+}
