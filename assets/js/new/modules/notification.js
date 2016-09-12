@@ -5,6 +5,7 @@ class Notification {
             visibleClassName: 'bab-Notification--visible',
             type: 'neutral',
             isVisible: false,
+            animationDuration: 200,
             ...options
         }
 
@@ -47,11 +48,15 @@ class Notification {
     hide() {
         this.isVisible = false
         this.updateClassName()
+
+        return new Promise(resolve => setTimeout(resolve, this.options.animationDuration))
     }
 
     show() {
         this.isVisible = true
         this.updateClassName()
+
+        return new Promise(resolve => setTimeout(resolve, this.options.animationDuration))
     }
 }
 

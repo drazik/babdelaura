@@ -1461,40 +1461,25 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout() {
-	    throw new Error('clearTimeout has not been defined');
-	}
 	(function () {
 	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
+	        cachedSetTimeout = setTimeout;
 	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
+	        cachedSetTimeout = function cachedSetTimeout() {
+	            throw new Error('setTimeout is not defined');
+	        };
 	    }
 	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
+	        cachedClearTimeout = clearTimeout;
 	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
+	        cachedClearTimeout = function cachedClearTimeout() {
+	            throw new Error('clearTimeout is not defined');
+	        };
 	    }
 	})();
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -1513,11 +1498,6 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -2492,6 +2472,8 @@
 	    }, {
 	        key: 'onSuccess',
 	        value: function onSuccess(data) {
+	            var _this2 = this;
+
 	            var success = data.success;
 	            var errors = data.errors;
 	            var message = data.message;
@@ -2504,15 +2486,22 @@
 
 	            this.form.reset();
 
-	            this.notification.hide();
-	            this.notification.setText(message);
-	            this.notification.setType('success');
-	            this.notification.show();
+	            this.notification.hide().then(function () {
+	                _this2.notification.setText(message);
+	                _this2.notification.setType('success');
+	                _this2.notification.show();
+	            });
 	        }
 	    }, {
 	        key: 'onError',
-	        value: function onError(error) {
-	            console.log('Error', error);
+	        value: function onError() {
+	            var _this3 = this;
+
+	            this.notification.hide().then(function () {
+	                _this3.notification.setText('Une erreur innatendue est survenue');
+	                _this3.notification.setType('error');
+	                _this3.notification.show();
+	            });
 	        }
 	    }, {
 	        key: 'setErrors',
@@ -2533,12 +2522,12 @@
 	    }, {
 	        key: 'resetErrors',
 	        value: function resetErrors() {
-	            var _this2 = this;
+	            var _this4 = this;
 
 	            var errorContainers = [].concat(_toConsumableArray(this.container.querySelectorAll('[id^="error-"]')));
 
 	            errorContainers.forEach(function (container) {
-	                return _this2.resetError(container);
+	                return _this4.resetError(container);
 	            });
 	        }
 	    }, {
@@ -2683,7 +2672,8 @@
 	            baseClassName: 'bab-Notification',
 	            visibleClassName: 'bab-Notification--visible',
 	            type: 'neutral',
-	            isVisible: false
+	            isVisible: false,
+	            animationDuration: 200
 	        }, options);
 
 	        this.container = container;
@@ -2729,14 +2719,26 @@
 	    }, {
 	        key: 'hide',
 	        value: function hide() {
+	            var _this = this;
+
 	            this.isVisible = false;
 	            this.updateClassName();
+
+	            return new Promise(function (resolve) {
+	                return setTimeout(resolve, _this.options.animationDuration);
+	            });
 	        }
 	    }, {
 	        key: 'show',
 	        value: function show() {
+	            var _this2 = this;
+
 	            this.isVisible = true;
 	            this.updateClassName();
+
+	            return new Promise(function (resolve) {
+	                return setTimeout(resolve, _this2.options.animationDuration);
+	            });
 	        }
 	    }]);
 

@@ -77,13 +77,20 @@ class CommentForm {
         this.form.reset()
 
         this.notification.hide()
-        this.notification.setText(message)
-        this.notification.setType('success')
-        this.notification.show()
+            .then(() => {
+                this.notification.setText(message)
+                this.notification.setType('success')
+                this.notification.show()
+            })
     }
 
-    onError(error) {
-        console.log('Error', error)
+    onError() {
+        this.notification.hide()
+            .then(() => {
+                this.notification.setText('Une erreur innatendue est survenue')
+                this.notification.setType('error')
+                this.notification.show()
+            })
     }
 
     setErrors(errors) {
