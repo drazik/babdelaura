@@ -1,7 +1,6 @@
 .bab-Logo {
     display: block;
-    width: 500px;
-    height: 250px;
+    max-width: 500px;
     margin: 0 auto;
 
     font-size: 0;
@@ -9,4 +8,11 @@
     background-image: url('../images/new/logo.svg');
     background-size: cover;
     background-position: center;
+}
+
+.bab-Logo::before {
+    content: '';
+
+    display: block;
+    padding-top: 50%;
 }

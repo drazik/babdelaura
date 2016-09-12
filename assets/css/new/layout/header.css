@@ -18,3 +18,9 @@
 .bab-Header--hidden {
     transform: translateY(-100%);
 }
+
+@media (--medium-viewport) {
+    .bab-Header {
+        display: none;
+    }
+}
