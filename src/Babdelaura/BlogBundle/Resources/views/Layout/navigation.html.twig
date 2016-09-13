@@ -8,6 +8,7 @@
     {% for page in pages %}
         {% if page.isExterne %}
             {% set href = page.lienExterne %}
+            {% set target = '_blank' %}
         {% else %}
             {% set href = path('babdelaurablog_page', {'slug': page.slug}) %}
         {% endif %}
@@ -18,7 +19,7 @@
             {% set className = className ~ ' bab-Navigation-item--highlight' %}
         {% endif %}
 
-    <a class="{{ className }}" href="{{ href }}">
+    <a class="{{ className }}" href="{{ href }}" target="{{ target }}" >
         {{ page.titre }}
     </a>
     {% endfor %}
