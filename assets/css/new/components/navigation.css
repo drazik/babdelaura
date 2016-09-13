@@ -19,3 +19,7 @@
 .bab-Navigation-item--highlight {
     color: var(--main-color);
 }
+
+.bab-Navigation-item--highlight:hover {
+    color: var(--text-color);
+}

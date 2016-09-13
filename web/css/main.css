@@ -756,6 +756,10 @@ body {
     color: #4fafb9;
 }
 
+.bab-Navigation-item--highlight:hover {
+    color: #444;
+}
+
 .InstagramPhoto {
     display: block;
     width: 100%;
@@ -1051,6 +1055,10 @@ body {
 
 .bab-Social:not(:first-child) {
     margin-left: 5px;
+}
+
+.bab-Social:hover {
+	color: #444;
 }
 
 .bab-Search {

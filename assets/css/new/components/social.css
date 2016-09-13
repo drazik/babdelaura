@@ -13,3 +13,6 @@
 .bab-Social:not(:first-child) {
     margin-left: 5px;
 }
+.bab-Social:hover {
+	color: var(--text-color);
+}
