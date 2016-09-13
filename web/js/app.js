@@ -1461,40 +1461,25 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout() {
-	    throw new Error('clearTimeout has not been defined');
-	}
 	(function () {
 	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
+	        cachedSetTimeout = setTimeout;
 	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
+	        cachedSetTimeout = function cachedSetTimeout() {
+	            throw new Error('setTimeout is not defined');
+	        };
 	    }
 	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
+	        cachedClearTimeout = clearTimeout;
 	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
+	        cachedClearTimeout = function cachedClearTimeout() {
+	            throw new Error('clearTimeout is not defined');
+	        };
 	    }
 	})();
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -1513,11 +1498,6 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -2476,12 +2456,25 @@
 
 	                (0, _naturalScroll.scrollTop)(document.documentElement, scrollTopLevel);
 	                (0, _naturalScroll.scrollTop)(document.body, scrollTopLevel);
-	            }, 500);
+	            }, 100);
 	        }
 	    }, {
 	        key: 'restoreInOriginalContainer',
 	        value: function restoreInOriginalContainer() {
+	            var _this2 = this;
+
 	            this.container.appendChild(this.form);
+
+	            setTimeout(function () {
+	                var offsetTop = _this2.container.offsetTop;
+	                var offsetHeight = _this2.header.container.offsetHeight;
+
+
+	                var scrollTopLevel = offsetTop - offsetHeight - _this2.options.scrollTopDelta - 50;
+
+	                (0, _naturalScroll.scrollTop)(document.documentElement, scrollTopLevel);
+	                (0, _naturalScroll.scrollTop)(document.body, scrollTopLevel);
+	            }, 100);
 	        }
 	    }, {
 	        key: 'restore',
@@ -2492,7 +2485,7 @@
 	    }, {
 	        key: 'onSuccess',
 	        value: function onSuccess(data) {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var success = data.success;
 	            var errors = data.errors;
@@ -2507,20 +2500,20 @@
 	            this.form.reset();
 
 	            this.notification.hide().then(function () {
-	                _this2.notification.setText(message);
-	                _this2.notification.setType('success');
-	                _this2.notification.show();
+	                _this3.notification.setText(message);
+	                _this3.notification.setType('success');
+	                _this3.notification.show();
 	            });
 	        }
 	    }, {
 	        key: 'onError',
 	        value: function onError() {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            this.notification.hide().then(function () {
-	                _this3.notification.setText('Une erreur innatendue est survenue');
-	                _this3.notification.setType('error');
-	                _this3.notification.show();
+	                _this4.notification.setText('Une erreur innatendue est survenue');
+	                _this4.notification.setType('error');
+	                _this4.notification.show();
 	            });
 	        }
 	    }, {
@@ -2542,12 +2535,12 @@
 	    }, {
 	        key: 'resetErrors',
 	        value: function resetErrors() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            var errorContainers = [].concat(_toConsumableArray(this.container.querySelectorAll('[id^="error-"]')));
 
 	            errorContainers.forEach(function (container) {
-	                return _this4.resetError(container);
+	                return _this5.resetError(container);
 	            });
 	        }
 	    }, {

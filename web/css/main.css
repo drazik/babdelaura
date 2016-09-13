@@ -1237,6 +1237,10 @@ a.bab-Comment-author {
     overflow: hidden;
 }
 
+.CommentForm_container {
+    height: 480px;
+}
+
 .CommentForm {
     margin-bottom: 45px;
 }
@@ -1255,7 +1259,7 @@ a.bab-Comment-author {
     width: 100%;
     height: 160px;
 
-    resize: vertical;
+    resize: none;
 }
 
 .CommentForm_error {

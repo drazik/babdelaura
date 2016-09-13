@@ -50,11 +50,21 @@ class CommentForm {
 
             scrollTop(document.documentElement, scrollTopLevel)
             scrollTop(document.body, scrollTopLevel)
-        }, 500)
+        }, 100)
     }
 
     restoreInOriginalContainer() {
         this.container.appendChild(this.form)
+
+        setTimeout(() => {
+            const {offsetTop} = this.container
+            const {offsetHeight} = this.header.container
+
+            const scrollTopLevel = offsetTop - offsetHeight - this.options.scrollTopDelta - 50
+
+            scrollTop(document.documentElement, scrollTopLevel)
+            scrollTop(document.body, scrollTopLevel)
+        }, 100)
     }
 
     restore() {
