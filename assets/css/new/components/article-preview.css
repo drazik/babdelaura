@@ -11,6 +11,8 @@
 
     background-size: cover;
     background-position: center;
+
+    border-radius: 10px;
 }
 
 .bab-ArticlePreview-shadow {
@@ -37,6 +39,8 @@
 
     background-size: cover;
     background-position: center;
+
+    border-radius: 5px;
 }
 
 .bab-ArticlePreview--small .bab-ArticlePreview-header {
