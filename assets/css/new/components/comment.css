@@ -1,5 +1,11 @@
 .bab-Comment {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.bab-Comment-content {
+    text-align: justify;
+
+    padding-top: 5px;
 }
 
 .bab-Comment + .bab-Comment {
