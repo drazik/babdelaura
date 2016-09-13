@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "axios": "^0.13.1",
-    "bloody-scroll-direction": "^1.0.0",
     "classlist-polyfill": "^1.0.3",
     "closest": "0.0.1",
     "dom-delegate": "^2.0.3",

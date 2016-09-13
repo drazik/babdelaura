@@ -1,5 +1,3 @@
-import scrollDirection from 'bloody-scroll-direction'
-
 class Header {
     constructor(container, options = {}) {
         this.options = {
@@ -8,21 +6,23 @@ class Header {
         }
 
         this.container = container
-        this.scrollDirection = scrollDirection.create()
+        this.lastScrollPosition = window.scrollY
 
         this.initEvents()
     }
 
     initEvents() {
-        this.scrollDirection.on('change', this.onScrollDirectionChange.bind(this))
-    }
+        window.addEventListener('scroll', () => {
+            const newScrollPosition = window.scrollY
 
-    onScrollDirectionChange({direction}) {
-        if (direction === 1) {
-            this.hide()
-        } else if (direction === -1) {
-            this.show()
-        }
+            if (newScrollPosition < this.lastScrollPosition) {
+                this.show()
+            } else {
+                this.hide()
+            }
+
+            this.lastScrollPosition = newScrollPosition
+        })
     }
 
     hide() {
