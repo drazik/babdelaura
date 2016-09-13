@@ -1185,8 +1185,10 @@ a.bab-Comment-author {
 }
 
 .bab-Comment-answerButton {
-    padding: 0px 5px;
+    margin-left: 5px;
+    padding: 1px 5px;
     border-width: 0;
+    border-radius: 5px;
 
     background-color: #4fafb9;
     color: #fff;
