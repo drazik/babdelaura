@@ -21,6 +21,7 @@ class PageExterneType extends AbstractType
         $builder
             ->add('titre', TextType::class)
             ->add('lienExterne', TextType::class)
+            ->add('targetBlank', CheckboxType::class, array('required' => false))
             ->add('publication', CheckboxType::class, array('required' => false))
             ->add('inMenu', CheckboxType::class, array('required' => false))
             ->add('inFooter', CheckboxType::class, array('required' => false))

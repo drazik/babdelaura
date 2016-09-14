@@ -16,6 +16,12 @@
         </div>
 
         <div class="checkbox">
+            {{ form_widget(form.targetBlank) }}
+            {{ form_label(form.targetBlank, "target _blank") }}
+            {{ form_errors(form.targetBlank)}}
+        </div>
+
+        <div class="checkbox">
             {{ form_widget(form.publication) }}
             {{ form_label(form.publication, "Publier la page") }}
             {{ form_errors(form.publication)}}

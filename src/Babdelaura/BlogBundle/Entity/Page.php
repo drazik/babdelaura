@@ -104,11 +104,19 @@ class Page implements DescriptionEntite
      */
     private $lienExterne;
 
+     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="targetBlank", type="boolean")
+     */
+    private $targetBlank;
+
     public function __construct(){
         $this->datePublication = new \DateTime;
         $this->publication = false;
         $this->isExterne = false;
         $this->mettreEnAvant = false;
+        $this->targetBlank = false;
     }
     
     /**
@@ -433,5 +441,29 @@ class Page implements DescriptionEntite
     public function getMettreEnAvant()
     {
         return $this->mettreEnAvant;
+    }
+
+    /**
+     * Set targetBlank
+     *
+     * @param boolean $targetBlank
+     *
+     * @return Page
+     */
+    public function setTargetBlank($targetBlank)
+    {
+        $this->targetBlank = $targetBlank;
+
+        return $this;
+    }
+
+    /**
+     * Get targetBlank
+     *
+     * @return boolean
+     */
+    public function getTargetBlank()
+    {
+        return $this->targetBlank;
     }
 }

@@ -8,7 +8,6 @@
     {% for page in pages %}
         {% if page.isExterne %}
             {% set href = page.lienExterne %}
-            {% set target = '_blank' %}
         {% else %}
             {% set href = path('babdelaurablog_page', {'slug': page.slug}) %}
         {% endif %}
@@ -17,6 +16,12 @@
 
         {% if page.mettreEnAvant %}
             {% set className = className ~ ' bab-Navigation-item--highlight' %}
+        {% endif %}
+
+        {% if page.targetBlank %}
+            {% set target = '_blank' %}
+        {% else %}
+            {% set target = '' %}
         {% endif %}
 
     <a class="{{ className }}" href="{{ href }}" target="{{ target }}" >
