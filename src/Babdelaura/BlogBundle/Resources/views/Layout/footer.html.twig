@@ -1,8 +1,22 @@
 <footer class="bab-Footer">
     <ul class="bab-Footer-pagesContainer">
         {% for page in pages %}
+
+        {% if page.isExterne %}
+            {% set href = page.lienExterne %}
+        {% else %}
+            {% set href = path('babdelaurablog_page', {'slug': page.slug}) %}
+        {% endif %}
+
+
+        {% if page.targetBlank %}
+            {% set target = '_blank' %}
+        {% else %}
+            {% set target = '' %}
+        {% endif %}
+
         <li class="bab-Footer-page">
-            <a class="bab-Footer-pageLink" href="{{ path('babdelaurablog_page', {'slug': page.slug}) }}">
+            <a class="bab-Footer-pageLink" href="{{ href }}" target="{{ target }}">
                 {{ page.titre }}
             </a>
         </li>
