@@ -2,14 +2,34 @@
 
 {% set titleElement = titleElement|default('h2') %}
 
-<article class="bab-ArticlePreview bab-ArticlePreview--featured" style="background-image: url('{{ asset(article.image.webPath) }}');">
-    <div class="bab-ArticlePreview-shadow"></div>
-    <div class="bab-ArticlePreview-infos">
-        <{{ titleElement }} class="bab-ArticlePreview-title">
+<article class="bab-ArticlePreview bab-ArticlePreview--featured">
+    <header class="bab-ArticlePreview-header" style="background-image: url('{{ asset(article.image.webPath) }}');">
+        <a class="bab-ArticlePreview-readMore" href="{{ articleUrl }}">
+            <div class="bab-ArticlePreview-infos bab-ArticlePreview-infos--largeViewport">
+                <{{ titleElement }} class="bab-ArticlePreview-title">
+                {{ article.titre }}
+                </{{ titleElement }}>
+                <span class="bab-Button bab-Button--large">
+                    Lire la suite
+                </span>
+            </div>
+        </a>
+    </header>
+    <div class="bab-ArticlePreview-title bab-ArticlePreview-title--hidden@large bab-ArticlePreview-title--visible@medium">
+        <a href="{{ articleUrl }}">
             {{ article.titre }}
-        </{{ titleElement }}>
-        <a class="bab-ArticlePreview-readMore bab-Button bab-Button--large" href="{{ articleUrl }}">
-            Lire la suite
         </a>
     </div>
+    <aside class="bab-ArticlePreview-infos bab-ArticlePreview-infos--mediumViewport">
+        <a class="bab-ArticlePreview-info" href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
+            {{ article.categorie.nom }}
+        </a>
+        <time class="bab-ArticlePreview-info" datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
+            {{ article.datePublication|localizeddate('medium', 'none') }}
+        </time>
+        <a class="bab-ArticlePreview-info" href="{{ articleUrl }}#commentaires" title="Lire les commentaires à propos de {{ article.titre }}">
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
+            {{ article.commentaires|length }}
+        </a>
+    </aside>
 </article>

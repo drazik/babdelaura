@@ -18,13 +18,13 @@
         </a>
     </{{ titleElement }}>
     <aside class="bab-ArticlePreview-infos">
-        <a href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
+        <a class="bab-ArticlePreview-info" href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
             {{ article.categorie.nom }}
         </a>
-        <time datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
+        <time class="bab-ArticlePreview-info" datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
             {{ article.datePublication|localizeddate('medium', 'none') }}
         </time>
-        <a href="{{ articleUrl }}#commentaires" title="Lire les commentaires à propos de {{ article.titre }}">
+        <a class="bab-ArticlePreview-info" href="{{ articleUrl }}#commentaires" title="Lire les commentaires à propos de {{ article.titre }}">
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
             {{ article.commentaires|length }}
         </a>
