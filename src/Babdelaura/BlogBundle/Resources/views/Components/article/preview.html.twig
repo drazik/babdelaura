@@ -6,9 +6,10 @@
 
 <article class="bab-ArticlePreview {% if small %}bab-ArticlePreview--small{% endif %}">
     <header class="bab-ArticlePreview-header" style="background-image: url('{{ asset(article.image.webPath) }}');">
-        <div class="bab-ArticlePreview-shadow"></div>
-        <a class="bab-ArticlePreview-readMore bab-Button bab-Button--large" href="{{ articleUrl }}" tabindex="-1">
-            Lire la suite
+        <a class="bab-ArticlePreview-readMore" href="{{ articleUrl }}" tabindex="-1">
+            <span class="bab-Button bab-Button--large">
+                Lire la suite
+            </span>
         </a>
     </header>
     <{{ titleElement }} class="bab-ArticlePreview-title">
