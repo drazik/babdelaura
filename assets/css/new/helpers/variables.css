@@ -17,6 +17,7 @@
     /* z-index scale */
     --zi-header-layer: 100;
     --zi-notification-layer: 200;
+    --zi-modal-layer: 300;
 
     /* Fonts */
     --base-font-stack: 'Vollkorn', serif;
