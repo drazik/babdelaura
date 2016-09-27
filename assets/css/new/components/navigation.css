@@ -29,6 +29,7 @@
     top: 20px;
     left: 20px;
 
+    display: none;
     width: 40px;
     height: 40px;
     padding: 0;
@@ -93,4 +94,10 @@
 
 .bab-NavigationTrigger--cross .bab-NavigationTrigger-burger::after {
     transform: translateY(0) rotate(-45deg);
+}
+
+@media (--medium-viewport) {
+    .bab-NavigationTrigger {
+        display: block;
+    }
 }
