@@ -16,3 +16,13 @@
 .bab-Social:hover {
 	color: var(--text-color);
 }
+
+@media (--medium-viewport) {
+    .bab-Socials {
+        text-align: center;
+    }
+
+    .bab-Social:not(:first-child) {
+        margin-left: 20px;
+    }
+}

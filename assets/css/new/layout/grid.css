@@ -58,6 +58,10 @@
     margin-bottom: var(--grid-horizontal-gutter-x-small);
 }
 
+.bab-Grid--flex {
+    display: flex;
+}
+
 .bab-Grid-cell--1-1 {
     width: 100%;
 }
@@ -87,6 +91,10 @@
 }
 
 @media (--medium-viewport) {
+    .bab-Grid--flexColumn\@medium {
+        flex-direction: column;
+    }
+
     .bab-Grid-cell--1-1\@medium {
         width: 100%;
     }

@@ -31,3 +31,20 @@
 
     font-size: 15px;
 }
+
+@media (--medium-viewport) {
+    .bab-Search-opener {
+        display: none;
+    }
+
+    .bab-Search-form {
+        position: static;
+
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .bab-Search-input {
+        width: 100%;
+    }
+}

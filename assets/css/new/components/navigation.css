@@ -100,4 +100,9 @@
     .bab-NavigationTrigger {
         display: block;
     }
+
+    .bab-Navigation-item {
+        display: block;
+        padding: 5px 0;
+    }
 }

@@ -1,13 +1,13 @@
 <header class="bab-Header js-header">
     <div class="bab-Wrapper">
-        <div class="bab-Grid">
-            <div class="bab-Grid-cell bab-Grid-cell--1-6">
+        <div class="bab-Grid bab-Grid--flex bab-Grid--flexColumn@medium">
+            <div class="bab-Grid-cell bab-Grid-cell--1-6 bab-Grid-cell--1-1@medium bab-Header-cell bab-Header-cell--socials">
                 {% include 'BabdelauraBlogBundle:Layout:socials.html.twig' %}
             </div>
-            <div class="bab-Grid-cell bab-Grid-cell--2-3">
+            <div class="bab-Grid-cell bab-Grid-cell--2-3 bab-Grid-cell--1-1@medium bab-Header-cell bab-Header-cell--menu">
                 {{ render(controller('BabdelauraBlogBundle:Blog:mainMenu')) }}
             </div>
-            <div class="bab-Grid-cell bab-Grid-cell--1-6 align-right">
+            <div class="bab-Grid-cell bab-Grid-cell--1-6 bab-Grid-cell--1-1@medium bab-Header-cell bab-Header-cell--search">
                 {% include 'BabdelauraBlogBundle:Layout:search.html.twig' %}
             </div>
         </div>
