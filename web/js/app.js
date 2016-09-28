@@ -2927,10 +2927,15 @@
 	        _classCallCheck(this, Header);
 
 	        this.options = _extends({
-	            hiddenClass: 'bab-Header--hidden'
+	            visibleClass: 'bab-Header--visible',
+	            triggerCrossClass: 'bab-NavigationTrigger--cross'
 	        }, options);
 
 	        this.container = container;
+
+	        var triggerSelector = container.getAttribute('data-header-trigger');
+	        this.trigger = document.querySelector(triggerSelector);
+
 	        this.lastScrollPosition = window.scrollY;
 
 	        this.initEvents();
@@ -2939,29 +2944,31 @@
 	    _createClass(Header, [{
 	        key: 'initEvents',
 	        value: function initEvents() {
-	            var _this = this;
-
-	            window.addEventListener('scroll', function () {
-	                var newScrollPosition = window.scrollY;
-
-	                if (newScrollPosition < _this.lastScrollPosition) {
-	                    _this.show();
+	            /*window.addEventListener('scroll', () => {
+	                const newScrollPosition = window.scrollY
+	                  if (newScrollPosition < this.lastScrollPosition) {
+	                    this.show()
 	                } else {
-	                    _this.hide();
+	                    this.hide()
 	                }
+	                  this.lastScrollPosition = newScrollPosition
+	            })*/
 
-	                _this.lastScrollPosition = newScrollPosition;
-	            });
+	            this.trigger.addEventListener('click', this.toggle.bind(this));
 	        }
-	    }, {
-	        key: 'hide',
-	        value: function hide() {
-	            this.container.classList.add(this.options.hiddenClass);
+
+	        /*hide() {
+	            this.container.classList.add(this.options.hiddenClass)
 	        }
+	          show() {
+	            this.container.classList.remove(this.options.hiddenClass)
+	        }*/
+
 	    }, {
-	        key: 'show',
-	        value: function show() {
-	            this.container.classList.remove(this.options.hiddenClass);
+	        key: 'toggle',
+	        value: function toggle() {
+	            this.trigger.classList.toggle(this.options.triggerCrossClass);
+	            this.container.classList.toggle(this.options.visibleClass);
 	        }
 	    }]);
 

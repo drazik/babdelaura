@@ -12,7 +12,7 @@
     background-repeat: no-repeat;
     background-color: #fff;
     z-index: var(--zi-header-layer);
-    transition: transform 0.25s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .bab-Header--hidden {
@@ -37,7 +37,15 @@
         background-image: none;
         overflow-y: scroll;
         overflow-x: hidden;
-        transform: none !important;
+        transform: translateX(-100%);
+    }
+
+    .bab-Header--hidden {
+        transform: translateX(-100%);
+    }
+
+    .bab-Header--visible {
+        transform: translateX(0);
     }
 
     .bab-Header-cell--menu {

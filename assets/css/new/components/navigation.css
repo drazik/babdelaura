@@ -40,7 +40,8 @@
     cursor: pointer;
     opacity: 0.85;
     z-index: var(--zi-modal-layer);
-    transition: transform 0.5s;
+    transition-property: transform;
+    transition-duration: 0.5s;
 }
 
 .bab-NavigationTrigger--cross {
@@ -58,7 +59,8 @@
     background-color: #fff;
     border-radius: 2px;
     transform: translate(-50%, -50%);
-    transition: background-color 0.5s;
+    transition-property: background-color;
+    transition-duration: inherit;
 }
 
 .bab-NavigationTrigger-burger::before,
@@ -73,7 +75,8 @@
 
     background-color: #fff;
     border-radius: inherit;
-    transition: transform 0.5s;
+    transition-property: transform;
+    transition-duration: inherit;
 }
 
 .bab-NavigationTrigger-burger::before {
