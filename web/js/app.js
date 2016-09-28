@@ -2928,13 +2928,16 @@
 
 	        this.options = _extends({
 	            visibleClass: 'bab-Header--visible',
-	            triggerCrossClass: 'bab-NavigationTrigger--cross'
+	            triggerCrossClass: 'bab-NavigationTrigger--cross',
+	            dropshadowVisibleClass: 'bab-Dropshadow--visible'
 	        }, options);
 
 	        this.container = container;
 
 	        var triggerSelector = container.getAttribute('data-header-trigger');
 	        this.trigger = document.querySelector(triggerSelector);
+
+	        this.dropshadow = document.querySelector('.js-dropshadow');
 
 	        this.lastScrollPosition = window.scrollY;
 
@@ -2955,6 +2958,7 @@
 	            })*/
 
 	            this.trigger.addEventListener('click', this.toggle.bind(this));
+	            this.dropshadow.addEventListener('click', this.toggle.bind(this));
 	        }
 
 	        /*hide() {
@@ -2969,6 +2973,7 @@
 	        value: function toggle() {
 	            this.trigger.classList.toggle(this.options.triggerCrossClass);
 	            this.container.classList.toggle(this.options.visibleClass);
+	            this.dropshadow.classList.toggle(this.options.dropshadowVisibleClass);
 	        }
 	    }]);
 

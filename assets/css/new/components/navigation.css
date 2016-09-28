@@ -39,7 +39,7 @@
     background-color: var(--main-color);
     cursor: pointer;
     opacity: 0.85;
-    z-index: var(--zi-modal-layer);
+    z-index: var(--zi-navigation-trigger-layer);
     transition-property: transform;
     transition-duration: 0.5s;
 }

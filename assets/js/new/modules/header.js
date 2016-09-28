@@ -3,6 +3,7 @@ class Header {
         this.options = {
             visibleClass: 'bab-Header--visible',
             triggerCrossClass: 'bab-NavigationTrigger--cross',
+            dropshadowVisibleClass: 'bab-Dropshadow--visible',
             ...options
         }
 
@@ -10,6 +11,8 @@ class Header {
 
         const triggerSelector = container.getAttribute('data-header-trigger')
         this.trigger = document.querySelector(triggerSelector)
+
+        this.dropshadow = document.querySelector('.js-dropshadow')
 
         this.lastScrollPosition = window.scrollY
 
@@ -30,6 +33,7 @@ class Header {
         })*/
 
         this.trigger.addEventListener('click', this.toggle.bind(this))
+        this.dropshadow.addEventListener('click', this.toggle.bind(this))
     }
 
     /*hide() {
@@ -43,6 +47,7 @@ class Header {
     toggle() {
         this.trigger.classList.toggle(this.options.triggerCrossClass)
         this.container.classList.toggle(this.options.visibleClass)
+        this.dropshadow.classList.toggle(this.options.dropshadowVisibleClass)
     }
 }
 
