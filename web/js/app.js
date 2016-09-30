@@ -2906,7 +2906,7 @@
 
 /***/ },
 /* 47 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2917,6 +2917,8 @@
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _breakpoints = __webpack_require__(48);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2941,33 +2943,64 @@
 
 	        this.lastScrollPosition = window.scrollY;
 
+	        this.handleScroll = this.handleScroll.bind(this);
+	        this.handleResize = this.handleResize.bind(this);
+
+	        this.currentViewport = (0, _breakpoints.getCurrentViewport)();
+
+	        if (this.currentViewport === _breakpoints.viewports.LARGE_VIEWPORT) {
+	            this.show();
+	        }
+
 	        this.initEvents();
 	    }
 
 	    _createClass(Header, [{
 	        key: 'initEvents',
 	        value: function initEvents() {
-	            /*window.addEventListener('scroll', () => {
-	                const newScrollPosition = window.scrollY
-	                  if (newScrollPosition < this.lastScrollPosition) {
-	                    this.show()
-	                } else {
-	                    this.hide()
-	                }
-	                  this.lastScrollPosition = newScrollPosition
-	            })*/
-
+	            window.addEventListener('scroll', this.handleScroll);
+	            window.addEventListener('resize', this.handleResize);
 	            this.trigger.addEventListener('click', this.toggle.bind(this));
 	            this.dropshadow.addEventListener('click', this.toggle.bind(this));
 	        }
+	    }, {
+	        key: 'handleScroll',
+	        value: function handleScroll() {
+	            var newScrollPosition = window.scrollY;
 
-	        /*hide() {
-	            this.container.classList.add(this.options.hiddenClass)
+	            newScrollPosition < this.lastScrollPosition ? this.show() : this.hide();
+
+	            this.lastScrollPosition = newScrollPosition;
 	        }
-	          show() {
-	            this.container.classList.remove(this.options.hiddenClass)
-	        }*/
+	    }, {
+	        key: 'handleResize',
+	        value: function handleResize() {
+	            var newCurrentViewport = (0, _breakpoints.getCurrentViewport)();
 
+	            if (newCurrentViewport === this.currentViewport) {
+	                return;
+	            }
+
+	            if (this.currentViewport === _breakpoints.viewports.LARGE_VIEWPORT && newCurrentViewport === _breakpoints.viewports.MEDIUM_VIEWPORT || newCurrentViewport === _breakpoints.viewports.SMALL_VIEWPORT) {
+	                this.hide();
+	            }
+
+	            if ((this.currentViewport === _breakpoints.viewports.SMALL_VIEWPORT || this.currentViewport === _breakpoints.viewports.MEDIUM_VIEWPORT) && newCurrentViewport === _breakpoints.viewports.LARGE_VIEWPORT) {
+	                this.show();
+	            }
+
+	            this.currentViewport = newCurrentViewport;
+	        }
+	    }, {
+	        key: 'hide',
+	        value: function hide() {
+	            this.container.classList.remove(this.options.visibleClass);
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            this.container.classList.add(this.options.visibleClass);
+	        }
 	    }, {
 	        key: 'toggle',
 	        value: function toggle() {
@@ -2981,6 +3014,40 @@
 	}();
 
 	exports.default = Header;
+
+/***/ },
+/* 48 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var SMALL_VIEWPORT = 'screen and (max-width: 400px)';
+	var MEDIUM_VIEWPORT = 'screen and (max-width: 790px)';
+	var LARGE_VIEWPORT = 'screen and (min-width: 791px)';
+
+	var viewports = {
+	    SMALL_VIEWPORT: SMALL_VIEWPORT,
+	    MEDIUM_VIEWPORT: MEDIUM_VIEWPORT,
+	    LARGE_VIEWPORT: LARGE_VIEWPORT
+	};
+
+	var match = function match(viewport) {
+	    return window.matchMedia(viewport).matches;
+	};
+
+	var getCurrentViewport = function getCurrentViewport() {
+	    for (var viewport in viewports) {
+	        if (match(viewports[viewport])) {
+	            return viewports[viewport];
+	        }
+	    }
+	};
+
+	exports.viewports = viewports;
+	exports.getCurrentViewport = getCurrentViewport;
 
 /***/ }
 /******/ ]);
