@@ -1,7 +1,5 @@
 .bab-Search {
     position: relative;
-
-    padding-top: 8px;
 }
 
 .bab-Search-opener {
@@ -9,6 +7,10 @@
 
     background-color: transparent;
     cursor: pointer;
+}
+
+.bab-Search-opener svg {
+    vertical-align: middle;
 }
 
 .bab-Search-form {
@@ -33,6 +35,10 @@
 }
 
 @media (--medium-viewport) {
+    .bab-Search {
+        padding-top: 16px;
+    }
+
     .bab-Search-opener {
         display: none;
     }

@@ -1,7 +1,3 @@
-.bab-Socials {
-    padding-top: 8px;
-}
-
 .bab-Social {
     display: inline-block;
 
@@ -15,6 +11,10 @@
 }
 .bab-Social:hover {
 	color: var(--text-color);
+}
+
+.bab-Social svg {
+    vertical-align: middle;
 }
 
 @media (--medium-viewport) {

@@ -582,6 +582,10 @@ body {
     display: flex;
 }
 
+.bab-Grid--flex.bab-Grid--alignCenter {
+    align-items: center;
+}
+
 .bab-Grid-cell--1-1 {
     width: 100%;
 }
@@ -887,6 +891,10 @@ body {
         display: block;
         padding: 5px 0;
     }
+
+    .bab-Navigation-item:not(:first-child) {
+        margin-left: 0;
+    }
 }
 
 .InstagramPhoto {
@@ -1178,10 +1186,6 @@ body {
     height: 20px;
 }
 
-.bab-Socials {
-    padding-top: 8px;
-}
-
 .bab-Social {
     display: inline-block;
 
@@ -1198,6 +1202,10 @@ body {
 	color: #444;
 }
 
+.bab-Social svg {
+    vertical-align: middle;
+}
+
 @media screen and (max-width: 790px) {
     .bab-Socials {
         text-align: center;
@@ -1210,8 +1218,6 @@ body {
 
 .bab-Search {
     position: relative;
-
-    padding-top: 8px;
 }
 
 .bab-Search-opener {
@@ -1219,6 +1225,10 @@ body {
 
     background-color: transparent;
     cursor: pointer;
+}
+
+.bab-Search-opener svg {
+    vertical-align: middle;
 }
 
 .bab-Search-form {
@@ -1243,6 +1253,10 @@ body {
 }
 
 @media screen and (max-width: 790px) {
+    .bab-Search {
+        padding-top: 16px;
+    }
+
     .bab-Search-opener {
         display: none;
     }

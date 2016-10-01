@@ -108,4 +108,8 @@
         display: block;
         padding: 5px 0;
     }
+
+    .bab-Navigation-item:not(:first-child) {
+        margin-left: 0;
+    }
 }
