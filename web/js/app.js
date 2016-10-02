@@ -2966,6 +2966,10 @@
 	    }, {
 	        key: 'handleScroll',
 	        value: function handleScroll() {
+	            if (this.currentViewport === _breakpoints.viewports.MEDIUM_VIEWPORT || this.currentViewport === _breakpoints.viewports.SMALL_VIEWPORT) {
+	                return;
+	            }
+
 	            var newScrollPosition = window.scrollY;
 
 	            newScrollPosition < this.lastScrollPosition ? this.show() : this.hide();

@@ -38,6 +38,10 @@ class Header {
     }
 
     handleScroll() {
+        if (this.currentViewport === viewports.MEDIUM_VIEWPORT || this.currentViewport === viewports.SMALL_VIEWPORT) {
+            return;
+        }
+
         const newScrollPosition = window.scrollY
 
         newScrollPosition < this.lastScrollPosition ? this.show() : this.hide()
