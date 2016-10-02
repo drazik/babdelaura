@@ -23,3 +23,18 @@
 .bab-Button--large {
     font-size: 20px;
 }
+
+@media (--small-viewport) {
+    .bab-Button--block\@small {
+        display: block;
+        width: 100%;
+
+        float: none;
+        text-align: center;
+    }
+
+    .bab-Button--block\@small + .bab-Button--block\@small {
+        margin-top: 15px;
+        margin-left: 0;
+    }
+}

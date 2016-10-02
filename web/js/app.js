@@ -3028,7 +3028,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var SMALL_VIEWPORT = 'screen and (max-width: 400px)';
+	var SMALL_VIEWPORT = 'screen and (max-width: 430px)';
 	var MEDIUM_VIEWPORT = 'screen and (max-width: 790px)';
 	var LARGE_VIEWPORT = 'screen and (min-width: 791px)';
 

@@ -20,14 +20,14 @@
 
     <nav class="bab-Section clearfix">
         {% if urlArticleSuivant is not null %}
-        <a class="bab-Button pull-left" href="{{ urlArticleSuivant }}">
+        <a class="bab-Button bab-Button--block@small pull-left" href="{{ urlArticleSuivant }}">
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronLeft'} only %}
             Article plus récent
         </a>
         {% endif %}
 
         {% if urlArticlePrecedent is not null %}
-        <a class="bab-Button pull-right" href="{{ urlArticlePrecedent }}">
+        <a class="bab-Button bab-Button--block@small pull-right" href="{{ urlArticlePrecedent }}">
             Article plus ancien
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
         </a>
@@ -38,7 +38,7 @@
         <h2 class="bab-Section-title">
             Articles similaires
         </h2>
-        <div class="bab-Grid bab-Grid--smallGutters">
+        <div class="bab-Grid bab-Grid--inlineBlock bab-Grid--smallGutters">
             {% set nbArticles = articlesSimilaires|length %}
             {% for article in articlesSimilaires %}
             <div class="bab-Grid-cell bab-Grid-cell--1-{{ nbArticles }} bab-Grid-cell--1-2@medium bab-Grid-cell--1-1@small">

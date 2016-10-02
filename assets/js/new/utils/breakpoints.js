@@ -1,4 +1,4 @@
-const SMALL_VIEWPORT = 'screen and (max-width: 400px)'
+const SMALL_VIEWPORT = 'screen and (max-width: 430px)'
 const MEDIUM_VIEWPORT = 'screen and (max-width: 790px)'
 const LARGE_VIEWPORT = 'screen and (min-width: 791px)'
 
