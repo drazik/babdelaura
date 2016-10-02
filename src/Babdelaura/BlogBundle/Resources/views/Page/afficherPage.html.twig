@@ -8,13 +8,15 @@
     {{ parent() }}
 {% endblock %}
 
-{% block mainContent %}
-    <section>
-        <header>
-            <h2 class="bab-Article-title">{{ page.titre }}</h2>
+{% block content %}
+    <article class="bab-Article">
+        <header class="bab-Article-header">
+            <h2 class="bab-Article-title">
+                {{ page.titre }}
+            </h2>
         </header>
         <div class="bab-Article-content">
-            {{ page.contenu | raw }}
+            {{ page.contenu|raw }}
         </div>
-    </section>
+    </article>
 {% endblock %}
