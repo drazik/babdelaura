@@ -658,12 +658,16 @@ body {
     background-repeat: no-repeat;
     background-color: #fff;
     z-index: 100;
-    transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+    transition: -webkit-transform 0.25s ease-in-out;
     transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
 }
 
 .bab-Header--visible {
-    transform: translateY(0);
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
 }
 
 .bab-Header-cell--search {
@@ -684,13 +688,15 @@ body {
         background-image: none;
         overflow-y: scroll;
         overflow-x: hidden;
-        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+                transform: translateX(-100%);
         transition-duration: 0.5s;
         z-index: 400;
     }
 
     .bab-Header--visible {
-        transform: translateX(0);
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
     }
 
     .bab-Header-cell--menu {
@@ -829,12 +835,15 @@ body {
     cursor: pointer;
     opacity: 0.85;
     z-index: 500;
+    transition-property: -webkit-transform;
     transition-property: transform;
+    transition-property: transform, -webkit-transform;
     transition-duration: 0.5s;
 }
 
 .bab-NavigationTrigger--cross {
-    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
 }
 
 .bab-NavigationTrigger-burger {
@@ -847,7 +856,8 @@ body {
 
     background-color: #fff;
     border-radius: 2px;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     transition-property: background-color;
     transition-duration: inherit;
 }
@@ -864,16 +874,20 @@ body {
 
     background-color: #fff;
     border-radius: inherit;
+    transition-property: -webkit-transform;
     transition-property: transform;
+    transition-property: transform, -webkit-transform;
     transition-duration: inherit;
 }
 
 .bab-NavigationTrigger-burger::before {
-    transform: translateY(-6px);
+    -webkit-transform: translateY(-6px);
+            transform: translateY(-6px);
 }
 
 .bab-NavigationTrigger-burger::after {
-    transform: translateY(6px);
+    -webkit-transform: translateY(6px);
+            transform: translateY(6px);
 }
 
 .bab-NavigationTrigger--cross .bab-NavigationTrigger-burger {
@@ -881,11 +895,13 @@ body {
 }
 
 .bab-NavigationTrigger--cross .bab-NavigationTrigger-burger::before {
-    transform: translateY(0) rotate(45deg);
+    -webkit-transform: translateY(0) rotate(45deg);
+            transform: translateY(0) rotate(45deg);
 }
 
 .bab-NavigationTrigger--cross .bab-NavigationTrigger-burger::after {
-    transform: translateY(0) rotate(-45deg);
+    -webkit-transform: translateY(0) rotate(-45deg);
+            transform: translateY(0) rotate(-45deg);
 }
 
 @media screen and (max-width: 790px) {
@@ -944,7 +960,8 @@ body {
     font-weight: bold;
 
     color: #fff;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 }
 
 .bab-Separator {
@@ -1030,7 +1047,9 @@ body {
     top: 50%;
     left: 50%;
 
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+
+            transform: translate(-50%, -50%);
     color: #fff !important;
 }
 
@@ -1073,7 +1092,9 @@ body {
     top: 50%;
     left: 50%;
 
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+
+            transform: translate(-50%, -50%);
 }
 
 .bab-ArticlePreview-infos--mediumViewport {
@@ -1092,7 +1113,9 @@ body {
 .bab-ArticlePreview-infos--largeViewport .bab-Button {
     position: static;
 
-    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+
+            transform: translate(0, 0);
 }
 
 .bab-ArticlePreview-infos--mediumViewport {
@@ -1491,14 +1514,19 @@ a.bab-Comment-author {
     width: 100%;
     padding: 10px 30px 10px;
 
-    transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+
+            transform: translateY(-100%);
+    transition: -webkit-transform 0.2s ease-in-out;
     transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
     z-index: 200;
     text-align: center;
 }
 
 .bab-Notification--visible {
-    transform: translateY(0);
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
 }
 
 .bab-Notification--neutral {
@@ -1525,7 +1553,8 @@ a.bab-Comment-author {
     border-width: 0;
 
     background-color: transparent;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
     color: inherit;
     cursor: pointer;
 }

@@ -11,7 +11,7 @@ function styles() {
         atImport(),
         customMedia(),
         customProperties(),
-        autoprefixer({browsers: ['last 2 versions']})
+        autoprefixer({browsers: ['last 2 versions', 'BlackBerry > 8']})
     ]
 
     return gulp.src('assets/css/*.css')
