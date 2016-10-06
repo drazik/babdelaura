@@ -1585,6 +1585,12 @@ a.bab-Comment-author {
     resize: vertical;
 }
 
+@media screen and (max-width: 430px) {
+    .ContactForm {
+        width: 90%;
+    }
+}
+
 .bab-Dropshadow {
     position: fixed;
     top: 0;

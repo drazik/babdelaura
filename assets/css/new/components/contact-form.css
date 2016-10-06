@@ -19,3 +19,9 @@
 
     resize: vertical;
 }
+
+@media (--small-viewport) {
+    .ContactForm {
+        width: 90%;
+    }
+}
