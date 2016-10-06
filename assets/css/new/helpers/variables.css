@@ -14,6 +14,8 @@
     --grid-horizontal-gutter-small: 6px;
     --grid-horizontal-gutter-x-small: 3px;
 
+    --grid-vertical-gutter-small: 10px;
+
     /* z-index scale */
     --zi-header-layer: 100;
     --zi-notification-layer: 200;

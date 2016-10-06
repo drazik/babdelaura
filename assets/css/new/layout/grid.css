@@ -51,7 +51,7 @@
 }
 
 .bab-Grid--inlineBlock.bab-Grid--smallGutters .bab-Grid-cell {
-    margin-bottom: var(--grid-horizontal-gutter-small);
+    margin-bottom: var(--grid-vertical-gutter-small);
 }
 
 .bab-Grid--inlineBlock.bab-Grid--xSmallGutters .bab-Grid-cell {

@@ -571,7 +571,7 @@ body {
 }
 
 .bab-Grid--inlineBlock.bab-Grid--smallGutters .bab-Grid-cell {
-    margin-bottom: 6px;
+    margin-bottom: 10px;
 }
 
 .bab-Grid--inlineBlock.bab-Grid--xSmallGutters .bab-Grid-cell {
@@ -1227,7 +1227,7 @@ body {
     }
 
     .bab-Social:not(:first-child) {
-        margin-left: 20px;
+        margin-left: 15px;
     }
 }
 
