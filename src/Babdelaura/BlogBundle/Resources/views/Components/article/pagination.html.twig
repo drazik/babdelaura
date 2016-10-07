@@ -1,13 +1,13 @@
 <div class="align-center">
 {% if previous is defined %}
-    <a class="bab-Button" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+    <a class="bab-Button bab-Button--block@small" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
         {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronLeft'} only %}
         Articles plus récents
     </a>
 {% endif %}
 
 {% if next is defined %}
-    <a class="bab-Button" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+    <a class="bab-Button bab-Button--block@small" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
         Articles plus anciens
         {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
     </a>
