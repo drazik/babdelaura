@@ -1504,6 +1504,10 @@ a.bab-Comment-author {
     .bab-CommentForm-cell + .bab-CommentForm-cell {
         margin-top: 30px;
     }
+
+    .bab-CommentForm-container {
+        height: 620px;
+    }
 }
 
 .bab-Notification {

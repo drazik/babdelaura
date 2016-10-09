@@ -34,4 +34,8 @@
     .bab-CommentForm-cell + .bab-CommentForm-cell {
         margin-top: var(--grid-horizontal-gutter);
     }
+
+    .bab-CommentForm-container {
+        height: 620px;
+    }
 }

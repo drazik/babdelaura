@@ -1,6 +1,7 @@
 import XHRForm from './xhr-form'
 import Notification from './notification'
 import {scrollTop} from 'natural-scroll'
+import {getCurrentViewport, viewports} from '../utils/breakpoints'
 
 class CommentForm {
     constructor(container, header, options = {}) {
@@ -46,7 +47,13 @@ class CommentForm {
             const {offsetTop} = comment.container
             const {offsetHeight} = this.header.container
 
-            const scrollTopLevel = offsetTop - offsetHeight - this.options.scrollTopDelta
+            let scrollTopLevel = offsetTop - this.options.scrollTopDelta
+
+            const currentViewport = getCurrentViewport()
+
+            if (currentViewport === viewports.LARGE_VIEWPORT) {
+                scrollTopLevel -= offsetHeight
+            }
 
             scrollTop(document.documentElement, scrollTopLevel)
             scrollTop(document.body, scrollTopLevel)

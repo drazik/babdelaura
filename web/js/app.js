@@ -56,7 +56,7 @@
 
 	var _comments2 = _interopRequireDefault(_comments);
 
-	var _header = __webpack_require__(47);
+	var _header = __webpack_require__(48);
 
 	var _header2 = _interopRequireDefault(_header);
 
@@ -2296,11 +2296,11 @@
 
 	var _commentForm2 = _interopRequireDefault(_commentForm);
 
-	var _comment = __webpack_require__(44);
+	var _comment = __webpack_require__(45);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
-	var _closest = __webpack_require__(45);
+	var _closest = __webpack_require__(46);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
@@ -2389,6 +2389,8 @@
 
 	var _naturalScroll = __webpack_require__(43);
 
+	var _breakpoints = __webpack_require__(44);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -2452,7 +2454,13 @@
 	                var offsetHeight = _this.header.container.offsetHeight;
 
 
-	                var scrollTopLevel = offsetTop - offsetHeight - _this.options.scrollTopDelta;
+	                var scrollTopLevel = offsetTop - _this.options.scrollTopDelta;
+
+	                var currentViewport = (0, _breakpoints.getCurrentViewport)();
+
+	                if (currentViewport === _breakpoints.viewports.LARGE_VIEWPORT) {
+	                    scrollTopLevel -= offsetHeight;
+	                }
 
 	                (0, _naturalScroll.scrollTop)(document.documentElement, scrollTopLevel);
 	                (0, _naturalScroll.scrollTop)(document.body, scrollTopLevel);
@@ -2799,6 +2807,40 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	var SMALL_VIEWPORT = 'screen and (max-width: 430px)';
+	var MEDIUM_VIEWPORT = 'screen and (max-width: 790px)';
+	var LARGE_VIEWPORT = 'screen and (min-width: 791px)';
+
+	var viewports = {
+	    SMALL_VIEWPORT: SMALL_VIEWPORT,
+	    MEDIUM_VIEWPORT: MEDIUM_VIEWPORT,
+	    LARGE_VIEWPORT: LARGE_VIEWPORT
+	};
+
+	var match = function match(viewport) {
+	    return window.matchMedia(viewport).matches;
+	};
+
+	var getCurrentViewport = function getCurrentViewport() {
+	    for (var viewport in viewports) {
+	        if (match(viewports[viewport])) {
+	            return viewports[viewport];
+	        }
+	    }
+	};
+
+	exports.viewports = viewports;
+	exports.getCurrentViewport = getCurrentViewport;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -2846,12 +2888,12 @@
 	exports.default = Comment;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(46);
+	var matches = __webpack_require__(47);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -2863,7 +2905,7 @@
 	};
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2905,7 +2947,7 @@
 	}
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2918,7 +2960,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _breakpoints = __webpack_require__(48);
+	var _breakpoints = __webpack_require__(44);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3018,40 +3060,6 @@
 	}();
 
 	exports.default = Header;
-
-/***/ },
-/* 48 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var SMALL_VIEWPORT = 'screen and (max-width: 430px)';
-	var MEDIUM_VIEWPORT = 'screen and (max-width: 790px)';
-	var LARGE_VIEWPORT = 'screen and (min-width: 791px)';
-
-	var viewports = {
-	    SMALL_VIEWPORT: SMALL_VIEWPORT,
-	    MEDIUM_VIEWPORT: MEDIUM_VIEWPORT,
-	    LARGE_VIEWPORT: LARGE_VIEWPORT
-	};
-
-	var match = function match(viewport) {
-	    return window.matchMedia(viewport).matches;
-	};
-
-	var getCurrentViewport = function getCurrentViewport() {
-	    for (var viewport in viewports) {
-	        if (match(viewports[viewport])) {
-	            return viewports[viewport];
-	        }
-	    }
-	};
-
-	exports.viewports = viewports;
-	exports.getCurrentViewport = getCurrentViewport;
 
 /***/ }
 /******/ ]);
