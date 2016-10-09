@@ -1,3 +1,5 @@
+{% set slideshow = slideshow|default(false) %}
+
 <article class="bab-Article">
     <header class="bab-Article-header">
         <h2 class="bab-Article-title">
@@ -16,8 +18,11 @@
             </a>
         </div>
     </header>
-    <div class="bab-Article-content">
+    <div class="bab-Article-content {% if slideshow %}bab-Article-content--withSlideshow js-images-slideshow{% endif %}" {% if slideshow %}data-gallery-pswp-element="#pswp-element"{% endif %}>
         {{ article.contenu|raw }}
     </div>
+
     {% include 'BabdelauraBlogBundle:Components/article:share.html.twig' %}
+
+    {% include 'BabdelauraBlogBundle:Components:photoswipe.html.twig' with {'id': 'pswp-element'} %}
 </article>

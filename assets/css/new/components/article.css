@@ -66,6 +66,10 @@
     margin: 25px auto;
 }
 
+.bab-Article-content--withSlideshow img {
+    cursor: pointer;
+}
+
 .bab-Article-content a {
     color: var(--main-color);
 }

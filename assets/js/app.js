@@ -3,6 +3,7 @@ import 'classlist-polyfill';
 import Search from './new/modules/search'
 import Comments from './new/modules/comments'
 import Header from './new/modules/header'
+import ImagesSlideshow from './new/modules/images-slideshow';
 
 const searchContainer = document.querySelector('.js-search')
 
@@ -20,3 +21,7 @@ const commentsContainer = document.querySelector('.js-comments')
 if (commentsContainer) {
     new Comments(commentsContainer, header)
 }
+
+
+const imagesSlideshowContainers = [...document.querySelectorAll('.js-images-slideshow')]
+imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container))
