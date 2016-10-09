@@ -14,19 +14,19 @@ use Babdelaura\BlogBundle\Form\ImageType;
 
 class ImageController extends Controller
 {
-    public function afficherGallerieAction() {
+    public function affichergalerieAction() {
         $form = $this->createForm(ImageType::class, null, [
             'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
         ]);
 
-        return $this->render('BabdelauraBlogBundle:Admin/Image:gallerie.html.twig', array(
+        return $this->render('BabdelauraBlogBundle:Admin/Image:galerie.html.twig', array(
           'form' => $form->createView(),
         ));
     }
 
     public function getImagesAction(Request $request) {
         $page = $request->query->getInt('page', 1);
-        $nbImagesParPage = $this->container->getParameter('nbImagesParPageGallerie');
+        $nbImagesParPage = $this->container->getParameter('nbImagesParPagegalerie');
         $firstResult = ($page - 1) * $nbImagesParPage;
         $lastResult = $page * $nbImagesParPage;
 
