@@ -14,7 +14,7 @@ use Babdelaura\BlogBundle\Form\ImageType;
 
 class ImageController extends Controller
 {
-    public function affichergalerieAction() {
+    public function afficherGalerieAction() {
         $form = $this->createForm(ImageType::class, null, [
             'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
         ]);
@@ -26,7 +26,7 @@ class ImageController extends Controller
 
     public function getImagesAction(Request $request) {
         $page = $request->query->getInt('page', 1);
-        $nbImagesParPage = $this->container->getParameter('nbImagesParPagegalerie');
+        $nbImagesParPage = $this->container->getParameter('nbImagesParPageGalerie');
         $firstResult = ($page - 1) * $nbImagesParPage;
         $lastResult = $page * $nbImagesParPage;
 
