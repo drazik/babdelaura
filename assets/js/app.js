@@ -3,7 +3,8 @@ import 'classlist-polyfill';
 import Search from './new/modules/search'
 import Comments from './new/modules/comments'
 import Header from './new/modules/header'
-import ImagesSlideshow from './new/modules/images-slideshow';
+import ImagesSlideshow from './new/modules/images-slideshow'
+import CookieBar from './new/modules/cookie-bar'
 
 const searchContainer = document.querySelector('.js-search')
 
@@ -25,3 +26,10 @@ if (commentsContainer) {
 
 const imagesSlideshowContainers = [...document.querySelectorAll('.js-images-slideshow')]
 imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container))
+
+
+const cookieBarContainer = document.querySelector('.js-cookie-bar')
+
+if (cookieBarContainer) {
+    new CookieBar(cookieBarContainer)
+}

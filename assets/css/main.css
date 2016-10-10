@@ -15,6 +15,7 @@
 @import 'new/layout/main.css';
 @import 'new/layout/footer.css';
 @import 'new/layout/logo.css';
+@import 'new/layout/cookie-bar.css';
 
 @import 'new/components/wrapper.css';
 @import 'new/components/navigation.css';
