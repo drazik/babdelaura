@@ -7,6 +7,7 @@ namespace Babdelaura\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Babdelaura\BlogBundle\Entity\Article;
@@ -14,29 +15,43 @@ use Babdelaura\BlogBundle\Form\ArticleType;
 use Babdelaura\BlogBundle\Entity\Commentaire;
 use Babdelaura\BlogBundle\Form\CommentaireType;
 use Babdelaura\BlogBundle\Form\ImageType;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ArticleController extends Controller
 {
     public function listerTousArticlesBlogAction(Request $request) {
+        $page = $request->query->getInt('page', 1);
+
+        if ($page === 1) {
+            return new RedirectResponse($this->generateUrl('babdelaurablog_accueil'));
+        }
+
+        --$page;
 
         $repository = $this->getDoctrine()
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
 
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+        $offset = $this->container->getParameter('nbArticlesParPageHome');
 
         $query = $repository->getArticlesPaginator(null, true);
-        $paginator  = $this->get('knp_paginator');
-        $articles = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            $nbArticlesParPage
-        );
-        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+        $query->setFirstResult($offset + ($page - 1) * $nbArticlesParPage)
+            ->setMaxResults($nbArticlesParPage);
 
+        $articles = new Paginator($query);
+        $nbPages = ceil((count($articles) - $offset) / $nbArticlesParPage);
+
+        $pagination = [
+            'isFirstPage' => false,
+            'isLastPage' => $page == $nbPages,
+            'route' => 'babdelaurablog_tousLesArticles',
+            'page' => $page + 1
+        ];
 
         return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
-            'articles' => $articles
+            'articles' => $articles,
+            'pagination' => $pagination
         ));
     }
 
@@ -55,21 +70,29 @@ class ArticleController extends Controller
           throw $this->createNotFoundException('La catégorie n\'existe pas');
         }
 
+        $page = $request->query->getInt('page', 1);
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
         $query = $articleRepository->getArticlesPaginator($categorie, true);
-        $paginator  = $this->get('knp_paginator');
-        $articles = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            $nbArticlesParPage
-        );
-        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+        $query->setFirstResult(($page - 1) * $nbArticlesParPage)
+            ->setMaxResults($nbArticlesParPage);
+
+        $articles = new Paginator($query);
+        $nbPages = ceil(count($articles) / $nbArticlesParPage);
+
+        $pagination = [
+            'isFirstPage' => $page == 1,
+            'isLastPage' => $page == $nbPages,
+            'route' => 'babdelaurablog_categorie',
+            'query' => ['slug' => $categorie->getSlug()],
+            'page' => $page
+        ];
 
         $title = 'Articles de la catégorie ' . $categorie->getNom();
 
         return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
             'articles' => $articles,
+            'pagination' => $pagination,
             'title' => $title
         ));
     }
@@ -79,22 +102,41 @@ class ArticleController extends Controller
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
 
+        $page = $request->query->getInt('page', 1);
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
         $query = $repository->getArticlesDate($annee, $mois, $jour);
-        $paginator  = $this->get('knp_paginator');
-        $articles = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            $nbArticlesParPage
-        );
+        $query->setFirstResult(($page - 1) * $nbArticlesParPage)
+            ->setMaxResults($nbArticlesParPage);
 
-        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+        $articles = new Paginator($query);
+        $nbArticles = count($articles);
+        $nbPages = ceil($nbArticles / $nbArticlesParPage);
 
-        $nbArticles = $articles->getTotalItemCount();
-
-        if ($nbArticles == 0) {
+        if ($nbArticles === 0) {
             throw $this->createNotFoundException('Aucun article ne correspond à cette date');
+        }
+
+        $pagination = [
+            'isFirstPage' => $page == 1,
+            'isLastPage' => $page == $nbPages,
+            'query' => [],
+            'page' => $page
+        ];
+
+        if ($annee != null) {
+            $pagination['route'] = 'babdelaurablog_articlesAnnee';
+            $pagination['query']['annee'] = $annee;
+
+            if ($mois != null) {
+                $pagination['route'] = 'babdelaurablog_articlesMois';
+                $pagination['query']['mois'] = $mois;
+
+                if ($jour != null) {
+                    $pagination['route'] = 'babdelaurablog_articlesJour';
+                    $pagination['query']['jour'] = $jour;
+                }
+            }
         }
 
         $title = 'Articles ';
@@ -109,6 +151,7 @@ class ArticleController extends Controller
 
         return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
             'articles' => $articles,
+            'pagination' => $pagination,
             'title' => $title
         ));
     }
@@ -118,21 +161,29 @@ class ArticleController extends Controller
 
         $repository = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Article');
 
+        $page = $request->query->getInt('page', 1);
         $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
 
         $query = $repository->rechercher($motsCles);
-        $paginator  = $this->get('knp_paginator');
-        $articles = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            $nbArticlesParPage
-        );
-        $articles->setTemplate('BabdelauraBlogBundle:Components/article:pagination.html.twig');
+        $query->setFirstResult(($page - 1) * $nbArticlesParPage)
+            ->setMaxResults($nbArticlesParPage);
+
+        $articles = new Paginator($query);
+        $nbPages = ceil(count($articles) / $nbArticlesParPage);
+
+        $pagination = [
+            'isFirstPage' => $page == 1,
+            'isLastPage' => $page == $nbPages,
+            'route' => 'babdelaurablog_recherche',
+            'query' => ['motscles' => $motsCles],
+            'page' => $page
+        ];
 
         $title = 'Recherche "' . $motsCles . '"';
 
         return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
             'articles' => $articles,
+            'pagination' => $pagination,
             'title' => $title
         ));
     }

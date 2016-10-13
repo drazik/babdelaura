@@ -22,6 +22,8 @@
     {% endif %}
 
     {% include 'BabdelauraBlogBundle:Components/article:list.html.twig' with {'articles': articles, 'previewTitleElement': previewTitleElement|default('h2')} only %}
-    {{ knp_pagination_render(articles) }}
+
+    {% include 'BabdelauraBlogBundle:Components/article:pagination.html.twig' with pagination only %}
+    {#{{ knp_pagination_render(articles) }}#}
 </section>
 {% endblock %}

@@ -1,13 +1,18 @@
+{% set pageParameterName = pageParameterName|default('page') %}
+{% set query = query|default({}) %}
+{% set previousPage = page - 1 %}
+{% set nextPage = page + 1 %}
+
 <div class="align-center">
-{% if previous is defined %}
-    <a class="bab-Button bab-Button--block@small" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+{% if not isFirstPage %}
+    <a class="bab-Button bab-Button--block@small" href="{{ path(route, query|merge({(pageParameterName): previousPage})) }}">
         {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronLeft'} only %}
         Articles plus récents
     </a>
 {% endif %}
 
-{% if next is defined %}
-    <a class="bab-Button bab-Button--block@small" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+{% if not isLastPage %}
+    <a class="bab-Button bab-Button--block@small" href="{{ path(route, query|merge({(pageParameterName): nextPage})) }}">
         Articles plus anciens
         {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
     </a>

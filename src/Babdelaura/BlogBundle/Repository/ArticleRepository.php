@@ -95,7 +95,7 @@ class ArticleRepository extends EntityRepository {
 
         $query = $query->orderBy('a.id','DESC');
 
-        return $query->getQuery()->getResult();
+        return $query->getQuery();
     }
 
     public function getPrecedent($id) {
@@ -182,7 +182,7 @@ class ArticleRepository extends EntityRepository {
       $result = $query->getQuery()->getResult();
 
       shuffle($result);
-      
+
       return array_slice($result,0,4);
     }
   }
