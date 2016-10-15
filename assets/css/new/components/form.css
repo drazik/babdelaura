@@ -1,0 +1,6 @@
+.bab-Form-error {
+    display: block;
+
+    color: var(--error-color);
+    line-height: 1.5; 
+}

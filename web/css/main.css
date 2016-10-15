@@ -2356,3 +2356,10 @@ a.bab-Comment-author {
     opacity: 1;
     visibility: visible;
 }
+
+.bab-Form-error {
+    display: block;
+
+    color: #c0392b;
+    line-height: 1.5; 
+}
