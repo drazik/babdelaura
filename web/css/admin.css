@@ -5289,7 +5289,7 @@ div.spoiler div.spoiler-content {
     z-index: -1;
 }
 
-.bab-Autocomplete--active .bab-Autocomplete-choices {
+.bab-Autocomplete--hasChoices .bab-Autocomplete-choices {
     -webkit-transform: translateY(0);
             transform: translateY(0);
     opacity: 1;
