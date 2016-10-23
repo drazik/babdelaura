@@ -1046,7 +1046,7 @@
 	 */
 	var XHRForm = function () {
 	    function XHRForm(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, XHRForm);
 
@@ -1181,7 +1181,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var bind = __webpack_require__(11);
 
@@ -1807,25 +1807,40 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout() {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
 	    try {
-	        cachedSetTimeout = setTimeout;
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
 	    } catch (e) {
-	        cachedSetTimeout = function cachedSetTimeout() {
-	            throw new Error('setTimeout is not defined');
-	        };
+	        cachedSetTimeout = defaultSetTimout;
 	    }
 	    try {
-	        cachedClearTimeout = clearTimeout;
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
 	    } catch (e) {
-	        cachedClearTimeout = function cachedClearTimeout() {
-	            throw new Error('clearTimeout is not defined');
-	        };
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
 	})();
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -1844,6 +1859,11 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -2596,7 +2616,7 @@
 
 	var ImagesList = function () {
 	    function ImagesList(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, ImagesList);
 
@@ -2679,7 +2699,7 @@
 	        value: function changeCurrentPage() {
 	            var _this3 = this;
 
-	            var page = arguments.length <= 0 || arguments[0] === undefined ? this.currentPage : arguments[0];
+	            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.currentPage;
 
 	            this.loading().then(function () {
 	                return _this3.getImages(page);
@@ -2799,7 +2819,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	/*!
 	 * mustache.js - Logic-less {{mustache}} templates with JavaScript
@@ -3493,7 +3513,7 @@
 
 	var ModalImagePicker = function () {
 	    function ModalImagePicker(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, ModalImagePicker);
 
@@ -3564,7 +3584,7 @@
 
 	var ImagePicker = function () {
 	    function ImagePicker(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, ImagePicker);
 

@@ -1,0 +1,105 @@
+.bab-Autocomplete {
+    position: relative;
+
+    display: block;
+    padding: 5px;
+    border: 1px solid #444;
+}
+
+.bab-Autocomplete-selectedChoices {
+    display: inline-block;
+}
+
+.bab-Autocomplete-selectedChoice {
+    display: inline-block;
+    padding: 5px 15px;
+
+    border-radius: 50px;
+    background-color: #4fafb9;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.bab-Autocomplete-deleteChoice {
+    position: relative;
+
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    border-width: 0;
+
+    background-color: transparent;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.bab-Autocomplete-deleteChoice::before,
+.bab-Autocomplete-deleteChoice::after {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 2px;
+    height: 100%;
+
+    background-color: #fff;
+}
+
+.bab-Autocomplete-deleteChoice::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.bab-Autocomplete-deleteChoice::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.bab-Autocomplete-input {
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    border-width: 0;
+}
+
+.bab-Autocomplete-choices {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    border: 1px solid #898c8c;
+    margin: 0;
+    padding-left: 0;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    list-style: none;
+    z-index: 100;
+}
+
+.bab-Autocomplete-choice {
+    display: block;
+    width: 100%;
+    padding: 5px 15px;
+    border-width: 0;
+
+    text-align: left;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.bab-Autocomplete-choice:hover,
+.bab-Autocomplete-choice:focus {
+    background-color: #ecf0f1;
+}
+
+.bab-Autocomplete-choiceItem:not(:last-child) {
+    border-bottom: 1px solid #bdc3c7;
+}
+
+.bab-Autocomplete-choiceItem:last-child .bab-Autocomplete-choice {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

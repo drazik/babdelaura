@@ -32,3 +32,4 @@
 @import 'legacy/components/cookie-bar';
 @import 'legacy/components/spoiler';
 @import 'legacy/components/searchbar';
+@import 'new/components/autocomplete';

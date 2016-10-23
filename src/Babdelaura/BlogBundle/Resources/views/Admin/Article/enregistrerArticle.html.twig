@@ -38,6 +38,32 @@
                 {{ form_label(form.categorie, "Catégorie") }}
                 {{ form_errors(form.categorie)}}
                 {{ form_widget(form.categorie) }}
+                <hr />
+                <div class="bab-Autocomplete">
+                    <div class="bab-Autocomplete-selectedChoices">
+                        <span class="bab-Autocomplete-selectedChoice">
+                            Test
+                            <button class="bab-Autocomplete-deleteChoice" type="button"></button>
+                        </span>
+                        <span class="bab-Autocomplete-selectedChoice">
+                            Blabla
+                            <button class="bab-Autocomplete-deleteChoice" type="button"></button>
+                        </span>
+                    </div>
+                    <input class="bab-Autocomplete-input" type="text" placeholder="Ajouter un tag..." />
+                    <ul class="bab-Autocomplete-choices">
+                        <li class="bab-Autocomplete-choiceItem">
+                            <button class="bab-Autocomplete-choice" type="button">
+                                Choice 1
+                            </button>
+                        </li>
+                        <li class="bab-Autocomplete-choiceItem">
+                            <button class="bab-Autocomplete-choice" type="button">
+                                Choice 2
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
