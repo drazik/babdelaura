@@ -5203,6 +5203,8 @@ div.spoiler div.spoiler-content {
     display: block;
     padding: 5px;
     border: 1px solid #444;
+
+    z-index: 100;
 }
 
 .bab-Autocomplete-selectedChoices {
@@ -5270,6 +5272,7 @@ div.spoiler div.spoiler-content {
     left: 0;
     right: 0;
 
+    max-height: 200px;
     border: 1px solid #898c8c;
     margin: 0;
     padding-left: 0;
@@ -5277,7 +5280,20 @@ div.spoiler div.spoiler-content {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     list-style: none;
-    z-index: 100;
+    overflow-y: auto;
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: -1;
+}
+
+.bab-Autocomplete--active .bab-Autocomplete-choices {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
 }
 
 .bab-Autocomplete-choice {
@@ -5289,6 +5305,8 @@ div.spoiler div.spoiler-content {
     text-align: left;
     background-color: #fff;
     cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .bab-Autocomplete-choice:hover,
