@@ -3719,9 +3719,11 @@
 	        this.options = _extends({}, options);
 
 	        this.container = container;
-	        this.input = container.querySelector('.js-autocomplete-input');
 
-	        this.items = [];
+	        var selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices');
+	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer);
+
+	        this.input = container.querySelector('.js-autocomplete-input');
 
 	        this.initEvents();
 	    }
@@ -3743,33 +3745,81 @@
 	    }, {
 	        key: 'addItem',
 	        value: function addItem(item) {
-	            var sanitizedItem = this.sanitizeItem(item);
-
-	            if (this.items.indexOf(sanitizedItem) >= 0) {
-	                return;
-	            }
-
-	            this.items.push(item);
-	            this.refreshSelectedItems();
-	        }
-	    }, {
-	        key: 'refreshSelectedItems',
-	        value: function refreshSelectedItems() {
-	            // TODO implement
+	            this.selectedChoicesList.addItem(item);
 	        }
 	    }, {
 	        key: 'resetInput',
 	        value: function resetInput() {
 	            this.input.value = '';
 	        }
-	    }, {
-	        key: 'sanitizeItem',
-	        value: function sanitizeItem(item) {
-	            return item.trim().toLowerCase();
-	        }
 	    }]);
 
 	    return Autocomplete;
+	}();
+
+	var SelectedChoicesList = function () {
+	    function SelectedChoicesList(container) {
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	        _classCallCheck(this, SelectedChoicesList);
+
+	        this.options = _extends({}, options);
+
+	        this.container = container;
+
+	        this.items = [];
+	    }
+
+	    _createClass(SelectedChoicesList, [{
+	        key: 'addItem',
+	        value: function addItem(item) {
+	            var sanitizedItem = this.sanitizeItem(item);
+
+	            if (this.items.indexOf(sanitizedItem) >= 0) {
+	                return;
+	            }
+
+	            this.items.push(sanitizedItem);
+	            this.updateDOM();
+	        }
+	    }, {
+	        key: 'sanitizeItem',
+	        value: function sanitizeItem(item) {
+	            var sanitizedItem = item.trim().toLowerCase();
+
+	            return sanitizedItem;
+	        }
+	    }, {
+	        key: 'updateDOM',
+	        value: function updateDOM() {
+	            var _this2 = this;
+
+	            var elements = this.items.map(function (item) {
+	                return _this2.getItemDOMElement(item);
+	            });
+	            var fragment = document.createDocumentFragment();
+
+	            elements.forEach(function (element) {
+	                return fragment.appendChild(element);
+	            });
+
+	            this.container.innerHTML = '';
+	            this.container.appendChild(fragment);
+	        }
+	    }, {
+	        key: 'getItemDOMElement',
+	        value: function getItemDOMElement(item) {
+	            var template = '\n<span class="bab-Autocomplete-selectedChoice">\n    ' + item + '\n    <button class="bab-Autocomplete-deleteChoice" type="button"></button>\n</span>\n';
+	            var element = document.createElement('div');
+	            element.innerHTML = template;
+
+	            var actualElement = element.querySelector(':first-child');
+
+	            return actualElement;
+	        }
+	    }]);
+
+	    return SelectedChoicesList;
 	}();
 
 	exports.default = Autocomplete;

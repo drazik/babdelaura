@@ -7,9 +7,11 @@ class Autocomplete {
         }
 
         this.container = container
-        this.input = container.querySelector('.js-autocomplete-input')
 
-        this.items = []
+        const selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices')
+        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer)
+
+        this.input = container.querySelector('.js-autocomplete-input')
 
         this.initEvents()
     }
@@ -26,26 +28,65 @@ class Autocomplete {
     }
 
     addItem(item) {
+        this.selectedChoicesList.addItem(item)
+    }
+
+    resetInput() {
+        this.input.value = ''
+    }
+}
+
+class SelectedChoicesList {
+    constructor(container, options = {}) {
+        this.options = {
+            ...options
+        }
+
+        this.container = container
+
+        this.items = []
+    }
+
+    addItem(item) {
         const sanitizedItem = this.sanitizeItem(item)
 
         if (this.items.indexOf(sanitizedItem) >= 0) {
             return
         }
 
-        this.items.push(item)
-        this.refreshSelectedItems()
-    }
-
-    refreshSelectedItems() {
-        // TODO implement
-    }
-
-    resetInput() {
-        this.input.value = ''
+        this.items.push(sanitizedItem)
+        this.updateDOM()
     }
 
     sanitizeItem(item) {
-        return item.trim().toLowerCase()
+        const sanitizedItem = item.trim().toLowerCase()
+
+        return sanitizedItem
+    }
+
+    updateDOM() {
+        const elements = this.items.map(item => this.getItemDOMElement(item))
+        const fragment = document.createDocumentFragment()
+
+        elements.forEach(element => fragment.appendChild(element))
+
+        this.container.innerHTML = ''
+        this.container.appendChild(fragment)
+    }
+
+    getItemDOMElement(item) {
+        const template = `
+<span class="bab-Autocomplete-selectedChoice">
+    ${item}
+    <button class="bab-Autocomplete-deleteChoice" type="button"></button>
+</span>
+`
+        const element = document.createElement('div')
+        element.innerHTML = template
+
+        const actualElement = element.querySelector(':first-child')
+
+        return actualElement
     }
 }
 
