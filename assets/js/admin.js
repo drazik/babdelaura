@@ -6,6 +6,7 @@ import ImageUploadList from './legacy/modules/image-upload-list';
 import PreviewModalImagePicker from './legacy/modules/preview-modal-image-picker';
 import WYSIWYGEditor from './legacy/modules/wysiwyg-editor';
 import ImagePicker from './legacy/modules/image-picker';
+import Autocomplete from './new/modules/autocomplete'
 
 const navContainer = document.querySelector('.js-nav');
 new Nav(navContainer);
@@ -24,3 +25,6 @@ wysiwygEditorContainers.forEach(container => new WYSIWYGEditor(container));
 
 const imagePickerContainers = [...document.querySelectorAll('.js-image-picker')];
 imagePickerContainers.forEach(container => new ImagePicker(container));
+
+const autocompleteContainers = [...document.querySelectorAll('.js-autocomplete')];
+autocompleteContainers.forEach(container => new Autocomplete(container));

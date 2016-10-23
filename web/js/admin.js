@@ -72,6 +72,10 @@
 
 	var _imagePicker2 = _interopRequireDefault(_imagePicker);
 
+	var _autocomplete = __webpack_require__(38);
+
+	var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -102,6 +106,11 @@
 	var imagePickerContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-image-picker')));
 	imagePickerContainers.forEach(function (container) {
 	  return new _imagePicker2.default(container);
+	});
+
+	var autocompleteContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-autocomplete')));
+	autocompleteContainers.forEach(function (container) {
+	  return new _autocomplete2.default(container);
 	});
 
 /***/ },
@@ -3682,6 +3691,101 @@
 	};
 
 	exports.default = WYSIWYGEditor;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _keycodes = __webpack_require__(39);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Autocomplete = function () {
+	    function Autocomplete(container) {
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	        _classCallCheck(this, Autocomplete);
+
+	        this.options = _extends({}, options);
+
+	        this.container = container;
+	        this.input = container.querySelector('.js-autocomplete-input');
+
+	        this.items = [];
+
+	        this.initEvents();
+	    }
+
+	    _createClass(Autocomplete, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            this.input.addEventListener('keydown', function (event) {
+	                if (event.keyCode === _keycodes.ENTER) {
+	                    event.preventDefault();
+
+	                    _this.addItem(_this.input.value);
+	                    _this.resetInput();
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'addItem',
+	        value: function addItem(item) {
+	            var sanitizedItem = this.sanitizeItem(item);
+
+	            if (this.items.indexOf(sanitizedItem) >= 0) {
+	                return;
+	            }
+
+	            this.items.push(item);
+	            this.refreshSelectedItems();
+	        }
+	    }, {
+	        key: 'refreshSelectedItems',
+	        value: function refreshSelectedItems() {
+	            // TODO implement
+	        }
+	    }, {
+	        key: 'resetInput',
+	        value: function resetInput() {
+	            this.input.value = '';
+	        }
+	    }, {
+	        key: 'sanitizeItem',
+	        value: function sanitizeItem(item) {
+	            return item.trim().toLowerCase();
+	        }
+	    }]);
+
+	    return Autocomplete;
+	}();
+
+	exports.default = Autocomplete;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ENTER = 13;
+
+	exports.ENTER = ENTER;
 
 /***/ }
 /******/ ]);

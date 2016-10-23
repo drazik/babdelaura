@@ -48,23 +48,23 @@
 
 	__webpack_require__(1);
 
-	var _search = __webpack_require__(38);
+	var _search = __webpack_require__(40);
 
 	var _search2 = _interopRequireDefault(_search);
 
-	var _comments = __webpack_require__(39);
+	var _comments = __webpack_require__(41);
 
 	var _comments2 = _interopRequireDefault(_comments);
 
-	var _header = __webpack_require__(48);
+	var _header = __webpack_require__(50);
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _imagesSlideshow = __webpack_require__(49);
+	var _imagesSlideshow = __webpack_require__(51);
 
 	var _imagesSlideshow2 = _interopRequireDefault(_imagesSlideshow);
 
-	var _cookieBar = __webpack_require__(59);
+	var _cookieBar = __webpack_require__(61);
 
 	var _cookieBar2 = _interopRequireDefault(_cookieBar);
 
@@ -2265,7 +2265,9 @@
 /* 35 */,
 /* 36 */,
 /* 37 */,
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2318,7 +2320,7 @@
 	exports.default = Search;
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2333,15 +2335,15 @@
 
 	var _domDelegate2 = _interopRequireDefault(_domDelegate);
 
-	var _commentForm = __webpack_require__(40);
+	var _commentForm = __webpack_require__(42);
 
 	var _commentForm2 = _interopRequireDefault(_commentForm);
 
-	var _comment = __webpack_require__(45);
+	var _comment = __webpack_require__(47);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
-	var _closest = __webpack_require__(46);
+	var _closest = __webpack_require__(48);
 
 	var _closest2 = _interopRequireDefault(_closest);
 
@@ -2407,7 +2409,7 @@
 	exports.default = Comments;
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2420,17 +2422,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _xhrForm = __webpack_require__(41);
+	var _xhrForm = __webpack_require__(43);
 
 	var _xhrForm2 = _interopRequireDefault(_xhrForm);
 
-	var _notification = __webpack_require__(42);
+	var _notification = __webpack_require__(44);
 
 	var _notification2 = _interopRequireDefault(_notification);
 
-	var _naturalScroll = __webpack_require__(43);
+	var _naturalScroll = __webpack_require__(45);
 
-	var _breakpoints = __webpack_require__(44);
+	var _breakpoints = __webpack_require__(46);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2605,7 +2607,7 @@
 	exports.default = CommentForm;
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2709,7 +2711,7 @@
 	exports.default = XHRForm;
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2810,7 +2812,7 @@
 	exports.default = Notification;
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -2840,7 +2842,7 @@
 	});
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2874,7 +2876,7 @@
 	exports.getCurrentViewport = getCurrentViewport;
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2929,12 +2931,12 @@
 	exports.default = Comment;
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var matches = __webpack_require__(47);
+	var matches = __webpack_require__(49);
 
 	module.exports = function (element, selector, checkYoSelf) {
 	  var parent = checkYoSelf ? element : element.parentNode;
@@ -2946,7 +2948,7 @@
 	};
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2988,7 +2990,7 @@
 	}
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3001,7 +3003,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _breakpoints = __webpack_require__(44);
+	var _breakpoints = __webpack_require__(46);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3103,7 +3105,7 @@
 	exports.default = Header;
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3114,13 +3116,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _url = __webpack_require__(50);
+	var _url = __webpack_require__(52);
 
-	var _photoswipe = __webpack_require__(57);
+	var _photoswipe = __webpack_require__(59);
 
 	var _photoswipe2 = _interopRequireDefault(_photoswipe);
 
-	var _photoswipeUiDefault = __webpack_require__(58);
+	var _photoswipeUiDefault = __webpack_require__(60);
 
 	var _photoswipeUiDefault2 = _interopRequireDefault(_photoswipeUiDefault);
 
@@ -3221,7 +3223,7 @@
 	exports.default = ImagesSlideshow;
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3249,7 +3251,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(51);
+	var punycode = __webpack_require__(53);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -3328,7 +3330,7 @@
 	  'gopher:': true,
 	  'file:': true
 	},
-	    querystring = __webpack_require__(54);
+	    querystring = __webpack_require__(56);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -3912,7 +3914,7 @@
 	}
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {'use strict';
@@ -4425,7 +4427,7 @@
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
-		if ("function" == 'function' && _typeof(__webpack_require__(53)) == 'object' && __webpack_require__(53)) {
+		if ("function" == 'function' && _typeof(__webpack_require__(55)) == 'object' && __webpack_require__(55)) {
 			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return punycode;
 			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -4444,10 +4446,10 @@
 			root.punycode = punycode;
 		}
 	})(undefined);
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)(module), (function() { return this; }())))
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4464,7 +4466,7 @@
 	};
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -4472,16 +4474,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(55);
-	exports.encode = exports.stringify = __webpack_require__(56);
+	exports.decode = exports.parse = __webpack_require__(57);
+	exports.encode = exports.stringify = __webpack_require__(58);
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -4570,7 +4572,7 @@
 	};
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -4639,7 +4641,7 @@
 	};
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -8181,7 +8183,7 @@
 	});
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -8979,7 +8981,7 @@
 	});
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports) {
 
 	'use strict';
