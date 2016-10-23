@@ -15,11 +15,16 @@
 .bab-Autocomplete-selectedChoice {
     display: inline-block;
     padding: 5px 15px;
+    margin-bottom: 5px;
 
     border-radius: 50px;
     background-color: #4fafb9;
     color: #fff;
     white-space: nowrap;
+}
+
+.bab-Autocomplete-selectedChoice:not(:first-child) {
+    margin-left: 3px;
 }
 
 .bab-Autocomplete-deleteChoice {
