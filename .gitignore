@@ -26,3 +26,4 @@
 /*.sublime-workspace
 /npm-debug.log
 /web/uploads
+.tern-project
