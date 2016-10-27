@@ -3795,7 +3795,7 @@
 	            var _this2 = this;
 
 	            var elements = this.items.map(function (item) {
-	                return _this2.getItemDOMElement(item);
+	                return _this2.createItemDOMElement(item);
 	            });
 	            var fragment = document.createDocumentFragment();
 
@@ -3807,8 +3807,8 @@
 	            this.container.appendChild(fragment);
 	        }
 	    }, {
-	        key: 'getItemDOMElement',
-	        value: function getItemDOMElement(item) {
+	        key: 'createItemDOMElement',
+	        value: function createItemDOMElement(item) {
 	            var template = '\n<span class="bab-Autocomplete-selectedChoice">\n    ' + item + '\n    <button class="bab-Autocomplete-deleteChoice" type="button"></button>\n</span>\n';
 	            var element = document.createElement('div');
 	            element.innerHTML = template;

@@ -65,7 +65,7 @@ class SelectedChoicesList {
     }
 
     updateDOM() {
-        const elements = this.items.map(item => this.getItemDOMElement(item))
+        const elements = this.items.map(item => this.createItemDOMElement(item))
         const fragment = document.createDocumentFragment()
 
         elements.forEach(element => fragment.appendChild(element))
@@ -74,7 +74,7 @@ class SelectedChoicesList {
         this.container.appendChild(fragment)
     }
 
-    getItemDOMElement(item) {
+    createItemDOMElement(item) {
         const template = `
 <span class="bab-Autocomplete-selectedChoice">
     ${item}
