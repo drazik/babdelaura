@@ -6,6 +6,7 @@ namespace Babdelaura\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Babdelaura\BlogBundle\Entity\Tag;
 use Babdelaura\BlogBundle\Form\TagType;
@@ -94,5 +95,16 @@ class TagController extends Controller
         ));
     }
 
+    public function getTagsAction(Request $request) {
+        $input = $request->get('input');
 
+        if ($input == null) {
+            return $this->createNotFoundException('No input');
+        }
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Tag');
+        $tags = $repository->findByPartialName($input);
+
+        return new JsonResponse($tags);
+    }
  }

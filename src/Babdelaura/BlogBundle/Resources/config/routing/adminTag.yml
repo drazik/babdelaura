@@ -13,3 +13,7 @@ babdelaurablog_admin_modifierTag:
 babdelaurablog_admin_supprimerTag:
     path: /admin/supprimerTag/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Tag:supprimerTag}
+
+babdelaurablog_admin_listerTagsAutocomplete:
+    path: /admin/tags-autocomplete
+    defaults: {_controller: BabdelauraBlogBundle:Tag:getTags}

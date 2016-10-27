@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Tag
  *
  * @ORM\Table(name="tag")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Babdelaura\BlogBundle\Repository\TagRepository")
  */
 class Tag implements DescriptionEntite
 {
