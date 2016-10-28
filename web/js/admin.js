@@ -3716,6 +3716,10 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
+	var _domDelegate = __webpack_require__(4);
+
+	var _domDelegate2 = _interopRequireDefault(_domDelegate);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3738,7 +3742,10 @@
 
 	        var sourceUrl = container.getAttribute('data-source-url');
 	        var availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices');
-	        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl);
+	        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl, {
+	            onItemSelect: this.onAvailableChoiceSelect.bind(this)
+	        });
+	        this.availableChoicesList.show();
 
 	        this.initEvents();
 	    }
@@ -3766,12 +3773,8 @@
 	                }
 	            }, 100));
 
-	            this.input.addEventListener('focus', function () {
-	                return _this.availableChoicesList.show();
-	            });
-	            this.input.addEventListener('blur', function () {
-	                return _this.availableChoicesList.hide();
-	            });
+	            // this.input.addEventListener('focus', () => this.availableChoicesList.show())
+	            // this.input.addEventListener('blur', () => this.availableChoicesList.hide())
 	        }
 	    }, {
 	        key: 'addItem',
@@ -3782,6 +3785,12 @@
 	        key: 'resetInput',
 	        value: function resetInput() {
 	            this.input.value = '';
+	        }
+	    }, {
+	        key: 'onAvailableChoiceSelect',
+	        value: function onAvailableChoiceSelect(item) {
+	            this.addItem(item);
+	            this.resetInput();
 	        }
 	    }]);
 
@@ -3860,7 +3869,8 @@
 	        _classCallCheck(this, AvailableChoicesList);
 
 	        this.options = _extends({
-	            containerVisibleClass: 'bab-Autocomplete-choices--visible'
+	            containerVisibleClass: 'bab-Autocomplete-choices--visible',
+	            onItemSelect: function onItemSelect() {}
 	        }, options);
 
 	        this.container = container;
@@ -3870,34 +3880,56 @@
 	                'X-Requested-With': 'XMLHttpRequest'
 	            }
 	        });
+
+	        this.containerDelegate = (0, _domDelegate2.default)(container);
+
+	        this.initEvents();
 	    }
 
 	    _createClass(AvailableChoicesList, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this3 = this;
+
+	            this.containerDelegate.on('click', 'button', function (event) {
+	                var item = event.target.textContent.trim().toLowerCase();
+
+	                _this3.onItemSelect(item);
+	            });
+	        }
+	    }, {
+	        key: 'onItemSelect',
+	        value: function onItemSelect(item) {
+	            this.options.onItemSelect(item);
+	        }
+	    }, {
 	        key: 'update',
 	        value: function update(input) {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            this.request.get(this.sourceUrl, {
 	                params: { input: input }
 	            }).then(function (response) {
 	                return response.data;
 	            }).then(function (items) {
-	                return _this3.updateDOM(items);
+	                return _this4.filterItems(items);
+	            }).then(function (filteredItems) {
+	                return _this4.updateDOM(filteredItems);
 	            });
 	        }
 	    }, {
 	        key: 'updateDOM',
 	        value: function updateDOM(items) {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            var fragment = document.createDocumentFragment();
 
 	            items.forEach(function (item) {
-	                var element = _this4.createItemDOMElement(item);
+	                var element = _this5.createItemDOMElement(item);
 	                fragment.appendChild(element);
 	            });
 
-	            this.container.innerHTML = '';
+	            this.reset();
 	            this.container.appendChild(fragment);
 	        }
 	    }, {
@@ -3920,6 +3952,17 @@
 	        key: 'hide',
 	        value: function hide() {
 	            this.container.classList.remove(this.options.containerVisibleClass);
+	        }
+	    }, {
+	        key: 'reset',
+	        value: function reset() {
+	            this.container.innerHTML = '';
+	        }
+	    }, {
+	        key: 'filterItems',
+	        value: function filterItems(items) {
+	            // TODO: filtrer les items pour ne pas réafficher ceux qui ont déjà été sélectionnés
+	            return items;
 	        }
 	    }]);
 

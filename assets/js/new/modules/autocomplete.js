@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {ENTER} from './keycodes'
 import debounce from 'lodash.debounce'
+import delegate from 'dom-delegate'
 
 class Autocomplete {
     constructor(container, options = {}) {
@@ -17,7 +18,10 @@ class Autocomplete {
 
         const sourceUrl = container.getAttribute('data-source-url')
         const availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices')
-        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl)
+        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl, {
+            onItemSelect: this.onAvailableChoiceSelect.bind(this)
+        })
+        this.availableChoicesList.show()
 
         this.initEvents()
     }
@@ -40,8 +44,8 @@ class Autocomplete {
             }
         }, 100))
 
-        this.input.addEventListener('focus', () => this.availableChoicesList.show())
-        this.input.addEventListener('blur', () => this.availableChoicesList.hide())
+        // this.input.addEventListener('focus', () => this.availableChoicesList.show())
+        // this.input.addEventListener('blur', () => this.availableChoicesList.hide())
     }
 
     addItem(item) {
@@ -50,6 +54,11 @@ class Autocomplete {
 
     resetInput() {
         this.input.value = ''
+    }
+
+    onAvailableChoiceSelect(item) {
+        this.addItem(item)
+        this.resetInput()
     }
 }
 
@@ -111,6 +120,7 @@ class AvailableChoicesList {
     constructor(container, sourceUrl, options = {}) {
         this.options = {
             containerVisibleClass: 'bab-Autocomplete-choices--visible',
+            onItemSelect: () => {},
             ...options
         }
 
@@ -121,13 +131,30 @@ class AvailableChoicesList {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
+
+        this.containerDelegate = delegate(container)
+
+        this.initEvents()
+    }
+
+    initEvents() {
+        this.containerDelegate.on('click', 'button', event => {
+            const item = event.target.textContent.trim().toLowerCase()
+
+            this.onItemSelect(item)
+        })
+    }
+
+    onItemSelect(item) {
+        this.options.onItemSelect(item)
     }
 
     update(input) {
         this.request.get(this.sourceUrl, {
             params: {input}
         }).then(response => response.data)
-            .then(items => this.updateDOM(items))
+            .then(items => this.filterItems(items))
+            .then(filteredItems => this.updateDOM(filteredItems))
     }
 
     updateDOM(items) {
@@ -138,7 +165,7 @@ class AvailableChoicesList {
             fragment.appendChild(element)
         })
 
-        this.container.innerHTML = ''
+        this.reset()
         this.container.appendChild(fragment)
     }
 
@@ -164,6 +191,15 @@ class AvailableChoicesList {
 
     hide() {
         this.container.classList.remove(this.options.containerVisibleClass)
+    }
+
+    reset() {
+        this.container.innerHTML = ''
+    }
+
+    filterItems(items) {
+        // TODO: filtrer les items pour ne pas réafficher ceux qui ont déjà été sélectionnés
+        return items
     }
 }
 
