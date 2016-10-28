@@ -124,7 +124,6 @@ class AvailableChoicesList {
     }
 
     update(input) {
-        console.log(input)
         this.request.get(this.sourceUrl, {
             params: {input}
         }).then(response => response.data)

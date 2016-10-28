@@ -3877,7 +3877,6 @@
 	        value: function update(input) {
 	            var _this3 = this;
 
-	            console.log(input);
 	            this.request.get(this.sourceUrl, {
 	                params: { input: input }
 	            }).then(function (response) {
