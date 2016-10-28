@@ -92,7 +92,7 @@
     z-index: -1;
 }
 
-.bab-Autocomplete--hasChoices .bab-Autocomplete-choices {
+.bab-Autocomplete-choices--visible {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;

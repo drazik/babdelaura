@@ -39,10 +39,10 @@
                 {{ form_errors(form.categorie)}}
                 {{ form_widget(form.categorie) }}
                 <hr />
-                <div class="bab-Autocomplete js-autocomplete">
+                <div class="bab-Autocomplete js-autocomplete" data-source-url="{{ path('babdelaurablog_admin_listerTagsAutocomplete') }}">
                     <div class="bab-Autocomplete-selectedChoices js-autocomplete-selected-choices"></div>
                     <input class="bab-Autocomplete-input js-autocomplete-input" type="text" placeholder="Ajouter un tag..." />
-                    <ul class="bab-Autocomplete-choices">
+                    <ul class="bab-Autocomplete-choices js-autocomplete-available-choices">
                         <!-- <li class="bab-Autocomplete-choiceItem">
                             <button class="bab-Autocomplete-choice" type="button">
                                 Choice 1
