@@ -19,7 +19,8 @@ class Autocomplete {
         const sourceUrl = container.getAttribute('data-source-url')
         const availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices')
         this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl, {
-            onItemSelect: this.onAvailableChoiceSelect.bind(this)
+            onItemSelect: this.onAvailableChoiceSelect.bind(this),
+            filterItems: this.filterAvailableChoices.bind(this)
         })
         this.availableChoicesList.show()
 
@@ -59,6 +60,14 @@ class Autocomplete {
     onAvailableChoiceSelect(item) {
         this.addItem(item)
         this.resetInput()
+        this.input.focus()
+    }
+
+    filterAvailableChoices(items) {
+        const selectedChoices = this.selectedChoicesList.getItems()
+        const filteredItems = items.filter(item => selectedChoices.indexOf(item) === -1);
+
+        return filteredItems
     }
 }
 
@@ -114,6 +123,10 @@ class SelectedChoicesList {
 
         return actualElement
     }
+
+    getItems() {
+        return this.items
+    }
 }
 
 class AvailableChoicesList {
@@ -121,6 +134,7 @@ class AvailableChoicesList {
         this.options = {
             containerVisibleClass: 'bab-Autocomplete-choices--visible',
             onItemSelect: () => {},
+            filterItems: items => items,
             ...options
         }
 
@@ -147,6 +161,7 @@ class AvailableChoicesList {
 
     onItemSelect(item) {
         this.options.onItemSelect(item)
+        this.reset()
     }
 
     update(input) {
@@ -173,7 +188,7 @@ class AvailableChoicesList {
         const template = `
 <li class="bab-Autocomplete-choiceItem">
     <button class="bab-Autocomplete-choice" type="button">
-        ${item.nom}
+        ${item}
     </button>
 </li>
 `
@@ -198,8 +213,7 @@ class AvailableChoicesList {
     }
 
     filterItems(items) {
-        // TODO: filtrer les items pour ne pas réafficher ceux qui ont déjà été sélectionnés
-        return items
+        return this.options.filterItems(items)
     }
 }
 

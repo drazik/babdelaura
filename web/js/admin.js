@@ -3743,7 +3743,8 @@
 	        var sourceUrl = container.getAttribute('data-source-url');
 	        var availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices');
 	        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl, {
-	            onItemSelect: this.onAvailableChoiceSelect.bind(this)
+	            onItemSelect: this.onAvailableChoiceSelect.bind(this),
+	            filterItems: this.filterAvailableChoices.bind(this)
 	        });
 	        this.availableChoicesList.show();
 
@@ -3791,6 +3792,17 @@
 	        value: function onAvailableChoiceSelect(item) {
 	            this.addItem(item);
 	            this.resetInput();
+	            this.input.focus();
+	        }
+	    }, {
+	        key: 'filterAvailableChoices',
+	        value: function filterAvailableChoices(items) {
+	            var selectedChoices = this.selectedChoicesList.getItems();
+	            var filteredItems = items.filter(function (item) {
+	                return selectedChoices.indexOf(item) === -1;
+	            });
+
+	            return filteredItems;
 	        }
 	    }]);
 
@@ -3857,6 +3869,11 @@
 
 	            return actualElement;
 	        }
+	    }, {
+	        key: 'getItems',
+	        value: function getItems() {
+	            return this.items;
+	        }
 	    }]);
 
 	    return SelectedChoicesList;
@@ -3870,7 +3887,10 @@
 
 	        this.options = _extends({
 	            containerVisibleClass: 'bab-Autocomplete-choices--visible',
-	            onItemSelect: function onItemSelect() {}
+	            onItemSelect: function onItemSelect() {},
+	            filterItems: function filterItems(items) {
+	                return items;
+	            }
 	        }, options);
 
 	        this.container = container;
@@ -3901,6 +3921,7 @@
 	        key: 'onItemSelect',
 	        value: function onItemSelect(item) {
 	            this.options.onItemSelect(item);
+	            this.reset();
 	        }
 	    }, {
 	        key: 'update',
@@ -3935,7 +3956,7 @@
 	    }, {
 	        key: 'createItemDOMElement',
 	        value: function createItemDOMElement(item) {
-	            var template = '\n<li class="bab-Autocomplete-choiceItem">\n    <button class="bab-Autocomplete-choice" type="button">\n        ' + item.nom + '\n    </button>\n</li>\n';
+	            var template = '\n<li class="bab-Autocomplete-choiceItem">\n    <button class="bab-Autocomplete-choice" type="button">\n        ' + item + '\n    </button>\n</li>\n';
 	            var element = document.createElement('ul');
 	            element.innerHTML = template;
 
@@ -3961,8 +3982,7 @@
 	    }, {
 	        key: 'filterItems',
 	        value: function filterItems(items) {
-	            // TODO: filtrer les items pour ne pas réafficher ceux qui ont déjà été sélectionnés
-	            return items;
+	            return this.options.filterItems(items);
 	        }
 	    }]);
 

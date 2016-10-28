@@ -103,7 +103,12 @@ class TagController extends Controller
         }
 
         $repository = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Tag');
-        $tags = $repository->findByPartialName($input);
+        $tagsTmp = $repository->findByPartialName($input);
+        $tags = [];
+
+        foreach ($tagsTmp as $t) {
+            $tags[] = $t['nom'];
+        }
 
         return new JsonResponse($tags);
     }
