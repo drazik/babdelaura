@@ -3738,7 +3738,9 @@
 	        this.input = container.querySelector('.js-autocomplete-input');
 
 	        var selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices');
-	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer);
+	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, {
+	            onItemDelete: this.onSelectedChoiceDelete.bind(this)
+	        });
 
 	        var sourceUrl = container.getAttribute('data-source-url');
 	        var availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices');
@@ -3771,11 +3773,10 @@
 
 	                if (value.length >= _this.options.minLengthToTrigger) {
 	                    _this.availableChoicesList.update(value);
+	                } else {
+	                    _this.availableChoicesList.reset();
 	                }
 	            }, 100));
-
-	            // this.input.addEventListener('focus', () => this.availableChoicesList.show())
-	            // this.input.addEventListener('blur', () => this.availableChoicesList.hide())
 	        }
 	    }, {
 	        key: 'addItem',
@@ -3804,6 +3805,11 @@
 
 	            return filteredItems;
 	        }
+	    }, {
+	        key: 'onSelectedChoiceDelete',
+	        value: function onSelectedChoiceDelete() {
+	            this.input.focus();
+	        }
 	    }]);
 
 	    return Autocomplete;
@@ -3815,14 +3821,31 @@
 
 	        _classCallCheck(this, SelectedChoicesList);
 
-	        this.options = _extends({}, options);
+	        this.options = _extends({
+	            onItemDelete: function onItemDelete() {}
+	        }, options);
 
 	        this.container = container;
 
 	        this.items = [];
+
+	        this.initEvents();
 	    }
 
 	    _createClass(SelectedChoicesList, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this2 = this;
+
+	            var delegation = (0, _domDelegate2.default)(this.container);
+
+	            delegation.on('click', 'button', function (event) {
+	                var item = event.target.parentNode.textContent.trim();
+
+	                _this2.deleteItem(item);
+	            });
+	        }
+	    }, {
 	        key: 'addItem',
 	        value: function addItem(item) {
 	            var sanitizedItem = this.sanitizeItem(item);
@@ -3844,10 +3867,10 @@
 	    }, {
 	        key: 'updateDOM',
 	        value: function updateDOM() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var elements = this.items.map(function (item) {
-	                return _this2.createItemDOMElement(item);
+	                return _this3.createItemDOMElement(item);
 	            });
 	            var fragment = document.createDocumentFragment();
 
@@ -3873,6 +3896,17 @@
 	        key: 'getItems',
 	        value: function getItems() {
 	            return this.items;
+	        }
+	    }, {
+	        key: 'deleteItem',
+	        value: function deleteItem(item) {
+	            this.items = this.items.filter(function (i) {
+	                return i !== item;
+	            });
+
+	            this.updateDOM();
+
+	            this.options.onItemDelete();
 	        }
 	    }]);
 
@@ -3909,12 +3943,12 @@
 	    _createClass(AvailableChoicesList, [{
 	        key: 'initEvents',
 	        value: function initEvents() {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            this.containerDelegate.on('click', 'button', function (event) {
 	                var item = event.target.textContent.trim().toLowerCase();
 
-	                _this3.onItemSelect(item);
+	                _this4.onItemSelect(item);
 	            });
 	        }
 	    }, {
@@ -3926,27 +3960,27 @@
 	    }, {
 	        key: 'update',
 	        value: function update(input) {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            this.request.get(this.sourceUrl, {
 	                params: { input: input }
 	            }).then(function (response) {
 	                return response.data;
 	            }).then(function (items) {
-	                return _this4.filterItems(items);
+	                return _this5.filterItems(items);
 	            }).then(function (filteredItems) {
-	                return _this4.updateDOM(filteredItems);
+	                return _this5.updateDOM(filteredItems);
 	            });
 	        }
 	    }, {
 	        key: 'updateDOM',
 	        value: function updateDOM(items) {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            var fragment = document.createDocumentFragment();
 
 	            items.forEach(function (item) {
-	                var element = _this5.createItemDOMElement(item);
+	                var element = _this6.createItemDOMElement(item);
 	                fragment.appendChild(element);
 	            });
 

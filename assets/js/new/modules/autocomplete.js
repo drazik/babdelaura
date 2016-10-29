@@ -14,7 +14,9 @@ class Autocomplete {
         this.input = container.querySelector('.js-autocomplete-input')
 
         const selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices')
-        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer)
+        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, {
+            onItemDelete: this.onSelectedChoiceDelete.bind(this)
+        })
 
         const sourceUrl = container.getAttribute('data-source-url')
         const availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices')
@@ -42,11 +44,10 @@ class Autocomplete {
 
             if (value.length >= this.options.minLengthToTrigger) {
                 this.availableChoicesList.update(value)
+            } else {
+                this.availableChoicesList.reset()
             }
         }, 100))
-
-        // this.input.addEventListener('focus', () => this.availableChoicesList.show())
-        // this.input.addEventListener('blur', () => this.availableChoicesList.hide())
     }
 
     addItem(item) {
@@ -69,17 +70,34 @@ class Autocomplete {
 
         return filteredItems
     }
+
+    onSelectedChoiceDelete() {
+        this.input.focus()
+    }
 }
 
 class SelectedChoicesList {
     constructor(container, options = {}) {
         this.options = {
+            onItemDelete: () => {},
             ...options
         }
 
         this.container = container
 
         this.items = []
+
+        this.initEvents()
+    }
+
+    initEvents() {
+        const delegation = delegate(this.container)
+
+        delegation.on('click', 'button', event => {
+            const item = event.target.parentNode.textContent.trim()
+
+            this.deleteItem(item)
+        })
     }
 
     addItem(item) {
@@ -126,6 +144,16 @@ class SelectedChoicesList {
 
     getItems() {
         return this.items
+    }
+
+    deleteItem(item) {
+        this.items = this.items.filter(i => {
+            return i !== item
+        })
+
+        this.updateDOM()
+
+        this.options.onItemDelete()
     }
 }
 
