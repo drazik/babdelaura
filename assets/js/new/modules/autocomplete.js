@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {ENTER} from './keycodes'
+import {BACKSPACE, ENTER} from './keycodes'
 import debounce from 'lodash.debounce'
 import delegate from 'dom-delegate'
 
@@ -31,11 +31,28 @@ class Autocomplete {
 
     initEvents() {
         this.input.addEventListener('keydown', event => {
-            if (event.keyCode === ENTER) {
-                event.preventDefault()
+            switch(event.keyCode) {
+                case ENTER:
+                    event.preventDefault()
 
-                this.addItem(this.input.value)
-                this.resetInput()
+                    this.addItem(this.input.value)
+                    this.resetInput()
+
+                    return
+
+                case BACKSPACE:
+                    if (this.input.value.length > 0) {
+                        return
+                    }
+
+                    event.preventDefault()
+
+                    var lastSelectedChoice = this.selectedChoicesList.getLastItem()
+                    this.selectedChoicesList.deleteItem(lastSelectedChoice)
+
+                    this.input.value = lastSelectedChoice
+
+                    return
             }
         })
 
@@ -154,6 +171,13 @@ class SelectedChoicesList {
         this.updateDOM()
 
         this.options.onItemDelete()
+    }
+
+    getLastItem() {
+        const lastItemIndex = this.items.length - 1
+        const lastItem = lastItemIndex > -1 ? this.items[lastItemIndex] : null
+
+        return lastItem
     }
 }
 

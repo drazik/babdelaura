@@ -3759,11 +3759,28 @@
 	            var _this = this;
 
 	            this.input.addEventListener('keydown', function (event) {
-	                if (event.keyCode === _keycodes.ENTER) {
-	                    event.preventDefault();
+	                switch (event.keyCode) {
+	                    case _keycodes.ENTER:
+	                        event.preventDefault();
 
-	                    _this.addItem(_this.input.value);
-	                    _this.resetInput();
+	                        _this.addItem(_this.input.value);
+	                        _this.resetInput();
+
+	                        return;
+
+	                    case _keycodes.BACKSPACE:
+	                        if (_this.input.value.length > 0) {
+	                            return;
+	                        }
+
+	                        event.preventDefault();
+
+	                        var lastSelectedChoice = _this.selectedChoicesList.getLastItem();
+	                        _this.selectedChoicesList.deleteItem(lastSelectedChoice);
+
+	                        _this.input.value = lastSelectedChoice;
+
+	                        return;
 	                }
 	            });
 
@@ -3908,6 +3925,14 @@
 
 	            this.options.onItemDelete();
 	        }
+	    }, {
+	        key: 'getLastItem',
+	        value: function getLastItem() {
+	            var lastItemIndex = this.items.length - 1;
+	            var lastItem = lastItemIndex > -1 ? this.items[lastItemIndex] : null;
+
+	            return lastItem;
+	        }
 	    }]);
 
 	    return SelectedChoicesList;
@@ -4035,7 +4060,9 @@
 	    value: true
 	});
 	var ENTER = 13;
+	var BACKSPACE = 8;
 
+	exports.BACKSPACE = BACKSPACE;
 	exports.ENTER = ENTER;
 
 /***/ },
