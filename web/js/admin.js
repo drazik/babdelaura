@@ -3736,6 +3736,7 @@
 
 	        this.container = container;
 	        this.input = container.querySelector('.js-autocomplete-input');
+	        this.realInput = container.querySelector('.js-autocomplete-real-input');
 
 	        var selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices');
 	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, {
@@ -3799,6 +3800,7 @@
 	        key: 'addItem',
 	        value: function addItem(item) {
 	            this.selectedChoicesList.addItem(item);
+	            this.updateRealInputValue();
 	        }
 	    }, {
 	        key: 'resetInput',
@@ -3826,6 +3828,15 @@
 	        key: 'onSelectedChoiceDelete',
 	        value: function onSelectedChoiceDelete() {
 	            this.input.focus();
+	            this.updateRealInputValue();
+	        }
+	    }, {
+	        key: 'updateRealInputValue',
+	        value: function updateRealInputValue() {
+	            var items = this.selectedChoicesList.getItems();
+	            var value = items.join(',');
+
+	            this.realInput.value = value;
 	        }
 	    }]);
 

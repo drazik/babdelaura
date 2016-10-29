@@ -12,6 +12,7 @@ class Autocomplete {
 
         this.container = container
         this.input = container.querySelector('.js-autocomplete-input')
+        this.realInput = container.querySelector('.js-autocomplete-real-input')
 
         const selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices')
         this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, {
@@ -69,6 +70,7 @@ class Autocomplete {
 
     addItem(item) {
         this.selectedChoicesList.addItem(item)
+        this.updateRealInputValue()
     }
 
     resetInput() {
@@ -90,6 +92,14 @@ class Autocomplete {
 
     onSelectedChoiceDelete() {
         this.input.focus()
+        this.updateRealInputValue()
+    }
+
+    updateRealInputValue() {
+        const items = this.selectedChoicesList.getItems()
+        const value = items.join(',')
+
+        this.realInput.value = value
     }
 }
 
