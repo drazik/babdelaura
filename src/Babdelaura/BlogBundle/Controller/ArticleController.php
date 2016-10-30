@@ -276,6 +276,20 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if($form->isValid()) {
+                /*
+                 * Gestion des tags
+                 * - On récupère le contenu du champs non mappé "tags"
+                 * - On le split sur les virgules pour obtenir un array
+                 * (en prenant en compte le fait que si la valeur est null, il
+                 * faut créer un tableau vide nous-même, merci PHP !)
+                 * - On vide a collection actuelle des tags de l'article pour ne
+                 * pas avoir à se soucier de merger les anciens avec les
+                 * nouveaux à la main
+                 * - On parcoure l'ensemble du tableau, et pour chaque tag, on
+                 * le recherche dans la base de données
+                 * - Si on le trouve pas, on le crée
+                 * - Dans tous les cas, on l'ajoute à l'article
+                 */
                 $tagsChild = $form->get('tags');
                 $tags = $tagsChild->getData();
                 $tags = $tags == null ? [] : explode(',', $tags);
@@ -288,7 +302,6 @@ class ArticleController extends Controller
                     $tag = $tagsRepository->findOneByNom($t);
 
                     if ($tag == null) {
-                        // créer le tag
                         $tag = new Tag();
                         $tag->setNom($t);
 
