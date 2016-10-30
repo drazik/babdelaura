@@ -265,6 +265,9 @@ class ArticleController extends Controller
         }
 
         $form = $this->createForm(ArticleType::class, $article);
+        $tagsChildren = $form->get('tags');
+        $tagsChildren->setData(implode(',', $article->getTags()->getValues()));
+
         $uploadImageForm = $this->createForm(ImageType::class, null, array(
             'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
         ));
@@ -275,9 +278,11 @@ class ArticleController extends Controller
             if($form->isValid()) {
                 $tagsChild = $form->get('tags');
                 $tags = $tagsChild->getData();
-                $tags = explode(',', $tags);
+                $tags = $tags == null ? [] : explode(',', $tags);
 
                 $tagsRepository = $em->getRepository('BabdelauraBlogBundle:Tag');
+
+                $article->getTags()->clear();
 
                 foreach ($tags as $t) {
                     $tag = $tagsRepository->findOneByNom($t);

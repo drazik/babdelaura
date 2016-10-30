@@ -29,7 +29,7 @@ class ArticleType extends AbstractType
                   'class'    => 'BabdelauraBlogBundle:Categorie',
                   'choice_label' => 'nom'))
             ->add('datePublication', DateTimeType::class)
-            ->add('tags', HiddenType::class, [
+            ->add('tags', TextType::class, [
                 'mapped' => false,
                 'required' => false,
                 'attr' => [

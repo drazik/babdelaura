@@ -3738,8 +3738,9 @@
 	        this.input = container.querySelector('.js-autocomplete-input');
 	        this.realInput = container.querySelector('.js-autocomplete-real-input');
 
+	        var initialTags = this.realInput.value === '' ? undefined : this.realInput.value.split(',');
 	        var selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices');
-	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, {
+	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, initialTags, {
 	            onItemDelete: this.onSelectedChoiceDelete.bind(this)
 	        });
 
@@ -3845,7 +3846,8 @@
 
 	var SelectedChoicesList = function () {
 	    function SelectedChoicesList(container) {
-	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	        var initialItems = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+	        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
 	        _classCallCheck(this, SelectedChoicesList);
 
@@ -3855,8 +3857,9 @@
 
 	        this.container = container;
 
-	        this.items = [];
+	        this.items = initialItems;
 
+	        this.updateDOM();
 	        this.initEvents();
 	    }
 

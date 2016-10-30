@@ -14,8 +14,9 @@ class Autocomplete {
         this.input = container.querySelector('.js-autocomplete-input')
         this.realInput = container.querySelector('.js-autocomplete-real-input')
 
+        const initialTags = this.realInput.value === '' ? undefined : this.realInput.value.split(',');
         const selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices')
-        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, {
+        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, initialTags, {
             onItemDelete: this.onSelectedChoiceDelete.bind(this)
         })
 
@@ -104,7 +105,7 @@ class Autocomplete {
 }
 
 class SelectedChoicesList {
-    constructor(container, options = {}) {
+    constructor(container, initialItems = [], options = {}) {
         this.options = {
             onItemDelete: () => {},
             ...options
@@ -112,8 +113,9 @@ class SelectedChoicesList {
 
         this.container = container
 
-        this.items = []
+        this.items = initialItems
 
+        this.updateDOM()
         this.initEvents()
     }
 

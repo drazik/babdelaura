@@ -156,4 +156,7 @@ class Tag implements DescriptionEntite
         return $this->articles;
     }
 
+    public function __toString() {
+        return $this->getNom();
+    }
 }
