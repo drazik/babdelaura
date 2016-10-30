@@ -1,0 +1,11 @@
+.bab-Tag {
+    padding: 2px 4px;
+
+    border-radius: 4px;
+    color: #fff;
+    background-color: var(--main-color);
+}
+
+.bab-Tag:not(:last-child) {
+    margin-right: 4px;
+}

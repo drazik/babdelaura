@@ -17,6 +17,13 @@
                 {{ article.commentaires|length }}
             </a>
         </div>
+        {% if article.tags|length > 0 %}
+            <ul class="bab-Article-tags">
+                {% for tag in article.tags %}
+                    <li class="bab-Tag">{{ tag }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </header>
     <div class="bab-Article-content {% if slideshow %}bab-Article-content--withSlideshow js-images-slideshow{% endif %}" {% if slideshow %}data-gallery-pswp-element="#pswp-element"{% endif %}>
         {{ article.contenu|raw }}

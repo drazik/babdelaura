@@ -2132,6 +2132,18 @@ body {
     color: #4fafb9;
 }
 
+.bab-Article-tags {
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+
+    list-style: none;
+    -ms-flex-pack: center;
+        justify-content: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
 @media screen and (max-width: 790px) {
     .bab-Article-content img {
         max-width: 100%;
@@ -2362,4 +2374,16 @@ a.bab-Comment-author {
 
     color: #c0392b;
     line-height: 1.5; 
+}
+
+.bab-Tag {
+    padding: 2px 4px;
+
+    border-radius: 4px;
+    color: #fff;
+    background-color: #4fafb9;
+}
+
+.bab-Tag:not(:last-child) {
+    margin-right: 4px;
 }

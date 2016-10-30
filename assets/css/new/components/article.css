@@ -74,6 +74,15 @@
     color: var(--main-color);
 }
 
+.bab-Article-tags {
+    display: flex;
+    padding-left: 0;
+
+    list-style: none;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 @media (--medium-viewport) {
     .bab-Article-content img {
         max-width: 100%;
