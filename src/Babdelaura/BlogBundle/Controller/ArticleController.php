@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Babdelaura\BlogBundle\Entity\Tag;
 use Babdelaura\BlogBundle\Entity\Article;
 use Babdelaura\BlogBundle\Form\ArticleType;
 use Babdelaura\BlogBundle\Entity\Commentaire;
@@ -272,6 +273,25 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if($form->isValid()) {
+                $tagsChild = $form->get('tags');
+                $tags = $tagsChild->getData();
+                $tags = explode(',', $tags);
+
+                $tagsRepository = $em->getRepository('BabdelauraBlogBundle:Tag');
+
+                foreach ($tags as $t) {
+                    $tag = $tagsRepository->findOneByNom($t);
+
+                    if ($tag == null) {
+                        // créer le tag
+                        $tag = new Tag();
+                        $tag->setNom($t);
+
+                        $em->persist($tag);
+                    }
+
+                    $article->addTag($tag);
+                }
 
                 $image = $em->getRepository('BabdelauraBlogBundle:Image')->findOneById($article->getImageTemp());
                 $article->setImage($image);

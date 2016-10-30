@@ -84,10 +84,10 @@ class Article implements DescriptionEntite
     private $categorie;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", cascade={"persist"}, inversedBy="articles")
+    * @ORM\ManyToMany(targetEntity="Babdelaura\BlogBundle\Entity\Tag", cascade={"persist"}, inversedBy="articles")
     *
     */
-     private $tags;
+    private $tags;
 
     /**
     * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Commentaire", cascade={"persist"}, mappedBy="article")
@@ -420,13 +420,14 @@ class Article implements DescriptionEntite
     /**
      * Add tag
      *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $tag
+     * @param \Babdelaura\BlogBundle\Entity\Tag $tag
      *
      * @return Article
      */
-    public function addTag(\Babdelaura\BlogBundle\Entity\Categorie $tag)
+    public function addTag(\Babdelaura\BlogBundle\Entity\Tag $tag)
     {
         $this->tags[] = $tag;
+        $tag->addArticle($this);
 
         return $this;
     }
@@ -434,11 +435,12 @@ class Article implements DescriptionEntite
     /**
      * Remove tag
      *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $tag
+     * @param \Babdelaura\BlogBundle\Entity\Tag $tag
      */
-    public function removeTag(\Babdelaura\BlogBundle\Entity\Categorie $tag)
+    public function removeTag(\Babdelaura\BlogBundle\Entity\Tag $tag)
     {
         $this->tags->removeElement($tag);
+        $tag->removeArticle(null);
     }
 
     /**
