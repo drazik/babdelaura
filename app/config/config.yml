@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: "@OhInstagramBundle/Resources/config/services.yml" }
+    #- { resource: @OhInstagramBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~
@@ -96,9 +96,3 @@ ewz_recaptcha:
     public_key:  "%recaptcha_public_key%"
     private_key: "%recaptcha_private_key%"
     locale_key:  "%kernel.default_locale%"
-
-oh_instagram:
-    instaphp:
-        config:
-            client_id: %instagram_api_client_id%
-            client_secret: %instagram_api_client_secret%

@@ -34,8 +34,6 @@ babdelaura_adminTag:
     resource: "@BabdelauraBlogBundle/Resources/config/routing/adminTag.yml"
     prefix:   /
 
-OhInstagramBundle:
-    resource: "@OhInstagramBundle/Resources/config/routing.yml"
-    prefix:   /
-
-
+#ohinstagrambundle:
+#    resource: "@OhInstagramBundle/Resources/config/routing.yml"
+#    prefix:   /
