@@ -308,7 +308,10 @@ class ArticleController extends Controller
 
         $form = $this->createForm(ArticleType::class, $article);
         $tagsChildren = $form->get('tags');
-        $tagsChildren->setData(implode(',', $article->getTags()->getValues()));
+        
+        if ($article->getTags() != null) {
+            $tagsChildren->setData(implode(',', $article->getTags()->getValues()));
+        }
 
         $uploadImageForm = $this->createForm(ImageType::class, null, array(
             'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
