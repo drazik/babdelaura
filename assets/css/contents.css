@@ -14,3 +14,12 @@ img {
     height: auto;
     margin: 0 auto;
 }
+
+.bab-Article-signature {
+    text-align: right;
+}
+
+.bab-Article-signature img {
+    display: inline-block;
+    margin: 0;
+}

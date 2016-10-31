@@ -2148,6 +2148,15 @@ body {
         flex-wrap: wrap;
 }
 
+.bab-Article-signature {
+    text-align: right;
+}
+
+.bab-Article-signature img {
+    display: inline-block;
+    margin: 0;
+}
+
 @media screen and (max-width: 790px) {
     .bab-Article-content img {
         max-width: 100%;

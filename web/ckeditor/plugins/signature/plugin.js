@@ -5,7 +5,7 @@ CKEDITOR.plugins.add('signature', {
     init: function (editor) {
         editor.addCommand('insertSignature', {
             exec: function (editor) {
-                editor.insertHtml('<img src="/images/new/signature.png" alt="Laura" />')
+                editor.insertHtml('<div class="bab-Article-signature"><img src="/images/new/signature.png" alt="Laura" /></div>')
             }
         })
 
