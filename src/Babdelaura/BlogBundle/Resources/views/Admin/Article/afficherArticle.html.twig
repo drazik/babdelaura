@@ -25,6 +25,15 @@
                     <ul class="bab-Article-categories">
                             <li class="bab-Article-category"><a href="#">{{article.categorie.nom}}</a></li>
                     </ul>
+                    
+                    {% if article.tags|length > 0 %}
+                        Tags :
+                        <ul class="bab-Article-categories">    
+                            {% for tag in article.tags %}
+                                <li class="bab-Article-category">{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </aside>
             </header>
             <div class="bab-Article-content">
