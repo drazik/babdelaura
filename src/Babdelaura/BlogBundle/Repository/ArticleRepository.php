@@ -8,6 +8,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 use Babdelaura\BlogBundle\Entity\Categorie;
 use Babdelaura\BlogBundle\Entity\Article;
+use Babdelaura\BlogBundle\Entity\Tag;
 
 class ArticleRepository extends EntityRepository {
 
@@ -22,6 +23,40 @@ class ArticleRepository extends EntityRepository {
         } else {
             $query = $query->innerJoin('a.categorie', 'cat')
                            ->addSelect('cat');
+        }
+
+        if($publication === true) {
+            $query = $query->andwhere('a.publication = true');
+        }
+        elseif($publication === false) {
+            $query = $query->andwhere('a.publication = false');
+        }
+
+        if(!$modeAdmin){
+            $query = $query->andwhere('a.datePublication <= ?1')
+                           ->setParameter(1, new \DateTime());
+        }
+
+
+
+        $query = $query->orderBy('a.datePublication','DESC')
+                       ->getQuery();
+
+        return $query;
+
+    }
+
+    public function getArticlesPaginatorTag(Tag $tag = null, $publication = null, $modeAdmin = false) {
+        $query = $this->createQueryBuilder('a')
+                      ->leftJoin('a.image', 'i')
+                      ->addSelect('i');
+
+        if ($tag) {
+            $query = $query->innerJoin('a.tags', 'tag', 'WITH', 'tag=:tag')
+                           ->setParameter('tag', $tag);
+        } else {
+            $query = $query->innerJoin('a.tags', 'tag')
+                           ->addSelect('tag');
         }
 
         if($publication === true) {

@@ -98,6 +98,48 @@ class ArticleController extends Controller
         ));
     }
 
+    public function listerArticlesTagAction(Request $request, $slug) {
+        $tagRepository = $this->getDoctrine()
+                                    ->getManager()
+                                    ->getRepository('BabdelauraBlogBundle:Tag');
+
+        $articleRepository = $this->getDoctrine()
+                                  ->getManager()
+                                  ->getRepository('BabdelauraBlogBundle:Article');
+
+        $tag = $tagRepository->findOneBySlug($slug);
+
+        if (!$tag) {
+          throw $this->createNotFoundException('Le tag n\'existe pas');
+        }
+
+        $page = $request->query->getInt('page', 1);
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+
+        $query = $articleRepository->getArticlesPaginatorTag($tag, true);
+        $query->setFirstResult(($page - 1) * $nbArticlesParPage)
+            ->setMaxResults($nbArticlesParPage);
+
+        $articles = new Paginator($query);
+        $nbPages = ceil(count($articles) / $nbArticlesParPage);
+
+        $pagination = [
+            'isFirstPage' => $page == 1,
+            'isLastPage' => $page == $nbPages,
+            'route' => 'babdelaurablog_categorie',
+            'query' => ['slug' => $tag->getSlug()],
+            'page' => $page
+        ];
+
+        $title = 'Articles correspondant à ' . $tag->getNom();
+
+        return $this->render('BabdelauraBlogBundle:Article:liste.html.twig', array(
+            'articles' => $articles,
+            'pagination' => $pagination,
+            'title' => $title
+        ));
+    }
+
     public function listerArticlesDateAction(Request $request, $annee, $mois, $jour) {
         $repository = $this->getDoctrine()
                            ->getManager()

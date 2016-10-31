@@ -2539,9 +2539,9 @@
 	        value: function onSuccess(data) {
 	            var _this3 = this;
 
-	            var success = data.success;
-	            var errors = data.errors;
-	            var message = data.message;
+	            var success = data.success,
+	                errors = data.errors,
+	                message = data.message;
 
 
 	            if (!success) {
@@ -2678,10 +2678,10 @@
 
 	            var data = new FormData(this.container);
 	            var config = {};
-	            var _options = this.options;
-	            var onSubmit = _options.onSubmit;
-	            var onSuccess = _options.onSuccess;
-	            var onError = _options.onError;
+	            var _options = this.options,
+	                onSubmit = _options.onSubmit,
+	                onSuccess = _options.onSuccess,
+	                onError = _options.onError;
 
 
 	            this.submitButton.disabled = true;

@@ -18,6 +18,10 @@ babdelaurablog_categorie:
     path: /categorie/{slug}/
     defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesCategorie}
 
+babdelaurablog_tag:
+    path: /tag/{slug}/
+    defaults: {_controller: BabdelauraBlogBundle:Article:listerArticlesTag}
+
 babdelaurablog_article:
     path: /{annee}/{mois}/{jour}/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Article:afficherArticle}

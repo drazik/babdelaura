@@ -1,9 +1,16 @@
 .bab-Tag {
     padding: 2px 4px;
 
+    font-size: 14px;
+
     border-radius: 4px;
     color: #fff;
     background-color: var(--main-color);
+}
+
+.bab-Tag a {	
+    color: inherit;
+    text-decoration: none;
 }
 
 .bab-Tag:not(:last-child) {

@@ -20,7 +20,9 @@
         {% if article.tags|length > 0 %}
             <ul class="bab-Article-tags">
                 {% for tag in article.tags %}
-                    <li class="bab-Tag">{{ tag }}</li>
+                    <li class="bab-Tag"><a href="{{ path('babdelaurablog_tag', {'slug': tag.slug}) }}" title="Voir les articles du tag {{ tag.nom }}">
+                {{ tag.nom }}
+            </a></li>
                 {% endfor %}
             </ul>
         {% endif %}
