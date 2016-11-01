@@ -308,7 +308,8 @@ class ArticleController extends Controller
 
         $form = $this->createForm(ArticleType::class, $article);
         $tagsChildren = $form->get('tags');
-        
+
+        // TODO : faire en sorte que tags soit une collection dans le constructeur de l'entité, et virer les ifs de merde
         if ($article->getTags() != null) {
             $tagsChildren->setData(implode(',', $article->getTags()->getValues()));
         }
@@ -341,7 +342,9 @@ class ArticleController extends Controller
 
                 $tagsRepository = $em->getRepository('BabdelauraBlogBundle:Tag');
 
-                $article->getTags()->clear();
+                if ($article->getTags() != null) {
+                    $article->getTags()->clear();
+                }
 
                 foreach ($tags as $t) {
                     $tag = $tagsRepository->findOneByNom($t);
