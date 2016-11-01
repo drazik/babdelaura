@@ -25,7 +25,8 @@ framework:
         cookie_httponly: false
     fragments:       ~
     http_method_override: true
-    assets: ~
+    assets:
+        version: 'v2'
 
 # Twig Configuration
 twig:
