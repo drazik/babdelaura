@@ -1,0 +1,63 @@
+{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+
+{% block content %}
+    <h1>Ajout d'une page externe</h1>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.titre, "Titre") }}
+            {{ form_errors(form.titre)}}
+            {{ form_widget(form.titre) }}
+        </div>        
+
+        <div class="form-group">
+            {{ form_label(form.lienExterne, "Lien externe") }}
+            {{ form_errors(form.lienExterne)}}
+            {{ form_widget(form.lienExterne) }}
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.targetBlank) }}
+            {{ form_label(form.targetBlank, "target _blank") }}
+            {{ form_errors(form.targetBlank)}}
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.publication) }}
+            {{ form_label(form.publication, "Publier la page") }}
+            {{ form_errors(form.publication)}}
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.inMenu) }}
+            {{ form_label(form.inMenu, "Afficher dans le menu") }}
+            {{ form_errors(form.inMenu)}}
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.inFooter) }}
+            {{ form_label(form.inFooter, "Afficher dans le footer") }}
+            {{ form_errors(form.inFooter)}}
+        </div>     
+
+        <div class="checkbox">
+            {{ form_widget(form.mettreEnAvant) }}
+            {{ form_label(form.mettreEnAvant, "Mettre en avant") }}
+            {{ form_errors(form.mettreEnAvant)}}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.position, "Position") }}
+            {{ form_errors(form.position)}}
+            {{ form_widget(form.position) }}
+        </div>
+
+
+        <button class="bab-Button" type="submit">Enregistrer la page</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+    {{ parent() }}
+{% endblock %}

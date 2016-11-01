@@ -1,0 +1,41 @@
+.bab-CommentForm-container {
+    height: 480px;
+}
+
+.bab-CommentForm {
+    margin-bottom: 45px;
+}
+
+.bab-CommentForm label {
+    display: block;
+}
+
+.bab-CommentForm input {
+    display: block;
+    width: 100%;
+}
+
+.bab-CommentForm textarea {
+    display: block;
+    width: 100%;
+    height: 160px;
+
+    resize: none;
+}
+
+.bab-CommentForm-error {
+    display: block;
+
+    color: var(--error-color);
+    line-height: 1.5;
+}
+
+@media (--medium-viewport) {
+    .bab-CommentForm-cell + .bab-CommentForm-cell {
+        margin-top: var(--grid-horizontal-gutter);
+    }
+
+    .bab-CommentForm-container {
+        height: 620px;
+    }
+}

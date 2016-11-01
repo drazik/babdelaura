@@ -1,0 +1,36 @@
+:root {
+    /* Colors */
+    --main-color: #4fafb9;
+    --title-color: #4a4949;
+    --text-color: #444;
+    --text-light-color: #898c8c;
+    --success-color: #2ecc71;
+    --error-color: #c0392b;
+
+    /* Grid */
+    --grid-horizontal-gutter: 30px;
+    --grid-vertical-gutter: 35px;
+
+    --grid-horizontal-gutter-small: 6px;
+    --grid-horizontal-gutter-x-small: 3px;
+
+    --grid-vertical-gutter-small: 10px;
+
+    /* z-index scale */
+    --zi-header-layer: 100;
+    --zi-notification-layer: 200;
+    --zi-dropshadow-layer: 300;
+    --zi-modal-layer: 400;
+    --zi-navigation-trigger-layer: 500;
+
+    /* Fonts */
+    --base-font-stack: 'Vollkorn', serif;
+    --title-font-stack: 'Amatic SC', cursive;
+
+    /* Separator */
+    --separator-element-width: 36px;
+    --separator-element-height: 63px;
+}
+
+@custom-media --small-viewport screen and (max-width: 430px);
+@custom-media --medium-viewport screen and (max-width: 790px);

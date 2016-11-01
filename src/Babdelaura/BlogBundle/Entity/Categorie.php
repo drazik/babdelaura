@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Categorie
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  */
 class Categorie implements DescriptionEntite
 {
@@ -45,20 +45,16 @@ class Categorie implements DescriptionEntite
     private $slug;
 
     /**
-    * @ORM\ManyToMany(targetEntity="Babdelaura\BlogBundle\Entity\Article", mappedBy="categories")
+    * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Article", mappedBy="categorie")
     */
     private $articles;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", inversedBy="enfants")
-    * @ORM\JoinColumn(nullable=true)
-    */
-    private $parent;
-
-    /**
-    * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Categorie", mappedBy="parent")
-    */
-    private $enfants;
+     * @var integer
+     * @Gedmo\SortablePosition()
+     * @ORM\Column(type="integer",options={"default" : -1})
+     */
+    public $position;
 
     /**
      * Constructor
@@ -125,39 +121,6 @@ class Categorie implements DescriptionEntite
     }
 
     /**
-     * Add articles
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Article $articles
-     * @return Categorie
-     */
-    public function addArticle(\Babdelaura\BlogBundle\Entity\Article $articles)
-    {
-        $this->articles[] = $articles;
-
-        return $this;
-    }
-
-    /**
-     * Remove articles
-     *
-     * @param \Babdelaura\BlogBundle\Entity\Article $articles
-     */
-    public function removeArticle(\Babdelaura\BlogBundle\Entity\Article $articles)
-    {
-        $this->articles->removeElement($articles);
-    }
-
-    /**
-     * Get articles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArticles()
-    {
-        return $this->articles;
-    }
-
-    /**
      * Set slug
      *
      * @param string $slug
@@ -196,78 +159,62 @@ class Categorie implements DescriptionEntite
         return "la ";
     }
 
+
     /**
-     * Set parent
+     * Set position
      *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $parent
+     * @param integer $position
+     *
      * @return Categorie
      */
-    public function setParent(\Babdelaura\BlogBundle\Entity\Categorie $parent = null)
+    public function setPosition($position)
     {
-        $this->parent = $parent;
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get parent
+     * Get position
      *
-     * @return \Babdelaura\BlogBundle\Entity\Categorie
+     * @return integer
      */
-    public function getParent()
+    public function getPosition()
     {
-        return $this->parent;
+        return $this->position;
     }
 
     /**
-     * Add enfants
+     * Add article
      *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $enfants
+     * @param \Babdelaura\BlogBundle\Entity\Article $article
+     *
      * @return Categorie
      */
-    public function addEnfant(\Babdelaura\BlogBundle\Entity\Categorie $enfants)
+    public function addArticle(\Babdelaura\BlogBundle\Entity\Article $article)
     {
-        $this->enfants[] = $enfants;
+        $this->articles[] = $article;
 
         return $this;
     }
 
     /**
-     * Remove enfants
+     * Remove article
      *
-     * @param \Babdelaura\BlogBundle\Entity\Categorie $enfants
+     * @param \Babdelaura\BlogBundle\Entity\Article $article
      */
-    public function removeEnfant(\Babdelaura\BlogBundle\Entity\Categorie $enfants)
+    public function removeArticle(\Babdelaura\BlogBundle\Entity\Article $article)
     {
-        $this->enfants->removeElement($enfants);
+        $this->articles->removeElement($article);
     }
 
     /**
-     * Get enfants
+     * Get articles
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEnfants()
+    public function getArticles()
     {
-        return $this->enfants;
+        return $this->articles;
     }
-
-    /**
-     * Get enfants visibles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEnfantsVisibles()
-    {
-        $enfantsVisibles = array();
-
-        foreach ($this->enfants as $enfant) {
-            if($enfant->getVisible()) {
-                $enfantsVisibles[] = $enfant;
-            }
-        }
-        return $enfantsVisibles;
-    }
-
-
 }

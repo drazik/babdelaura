@@ -1,0 +1,39 @@
+.bab-Footer {
+    margin-top: 50px;
+    padding: 8px 0;
+
+    font-size: 14px;
+
+    /* FIXME dissocier de --title-color */
+    background-color: var(--title-color);
+    text-align: center;
+    color: #fff;
+}
+
+.bab-Footer-pagesContainer {
+    padding-left: 0;
+
+    list-style: none;
+}
+
+.bab-Footer-page {
+    display: inline-block;
+
+    color: #fff;
+}
+
+.bab-Footer-page:not(:first-child)::before {
+    content: '';
+
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+    background-color: currentColor;
+    vertical-align: middle;
+}
+
+.bab-Footer-pageLink {
+    color: inherit;
+}

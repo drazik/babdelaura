@@ -1,0 +1,43 @@
+.bab-Comment {
+    font-size: 16px;
+}
+
+.bab-Comment-content {
+    text-align: justify;
+
+    padding-top: 5px;
+}
+
+.bab-Comment + .bab-Comment {
+    margin-top: 15px;
+}
+
+.bab-Comment--offset {
+    padding-left: 60px;
+}
+
+a.bab-Comment-author {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+.bab-Comment-answerButton {
+    margin-left: 5px;
+    padding: 1px 5px;
+    border-width: 0;
+    border-radius: 5px;
+
+    background-color: var(--main-color);
+    color: #fff;
+    cursor: pointer;
+}
+
+.bab-Comment-answerButton--answering {
+    background-color: var(--text-color);
+}
+
+@media (--small-viewport) {
+    .bab-Comment--offset {
+        padding-left: 20px;
+    }
+}

@@ -18,11 +18,11 @@ class BlogController extends Controller
                            ->getManager()
                            ->getRepository('BabdelauraBlogBundle:Article');
 
-        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
+        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPageHome');
 
-        $listeArticles = $repository->getArticles($nbArticlesParPage);
+        $articles = $repository->getArticles($nbArticlesParPage);
 
-        return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('listeArticles' => $listeArticles));
+        return $this->render('BabdelauraBlogBundle:Blog:index.html.twig', array('articles' => $articles));
     }
 
     public function mainMenuAction() {
@@ -30,13 +30,15 @@ class BlogController extends Controller
                    ->getManager();
 
         $repositoryCategorie = $em->getRepository('BabdelauraBlogBundle:Categorie');
-        $listeCategories = $repositoryCategorie->findBy(array('visible' => true, 'parent' => null));
+        $categories = $repositoryCategorie->findBy(array('visible' => true),array('position' => 'ASC'));
 
         $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-        $listePages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true));
+        $pages = $repositoryPage->findBy(array('publication' => true, 'inMenu' => true),array('position' => 'ASC'));
 
-        return $this->render('BabdelauraBlogBundle:Blog:mainMenu.html.twig', array('listeCategories' => $listeCategories, 'listePages' => $listePages));
-
+        return $this->render('BabdelauraBlogBundle:Layout:navigation.html.twig', array(
+            'categories' => $categories,
+            'pages' => $pages
+        ));
     }
 
     public function footerAction() {
@@ -44,36 +46,11 @@ class BlogController extends Controller
                    ->getManager();
 
        $repositoryPage = $em->getRepository('BabdelauraBlogBundle:Page');
-       $listePages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true));
+       $pages = $repositoryPage->findBy(array('publication' => true, 'inFooter' => true),array('position' => 'ASC'));
 
-       return $this->render('BabdelauraBlogBundle:Blog:footer.html.twig', array('listePages' => $listePages));
-    }
-
-    public function formulaireRechercheAction() {
-        $recherche = new Recherche();
-        $form = $this->createForm(RechercheType::class, $recherche);
-
-        return $this->render('BabdelauraBlogBundle:Blog:formulaireRecherche.html.twig', array('form' => $form->createView()));
-    }
-
-    public function rechercherAction(Request $request) {
-        $motsCles = $request->query->get('motscles');
-
-        $repository = $this->getDoctrine()->getManager()->getRepository('BabdelauraBlogBundle:Article');
-
-        $nbArticlesParPage = $this->container->getParameter('nbArticlesParPage');
-
-        $query = $repository->rechercher($motsCles);
-        $paginator  = $this->get('knp_paginator');
-        $listeArticles = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            $nbArticlesParPage
-        );
-        $listeArticles->setTemplate('BabdelauraBlogBundle:Article:slidingArticle.html.twig');
-
-
-        return $this->render('BabdelauraBlogBundle:Article:resultatsRecherche.html.twig', array('listeArticles' => $listeArticles, 'motsCles' => $motsCles));
+       return $this->render('BabdelauraBlogBundle:Layout:footer.html.twig', array(
+           'pages' => $pages
+       ));
     }
 
     public function feedRssAction() {

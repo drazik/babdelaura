@@ -1,0 +1,19 @@
+.bab-Section {
+    padding: 35px 0;
+}
+
+.bab-Section:first-child {
+    padding-top: 0;
+}
+
+.bab-Section:last-child {
+    padding-bottom: 0;
+}
+
+.bab-Section-title {
+    font-family: var(--title-font-stack);
+    font-weight: normal;
+    font-size: 36px;
+
+    text-transform: uppercase;
+}

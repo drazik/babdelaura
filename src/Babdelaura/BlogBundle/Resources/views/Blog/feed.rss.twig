@@ -11,9 +11,9 @@
             <description><![CDATA[{{article.contenu | raw}}]]></description>
             <pubDate>{{article.datePublication | date("D, d M Y H:i:s O")}}</pubDate>
             <category>
-                <![CDATA[{% for cat in article.categories %}
-                    {{cat.nom}}{% if not loop.last %},{% endif %}
-                {% endfor %}]]>
+                <![CDATA[
+                    {{article.categorie.nom}}
+                ]]>
             </category>
             <link>{{ url('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) }}</link>
             <comments>

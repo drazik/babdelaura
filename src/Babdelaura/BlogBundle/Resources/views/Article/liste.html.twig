@@ -1,0 +1,29 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% if title is defined %}
+  {% set metaDescription = title %}
+{% else %}
+  {% set metaDescription = 'Tous les articles' %}
+{% endif %}
+
+{% block facebookMetas %}
+    {% set ogTitle = metaDescription %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<section class="bab-Section">
+    {% if title is defined %}
+        {% set previewTitleElement = 'h3' %}
+        <h2 class="bab-Section-title align-center">
+            {{ title }}
+        </h2>
+    {% endif %}
+
+    {% include 'BabdelauraBlogBundle:Components/article:list.html.twig' with {'articles': articles, 'previewTitleElement': previewTitleElement|default('h2')} only %}
+
+    {% include 'BabdelauraBlogBundle:Components/article:pagination.html.twig' with pagination only %}
+    {#{{ knp_pagination_render(articles) }}#}
+</section>
+{% endblock %}

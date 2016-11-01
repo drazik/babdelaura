@@ -1,0 +1,115 @@
+.bab-Navigation {
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    text-align: center;
+}
+
+.bab-Navigation-item {
+    display: inline-block;
+
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.bab-Navigation-item:not(:first-child) {
+    margin-left: 15px;
+}
+
+.bab-Navigation-item--highlight {
+    color: var(--main-color);
+}
+
+.bab-Navigation-item--highlight:hover {
+    color: var(--text-color);
+}
+
+.bab-NavigationTrigger {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    display: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-width: 0;
+
+    border-radius: 50%;
+    background-color: var(--main-color);
+    cursor: pointer;
+    opacity: 0.85;
+    z-index: var(--zi-navigation-trigger-layer);
+    transition-property: transform;
+    transition-duration: 0.5s;
+}
+
+.bab-NavigationTrigger--cross {
+    transform: rotate(180deg);
+}
+
+.bab-NavigationTrigger-burger {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 50%;
+    height: 2px;
+
+    background-color: #fff;
+    border-radius: 2px;
+    transform: translate(-50%, -50%);
+    transition-property: background-color;
+    transition-duration: inherit;
+}
+
+.bab-NavigationTrigger-burger::before,
+.bab-NavigationTrigger-burger::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: #fff;
+    border-radius: inherit;
+    transition-property: transform;
+    transition-duration: inherit;
+}
+
+.bab-NavigationTrigger-burger::before {
+    transform: translateY(-6px);
+}
+
+.bab-NavigationTrigger-burger::after {
+    transform: translateY(6px);
+}
+
+.bab-NavigationTrigger--cross .bab-NavigationTrigger-burger {
+    background-color: transparent;
+}
+
+.bab-NavigationTrigger--cross .bab-NavigationTrigger-burger::before {
+    transform: translateY(0) rotate(45deg);
+}
+
+.bab-NavigationTrigger--cross .bab-NavigationTrigger-burger::after {
+    transform: translateY(0) rotate(-45deg);
+}
+
+@media (--medium-viewport) {
+    .bab-NavigationTrigger {
+        display: block;
+    }
+
+    .bab-Navigation-item {
+        display: block;
+        padding: 5px 0;
+    }
+
+    .bab-Navigation-item:not(:first-child) {
+        margin-left: 0;
+    }
+}

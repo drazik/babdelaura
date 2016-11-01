@@ -1,0 +1,28 @@
+.bab-Social {
+    display: inline-block;
+
+    text-decoration: none;
+    color: var(--main-color);
+    vertical-align: middle;
+}
+
+.bab-Social:not(:first-child) {
+    margin-left: 5px;
+}
+.bab-Social:hover {
+	color: var(--text-color);
+}
+
+.bab-Social svg {
+    vertical-align: middle;
+}
+
+@media (--medium-viewport) {
+    .bab-Socials {
+        text-align: center;
+    }
+
+    .bab-Social:not(:first-child) {
+        margin-left: 15px;
+    }
+}

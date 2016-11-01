@@ -500,7 +500,8 @@ textarea {
 }
 
 .rotate-90 {
-    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
 }
 
 body {
@@ -557,4 +558,13 @@ img {
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+}
+
+.bab-Article-signature {
+    text-align: right;
+}
+
+.bab-Article-signature img {
+    display: inline-block;
+    margin: 0;
 }

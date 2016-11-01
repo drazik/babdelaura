@@ -6,6 +6,7 @@ namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Babdelaura\BlogBundle\Entity\Commentaire;
 use Babdelaura\BlogBundle\Form\CommentaireType;
 
@@ -19,60 +20,66 @@ class CommentaireController extends Controller
         $article = $repository->findOneBySlug($slug);
 
         $form = $this->createForm(CommentaireType::class, $commentaire, array(
-            'recaptcha' => true
+            'recaptcha' => true,
+            'comments' => $article->getRootCommentairesValides()
         ));
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if($form->isValid()) {
-                if($commentaire->getSite()){
-                    if(!preg_match('#^http://#', $commentaire->getSite())) {
-                        $commentaire->setSite('http://'.$commentaire->getSite());
-                    }
+        $isValid = $form->isValid();
+
+        $responseData = [
+            'success' => $isValid,
+            'errors' => $this->getErrorMessages($form)
+        ];
+
+        if ($isValid) {
+            if ($commentaire->getSite()) {
+                if (!preg_match('#^http://#', $commentaire->getSite())) {
+                    $commentaire->setSite('http://' . $commentaire->getSite());
                 }
-                $article->addCommentaire($commentaire);
-                $em->persist($article);
-
-                $em->flush();
-
-                $mailer = $this->get('mailer');
-                $message = $mailer->createMessage()
-                    ->setSubject('Un nouveau commentaire a été posté')
-                    ->setFrom($this->container->getParameter('mail_notifications'))
-                    ->setTo($this->container->getParameter('mail_contact'))
-                    ->setBody(
-                        $this->renderView(
-                            'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
-                            array('commentaire' => $commentaire, 'article' => $article)
-                        ),
-                        'text/html'
-                );
-                $mailer->send($message);
-
-                $this->get('session')->getFlashBag()->add(
-                            'notice',
-                            'Merci '.$commentaire->getAuteur().'. Votre commentaire est en cours de validation.'
-                );
-                $form = $this->createForm(CommentaireType::class, new Commentaire(), array(
-                    'recaptcha' => true
-                ));
-
             }
 
-            $articlePrecedent = $repository->getPrecedent($article->getId());
-            $articlePrecedent = array_shift($articlePrecedent);
+            $article->addCommentaire($commentaire);
 
-            $articleSuivant = $repository->getSuivant($article->getId());
-            $articleSuivant = array_shift($articleSuivant);
+            $em->persist($article);
+            $em->flush();
 
-            return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig', array(
-                'article' => $article,
-                'form' => $form->createView(),
-                'articlePrecedent' => $articlePrecedent,
-                'articleSuivant' => $articleSuivant));
+            $responseData['message'] = 'Merci pour votre commentaire ' . $commentaire->getAuteur() . '. Celui-ci est en cours de validation et apparaitra bientôt.';
+
+            $mailer = $this->get('mailer');
+            $message = $mailer->createMessage()
+                ->setSubject('Un nouveau commentaire a été posté')
+                ->setFrom($this->container->getParameter('mail_notifications'))
+                ->setTo($this->container->getParameter('mail_contact'))
+                ->setBody(
+                    $this->renderView(
+                        'BabdelauraBlogBundle:Mail:nouveauCommentaire.html.twig',
+                        array('commentaire' => $commentaire, 'article' => $article)
+                    ),
+                    'text/html'
+            );
+            $mailer->send($message);
         }
 
+        return new JsonResponse($responseData);
+    }
+
+    private function getErrorMessages(\Symfony\Component\Form\Form $form)
+    {
+        $errors = array();
+
+        foreach ($form->getErrors() as $key => $error) {
+            $errors[] = $error->getMessage();
+        }
+
+        foreach ($form->all() as $child) {
+            if (!$child->isValid()) {
+                $errors[$child->getName()] = $this->getErrorMessages($child);
+            }
+        }
+
+        return $errors;
     }
 
     public function enregistrerCommentaireAdminAction(Request $request, $slug) {

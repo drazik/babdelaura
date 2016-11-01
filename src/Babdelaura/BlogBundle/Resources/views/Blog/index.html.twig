@@ -1,7 +1,11 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
-{% block mainContent %}
-    <h1 class="grid-title">Les derniers articles</h1>
-    {% include "BabdelauraBlogBundle:Article:grille.html.twig" with {'modeAdmin': false} %}
-    <a class="bab-Button bab-Button--fullWidth" href="{{ path('babdelaurablog_tousLesArticles') }}">Voir tous les articles</a>
+{% block content %}
+    {% include 'BabdelauraBlogBundle:Components/article:list.html.twig' with {'articles': articles, 'featured': true} only %}
+    <div class="align-center">
+        <a class="bab-Button" href="{{ path('babdelaurablog_tousLesArticles') }}?page=2">
+            Articles plus anciens
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
+        </a>
+    </div>
 {% endblock %}

@@ -7,6 +7,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 use Babdelaura\BlogBundle\Entity\Categorie;
+use Babdelaura\BlogBundle\Entity\Article;
+use Babdelaura\BlogBundle\Entity\Tag;
 
 class ArticleRepository extends EntityRepository {
 
@@ -16,11 +18,45 @@ class ArticleRepository extends EntityRepository {
                       ->addSelect('i');
 
         if ($categorie) {
-            $query = $query->innerJoin('a.categories', 'cat', 'WITH', 'cat=:categorie')
+            $query = $query->innerJoin('a.categorie', 'cat', 'WITH', 'cat=:categorie')
                            ->setParameter('categorie', $categorie);
         } else {
-            $query = $query->innerJoin('a.categories', 'cat')
+            $query = $query->innerJoin('a.categorie', 'cat')
                            ->addSelect('cat');
+        }
+
+        if($publication === true) {
+            $query = $query->andwhere('a.publication = true');
+        }
+        elseif($publication === false) {
+            $query = $query->andwhere('a.publication = false');
+        }
+
+        if(!$modeAdmin){
+            $query = $query->andwhere('a.datePublication <= ?1')
+                           ->setParameter(1, new \DateTime());
+        }
+
+
+
+        $query = $query->orderBy('a.datePublication','DESC')
+                       ->getQuery();
+
+        return $query;
+
+    }
+
+    public function getArticlesPaginatorTag(Tag $tag = null, $publication = null, $modeAdmin = false) {
+        $query = $this->createQueryBuilder('a')
+                      ->leftJoin('a.image', 'i')
+                      ->addSelect('i');
+
+        if ($tag) {
+            $query = $query->innerJoin('a.tags', 'tag', 'WITH', 'tag=:tag')
+                           ->setParameter('tag', $tag);
+        } else {
+            $query = $query->innerJoin('a.tags', 'tag')
+                           ->addSelect('tag');
         }
 
         if($publication === true) {
@@ -94,7 +130,7 @@ class ArticleRepository extends EntityRepository {
 
         $query = $query->orderBy('a.id','DESC');
 
-        return $query->getQuery()->getResult();
+        return $query->getQuery();
     }
 
     public function getPrecedent($id) {
@@ -167,5 +203,21 @@ class ArticleRepository extends EntityRepository {
                ->getSingleScalarResult();
 
       return $query;
+    }
+
+    public function getArticlesSimilaires(Article $article) {
+      $query = $this->createQueryBuilder('a');
+      $expr = $query->expr();
+
+      $query = $query->innerJoin('a.categorie', 'cat', 'WITH', 'cat=:categorie')
+                     ->setParameter('categorie', $article->getCategorie())
+                     ->where('a.publication = true')
+                     ->andwhere($expr->neq('a.id', $article->getId()));
+
+      $result = $query->getQuery()->getResult();
+
+      shuffle($result);
+
+      return array_slice($result,0,4);
     }
   }

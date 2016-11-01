@@ -74,6 +74,16 @@ class Commentaire implements DescriptionEntite
      */
     private $article;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Babdelaura\BlogBundle\Entity\Commentaire", inversedBy="enfants")
+    * @ORM\JoinColumn(nullable=true)
+    */
+    private $parent;
+    /**
+    * @ORM\OneToMany(targetEntity="Babdelaura\BlogBundle\Entity\Commentaire", mappedBy="parent")
+    */
+    private $enfants;
+
     public function __construct(){
         $this->datePublication = new \DateTime;
         $this->valide = false;
@@ -264,5 +274,81 @@ class Commentaire implements DescriptionEntite
 
     public function getPrefixeType() {
         return "le ";
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Commentaire $parent
+     *
+     * @return Commentaire
+     */
+    public function setParent(\Babdelaura\BlogBundle\Entity\Commentaire $parent = null)
+    {
+        $this->parent = $parent;
+        $parent->addEnfant($this);
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Babdelaura\BlogBundle\Entity\Commentaire
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add enfant
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Commentaire $enfant
+     *
+     * @return Commentaire
+     */
+    public function addEnfant(\Babdelaura\BlogBundle\Entity\Commentaire $enfant)
+    {
+        $this->enfants[] = $enfant;
+
+        return $this;
+    }
+
+    /**
+     * Remove enfant
+     *
+     * @param \Babdelaura\BlogBundle\Entity\Commentaire $enfant
+     */
+    public function removeEnfant(\Babdelaura\BlogBundle\Entity\Commentaire $enfant)
+    {
+        $this->enfants->removeElement($enfant);
+        $enfant->setParent(null);
+    }
+
+    /**
+     * Get enfants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnfants()
+    {
+        return $this->enfants;
+    }
+
+    /**
+     * Get enfants visibles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnfantsValides()
+    {
+        $enfantsValides = array();
+        foreach ($this->enfants as $enfant) {
+            if($enfant->getValide()) {
+                $enfantsValides[] = $enfant;
+            }
+        }
+        return $enfantsValides;
     }
 }

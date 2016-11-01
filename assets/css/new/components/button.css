@@ -1,0 +1,40 @@
+.bab-Button {
+    display: inline-block;
+    padding: 0.75em 0.65em;
+    border-width: 0;
+
+    font-size: 18px;
+
+    color: #fff !important;
+    text-decoration: none;
+    background-color: var(--main-color);
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+}
+
+.bab-Button[disabled] {
+    cursor: default;
+}
+
+.bab-Button + .bab-Button {
+    margin-left: 20px;
+}
+
+.bab-Button--large {
+    font-size: 20px;
+}
+
+@media (--small-viewport) {
+    .bab-Button--block\@small {
+        display: block;
+        width: 100%;
+
+        float: none;
+        text-align: center;
+    }
+
+    .bab-Button--block\@small + .bab-Button--block\@small {
+        margin-top: 15px;
+        margin-left: 0;
+    }
+}

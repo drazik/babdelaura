@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Administration - Bric à Brac de Laura</title>
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
-    <link rel="stylesheet" media="screen" href="{{asset('css/admin.css')}}" />
+    <link rel="stylesheet" media="screen" href="{{asset('css/admin.css') }}" />
 
      {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
 </head>
@@ -38,13 +37,19 @@
                     </ul>
                 </li>
                 <li class="bab-MainNav-item">
-                    <a href="#" title="">Catégories <i class="fa fa-caret-down"></i></a>
+                    <a href="#" title="">Catégories et tags<i class="fa fa-caret-down"></i></a>
                     <ul class="bab-MainNav-submenu">
                         <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_listerCategories')}}">Liste des catégories</a>
                         </li>
                         <li class="bab-MainNav-submenuItem">
                             <a href="{{ path ('babdelaurablog_admin_ajouterCategorie')}}">Ajouter une catégorie</a>
+                        </li>
+                        <li class="bab-MainNav-submenuItem">
+                            <a href="{{ path ('babdelaurablog_admin_listerTags')}}">Liste des tags</a>
+                        </li>
+                        <li class="bab-MainNav-submenuItem">
+                            <a href="{{ path ('babdelaurablog_admin_ajouterTag')}}">Ajouter un tag</a>
                         </li>
                     </ul>
                 </li>
@@ -63,12 +68,15 @@
                             <a href="{{ path ('babdelaurablog_admin_listerPages')}}">Liste des pages</a>
                         </li>
                         <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_ajouterPage')}}">Ajouter une page</a>
+                            <a href="{{ path ('babdelaurablog_admin_ajouterPageInterne')}}">Ajouter une page interne</a>
+                        </li>
+                        <li class="bab-MainNav-submenuItem">
+                            <a href="{{ path ('babdelaurablog_admin_ajouterPageExterne')}}">Ajouter une page externe</a>
                         </li>
                     </ul>
                 </li>
                 <li class="bab-MainNav-item">
-                    <a href="{{ path('babdelaurablog_admin_gallerieImages') }}" title="">Gallerie</a>
+                    <a href="{{ path('babdelaurablog_admin_galerieImages') }}" title="">Galerie</a>
                 </li>
                 <li class="bab-MainNav-item">
                     <a href="{{ path('logout') }}" title="">Déconnexion</a>

@@ -1,23 +1,35 @@
 import 'classlist-polyfill';
-import 'feature.js';
 
-import Nav from './modules/nav';
-import ImagesSlideshow from './modules/images-slideshow';
-import Notification from './modules/notification';
-import CookieBar from './modules/cookie-bar';
-import ArticlesGrid from './modules/articles-grid';
+import Search from './new/modules/search'
+import Comments from './new/modules/comments'
+import Header from './new/modules/header'
+import ImagesSlideshow from './new/modules/images-slideshow'
+import CookieBar from './new/modules/cookie-bar'
 
-const cookieBarContainer = document.querySelector('.js-cookie-bar');
-new CookieBar(cookieBarContainer);
+const searchContainer = document.querySelector('.js-search')
 
-const navContainer = document.querySelector('.js-nav');
-new Nav(navContainer);
+if (searchContainer) {
+    new Search(searchContainer)
+}
 
-const imagesSlideshowContainers = [...document.querySelectorAll('.js-images-slideshow')];
-imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container));
 
-const notificationContainers = [...document.querySelectorAll('.js-notification')];
-notificationContainers.forEach(container => new Notification(container));
+const headerContainer = document.querySelector('.js-header')
+const header = new Header(headerContainer)
 
-const articlesGridContainers = [...document.querySelectorAll('.js-articles-grid')];
-articlesGridContainers.forEach(container => new ArticlesGrid(container));
+
+const commentsContainer = document.querySelector('.js-comments')
+
+if (commentsContainer) {
+    new Comments(commentsContainer, header)
+}
+
+
+const imagesSlideshowContainers = [...document.querySelectorAll('.js-images-slideshow')]
+imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container))
+
+
+const cookieBarContainer = document.querySelector('.js-cookie-bar')
+
+if (cookieBarContainer) {
+    new CookieBar(cookieBarContainer)
+}

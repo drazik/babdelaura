@@ -26,6 +26,7 @@
             <th>Edition</th>
             <th>Publication</th>
             <th>Catégories</th>
+            <th>Tags</th>
             <th></th>
         </tr>
     </thead>
@@ -68,8 +69,12 @@
                 </td>
 
                 <td>
-                    {% for categorie in article.categories %}
-                        {{categorie.nom ~ " "}}
+                    {{article.categorie.nom}}
+                </td>
+
+                 <td>
+                    {% for tag in article.tags %}
+                        {{tag.nom ~ " "}}
                     {% endfor %}
                 </td>
 

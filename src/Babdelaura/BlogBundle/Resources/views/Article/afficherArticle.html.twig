@@ -13,116 +13,59 @@
 
 {% block pageTitle %}{{article.titre}} | {% endblock %}
 
-
-{% block mainContent %}
-
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="bab-Notification bab-Notification--success js-notification">
-            <div class="bab-Notification-content">{{ flashMessage }}</div>
-        </div>
-    {% endfor %}
-
-    <section itemscope itemtype="http://schema.org/BlogPosting">
-        {% set nbCommentaires = article.getNbCommentaires(true) %}
-        <header>
-            <h1 class="bab-Article-title" itemprop="name">{{ article.titre }}</h1>
-            <aside class="bab-Article-infos">
-                <time pubdate itemprop="datePublished">
-                    Le {{ article.datePublication|date("d/m/Y à H:i") }}
-                </time>
-                -
-                <a href="#commentaires" title="Accéder aux commentaires">
-                    {{ nbCommentaires }}
-                    {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %}
-                </a>
-                <ul class="bab-Article-categories" itemprop="keywords">
-                    {% for categorie in article.categories %}
-                        <li class="bab-Article-category">
-                            <a href="{{ path('babdelaurablog_categorie', {'slug' : categorie.slug}) }}">
-                                {{categorie.nom}}{% if not loop.last %},{% endif %}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </aside>
-        </header>
-        <div class="bab-Article-content bab-Article-content--gallery js-images-slideshow" data-gallery-pswp-element="#pswp-element" itemprop="articleBody">
-            <p>{{article.contenu | raw}}</p>
-        </div>
-        {% include 'BabdelauraBlogBundle::Article/social-share.html.twig' %}
+{% block content %}
+    <section class="bab-Section">
+        {% include 'BabdelauraBlogBundle:Components/article:entry.html.twig' with {'article': article, 'slideshow': true} only %}
     </section>
 
-    <nav class="bab-Article-navigation">
-        {% if articlePrecedent is not null %}
-            <a class="bab-Button" href="{{ path('babdelaurablog_article', {'slug': articlePrecedent.slug, 'annee': articlePrecedent.datePublication|date("Y"), 'mois': articlePrecedent.datePublication|date("m"), 'jour': articlePrecedent.datePublication|date("d")}) }}">
-                <i class="fa fa-chevron-circle-left"></i> Article précédent
-            </a>
+    <nav class="bab-Section clearfix">
+        {% if urlArticleSuivant is not null %}
+        <a class="bab-Button bab-Button--block@small pull-left" href="{{ urlArticleSuivant }}">
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronLeft'} only %}
+            Article plus récent
+        </a>
         {% endif %}
 
-        {% if articleSuivant is not null %}
-            <a class="bab-Button pull-right" href="{{ path('babdelaurablog_article', {'slug': articleSuivant.slug, 'annee': articleSuivant.datePublication|date("Y"), 'mois': articleSuivant.datePublication|date("m"), 'jour': articleSuivant.datePublication|date("d")}) }}">
-                Article suivant <i class="fa fa-chevron-circle-right"></i>
-            </a>
+        {% if urlArticlePrecedent is not null %}
+        <a class="bab-Button bab-Button--block@small pull-right" href="{{ urlArticlePrecedent }}">
+            Article plus ancien
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'chevronRight'} only %}
+        </a>
         {% endif %}
     </nav>
 
-    <h1 id="commentaires">Commentaires</h1>
-    {% if nbCommentaires > 0 %}
-    <ul class="list-unstyled">
-        {% for commentaire in article.commentaires %}
-            {% if commentaire.valide %}
-            <li class="bab-Comment">
-                <header class="bab-Comment-header">
-                    <i class="fa fa-user"></i>
-                    {% if commentaire.site %}
-                        <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
-                    {% else %}
-                        {{ commentaire.auteur }}
-                    {% endif %}
-                    <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
-                </header>
-                <div class="bab-Comment-content">
-                    {{ commentaire.contenu }}
-                </div>
-            </li>
-            {% endif %}
-        {% endfor %}
+    <section class="bab-Section">
+        <h2 class="bab-Section-title">
+            Articles similaires
+        </h2>
+        <div class="bab-Grid bab-Grid--inlineBlock bab-Grid--smallGutters">
+            {% set nbArticles = articlesSimilaires|length %}
+            {% for article in articlesSimilaires %}
+            <div class="bab-Grid-cell bab-Grid-cell--1-{{ nbArticles }} bab-Grid-cell--1-2@medium bab-Grid-cell--1-1@small">
+                {% include 'BabdelauraBlogBundle:Components/article:preview.html.twig' with {'article': article, 'small': true, 'titleElement': 'h3'} only %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
-    </ul>
+    <section class="bab-Section" id="commentaires">
+        <h2 class="bab-Section-title">
+            Laisser un commentaire
+        </h2>
+        <section class="bab-CommentForm-container js-comment-form" data-comment-form-notification="#comment-form-notification">
+            {% include 'BabdelauraBlogBundle:Components/comment:form.html.twig' with {'form': form} only %}
+        </section>
+        <section class="js-comments" data-comments-form=".js-comment-form">
+            {% include 'BabdelauraBlogBundle:Components/comment:list.html.twig' with {'comments': article.rootCommentairesValides} only %}
+        </section>
+    </section>
 
-    {% else %}
-        <p>
-            Aucun commentaire. Soyez le premier à commenter.
-        </p>
-    {% endif %}
-    <form class="comment-form" action="#commentaires" method="post" class="comment-form" id="new-comment">
-        <h1>Poster un commentaire</h1>
-        <div class="form-group">
-            {{ form_label(form.auteur, "Votre nom") }}
-            {{ form_widget(form.auteur) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.email, "Votre adresse mail") }}
-            {{ form_widget(form.email) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.site, "Votre site") }}
-            {{ form_widget(form.site) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.contenu, "Votre commentaire") }}
-            {{ form_widget(form.contenu) }}
-        </div>
-        <div class="form-group">
-            {{ form_errors(form.recaptcha)}}
-            {{ form_widget(form.recaptcha) }}
-        </div>
-        {{ form_widget(form._token) }}
-
-        <button class="bab-Button" type="submit">Envoyer mon commentaire</button>
-    </form>
-
-    {% include 'BabdelauraBlogBundle::photoswipe.html.twig' with {'id': 'pswp-element'} %}
+    <div class="bab-Notification" id="comment-form-notification">
+        <button class="bab-Notification-close js-notification-closer" type="button">
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'cross'} only %}
+        </button>
+        <p class="bab-Notification-content js-notification-content"></p>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

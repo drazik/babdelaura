@@ -18,6 +18,7 @@
 /app/config/security.yml
 /app/config/parametersProd.yml
 /app/config/parametersPreprod.yml
+/app/config/parametersNewprod.yml
 /composer.phar
 /dploy.yaml
 /node_modules/
@@ -25,3 +26,4 @@
 /*.sublime-workspace
 /npm-debug.log
 /web/uploads
+.tern-project

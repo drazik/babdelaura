@@ -1,8 +1,8 @@
 @import 'normalize.css';
 
-@import 'helpers/utils';
+@import 'legacy/helpers/utils';
 
-@import 'base/typography';
+@import 'legacy/base/typography';
 
 p {
     text-align: justify;
@@ -13,4 +13,13 @@ img {
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+}
+
+.bab-Article-signature {
+    text-align: right;
+}
+
+.bab-Article-signature img {
+    display: inline-block;
+    margin: 0;
 }

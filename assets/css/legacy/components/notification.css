@@ -1,0 +1,37 @@
+.bab-Notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: .5em;
+    box-shadow: 0 0 10px 0 #585858;
+}
+
+.bab-Notification--success {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.bab-Notification--info {
+    background-color: #a4c3cb;
+    color: #fff;
+}
+
+.bab-Notification--error {
+    background-color: #ca3e3e;
+    color: #fff;
+}
+
+.bab-Notification-close {
+    border-width: 0;
+    background-color: transparent;
+    position: absolute;
+    top: .5em;
+    right: .5em;
+    color: #000;
+}
+
+.bab-Notification-content {
+    text-align: center;
+}

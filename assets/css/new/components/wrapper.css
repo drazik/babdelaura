@@ -1,0 +1,10 @@
+.bab-Wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (--medium-viewport) {
+    .bab-Wrapper {
+        width: 90%;
+    }
+}

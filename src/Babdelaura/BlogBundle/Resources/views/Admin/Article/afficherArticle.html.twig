@@ -23,10 +23,17 @@
                     Le {{ article.datePublication|date("d/m/Y à H:i") }} -
                     <a href="#commentaires">{{nbCommentaires}} {% if nbCommentaires <= 1 %}commentaire{% else %}commentaires{% endif %} {% if nbCommentairesNonValides > 0 %} (dont {{nbCommentairesNonValides}} à valider){% endif %}</a>
                     <ul class="bab-Article-categories">
-                        {% for categorie in article.categories %}
-                            <li class="bab-Article-category"><a href="#">{{categorie.nom}}{% if not loop.last %},{% endif %}</a></li>
-                        {% endfor %}
+                            <li class="bab-Article-category"><a href="#">{{article.categorie.nom}}</a></li>
                     </ul>
+                    
+                    {% if article.tags|length > 0 %}
+                        Tags :
+                        <ul class="bab-Article-categories">    
+                            {% for tag in article.tags %}
+                                <li class="bab-Article-category">{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </aside>
             </header>
             <div class="bab-Article-content">
@@ -61,9 +68,12 @@
                             {{ commentaire.auteur }}
                         {% endif %}
                         <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
+                        
+                        <a href="{{path('babdelaurablog_admin_supprimerCommentaire', {'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-trash-o"></i> Supprimer</a>
                         {% if commentaire.valide == false %}
                             <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>
                         {% endif %}
+
                     </header>
                     <div class="bab-Comment-content">
                         {{ commentaire.contenu }}

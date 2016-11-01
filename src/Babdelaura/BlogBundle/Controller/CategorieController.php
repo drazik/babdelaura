@@ -48,9 +48,7 @@ class CategorieController extends Controller
 
 
 
-        $listeAllCategories = $repository->findAll();
-
-        $listeCategories = $this->listerEnfants(null, 0, $listeAllCategories);
+        $listeCategories = $repository->findBy(array(),array('position' => 'ASC'));
 
         $session = $this->get('session');
         $session->set('url', $this->generateUrl('babdelaurablog_admin_listerCategories'));
@@ -60,25 +58,17 @@ class CategorieController extends Controller
         ));
     }
 
-    private function listerEnfants($parent, $niveau, $listeCategories) {
-        $result = array();
-        foreach ($listeCategories as $categorie) {
-           if ($parent == $categorie->getParent()) {
-              $result[] = array(
-                 'categorie' => $categorie,
-                 'niveau' => $niveau,
-                 'enfants' => $this->listerEnfants($categorie, $niveau + 1, $listeCategories)
-              );
-           }
-        }
-        return $result;
-    }
-
     public function supprimerCategorieAction(Request $request, $slug)
     {
 
         $em = $this->getDoctrine()->getManager();
         $categorie = $em->getRepository('BabdelauraBlogBundle:Categorie')->findOneBySlug($slug);
+
+        if (!$categorie->getArticles()->isEmpty()) {
+            $this->get('session')->getFlashBag()
+                ->add('error', 'Impossible de supprimer : la catégorie est liée à des articles');
+            return $this->redirect($this->generateUrl('babdelaurablog_admin_listerCategories', array('numPage' => 1)));
+        }
 
         // On crée un formulaire vide, qui ne contiendra que le champ CSRF
         // Cela permet de protéger la suppression de categorie contre cette faille
@@ -94,7 +84,7 @@ class CategorieController extends Controller
             $em->flush();
 
             // On définit un message flash
-            $this->get('session')->getFlashBag()->add('info', 'Catégorie bien supprimée');
+            $this->get('session')->getFlashBag()->add('info', 'La catégorie a bien été supprimée');
 
 
             return $this->redirect($this->generateUrl('babdelaurablog_admin_listerCategories', array('numPage' => 1)));

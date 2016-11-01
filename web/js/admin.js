@@ -72,6 +72,10 @@
 
 	var _imagePicker2 = _interopRequireDefault(_imagePicker);
 
+	var _autocomplete = __webpack_require__(38);
+
+	var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -102,6 +106,11 @@
 	var imagePickerContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-image-picker')));
 	imagePickerContainers.forEach(function (container) {
 	  return new _imagePicker2.default(container);
+	});
+
+	var autocompleteContainers = [].concat(_toConsumableArray(document.querySelectorAll('.js-autocomplete')));
+	autocompleteContainers.forEach(function (container) {
+	  return new _autocomplete2.default(container);
 	});
 
 /***/ },
@@ -1046,7 +1055,7 @@
 	 */
 	var XHRForm = function () {
 	    function XHRForm(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, XHRForm);
 
@@ -1089,9 +1098,9 @@
 
 	            var data = new FormData(this.container);
 	            var config = {};
-	            var _options = this.options;
-	            var onSuccess = _options.onSuccess;
-	            var onError = _options.onError;
+	            var _options = this.options,
+	                onSuccess = _options.onSuccess,
+	                onError = _options.onError;
 
 
 	            this.submitButton.disabled = true;
@@ -1181,7 +1190,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var bind = __webpack_require__(11);
 
@@ -1797,7 +1806,6 @@
 	'use strict';
 
 	// shim for using process in browser
-
 	var process = module.exports = {};
 
 	// cached from whatever global is present so that test runners that stub it
@@ -1808,22 +1816,79 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout() {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
 	    try {
-	        cachedSetTimeout = setTimeout;
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
 	    } catch (e) {
-	        cachedSetTimeout = function cachedSetTimeout() {
-	            throw new Error('setTimeout is not defined');
-	        };
+	        cachedSetTimeout = defaultSetTimout;
 	    }
 	    try {
-	        cachedClearTimeout = clearTimeout;
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
 	    } catch (e) {
-	        cachedClearTimeout = function cachedClearTimeout() {
-	            throw new Error('clearTimeout is not defined');
-	        };
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
 	})();
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch (e) {
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch (e) {
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e) {
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e) {
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -1848,7 +1913,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = cachedSetTimeout.call(null, cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -1865,7 +1930,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    cachedClearTimeout.call(null, timeout);
+	    runClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -1877,7 +1942,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout.call(null, drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 
@@ -2560,7 +2625,7 @@
 
 	var ImagesList = function () {
 	    function ImagesList(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, ImagesList);
 
@@ -2632,7 +2697,7 @@
 	    }, {
 	        key: 'getImages',
 	        value: function getImages(page) {
-	            return _axios2.default.get(this.url + ('?page=' + page)).then(function (response) {
+	            return _axios2.default.post(this.url + ('?page=' + page)).then(function (response) {
 	                return response.data;
 	            }).catch(function (error) {
 	                throw new Error(error);
@@ -2643,13 +2708,13 @@
 	        value: function changeCurrentPage() {
 	            var _this3 = this;
 
-	            var page = arguments.length <= 0 || arguments[0] === undefined ? this.currentPage : arguments[0];
+	            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.currentPage;
 
 	            this.loading().then(function () {
 	                return _this3.getImages(page);
 	            }).then(function (data) {
-	                var images = data.images;
-	                var pagination = data.pagination;
+	                var images = data.images,
+	                    pagination = data.pagination;
 
 
 	                _this3.updateList(images);
@@ -2763,7 +2828,7 @@
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	/*!
 	 * mustache.js - Logic-less {{mustache}} templates with JavaScript
@@ -3406,8 +3471,8 @@
 	    _createClass(PreviewModalImagePicker, [{
 	        key: 'onItemSelect',
 	        value: function onItemSelect(_ref) {
-	            var id = _ref.id;
-	            var src = _ref.src;
+	            var id = _ref.id,
+	                src = _ref.src;
 
 	            this.setPreview(src);
 	            this.setInputValue(id);
@@ -3457,7 +3522,7 @@
 
 	var ModalImagePicker = function () {
 	    function ModalImagePicker(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, ModalImagePicker);
 
@@ -3476,8 +3541,8 @@
 	    _createClass(ModalImagePicker, [{
 	        key: 'onItemSelect',
 	        value: function onItemSelect(_ref) {
-	            var id = _ref.id;
-	            var src = _ref.src;
+	            var id = _ref.id,
+	                src = _ref.src;
 
 	            this.options.onItemSelect({ id: id, src: src });
 
@@ -3528,7 +3593,7 @@
 
 	var ImagePicker = function () {
 	    function ImagePicker(container) {
-	        var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 	        _classCallCheck(this, ImagePicker);
 
@@ -3553,9 +3618,9 @@
 	    }, {
 	        key: 'handleItemSelect',
 	        value: function handleItemSelect(event) {
-	            var _event$target = event.target;
-	            var id = _event$target.id;
-	            var src = _event$target.src;
+	            var _event$target = event.target,
+	                id = _event$target.id,
+	                src = _event$target.src;
 
 
 	            if (this.CKEditorFuncNum) {
@@ -3612,8 +3677,8 @@
 	    var browseUrl = this.container.getAttribute('data-browse-url');
 	    var cssUrl = this.container.getAttribute('data-css-url');
 	    var textarea = this.container.querySelector('textarea');
-	    var _window = window;
-	    var CKEDITOR = _window.CKEDITOR;
+	    var _window = window,
+	        CKEDITOR = _window.CKEDITOR;
 
 
 	    CKEDITOR.config.entities = false;
@@ -3626,6 +3691,776 @@
 	};
 
 	exports.default = WYSIWYGEditor;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _axios = __webpack_require__(8);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _keycodes = __webpack_require__(39);
+
+	var _lodash = __webpack_require__(40);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _domDelegate = __webpack_require__(4);
+
+	var _domDelegate2 = _interopRequireDefault(_domDelegate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Autocomplete = function () {
+	    function Autocomplete(container) {
+	        var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	        _classCallCheck(this, Autocomplete);
+
+	        this.options = _extends({
+	            minLengthToTrigger: 2
+	        }, options);
+
+	        this.container = container;
+	        this.input = container.querySelector('.js-autocomplete-input');
+	        this.realInput = container.querySelector('.js-autocomplete-real-input');
+
+	        var initialTags = this.realInput.value === '' ? undefined : this.realInput.value.split(',');
+	        var selectedChoicesContainer = container.querySelector('.js-autocomplete-selected-choices');
+	        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, initialTags, {
+	            onItemDelete: this.onSelectedChoiceDelete.bind(this)
+	        });
+
+	        var sourceUrl = container.getAttribute('data-source-url');
+	        var availableChoicesContainer = container.querySelector('.js-autocomplete-available-choices');
+	        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl, {
+	            onItemSelect: this.onAvailableChoiceSelect.bind(this),
+	            filterItems: this.filterAvailableChoices.bind(this)
+	        });
+	        this.availableChoicesList.show();
+
+	        this.initEvents();
+	    }
+
+	    _createClass(Autocomplete, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this = this;
+
+	            this.input.addEventListener('keydown', function (event) {
+	                switch (event.keyCode) {
+	                    case _keycodes.ENTER:
+	                        event.preventDefault();
+
+	                        _this.addItem(_this.input.value);
+	                        _this.resetInput();
+
+	                        return;
+
+	                    case _keycodes.BACKSPACE:
+	                        if (_this.input.value.length > 0) {
+	                            return;
+	                        }
+
+	                        event.preventDefault();
+
+	                        var lastSelectedChoice = _this.selectedChoicesList.getLastItem();
+	                        _this.selectedChoicesList.deleteItem(lastSelectedChoice);
+
+	                        _this.input.value = lastSelectedChoice;
+
+	                        return;
+	                }
+	            });
+
+	            this.input.addEventListener('keyup', (0, _lodash2.default)(function (event) {
+	                var value = event.target.value;
+
+
+	                if (value.length >= _this.options.minLengthToTrigger) {
+	                    _this.availableChoicesList.update(value);
+	                } else {
+	                    _this.availableChoicesList.reset();
+	                }
+	            }, 100));
+	        }
+	    }, {
+	        key: 'addItem',
+	        value: function addItem(item) {
+	            this.selectedChoicesList.addItem(item);
+	            this.updateRealInputValue();
+	        }
+	    }, {
+	        key: 'resetInput',
+	        value: function resetInput() {
+	            this.input.value = '';
+	        }
+	    }, {
+	        key: 'onAvailableChoiceSelect',
+	        value: function onAvailableChoiceSelect(item) {
+	            this.addItem(item);
+	            this.resetInput();
+	            this.input.focus();
+	        }
+	    }, {
+	        key: 'filterAvailableChoices',
+	        value: function filterAvailableChoices(items) {
+	            var selectedChoices = this.selectedChoicesList.getItems();
+	            var filteredItems = items.filter(function (item) {
+	                return selectedChoices.indexOf(item) === -1;
+	            });
+
+	            return filteredItems;
+	        }
+	    }, {
+	        key: 'onSelectedChoiceDelete',
+	        value: function onSelectedChoiceDelete() {
+	            this.input.focus();
+	            this.updateRealInputValue();
+	        }
+	    }, {
+	        key: 'updateRealInputValue',
+	        value: function updateRealInputValue() {
+	            var items = this.selectedChoicesList.getItems();
+	            var value = items.join(',');
+
+	            this.realInput.value = value;
+	        }
+	    }]);
+
+	    return Autocomplete;
+	}();
+
+	var SelectedChoicesList = function () {
+	    function SelectedChoicesList(container) {
+	        var initialItems = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+	        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+	        _classCallCheck(this, SelectedChoicesList);
+
+	        this.options = _extends({
+	            onItemDelete: function onItemDelete() {}
+	        }, options);
+
+	        this.container = container;
+
+	        this.items = initialItems;
+
+	        this.updateDOM();
+	        this.initEvents();
+	    }
+
+	    _createClass(SelectedChoicesList, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this2 = this;
+
+	            var delegation = (0, _domDelegate2.default)(this.container);
+
+	            delegation.on('click', 'button', function (event) {
+	                var item = event.target.parentNode.textContent.trim();
+
+	                _this2.deleteItem(item);
+	            });
+	        }
+	    }, {
+	        key: 'addItem',
+	        value: function addItem(item) {
+	            var sanitizedItem = this.sanitizeItem(item);
+
+	            if (this.items.indexOf(sanitizedItem) >= 0) {
+	                return;
+	            }
+
+	            this.items.push(sanitizedItem);
+	            this.updateDOM();
+	        }
+	    }, {
+	        key: 'sanitizeItem',
+	        value: function sanitizeItem(item) {
+	            var sanitizedItem = item.trim().toLowerCase();
+
+	            return sanitizedItem;
+	        }
+	    }, {
+	        key: 'updateDOM',
+	        value: function updateDOM() {
+	            var _this3 = this;
+
+	            var elements = this.items.map(function (item) {
+	                return _this3.createItemDOMElement(item);
+	            });
+	            var fragment = document.createDocumentFragment();
+
+	            elements.forEach(function (element) {
+	                return fragment.appendChild(element);
+	            });
+
+	            this.container.innerHTML = '';
+	            this.container.appendChild(fragment);
+	        }
+	    }, {
+	        key: 'createItemDOMElement',
+	        value: function createItemDOMElement(item) {
+	            var template = '\n<span class="bab-Autocomplete-selectedChoice">\n    ' + item + '\n    <button class="bab-Autocomplete-deleteChoice" type="button"></button>\n</span>\n';
+	            var element = document.createElement('div');
+	            element.innerHTML = template;
+
+	            var actualElement = element.querySelector(':first-child');
+
+	            return actualElement;
+	        }
+	    }, {
+	        key: 'getItems',
+	        value: function getItems() {
+	            return this.items;
+	        }
+	    }, {
+	        key: 'deleteItem',
+	        value: function deleteItem(item) {
+	            this.items = this.items.filter(function (i) {
+	                return i !== item;
+	            });
+
+	            this.updateDOM();
+
+	            this.options.onItemDelete();
+	        }
+	    }, {
+	        key: 'getLastItem',
+	        value: function getLastItem() {
+	            var lastItemIndex = this.items.length - 1;
+	            var lastItem = lastItemIndex > -1 ? this.items[lastItemIndex] : null;
+
+	            return lastItem;
+	        }
+	    }]);
+
+	    return SelectedChoicesList;
+	}();
+
+	var AvailableChoicesList = function () {
+	    function AvailableChoicesList(container, sourceUrl) {
+	        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+	        _classCallCheck(this, AvailableChoicesList);
+
+	        this.options = _extends({
+	            containerVisibleClass: 'bab-Autocomplete-choices--visible',
+	            onItemSelect: function onItemSelect() {},
+	            filterItems: function filterItems(items) {
+	                return items;
+	            }
+	        }, options);
+
+	        this.container = container;
+	        this.sourceUrl = sourceUrl;
+	        this.request = _axios2.default.create({
+	            headers: {
+	                'X-Requested-With': 'XMLHttpRequest'
+	            }
+	        });
+
+	        this.containerDelegate = (0, _domDelegate2.default)(container);
+
+	        this.initEvents();
+	    }
+
+	    _createClass(AvailableChoicesList, [{
+	        key: 'initEvents',
+	        value: function initEvents() {
+	            var _this4 = this;
+
+	            this.containerDelegate.on('click', 'button', function (event) {
+	                var item = event.target.textContent.trim().toLowerCase();
+
+	                _this4.onItemSelect(item);
+	            });
+	        }
+	    }, {
+	        key: 'onItemSelect',
+	        value: function onItemSelect(item) {
+	            this.options.onItemSelect(item);
+	            this.reset();
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update(input) {
+	            var _this5 = this;
+
+	            this.request.get(this.sourceUrl, {
+	                params: { input: input }
+	            }).then(function (response) {
+	                return response.data;
+	            }).then(function (items) {
+	                return _this5.filterItems(items);
+	            }).then(function (filteredItems) {
+	                return _this5.updateDOM(filteredItems);
+	            });
+	        }
+	    }, {
+	        key: 'updateDOM',
+	        value: function updateDOM(items) {
+	            var _this6 = this;
+
+	            var fragment = document.createDocumentFragment();
+
+	            items.forEach(function (item) {
+	                var element = _this6.createItemDOMElement(item);
+	                fragment.appendChild(element);
+	            });
+
+	            this.reset();
+	            this.container.appendChild(fragment);
+	        }
+	    }, {
+	        key: 'createItemDOMElement',
+	        value: function createItemDOMElement(item) {
+	            var template = '\n<li class="bab-Autocomplete-choiceItem">\n    <button class="bab-Autocomplete-choice" type="button">\n        ' + item + '\n    </button>\n</li>\n';
+	            var element = document.createElement('ul');
+	            element.innerHTML = template;
+
+	            var actualElement = element.querySelector(':first-child');
+
+	            return actualElement;
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            this.container.classList.add(this.options.containerVisibleClass);
+	        }
+	    }, {
+	        key: 'hide',
+	        value: function hide() {
+	            this.container.classList.remove(this.options.containerVisibleClass);
+	        }
+	    }, {
+	        key: 'reset',
+	        value: function reset() {
+	            this.container.innerHTML = '';
+	        }
+	    }, {
+	        key: 'filterItems',
+	        value: function filterItems(items) {
+	            return this.options.filterItems(items);
+	        }
+	    }]);
+
+	    return AvailableChoicesList;
+	}();
+
+	exports.default = Autocomplete;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ENTER = 13;
+	var BACKSPACE = 8;
+
+	exports.BACKSPACE = BACKSPACE;
+	exports.ENTER = ENTER;
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	/**
+	 * lodash (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modularize exports="npm" -o ./`
+	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Released under MIT license <https://lodash.com/license>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 */
+
+	/** Used as the `TypeError` message for "Functions" methods. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+
+	/** Used as references for various `Number` constants. */
+	var NAN = 0 / 0;
+
+	/** `Object#toString` result references. */
+	var symbolTag = '[object Symbol]';
+
+	/** Used to match leading and trailing whitespace. */
+	var reTrim = /^\s+|\s+$/g;
+
+	/** Used to detect bad signed hexadecimal string values. */
+	var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+	/** Used to detect binary string values. */
+	var reIsBinary = /^0b[01]+$/i;
+
+	/** Used to detect octal string values. */
+	var reIsOctal = /^0o[0-7]+$/i;
+
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseInt = parseInt;
+
+	/** Detect free variable `global` from Node.js. */
+	var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global && global.Object === Object && global;
+
+	/** Detect free variable `self`. */
+	var freeSelf = (typeof self === 'undefined' ? 'undefined' : _typeof(self)) == 'object' && self && self.Object === Object && self;
+
+	/** Used as a reference to the global object. */
+	var root = freeGlobal || freeSelf || Function('return this')();
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max,
+	    nativeMin = Math.min;
+
+	/**
+	 * Gets the timestamp of the number of milliseconds that have elapsed since
+	 * the Unix epoch (1 January 1970 00:00:00 UTC).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 2.4.0
+	 * @category Date
+	 * @returns {number} Returns the timestamp.
+	 * @example
+	 *
+	 * _.defer(function(stamp) {
+	 *   console.log(_.now() - stamp);
+	 * }, _.now());
+	 * // => Logs the number of milliseconds it took for the deferred invocation.
+	 */
+	var now = function now() {
+	  return root.Date.now();
+	};
+
+	/**
+	 * Creates a debounced function that delays invoking `func` until after `wait`
+	 * milliseconds have elapsed since the last time the debounced function was
+	 * invoked. The debounced function comes with a `cancel` method to cancel
+	 * delayed `func` invocations and a `flush` method to immediately invoke them.
+	 * Provide `options` to indicate whether `func` should be invoked on the
+	 * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+	 * with the last arguments provided to the debounced function. Subsequent
+	 * calls to the debounced function return the result of the last `func`
+	 * invocation.
+	 *
+	 * **Note:** If `leading` and `trailing` options are `true`, `func` is
+	 * invoked on the trailing edge of the timeout only if the debounced function
+	 * is invoked more than once during the `wait` timeout.
+	 *
+	 * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+	 * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+	 *
+	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+	 * for details over the differences between `_.debounce` and `_.throttle`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Function
+	 * @param {Function} func The function to debounce.
+	 * @param {number} [wait=0] The number of milliseconds to delay.
+	 * @param {Object} [options={}] The options object.
+	 * @param {boolean} [options.leading=false]
+	 *  Specify invoking on the leading edge of the timeout.
+	 * @param {number} [options.maxWait]
+	 *  The maximum time `func` is allowed to be delayed before it's invoked.
+	 * @param {boolean} [options.trailing=true]
+	 *  Specify invoking on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new debounced function.
+	 * @example
+	 *
+	 * // Avoid costly calculations while the window size is in flux.
+	 * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+	 *
+	 * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+	 * jQuery(element).on('click', _.debounce(sendMail, 300, {
+	 *   'leading': true,
+	 *   'trailing': false
+	 * }));
+	 *
+	 * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+	 * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+	 * var source = new EventSource('/stream');
+	 * jQuery(source).on('message', debounced);
+	 *
+	 * // Cancel the trailing debounced invocation.
+	 * jQuery(window).on('popstate', debounced.cancel);
+	 */
+	function debounce(func, wait, options) {
+	  var lastArgs,
+	      lastThis,
+	      maxWait,
+	      result,
+	      timerId,
+	      lastCallTime,
+	      lastInvokeTime = 0,
+	      leading = false,
+	      maxing = false,
+	      trailing = true;
+
+	  if (typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  wait = toNumber(wait) || 0;
+	  if (isObject(options)) {
+	    leading = !!options.leading;
+	    maxing = 'maxWait' in options;
+	    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+	    trailing = 'trailing' in options ? !!options.trailing : trailing;
+	  }
+
+	  function invokeFunc(time) {
+	    var args = lastArgs,
+	        thisArg = lastThis;
+
+	    lastArgs = lastThis = undefined;
+	    lastInvokeTime = time;
+	    result = func.apply(thisArg, args);
+	    return result;
+	  }
+
+	  function leadingEdge(time) {
+	    // Reset any `maxWait` timer.
+	    lastInvokeTime = time;
+	    // Start the timer for the trailing edge.
+	    timerId = setTimeout(timerExpired, wait);
+	    // Invoke the leading edge.
+	    return leading ? invokeFunc(time) : result;
+	  }
+
+	  function remainingWait(time) {
+	    var timeSinceLastCall = time - lastCallTime,
+	        timeSinceLastInvoke = time - lastInvokeTime,
+	        result = wait - timeSinceLastCall;
+
+	    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+	  }
+
+	  function shouldInvoke(time) {
+	    var timeSinceLastCall = time - lastCallTime,
+	        timeSinceLastInvoke = time - lastInvokeTime;
+
+	    // Either this is the first call, activity has stopped and we're at the
+	    // trailing edge, the system time has gone backwards and we're treating
+	    // it as the trailing edge, or we've hit the `maxWait` limit.
+	    return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
+	  }
+
+	  function timerExpired() {
+	    var time = now();
+	    if (shouldInvoke(time)) {
+	      return trailingEdge(time);
+	    }
+	    // Restart the timer.
+	    timerId = setTimeout(timerExpired, remainingWait(time));
+	  }
+
+	  function trailingEdge(time) {
+	    timerId = undefined;
+
+	    // Only invoke if we have `lastArgs` which means `func` has been
+	    // debounced at least once.
+	    if (trailing && lastArgs) {
+	      return invokeFunc(time);
+	    }
+	    lastArgs = lastThis = undefined;
+	    return result;
+	  }
+
+	  function cancel() {
+	    if (timerId !== undefined) {
+	      clearTimeout(timerId);
+	    }
+	    lastInvokeTime = 0;
+	    lastArgs = lastCallTime = lastThis = timerId = undefined;
+	  }
+
+	  function flush() {
+	    return timerId === undefined ? result : trailingEdge(now());
+	  }
+
+	  function debounced() {
+	    var time = now(),
+	        isInvoking = shouldInvoke(time);
+
+	    lastArgs = arguments;
+	    lastThis = this;
+	    lastCallTime = time;
+
+	    if (isInvoking) {
+	      if (timerId === undefined) {
+	        return leadingEdge(lastCallTime);
+	      }
+	      if (maxing) {
+	        // Handle invocations in a tight loop.
+	        timerId = setTimeout(timerExpired, wait);
+	        return invokeFunc(lastCallTime);
+	      }
+	    }
+	    if (timerId === undefined) {
+	      timerId = setTimeout(timerExpired, wait);
+	    }
+	    return result;
+	  }
+	  debounced.cancel = cancel;
+	  debounced.flush = flush;
+	  return debounced;
+	}
+
+	/**
+	 * Checks if `value` is the
+	 * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+	  return !!value && (type == 'object' || type == 'function');
+	}
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return !!value && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object';
+	}
+
+	/**
+	 * Checks if `value` is classified as a `Symbol` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+	 * @example
+	 *
+	 * _.isSymbol(Symbol.iterator);
+	 * // => true
+	 *
+	 * _.isSymbol('abc');
+	 * // => false
+	 */
+	function isSymbol(value) {
+	  return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+	}
+
+	/**
+	 * Converts `value` to a number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {number} Returns the number.
+	 * @example
+	 *
+	 * _.toNumber(3.2);
+	 * // => 3.2
+	 *
+	 * _.toNumber(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toNumber(Infinity);
+	 * // => Infinity
+	 *
+	 * _.toNumber('3.2');
+	 * // => 3.2
+	 */
+	function toNumber(value) {
+	  if (typeof value == 'number') {
+	    return value;
+	  }
+	  if (isSymbol(value)) {
+	    return NAN;
+	  }
+	  if (isObject(value)) {
+	    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+	    value = isObject(other) ? other + '' : other;
+	  }
+	  if (typeof value != 'string') {
+	    return value === 0 ? value : +value;
+	  }
+	  value = value.replace(reTrim, '');
+	  var isBinary = reIsBinary.test(value);
+	  return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+	}
+
+	module.exports = debounce;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }
 /******/ ]);

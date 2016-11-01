@@ -11,7 +11,7 @@
 
         <div
             class="form-group js-wysiwyg-editor"
-            data-browse-url="{{ path('babdelaurablog_admin_gallerieImages') }}"
+            data-browse-url="{{ path('babdelaurablog_admin_galerieImages') }}"
             data-css-url="{{ asset('css/contents.css') }}">
             {{ form_label(form.contenu, "Contenu de l'article") }}
             {{ form_errors(form.contenu)}}
@@ -35,9 +35,16 @@
             </div>
 
             <div class="form-group bab-Grid-cell bab-Grid-cell--1-2">
-                {{ form_label(form.categories, "Catégories") }}
-                {{ form_errors(form.categories)}}
-                {{ form_widget(form.categories) }}
+                {{ form_label(form.categorie, "Catégorie") }}
+                {{ form_errors(form.categorie)}}
+                {{ form_widget(form.categorie) }}
+                <hr />
+                <div class="bab-Autocomplete js-autocomplete" data-source-url="{{ path('babdelaurablog_admin_listerTagsAutocomplete') }}">
+                    <div class="bab-Autocomplete-selectedChoices js-autocomplete-selected-choices"></div>
+                    <input class="bab-Autocomplete-input js-autocomplete-input" type="text" placeholder="Ajouter un tag..." />
+                    <ul class="bab-Autocomplete-choices js-autocomplete-available-choices"></ul>
+                    {{ form_widget(form.tags) }}
+                </div>
             </div>
         </div>
 

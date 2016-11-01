@@ -1,6 +1,6 @@
 {% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
-{% block mainContent %}
+{% block content %}
 
 {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="bab-Notification bab-Notification--success">
@@ -8,32 +8,51 @@
         </div>
     {% endfor %}
 
-	<h1>Contact</h1>
+    <section class="bab-Section">
+    	<h2 class="bab-Section-title align-center">Contact</h2>
 
 
-    {{ form_start(form) }}
-        <div class="form-group">
-            {{ form_label(form.nom, "Nom") }}
-            {{ form_errors(form.nom)}}
-            {{ form_widget(form.nom) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.email, "Email") }}
-            {{ form_errors(form.email)}}
-            {{ form_widget(form.email) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(form.contenu, "Contenu") }}
-            {{ form_errors(form.contenu)}}
-            {{ form_widget(form.contenu) }}
-        </div>
-        <div class="form-group">
-            {{ form_errors(form.recaptcha)}}
-            {{ form_widget(form.recaptcha) }}
-        </div>
+        {{ form_start(form, {'attr': {'class': 'ContactForm'}}) }}
+            <fieldset class="bab-Grid bab-Grid--smallGutters">
+                <div class="bab-Grid-cell bab-Grid-cell--1-1">
+                    {{ form_label(form.nom, "Nom") }}
+                    {{ form_errors(form.nom)}}
+                    {{ form_widget(form.nom) }}
+                </div>
+            </fieldset>
+            <fieldset class="bab-Grid bab-Grid--smallGutters">
+                <div class="bab-Grid-cell bab-Grid-cell--1-1">
+                    {{ form_label(form.email, "Email") }}
+                    {{ form_errors(form.email)}}
+                    {{ form_widget(form.email) }}
+                </div>
+            </fieldset>
+            <fieldset class="bab-Grid bab-Grid--smallGutters">
+                <div class="bab-Grid-cell bab-Grid-cell--1-1">
+                    {{ form_label(form.contenu, "Contenu") }}
+                    {{ form_errors(form.contenu)}}
+                    {{ form_widget(form.contenu) }}
+                </div>
+            </fieldset>
+            <fieldset class="bab-Grid bab-Grid--smallGutters">
+                <div class="bab-Grid-cell bab-Grid-cell--1-1">
+            
+                    {{ form_errors(form.recaptcha)}}
+                    {{ form_widget(form.recaptcha) }}
+                </div>
+            </fieldset>
+
+            <div class="bab-Grid bab-Grid--smallGutters">
+                <div class="bab-Grid-cell bab-Grid-cell--1-1">
+                    <button class="bab-Button" type="submit">
+                        Envoyer
+                    </button>
+                </div>
+            </div>
+
+
         {{ form_widget(form._token) }}
-
-        <button class="bab-Button" id="submit-btn" type="submit">Envoyer</button>
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+    </section>
 
 {% endblock %}

@@ -1,0 +1,32 @@
+{% set articleUrl = path('babdelaurablog_article', {'slug': article.slug, 'annee': article.datePublication|date("Y"), 'mois': article.datePublication|date("m"), 'jour': article.datePublication|date("d")}) %}
+
+{% set titleElement = titleElement|default('h2') %}
+
+{% set small = small|default(false) %}
+
+<article class="bab-ArticlePreview {% if small %}bab-ArticlePreview--small{% endif %}">
+    <header class="bab-ArticlePreview-header" style="background-image: url('{{ asset(article.image.webPath) }}');">
+        <a class="bab-ArticlePreview-readMore" href="{{ articleUrl }}" tabindex="-1">
+            <span class="bab-Button bab-Button--large">
+                Lire la suite
+            </span>
+        </a>
+    </header>
+    <{{ titleElement }} class="bab-ArticlePreview-title">
+        <a href="{{ articleUrl }}">
+            {{ article.titre }}
+        </a>
+    </{{ titleElement }}>
+    <aside class="bab-ArticlePreview-infos">
+        <a class="bab-ArticlePreview-info" href="{{ path('babdelaurablog_categorie', {'slug' : article.categorie.slug}) }}" title="Voir les articles de la catégorie {{ article.categorie.nom }}">
+            {{ article.categorie.nom }}
+        </a>
+        <time class="bab-ArticlePreview-info" datetime="{{ article.datePublication|date('Y-m-d') }}" pubdate>
+            {{ article.datePublication|localizeddate('medium', 'none') }}
+        </time>
+        <a class="bab-ArticlePreview-info" href="{{ articleUrl }}#commentaires" title="Lire les commentaires à propos de {{ article.titre }}">
+            {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
+            {{ article.commentaires|length }}
+        </a>
+    </aside>
+</article>

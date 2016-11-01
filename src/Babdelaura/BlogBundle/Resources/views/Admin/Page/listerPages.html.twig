@@ -11,6 +11,7 @@
                 <th class="text-centered">Publication</th>
                 <th class="text-centered">Menu</th>
                 <th class="text-centered">Footer</th>
+                <th class="text-centered">Externe</th>
                 <th></th>
             </tr>
         </thead>
@@ -43,14 +44,27 @@
                         <i class="fa fa-times"></i>
                     {% endif %}
                 </td>
+                <td class="text-centered">
+                    {% if page.isExterne %}
+                        <i class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-times"></i>
+                    {% endif %}
+                </td>
                 <td>
                     <ul class="actions">
-                        <li class="action">
-                            <a href="{{ path('babdelaurablog_admin_afficherPage', {'slug' : page.slug}) }}"><i class="fa fa-eye"></i></a>
-                        </li>
-                        <li class="action">
-                            <a href="{{ path('babdelaurablog_admin_modifierPage', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i></a>
-                        </li>
+                        {% if page.isExterne %}
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_modifierPageExterne', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i></a>
+                            </li>
+                        {% else %}
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_afficherPage', {'slug' : page.slug}) }}"><i class="fa fa-eye"></i></a>
+                            </li>
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_modifierPageInterne', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i></a>
+                            </li>
+                        {% endif %}
                         <li class="action">
                             <a href="{{ path('babdelaurablog_admin_supprimerPage', {'slug' : page.slug}) }}"><i class="fa fa-trash-o"></i></a>
                         </li>

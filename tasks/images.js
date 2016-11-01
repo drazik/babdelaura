@@ -12,7 +12,7 @@ const compress = imagemin([
 const dest = 'web/images'
 
 function images() {
-    return gulp.src('assets/images/**/*.{jpg,png}')
+    return gulp.src('assets/images/**/*.{jpg,png,svg}')
         .pipe(newer(dest))
         .pipe(compress)
         .pipe(gulp.dest(dest))

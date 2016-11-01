@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Page
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Page implements DescriptionEntite
@@ -43,8 +43,7 @@ class Page implements DescriptionEntite
     /**
      * @var string
      *
-     * @Assert\NotBlank(message="Le contenu de l'article ne peut pas être vide")
-     * @ORM\Column(name="contenu", type="text")
+     * @ORM\Column(name="contenu", type="text", nullable=true)
      */
     private $contenu;
 
@@ -84,11 +83,48 @@ class Page implements DescriptionEntite
      */
     private $inFooter;
 
+    /**
+     * @var integer
+     * @Gedmo\SortablePosition()
+     * @ORM\Column(type="integer", options={"default" : -1})
+     */
+    public $position;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isExterne", type="boolean")
+     */
+    private $isExterne;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lienExterne", type="string", length=255, nullable=true)
+     */
+    private $lienExterne;
+
+     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="targetBlank", type="boolean")
+     */
+    private $targetBlank;
 
     public function __construct(){
         $this->datePublication = new \DateTime;
         $this->publication = false;
+        $this->isExterne = false;
+        $this->mettreEnAvant = false;
+        $this->targetBlank = false;
     }
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="mettreEnAvant", type="boolean")
+     */
+    public $mettreEnAvant;
 
     /**
      * Get id
@@ -309,5 +345,125 @@ class Page implements DescriptionEntite
     public function getInFooter()
     {
         return $this->inFooter;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return Page
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set isExterne
+     *
+     * @param boolean $isExterne
+     *
+     * @return Page
+     */
+    public function setIsExterne($isExterne)
+    {
+        $this->isExterne = $isExterne;
+
+        return $this;
+    }
+
+    /**
+     * Get isExterne
+     *
+     * @return boolean
+     */
+    public function getIsExterne()
+    {
+        return $this->isExterne;
+    }
+
+    /**
+     * Set lienExterne
+     *
+     * @param string $lienExterne
+     *
+     * @return Page
+     */
+    public function setLienExterne($lienExterne)
+    {
+        $this->lienExterne = $lienExterne;
+
+        return $this;
+    }
+
+    /**
+     * Get lienExterne
+     *
+     * @return string
+     */
+    public function getLienExterne()
+    {
+        return $this->lienExterne;
+    }
+
+    /**
+     * Set mettreEnAvant
+     *
+     * @param boolean $mettreEnAvant
+     *
+     * @return Page
+     */
+    public function setMettreEnAvant($mettreEnAvant)
+    {
+        $this->mettreEnAvant = $mettreEnAvant;
+
+        return $this;
+    }
+
+    /**
+     * Get mettreEnAvant
+     *
+     * @return boolean
+     */
+    public function getMettreEnAvant()
+    {
+        return $this->mettreEnAvant;
+    }
+
+    /**
+     * Set targetBlank
+     *
+     * @param boolean $targetBlank
+     *
+     * @return Page
+     */
+    public function setTargetBlank($targetBlank)
+    {
+        $this->targetBlank = $targetBlank;
+
+        return $this;
+    }
+
+    /**
+     * Get targetBlank
+     *
+     * @return boolean
+     */
+    public function getTargetBlank()
+    {
+        return $this->targetBlank;
     }
 }

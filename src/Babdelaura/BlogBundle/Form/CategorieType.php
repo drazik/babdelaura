@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CategorieType extends AbstractType
@@ -19,11 +20,8 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('visible', CheckboxType::class, array('required' => false))
-            ->add('parent', EntityType::class, array(
-                  'class'    => 'BabdelauraBlogBundle:Categorie',
-                  'choice_label' => 'nom',
-                  'required' => false))
+            ->add('visible', CheckboxType::class, array('required' => false))            
+            ->add('position', IntegerType::class, array('required' => false))
         ;
     }
 

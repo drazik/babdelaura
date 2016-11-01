@@ -12,7 +12,7 @@ framework:
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:      { enable_annotations: true }
+    validation: { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -25,12 +25,15 @@ framework:
         cookie_httponly: false
     fragments:       ~
     http_method_override: true
-    assets: ~
+    assets:
+        version: 'v2'
 
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'form/fields.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -71,6 +74,7 @@ stof_doctrine_extensions:
     orm:
         default:
             sluggable: true
+            sortable: true
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
