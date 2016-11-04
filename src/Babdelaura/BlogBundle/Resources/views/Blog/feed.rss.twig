@@ -8,7 +8,11 @@
        {% for article in listeArticles %}
         <item>
             <title>{{article.titre}}</title>
-            <description><![CDATA[{{article.contenu | raw}}]]></description>
+            <description>
+                
+                <![CDATA[<p><img src="{{ asset(article.image.webPath) }}" alt="{{article.image.alt}}"></p> 
+                {{article.contenu | raw}}]]>
+            </description>
             <pubDate>{{article.datePublication | date("D, d M Y H:i:s O")}}</pubDate>
             <category>
                 <![CDATA[
