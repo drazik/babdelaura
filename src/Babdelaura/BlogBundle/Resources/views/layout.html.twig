@@ -10,7 +10,7 @@
             <meta property="og:locale" content="fr_FR" />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
-            <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ ogImage|default(asset('images/header-bijoux.jpg')) }}" />
+            <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ ogImage|default(asset('images/new/logo.jpg')) }}" />
             <meta property="og:title" content="{{ ogTitle|default('Bric à Brac de Laura') }}" />
             <meta property="og:description" content="{{ metaDescription|default('Blog traitant du nail art et de la création de bijoux en pâte polymère.') }}" />
         {% endblock %}
