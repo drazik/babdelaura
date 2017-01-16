@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import 'classlist-polyfill';
 
 import Search from './new/modules/search'
