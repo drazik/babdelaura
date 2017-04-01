@@ -1098,9 +1098,9 @@
 
 	            var data = new FormData(this.container);
 	            var config = {};
-	            var _options = this.options,
-	                onSuccess = _options.onSuccess,
-	                onError = _options.onError;
+	            var _options = this.options;
+	            var onSuccess = _options.onSuccess;
+	            var onError = _options.onError;
 
 
 	            this.submitButton.disabled = true;
@@ -2713,8 +2713,8 @@
 	            this.loading().then(function () {
 	                return _this3.getImages(page);
 	            }).then(function (data) {
-	                var images = data.images,
-	                    pagination = data.pagination;
+	                var images = data.images;
+	                var pagination = data.pagination;
 
 
 	                _this3.updateList(images);
@@ -3378,7 +3378,7 @@
 	  };
 
 	  mustache.name = 'mustache.js';
-	  mustache.version = '2.3.0';
+	  mustache.version = '2.2.1';
 	  mustache.tags = ['{{', '}}'];
 
 	  // All high-level mustache.* functions use this writer.
@@ -3434,8 +3434,6 @@
 	  mustache.Scanner = Scanner;
 	  mustache.Context = Context;
 	  mustache.Writer = Writer;
-
-	  return mustache;
 	});
 
 /***/ },
@@ -3473,8 +3471,8 @@
 	    _createClass(PreviewModalImagePicker, [{
 	        key: 'onItemSelect',
 	        value: function onItemSelect(_ref) {
-	            var id = _ref.id,
-	                src = _ref.src;
+	            var id = _ref.id;
+	            var src = _ref.src;
 
 	            this.setPreview(src);
 	            this.setInputValue(id);
@@ -3543,8 +3541,8 @@
 	    _createClass(ModalImagePicker, [{
 	        key: 'onItemSelect',
 	        value: function onItemSelect(_ref) {
-	            var id = _ref.id,
-	                src = _ref.src;
+	            var id = _ref.id;
+	            var src = _ref.src;
 
 	            this.options.onItemSelect({ id: id, src: src });
 
@@ -3620,9 +3618,9 @@
 	    }, {
 	        key: 'handleItemSelect',
 	        value: function handleItemSelect(event) {
-	            var _event$target = event.target,
-	                id = _event$target.id,
-	                src = _event$target.src;
+	            var _event$target = event.target;
+	            var id = _event$target.id;
+	            var src = _event$target.src;
 
 
 	            if (this.CKEditorFuncNum) {
@@ -3679,8 +3677,8 @@
 	    var browseUrl = this.container.getAttribute('data-browse-url');
 	    var cssUrl = this.container.getAttribute('data-css-url');
 	    var textarea = this.container.querySelector('textarea');
-	    var _window = window,
-	        CKEDITOR = _window.CKEDITOR;
+	    var _window = window;
+	    var CKEDITOR = _window.CKEDITOR;
 
 
 	    CKEDITOR.config.entities = false;

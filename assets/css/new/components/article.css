@@ -108,4 +108,8 @@
     .bab-Article-content img {
         max-width: 100%;
     }
+
+    .bab-Article-content table {
+        width: 100%;
+    }
 }
