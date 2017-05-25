@@ -28,7 +28,7 @@ class TagController extends Controller
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if($form->isSubmitted() && $form->isValid()) {
                 $em->persist($tag);
                 $em->flush();
 
@@ -71,7 +71,7 @@ class TagController extends Controller
         if ($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
-          if ($form->isValid()) {
+          if ($form->isSubmitted() && $form->isValid()) {
             // On supprime le tag
 
             $em->remove($tag);

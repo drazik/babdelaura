@@ -26,7 +26,7 @@ class CommentaireController extends Controller
 
         $form->handleRequest($request);
 
-        $isValid = $form->isValid();
+        $isValid = $form->isSubmitted() && $form->isValid();
 
         $responseData = [
             'success' => $isValid,
@@ -94,7 +94,7 @@ class CommentaireController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if($form->isSubmitted() && $form->isValid()) {
                 if($commentaire->getSite()){
                     if(!preg_match('#^http://#', $commentaire->getSite())) {
                         $commentaire->setSite('http://'.$commentaire->getSite());
@@ -166,7 +166,7 @@ class CommentaireController extends Controller
         if ($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
-          if ($form->isValid()) {
+          if ($form->isSubmitted() && $form->isValid()) {
             // On supprime le commentaire
 
             $em->remove($commentaire);

@@ -28,7 +28,7 @@ class CategorieController extends Controller
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if($form->isSubmitted() && $form->isValid()) {
                 $em->persist($categorie);
                 $em->flush();
 
@@ -77,7 +77,7 @@ class CategorieController extends Controller
         if ($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
-          if ($form->isValid()) {
+          if ($form->isSubmitted() && $form->isValid()) {
             // On supprime la categorie
 
             $em->remove($categorie);

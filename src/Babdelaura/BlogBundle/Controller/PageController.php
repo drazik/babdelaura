@@ -29,7 +29,7 @@ class PageController extends Controller
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if($form->isSubmitted() && $form->isValid()) {
                 $page->setDatePublication(new \DateTime());
 
                 $em->persist($page);
@@ -59,7 +59,7 @@ class PageController extends Controller
       if($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
-          if($form->isValid()) {
+          if($form->isSubmitted() && $form->isValid()) {
               $page->setDatePublication(new \DateTime());
               $page->setIsExterne(true);
 
@@ -152,7 +152,7 @@ class PageController extends Controller
         if ($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
-          if ($form->isValid()) {
+          if ($form->isSubmitted() && $form->isValid()) {
             // On supprime la page
 
             $em->remove($page);

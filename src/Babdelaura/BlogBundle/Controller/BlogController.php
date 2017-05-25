@@ -72,7 +72,7 @@ class BlogController extends Controller
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if($form->isSubmitted() && $form->isValid()) {
 
                 $data = $form->getData();
                 $mailer = $this->get('mailer');

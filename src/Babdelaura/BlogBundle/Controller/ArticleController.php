@@ -321,7 +321,7 @@ class ArticleController extends Controller
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
-            if($form->isValid()) {
+            if($form->isSubmitted() && $form->isValid()) {
                 /*
                  * Gestion des tags
                  * - On récupère le contenu du champs non mappé "tags"
@@ -389,7 +389,7 @@ class ArticleController extends Controller
         if ($request->getMethod() == 'POST') {
           $form->handleRequest($request);
 
-          if ($form->isValid()) {
+          if ($form->isSubmitted() && $form->isValid()) {
             // On supprime l'article
 
             $em->remove($article);
