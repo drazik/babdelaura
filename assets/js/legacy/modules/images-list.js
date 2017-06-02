@@ -1,20 +1,22 @@
-import Mustache from 'mustache';
-import axios from 'axios';
-import delegate from 'dom-delegate';
+import Mustache from "mustache";
+import axios from "axios";
+import delegate from "dom-delegate";
 
 class ImagesList {
     constructor(container, options = {}) {
         this.options = {
+            /* eslint-disable no-empty-function */
             onItemSelect: () => {},
-            ...options
+            /* eslint-enable no-empty-function */
+            ...options,
         };
 
         this.container = container;
-        this.imagesList = this.container.querySelector('.js-images-gallery-images-list');
-        this.previousPageButtons = [...this.container.querySelectorAll('.js-images-gallery-previous')];
-        this.nextPageButtons = [...this.container.querySelectorAll('.js-images-gallery-next')];
+        this.imagesList = this.container.querySelector(".js-images-gallery-images-list");
+        this.previousPageButtons = [...this.container.querySelectorAll(".js-images-gallery-previous")];
+        this.nextPageButtons = [...this.container.querySelectorAll(".js-images-gallery-next")];
 
-        this.url = this.container.getAttribute('data-url');
+        this.url = this.container.getAttribute("data-url");
 
         this.template = `<img class="bab-ImageGallery-item js-image-picker-item" src="{{ src }}" alt="" id="{{ id }}" />`;
         Mustache.parse(this.template);
@@ -28,15 +30,15 @@ class ImagesList {
     }
 
     initEvents() {
-        this.containerDelegate.on('click', 'img', (event) => {
+        this.containerDelegate.on("click", "img", (event) => {
             const imageSelected = event.target;
-            const src = imageSelected.src;
+            const { src } = imageSelected;
 
             this.options.onItemSelect(src);
         });
 
-        this.containerDelegate.on('click', '.js-images-gallery-previous', () => this.getPreviousPage());
-        this.containerDelegate.on('click', '.js-images-gallery-next', () => this.getNextPage());
+        this.containerDelegate.on("click", ".js-images-gallery-previous", () => this.getPreviousPage());
+        this.containerDelegate.on("click", ".js-images-gallery-next", () => this.getNextPage());
     }
 
     renderImagesList(images) {
@@ -52,24 +54,24 @@ class ImagesList {
 
     renderImage(image) {
         const renderedImage = Mustache.render(this.template, image);
-        const imageContainer = document.createElement('div');
+        const imageContainer = document.createElement("div");
 
         imageContainer.innerHTML = renderedImage;
 
-        return imageContainer.querySelector(':first-child');
+        return imageContainer.querySelector(":first-child");
     }
 
     getImages(page) {
-        return axios.post(this.url + `?page=${page}`)
-            .then((response) => response.data)
-            .catch((error) => { throw new Error(error) });
+        return axios.post(`${this.url}?page=${page}`)
+            .then(response => response.data)
+            .catch((error) => { throw new Error(error); });
     }
 
     changeCurrentPage(page = this.currentPage) {
         this.loading()
             .then(() => this.getImages(page))
             .then((data) => {
-                const {images, pagination} = data;
+                const { images, pagination } = data;
 
                 this.updateList(images);
                 this.updatePagination(pagination);
@@ -81,7 +83,7 @@ class ImagesList {
     loading() {
         return new Promise((resolve) => {
             this.disableAllButtons();
-            this.imagesList.innerHTML = 'Chargement...';
+            this.imagesList.innerHTML = "Chargement...";
 
             resolve();
         });
@@ -90,38 +92,48 @@ class ImagesList {
     updateList(images) {
         const fragment = this.renderImagesList(images);
 
-        this.imagesList.innerHTML = '';
+        this.imagesList.innerHTML = "";
         this.imagesList.appendChild(fragment);
     }
 
     updatePagination(pagination) {
         if (pagination.hasPreviousResults) {
             this.enablePreviousPageButtons();
-        } else {
+        }
+        else {
             this.disablePreviousPageButtons();
         }
 
         if (pagination.hasNextResults) {
             this.enableNextPageButtons();
-        } else {
+        }
+        else {
             this.disableNextPageButtons();
         }
     }
 
     enablePreviousPageButtons() {
-        this.previousPageButtons.forEach(button => button.disabled = false);
+        this.previousPageButtons.forEach((button) => {
+            button.disabled = false;
+        });
     }
 
     disablePreviousPageButtons() {
-        this.previousPageButtons.forEach(button => button.disabled = true);
+        this.previousPageButtons.forEach((button) => {
+            button.disabled = true;
+        });
     }
 
     enableNextPageButtons() {
-        this.nextPageButtons.forEach(button => button.disabled = false);
+        this.nextPageButtons.forEach((button) => {
+            button.disabled = false;
+        });
     }
 
     disableNextPageButtons() {
-        this.nextPageButtons.forEach(button => button.disabled = true);
+        this.nextPageButtons.forEach((button) => {
+            button.disabled = true;
+        });
     }
 
     disableAllButtons() {

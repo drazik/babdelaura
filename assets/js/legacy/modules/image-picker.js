@@ -1,36 +1,40 @@
-import delegate from 'dom-delegate';
-import getUrlParam from '../utils/get-url-param';
+import delegate from "dom-delegate";
+import getUrlParam from "../utils/get-url-param";
 
 class ImagePicker {
     constructor(container, options = {}) {
         this.options = {
+            /* eslint-disable no-empty-function */
             onItemSelect: () => {},
-            ...options
+            /* eslint-enable no-empty-function */
+            ...options,
         };
 
         this.container = container;
 
         this.containerDelegate = delegate(this.container);
 
-        this.CKEditorFuncNum = getUrlParam('CKEditorFuncNum');
+        this.CKEditorFuncNum = getUrlParam("CKEditorFuncNum");
 
         this.initEvents();
     }
 
     initEvents() {
-        this.containerDelegate.on('click', '.js-image-picker-item', this.handleItemSelect.bind(this));
+        this.containerDelegate.on("click", ".js-image-picker-item", this.handleItemSelect.bind(this));
     }
 
     handleItemSelect(event) {
-        const {id, src} = event.target;
+        const { id, src } = event.target;
 
         if (this.CKEditorFuncNum) {
             if (window.opener) {
                 window.opener.CKEDITOR.tools.callFunction(this.CKEditorFuncNum, src);
                 window.close();
             }
-        } else {
-            this.options.onItemSelect({id, src});
+        }
+        else {
+            this.options.onItemSelect({ id,
+                src });
         }
     }
 }

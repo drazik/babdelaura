@@ -1,9 +1,9 @@
-import { parse as parseUrl } from 'url';
+import { parse as parseUrl } from "url";
 
-import PhotoSwipe from 'photoswipe';
-import PhotoSwipeUiDefault from 'photoswipe/dist/photoswipe-ui-default';
+import PhotoSwipe from "photoswipe";
+import PhotoSwipeUiDefault from "photoswipe/dist/photoswipe-ui-default";
 
-import delegate from 'dom-delegate';
+import delegate from "dom-delegate";
 
 /**
  * Slideshow d'images
@@ -14,13 +14,13 @@ class ImagesSlideshow {
             photoSwipe: {
                 bgOpacity: 0.85,
                 closeOnScroll: false,
-                history: false
-            }
+                history: false,
+            },
         };
 
         this.container = container;
-        this.photoSwipeElement = document.querySelector(this.container.getAttribute('data-gallery-pswp-element'));
-        this.images = [...this.container.querySelectorAll('img')];
+        this.photoSwipeElement = document.querySelector(this.container.getAttribute("data-gallery-pswp-element"));
+        this.images = [...this.container.querySelectorAll("img")];
 
         this.photoSwipeItems = [];
         this.photoSwipe = null;
@@ -36,12 +36,12 @@ class ImagesSlideshow {
      * PhotoSwipe a besoin de la src et des dimensions de chaque image
      */
     initPhotoSwipeItems() {
-        this.images.forEach(image => {
+        this.images.forEach((image) => {
             const srcParams = parseUrl(image.src, true).query;
             const item = {
                 src: image.src,
                 w: parseInt(srcParams.width, 10),
-                h: parseInt(srcParams.height, 10)
+                h: parseInt(srcParams.height, 10),
             };
 
             this.photoSwipeItems.push(item);
@@ -52,7 +52,7 @@ class ImagesSlideshow {
      * Gestion du click sur une image
      */
     initEvents() {
-        this.containerDelegate.on('click', 'img', event => {
+        this.containerDelegate.on("click", "img", (event) => {
             const img = event.target;
             const imgIndex = this.images.indexOf(img);
 

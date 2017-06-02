@@ -4,14 +4,14 @@
 class CookieBar {
     constructor(container) {
         this.options = {
-            containerOpenClass: 'bab-CookieBar--open',
-            cookieName: 'bab-accept-cookies',
-            cookieValue: 'true',
-            cookieDuration: 365
+            containerOpenClass: "bab-CookieBar--open",
+            cookieName: "bab-accept-cookies",
+            cookieValue: "true",
+            cookieDuration: 365,
         };
 
         this.container = container;
-        this.button = this.container.querySelector('.js-cookie-bar-button');
+        this.button = this.container.querySelector(".js-cookie-bar-button");
 
         // On récupère le cookie, et si il ne vaut pas la valeur attendue,
         // cela veut dire que les cookies n'ont pas été acceptés, donc
@@ -26,7 +26,7 @@ class CookieBar {
     }
 
     initEvents() {
-        this.button.addEventListener('click', () => this.accept());
+        this.button.addEventListener("click", () => this.accept());
     }
 
     /**
@@ -56,7 +56,8 @@ class CookieBar {
      * Récupère la valeur d'un cookie
      */
     getCookie(name) {
-        var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        const v = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+
         return v ? v[2] : null;
     }
 
@@ -64,10 +65,10 @@ class CookieBar {
      * Attribue une valeur à un cookie pour un nombre de jours donné
      */
     setCookie(name, value, days) {
-        var d = new Date;
-        d.setTime(d.getTime() + 24*60*60*1000*days);
-        document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
-	}
+        const d = new Date();
+        d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
+        document.cookie = `${name}=${value};path=/;expires=${d.toGMTString()}`;
+    }
 }
 
 export default CookieBar;

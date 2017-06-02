@@ -1,17 +1,17 @@
-import XHRForm from './xhr-form';
-import ImagesList from './images-list';
+import XHRForm from "./xhr-form";
+import ImagesList from "./images-list";
 
 class ImageUploadList {
     constructor(container) {
         this.container = container;
 
-        const imageUploadFormContainer = this.container.querySelector('.js-image-upload-form');
+        const imageUploadFormContainer = this.container.querySelector(".js-image-upload-form");
         this.imageUploadForm = new XHRForm(imageUploadFormContainer, {
             onSuccess: this.handleImageUploadSuccess.bind(this),
-            onError: this.handleImageUploadError.bind(this)
+            onError: this.handleImageUploadError.bind(this),
         });
 
-        const imagesListContainer = this.container.querySelector('.js-images-list');
+        const imagesListContainer = this.container.querySelector(".js-images-list");
         this.imagesList = new ImagesList(imagesListContainer);
     }
 

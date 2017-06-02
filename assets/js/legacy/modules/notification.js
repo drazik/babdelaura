@@ -4,7 +4,7 @@
 class Notification {
     constructor(container) {
         this.options = {
-            timeBeforeClose: 10000
+            timeBeforeClose: 10000,
         };
 
         this.container = container;
