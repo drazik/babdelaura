@@ -1,36 +1,38 @@
-import 'babel-polyfill';
-import 'classlist-polyfill';
+import "babel-polyfill";
+import "classlist-polyfill";
 
-import Search from './new/modules/search'
-import Comments from './new/modules/comments'
-import Header from './new/modules/header'
-import ImagesSlideshow from './new/modules/images-slideshow'
-import CookieBar from './new/modules/cookie-bar'
+import Search from "./new/modules/search";
+import Comments from "./new/modules/comments";
+import Header from "./new/modules/header";
+import ImagesSlideshow from "./new/modules/images-slideshow";
+import CookieBar from "./new/modules/cookie-bar";
 
-const searchContainer = document.querySelector('.js-search')
+import "../css/main.css";
+
+const searchContainer = document.querySelector(".js-search");
 
 if (searchContainer) {
-    new Search(searchContainer)
+    const search = new Search(searchContainer);
 }
 
 
-const headerContainer = document.querySelector('.js-header')
-const header = new Header(headerContainer)
+const headerContainer = document.querySelector(".js-header");
+const header = new Header(headerContainer);
 
 
-const commentsContainer = document.querySelector('.js-comments')
+const commentsContainer = document.querySelector(".js-comments");
 
 if (commentsContainer) {
-    new Comments(commentsContainer, header)
+    const comments = new Comments(commentsContainer, header);
 }
 
 
-const imagesSlideshowContainers = [...document.querySelectorAll('.js-images-slideshow')]
-imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container))
+const imagesSlideshowContainers = [...document.querySelectorAll(".js-images-slideshow")];
+imagesSlideshowContainers.forEach(container => new ImagesSlideshow(container));
 
 
-const cookieBarContainer = document.querySelector('.js-cookie-bar')
+const cookieBarContainer = document.querySelector(".js-cookie-bar");
 
 if (cookieBarContainer) {
-    new CookieBar(cookieBarContainer)
+    const cookieBar = new CookieBar(cookieBarContainer);
 }

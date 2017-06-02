@@ -4,15 +4,15 @@
 class Nav {
     constructor(container) {
         this.options = {
-            itemsContainerOpenClass: 'bab-MainNav--open',
-            toggleIconOpenClass: 'fa-bars',
-            toggleIconCloseClass: 'fa-times'
+            itemsContainerOpenClass: "bab-MainNav--open",
+            toggleIconOpenClass: "fa-bars",
+            toggleIconCloseClass: "fa-times",
         };
 
         this.container = container;
-        this.toggleButton = this.container.querySelector('.js-nav-toggle');
-        this.toggleIcon = this.toggleButton.querySelector('.js-nav-toggle-icon');
-        this.itemsContainer = this.container.querySelector('.js-nav-items');
+        this.toggleButton = this.container.querySelector(".js-nav-toggle");
+        this.toggleIcon = this.toggleButton.querySelector(".js-nav-toggle-icon");
+        this.itemsContainer = this.container.querySelector(".js-nav-items");
 
         this.initEvents();
     }
@@ -21,7 +21,7 @@ class Nav {
      * Au click sur le bouton, toggle le menu
      */
     initEvents() {
-        this.toggleButton.addEventListener('click', () => this.toggle());
+        this.toggleButton.addEventListener("click", () => this.toggle());
     }
 
     /**

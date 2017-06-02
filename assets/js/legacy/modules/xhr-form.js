@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 /**
  * Gestion d'un formulaire XHR
@@ -6,13 +6,15 @@ import axios from 'axios';
 class XHRForm {
     constructor(container, options = {}) {
         this.options = {
+            /* eslint-disable no-empty-function */
             onSuccess: () => {},
             onError: () => {},
-            ...options
+            /* eslint-enable no-empty-function */
+            ...options,
         };
 
         this.container = container;
-        this.url = this.container.getAttribute('action');
+        this.url = this.container.getAttribute("action");
         this.submitButton = this.container.querySelector('[type="submit"]');
 
         this.initEvents();
@@ -22,7 +24,7 @@ class XHRForm {
      *  Bloquage de l'événement submit par défaut
      */
     initEvents() {
-        this.container.addEventListener('submit', event => {
+        this.container.addEventListener("submit", (event) => {
             event.preventDefault();
             this.submit();
         });
@@ -34,13 +36,13 @@ class XHRForm {
     submit() {
         const data = new FormData(this.container);
         const config = {};
-        const {onSuccess, onError} = this.options;
+        const { onSuccess, onError } = this.options;
 
         this.submitButton.disabled = true;
 
         axios.post(this.url, data, config)
             .then(response => response.data)
-            .then(response => {
+            .then((response) => {
 
                 this.submitButton.disabled = false;
                 this.container.reset();
