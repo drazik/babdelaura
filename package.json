@@ -4,8 +4,9 @@
   "description": "Blog traitant du nail art et de la création de bijoux en pâte polymère",
   "main": "gulpfile.js",
   "scripts": {
-    "compile": "cross-env NODE_ENV=production webpack -p",
-    "start": "webpack -w",
+    "clean": "rm -rf ./web/assets",
+    "compile": "npm run clean && cross-env NODE_ENV=production webpack -p",
+    "start": "npm run clean && webpack -w",
     "dploy:preprod": "dploy preprod",
     "dploy:prod": "dploy prod"
   },
