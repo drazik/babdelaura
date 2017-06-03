@@ -26,7 +26,7 @@ framework:
     fragments:       ~
     http_method_override: true
     assets:
-        version: 'v2'
+        version: "%assets_version%"
 
 # Twig Configuration
 twig:
@@ -97,3 +97,8 @@ ewz_recaptcha:
     public_key:  "%recaptcha_public_key%"
     private_key: "%recaptcha_private_key%"
     locale_key:  "%kernel.default_locale%"
+
+kachkaev_assets_version:
+    file_path: "%kernel.root_dir%/config/parameters.yml"
+    parameter_name: assets_version
+    manager: Kachkaev\AssetsVersionBundle\AssetsVersionManager
