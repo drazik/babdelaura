@@ -59,11 +59,11 @@ module.exports = {
             },
             {
                 test: /\.(svg|png|gif|jpg)$/,
-                use: "file-loader?publicPath=/assets/img/&outputPath=img/",
+                use: "file-loader",
             },
             {
                 test: /\.(woff|woff2|eot|ttf)/,
-                use: "file-loader?publicPath=/assets/fonts/&outputPath=fonts/",
+                use: "file-loader",
             },
         ],
     },
