@@ -29,7 +29,7 @@
         </time>
         <a class="bab-ArticlePreview-info" href="{{ articleUrl }}#commentaires" title="Lire les commentaires à propos de {{ article.titre }}">
             {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
-            {{ article.commentaires|length }}
+            {{ article.getNbCommentaires(true)|length }}
         </a>
     </aside>
 </article>
