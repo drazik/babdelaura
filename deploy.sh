@@ -22,4 +22,6 @@ check_run assets "npm run compile"
 # If composer.json or composer.lock changed, install the new dependencies
 check_run composer "composer install"
 
+php bin/console assets-version:increment
+
 update_rights
