@@ -8,7 +8,14 @@
     "compile": "npm run clean && cross-env NODE_ENV=production webpack -p",
     "start": "npm run clean && webpack -w",
     "dploy:preprod": "dploy preprod",
-    "dploy:prod": "dploy prod"
+    "dploy:prod": "dploy prod",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -32,11 +39,14 @@
     "eslint": "^3.19.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
+    "husky": "^0.13.4",
+    "lint-staged": "^3.6.1",
     "postcss-custom-media": "^6.0.0",
     "postcss-custom-properties": "^6.0.1",
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.5",
     "postcss-url": "^6.1.0",
+    "prettier": "^1.4.4",
     "style-loader": "^0.18.1",
     "webpack": "^2.6.1"
   },

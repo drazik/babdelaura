@@ -4,291 +4,311 @@ import debounce from "lodash.debounce";
 import delegate from "dom-delegate";
 
 class SelectedChoicesList {
-    constructor(container, initialItems = [], options = {}) {
-        this.options = {
-            /* eslint-disable no-empty-function */
-            onItemDelete: () => {},
-            /* eslint-enable no-empty-function */
-            ...options,
-        };
+  constructor(container, initialItems = [], options = {}) {
+    this.options = {
+      /* eslint-disable no-empty-function */
+      onItemDelete: () => {},
+      /* eslint-enable no-empty-function */
+      ...options
+    };
 
-        this.container = container;
+    this.container = container;
 
-        this.items = initialItems;
+    this.items = initialItems;
 
-        this.updateDOM();
-        this.initEvents();
+    this.updateDOM();
+    this.initEvents();
+  }
+
+  initEvents() {
+    const delegation = delegate(this.container);
+
+    delegation.on("click", "button", event => {
+      const item = event.target.parentNode.textContent.trim();
+
+      this.deleteItem(item);
+    });
+  }
+
+  addItem(item) {
+    const sanitizedItem = this.sanitizeItem(item);
+
+    if (this.items.indexOf(sanitizedItem) >= 0) {
+      return;
     }
 
-    initEvents() {
-        const delegation = delegate(this.container);
+    this.items.push(sanitizedItem);
+    this.updateDOM();
+  }
 
-        delegation.on("click", "button", (event) => {
-            const item = event.target.parentNode.textContent.trim();
+  sanitizeItem(item) {
+    const sanitizedItem = item.trim().toLowerCase();
 
-            this.deleteItem(item);
-        });
-    }
+    return sanitizedItem;
+  }
 
-    addItem(item) {
-        const sanitizedItem = this.sanitizeItem(item);
+  updateDOM() {
+    const elements = this.items.map(item => this.createItemDOMElement(item));
+    const fragment = document.createDocumentFragment();
 
-        if (this.items.indexOf(sanitizedItem) >= 0) {
-            return;
-        }
+    elements.forEach(element => fragment.appendChild(element));
 
-        this.items.push(sanitizedItem);
-        this.updateDOM();
-    }
+    this.container.innerHTML = "";
+    this.container.appendChild(fragment);
+  }
 
-    sanitizeItem(item) {
-        const sanitizedItem = item.trim().toLowerCase();
-
-        return sanitizedItem;
-    }
-
-    updateDOM() {
-        const elements = this.items.map(item => this.createItemDOMElement(item));
-        const fragment = document.createDocumentFragment();
-
-        elements.forEach(element => fragment.appendChild(element));
-
-        this.container.innerHTML = "";
-        this.container.appendChild(fragment);
-    }
-
-    createItemDOMElement(item) {
-        const template = `
+  createItemDOMElement(item) {
+    const template = `
 <span class="bab-Autocomplete-selectedChoice">
     ${item}
     <button class="bab-Autocomplete-deleteChoice" type="button"></button>
 </span>
 `;
-        const element = document.createElement("div");
-        element.innerHTML = template;
+    const element = document.createElement("div");
+    element.innerHTML = template;
 
-        const actualElement = element.querySelector(":first-child");
+    const actualElement = element.querySelector(":first-child");
 
-        return actualElement;
-    }
+    return actualElement;
+  }
 
-    getItems() {
-        return this.items;
-    }
+  getItems() {
+    return this.items;
+  }
 
-    deleteItem(item) {
-        this.items = this.items.filter(i => i !== item);
+  deleteItem(item) {
+    this.items = this.items.filter(i => i !== item);
 
-        this.updateDOM();
+    this.updateDOM();
 
-        this.options.onItemDelete();
-    }
+    this.options.onItemDelete();
+  }
 
-    getLastItem() {
-        const lastItemIndex = this.items.length - 1;
-        const lastItem = lastItemIndex > -1 ? this.items[lastItemIndex] : null;
+  getLastItem() {
+    const lastItemIndex = this.items.length - 1;
+    const lastItem = lastItemIndex > -1 ? this.items[lastItemIndex] : null;
 
-        return lastItem;
-    }
+    return lastItem;
+  }
 }
 
 class AvailableChoicesList {
-    constructor(container, sourceUrl, options = {}) {
-        this.options = {
-            containerVisibleClass: "bab-Autocomplete-choices--visible",
-            /* eslint-disable no-empty-function */
-            onItemSelect: () => {},
-            /* eslint-enable no-empty-function */
-            filterItems: items => items,
-            ...options,
-        };
+  constructor(container, sourceUrl, options = {}) {
+    this.options = {
+      containerVisibleClass: "bab-Autocomplete-choices--visible",
+      /* eslint-disable no-empty-function */
+      onItemSelect: () => {},
+      /* eslint-enable no-empty-function */
+      filterItems: items => items,
+      ...options
+    };
 
-        this.container = container;
-        this.sourceUrl = sourceUrl;
-        this.request = axios.create({
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            },
-        });
+    this.container = container;
+    this.sourceUrl = sourceUrl;
+    this.request = axios.create({
+      headers: {
+        "X-Requested-With": "XMLHttpRequest"
+      }
+    });
 
-        this.containerDelegate = delegate(container);
+    this.containerDelegate = delegate(container);
 
-        this.initEvents();
-    }
+    this.initEvents();
+  }
 
-    initEvents() {
-        this.containerDelegate.on("click", "button", (event) => {
-            const item = event.target.textContent.trim().toLowerCase();
+  initEvents() {
+    this.containerDelegate.on("click", "button", event => {
+      const item = event.target.textContent.trim().toLowerCase();
 
-            this.onItemSelect(item);
-        });
-    }
+      this.onItemSelect(item);
+    });
+  }
 
-    onItemSelect(item) {
-        this.options.onItemSelect(item);
-        this.reset();
-    }
+  onItemSelect(item) {
+    this.options.onItemSelect(item);
+    this.reset();
+  }
 
-    update(input) {
-        this.request.get(this.sourceUrl, {
-            params: { input },
-        }).then(response => response.data)
-            .then(items => this.filterItems(items))
-            .then(filteredItems => this.updateDOM(filteredItems));
-    }
+  update(input) {
+    this.request
+      .get(this.sourceUrl, {
+        params: { input }
+      })
+      .then(response => response.data)
+      .then(items => this.filterItems(items))
+      .then(filteredItems => this.updateDOM(filteredItems));
+  }
 
-    updateDOM(items) {
-        const fragment = document.createDocumentFragment();
+  updateDOM(items) {
+    const fragment = document.createDocumentFragment();
 
-        items.forEach((item) => {
-            const element = this.createItemDOMElement(item);
-            fragment.appendChild(element);
-        });
+    items.forEach(item => {
+      const element = this.createItemDOMElement(item);
+      fragment.appendChild(element);
+    });
 
-        this.reset();
-        this.container.appendChild(fragment);
-    }
+    this.reset();
+    this.container.appendChild(fragment);
+  }
 
-    createItemDOMElement(item) {
-        const template = `
+  createItemDOMElement(item) {
+    const template = `
 <li class="bab-Autocomplete-choiceItem">
     <button class="bab-Autocomplete-choice" type="button">
         ${item}
     </button>
 </li>
 `;
-        const element = document.createElement("ul");
-        element.innerHTML = template;
+    const element = document.createElement("ul");
+    element.innerHTML = template;
 
-        const actualElement = element.querySelector(":first-child");
+    const actualElement = element.querySelector(":first-child");
 
-        return actualElement;
-    }
+    return actualElement;
+  }
 
-    show() {
-        this.container.classList.add(this.options.containerVisibleClass);
-    }
+  show() {
+    this.container.classList.add(this.options.containerVisibleClass);
+  }
 
-    hide() {
-        this.container.classList.remove(this.options.containerVisibleClass);
-    }
+  hide() {
+    this.container.classList.remove(this.options.containerVisibleClass);
+  }
 
-    reset() {
-        this.container.innerHTML = "";
-    }
+  reset() {
+    this.container.innerHTML = "";
+  }
 
-    filterItems(items) {
-        return this.options.filterItems(items);
-    }
+  filterItems(items) {
+    return this.options.filterItems(items);
+  }
 }
 
 class Autocomplete {
-    constructor(container, options = {}) {
-        this.options = {
-            minLengthToTrigger: 2,
-            ...options,
-        };
+  constructor(container, options = {}) {
+    this.options = {
+      minLengthToTrigger: 2,
+      ...options
+    };
 
-        this.container = container;
-        this.input = container.querySelector(".js-autocomplete-input");
-        this.realInput = container.querySelector(".js-autocomplete-real-input");
+    this.container = container;
+    this.input = container.querySelector(".js-autocomplete-input");
+    this.realInput = container.querySelector(".js-autocomplete-real-input");
 
-        /* eslint-disable no-undefined */
-        const initialTags = this.realInput.value === "" ? undefined : this.realInput.value.split(",");
-        /* eslint-enable no-undefined */
-        const selectedChoicesContainer = container.querySelector(".js-autocomplete-selected-choices");
-        this.selectedChoicesList = new SelectedChoicesList(selectedChoicesContainer, initialTags, {
-            onItemDelete: this.onSelectedChoiceDelete.bind(this),
-        });
+    /* eslint-disable no-undefined */
+    const initialTags = this.realInput.value === ""
+      ? undefined
+      : this.realInput.value.split(",");
+    /* eslint-enable no-undefined */
+    const selectedChoicesContainer = container.querySelector(
+      ".js-autocomplete-selected-choices"
+    );
+    this.selectedChoicesList = new SelectedChoicesList(
+      selectedChoicesContainer,
+      initialTags,
+      {
+        onItemDelete: this.onSelectedChoiceDelete.bind(this)
+      }
+    );
 
-        const sourceUrl = container.getAttribute("data-source-url");
-        const availableChoicesContainer = container.querySelector(".js-autocomplete-available-choices");
-        this.availableChoicesList = new AvailableChoicesList(availableChoicesContainer, sourceUrl, {
-            onItemSelect: this.onAvailableChoiceSelect.bind(this),
-            filterItems: this.filterAvailableChoices.bind(this),
-        });
-        this.availableChoicesList.show();
+    const sourceUrl = container.getAttribute("data-source-url");
+    const availableChoicesContainer = container.querySelector(
+      ".js-autocomplete-available-choices"
+    );
+    this.availableChoicesList = new AvailableChoicesList(
+      availableChoicesContainer,
+      sourceUrl,
+      {
+        onItemSelect: this.onAvailableChoiceSelect.bind(this),
+        filterItems: this.filterAvailableChoices.bind(this)
+      }
+    );
+    this.availableChoicesList.show();
 
-        this.initEvents();
-    }
+    this.initEvents();
+  }
 
-    initEvents() {
-        this.input.addEventListener("keydown", (event) => {
-            switch (event.keyCode) {
-            case ENTER:
-                event.preventDefault();
+  initEvents() {
+    this.input.addEventListener("keydown", event => {
+      switch (event.keyCode) {
+        case ENTER:
+          event.preventDefault();
 
-                this.addItem(this.input.value);
-                this.resetInput();
+          this.addItem(this.input.value);
+          this.resetInput();
 
-                return;
+          return;
 
-            case BACKSPACE:
-                if (this.input.value.length > 0) {
-                    return;
-                }
+        case BACKSPACE:
+          if (this.input.value.length > 0) {
+            return;
+          }
 
-                event.preventDefault();
+          event.preventDefault();
 
-                /* eslint-disable no-var */
-                var lastSelectedChoice = this.selectedChoicesList.getLastItem();
-                /* eslint-enable no-var */
-                this.selectedChoicesList.deleteItem(lastSelectedChoice);
+          /* eslint-disable no-var */
+          var lastSelectedChoice = this.selectedChoicesList.getLastItem();
+          /* eslint-enable no-var */
+          this.selectedChoicesList.deleteItem(lastSelectedChoice);
 
-                this.input.value = lastSelectedChoice;
+          this.input.value = lastSelectedChoice;
 
-                break;
+          break;
 
-            default:
-                break;
-            }
-        });
+        default:
+          break;
+      }
+    });
 
-        this.input.addEventListener("keyup", debounce((event) => {
-            const { value } = event.target;
+    this.input.addEventListener(
+      "keyup",
+      debounce(event => {
+        const { value } = event.target;
 
-            if (value.length >= this.options.minLengthToTrigger) {
-                this.availableChoicesList.update(value);
-            }
-            else {
-                this.availableChoicesList.reset();
-            }
-        }, 100));
-    }
+        if (value.length >= this.options.minLengthToTrigger) {
+          this.availableChoicesList.update(value);
+        } else {
+          this.availableChoicesList.reset();
+        }
+      }, 100)
+    );
+  }
 
-    addItem(item) {
-        this.selectedChoicesList.addItem(item);
-        this.updateRealInputValue();
-    }
+  addItem(item) {
+    this.selectedChoicesList.addItem(item);
+    this.updateRealInputValue();
+  }
 
-    resetInput() {
-        this.input.value = "";
-    }
+  resetInput() {
+    this.input.value = "";
+  }
 
-    onAvailableChoiceSelect(item) {
-        this.addItem(item);
-        this.resetInput();
-        this.input.focus();
-    }
+  onAvailableChoiceSelect(item) {
+    this.addItem(item);
+    this.resetInput();
+    this.input.focus();
+  }
 
-    filterAvailableChoices(items) {
-        const selectedChoices = this.selectedChoicesList.getItems();
-        const filteredItems = items.filter(item => selectedChoices.indexOf(item) === -1);
+  filterAvailableChoices(items) {
+    const selectedChoices = this.selectedChoicesList.getItems();
+    const filteredItems = items.filter(
+      item => selectedChoices.indexOf(item) === -1
+    );
 
-        return filteredItems;
-    }
+    return filteredItems;
+  }
 
-    onSelectedChoiceDelete() {
-        this.input.focus();
-        this.updateRealInputValue();
-    }
+  onSelectedChoiceDelete() {
+    this.input.focus();
+    this.updateRealInputValue();
+  }
 
-    updateRealInputValue() {
-        const items = this.selectedChoicesList.getItems();
-        const value = items.join(",");
+  updateRealInputValue() {
+    const items = this.selectedChoicesList.getItems();
+    const value = items.join(",");
 
-        this.realInput.value = value;
-    }
+    this.realInput.value = value;
+  }
 }
 
 export default Autocomplete;

@@ -2,22 +2,22 @@
  * Gestion de l'affichage des notifications
  */
 class Notification {
-    constructor(container) {
-        this.options = {
-            timeBeforeClose: 10000,
-        };
+  constructor(container) {
+    this.options = {
+      timeBeforeClose: 10000
+    };
 
-        this.container = container;
+    this.container = container;
 
-        setTimeout(() => this.close, this.options.timeBeforeClose);
-    }
+    setTimeout(() => this.close, this.options.timeBeforeClose);
+  }
 
-    /**
+  /**
      * Femerture de la notification
      */
-    close() {
-        this.container.parentNode.removeChild(this.container);
-    }
+  close() {
+    this.container.parentNode.removeChild(this.container);
+  }
 }
 
 export default Notification;
