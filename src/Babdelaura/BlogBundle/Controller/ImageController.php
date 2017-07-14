@@ -56,25 +56,36 @@ class ImageController extends Controller
     }
 
     public function uploadAction(Request $request) {
-        $file = $request->files->get('babdelaura_blogbundle_image')['file'];
+        $files = $request->files->get('babdelaura_blogbundle_image')['file'];
         $watermark = isset($request->request->get('babdelaura_blogbundle_image')['watermark']);
 
-        $response = array('success' => $file->isValid());
+        $response = [
+            "success" => true,
+            "items" => [],
+        ];
 
-        if ($response['success']) {
-            $image = new Image($file, $watermark);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($image);
-            $em->flush();
+        foreach ($files as $file) {
+            $success = $file->isValid();
 
-            $response['image'] = array(
-                'id' => $image->getId(),
-                'path' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath(),
-                'width' => $image->getWidth(),
-                'height' => $image->getHeight()
-            );
-        } else {
-            $response['error'] = $this->getErrorMessage($file);
+            $item = ["success" => $success];
+
+            if ($success) {
+                $image = new Image($file, $watermark);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($image);
+                $em->flush();
+
+                $item["image"] = [
+                    'id' => $image->getId(),
+                    'path' => $request->getScheme() . '://' . $request->getHttpHost() . '/' . $image->getWebPath(),
+                    'width' => $image->getWidth(),
+                    'height' => $image->getHeight()
+                ];
+            } else {
+                $item["error"] = $this->getErrorMessage($file);
+            }
+
+            $response[] = $item;
         }
 
         return new JsonResponse($response);
