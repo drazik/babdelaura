@@ -58,30 +58,32 @@ module.exports = {
       {
         test: /\.(svg|png|gif|jpg)$/,
         use: [
-          { loader: "file-loader" }
-          //   {
-          //     loader: "imagemin-loader",
-          //     options: {
-          //       plugins: [
-          //         {
-          //           use: require("imagemin-pngquant"),
-          //           options: {}
-          //         },
-          //         {
-          //           use: require("imagemin-mozjpeg"),
-          //           options: {}
-          //         },
-          //         {
-          //           use: require("imagemin-gifsicle"),
-          //           options: {}
-          //         },
-          //         {
-          //           use: require("imagemin-svgo"),
-          //           options: {}
-          //         }
-          //       ]
-          //     }
-          //   }
+          { loader: "file-loader" },
+          {
+            loader: "imagemin-loader",
+            options: {
+              plugins: [
+                {
+                  use: require("imagemin-pngquant"),
+                  options: {
+                    enabled: production
+                  }
+                },
+                {
+                  use: require("imagemin-jpegtran"),
+                  options: {
+                    enabled: production
+                  }
+                },
+                {
+                  use: require("imagemin-svgo"),
+                  options: {
+                    enabled: production
+                  }
+                }
+              ]
+            }
+          }
         ]
       },
       {
