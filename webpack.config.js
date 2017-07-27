@@ -65,15 +65,21 @@ module.exports = {
               plugins: [
                 {
                   use: require("imagemin-pngquant"),
-                  options: {}
+                  options: {
+                    enabled: production
+                  }
                 },
                 {
                   use: require("imagemin-jpegtran"),
-                  options: {}
+                  options: {
+                    enabled: production
+                  }
                 },
                 {
                   use: require("imagemin-svgo"),
-                  options: {}
+                  options: {
+                    enabled: production
+                  }
                 }
               ]
             }
