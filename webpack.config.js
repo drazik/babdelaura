@@ -68,11 +68,7 @@ module.exports = {
                   options: {}
                 },
                 {
-                  use: require("imagemin-mozjpeg"),
-                  options: {}
-                },
-                {
-                  use: require("imagemin-gifsicle"),
+                  use: require("imagemin-jpegtran"),
                   options: {}
                 },
                 {
