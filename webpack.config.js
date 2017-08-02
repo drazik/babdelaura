@@ -8,8 +8,8 @@ const production = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: {
-    app: "./assets/js/app.js",
-    admin: "./assets/js/admin.js"
+    app: "./app/Resources/js/app.js",
+    admin: "./app/Resources/js/admin.js"
   },
   output: {
     path: path.resolve(__dirname, "web", "assets"),
@@ -25,7 +25,7 @@ module.exports = {
           presets: ["env"],
           plugins: ["transform-object-rest-spread"]
         },
-        include: path.resolve(__dirname, "assets", "js")
+        include: path.resolve(__dirname, "app/Resources/js")
       },
       {
         test: /\.css$/,

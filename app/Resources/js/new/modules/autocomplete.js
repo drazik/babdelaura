@@ -196,9 +196,8 @@ class Autocomplete {
     this.realInput = container.querySelector(".js-autocomplete-real-input");
 
     /* eslint-disable no-undefined */
-    const initialTags = this.realInput.value === ""
-      ? undefined
-      : this.realInput.value.split(",");
+    const initialTags =
+      this.realInput.value === "" ? undefined : this.realInput.value.split(",");
     /* eslint-enable no-undefined */
     const selectedChoicesContainer = container.querySelector(
       ".js-autocomplete-selected-choices"
