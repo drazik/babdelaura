@@ -69,3 +69,8 @@ babdelaurablog_ajouterCommentaire:
 babdelaurablog_page:
     path: /page/{slug}
     defaults: {_controller: BabdelauraBlogBundle:Page:afficherPage}
+
+babdelaurablog_instagram_add_photo:
+    path: /instagram/photo
+    defaults: {_controller: BabdelauraBlogBundle:Instagram:addPhoto}
+    methods: [POST]

@@ -6,6 +6,8 @@ namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Babdelaura\BlogBundle\Entity\InstagramPhoto;
 
 class InstagramController extends Controller
 {
@@ -17,5 +19,22 @@ class InstagramController extends Controller
         $results = $response->data;
 
         return $this->render('BabdelauraBlogBundle:Instagram:chargerFlux.html.twig', array('results' => $results));
+    }
+
+    public function addPhoto(Request $request) {
+        $sourceURL = $request->request->get("sourceURL");
+        $url = $request->request->get("url");
+        $caption = $request->request->get("caption");
+
+        $instagramPhoto = new InstagramPhoto();
+        $instagramPhoto->setUrl($url);
+        $instagramPhoto->setCaption($caption);
+        $instagramPhoto->setSourceUrl($sourceURL);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($instagramPhoto);
+        $em->flush();
+
+        return new Response("wesh");
     }
 }
