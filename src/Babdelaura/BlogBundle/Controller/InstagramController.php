@@ -5,7 +5,7 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Babdelaura\BlogBundle\Entity\InstagramPhoto;
 
@@ -35,6 +35,10 @@ class InstagramController extends Controller
         $em->persist($instagramPhoto);
         $em->flush();
 
-        return new Response("wesh");
+        return new JsonResponse([
+            "sourceURL" => $sourceURL,
+            "url" => $url,
+            "caption" => $caption,
+        ]);
     }
 }
