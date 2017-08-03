@@ -4,7 +4,7 @@
             L'actu instagram
         </h2>
 
-        <div class="bab-Grid bab-Grid--inlineBlock bab-Grid--xSmallGutters">
+        <div class="bab-Grid bab-Grid--flex bab-Grid--xSmallGutters">
             {% for photo in photos %}
             <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
                 <a
@@ -18,10 +18,12 @@
 
             <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
                 <a
-                    class="InstagramPhoto InstagramPhoto--more"
+                    class="InstagramPhotoMore"
                     href="https://www.instagram.com/babdelaura/"
                     target="_blank"
-                ></a>
+                >
+                    {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'instagram', 'size': 32} only %}
+                </a>
             </div>
         </div>
     </div>

@@ -30,6 +30,7 @@
 }
 
 .bab-Grid-cell {
+    position: relative;
     padding: 0 calc(var(--grid-horizontal-gutter) / 2);
 
     float: left;
@@ -60,6 +61,7 @@
 
 .bab-Grid--flex {
     display: flex;
+    align-items: stretch;
 }
 
 .bab-Grid--flex.bab-Grid--alignCenter {
