@@ -14,7 +14,7 @@
             </time>
             <a class="bab-Article-nbComments" href="#commentaires" title="Lire les commentaires">
                 {% include 'BabdelauraBlogBundle:Components:icon.html.twig' with {'name': 'bubbles2'} only %}
-                {{ article.getNbCommentaires(true)|length }}
+                {{ article.getNbCommentaires(true) }}
             </a>
         </div>
         {% if article.tags|length > 0 %}
