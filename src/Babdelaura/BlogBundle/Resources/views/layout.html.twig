@@ -44,6 +44,8 @@
         <div class="bab-Wrapper">
             <main class="bab-Main">{% block content %}{% endblock %}</main>
 
+            {{ render(controller("BabdelauraBlogBundle:Instagram:getLastPhotos")) }}
+
             {% include 'BabdelauraBlogBundle:Components:separator.html.twig' %}
         </div>
 

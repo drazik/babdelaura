@@ -1,37 +1,28 @@
-<section class="bab-Section">
-    <h2 class="bab-Section-title">
-        L'actu instagram
-    </h2>
-    <div class="bab-Grid bab-Grid--inlineBlock bab-Grid--xSmallGutters">
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto" href="#" target="social"></a>
-        </div>
-        <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
-            <a class="InstagramPhoto InstagramPhoto--more" href="#" title="Voir les autres photos sur Instagram" target="social"></a>
+{% if photos|length > 0 %}
+    <div class="bab-Section">
+        <h2 class="bab-Section-title">
+            L'actu instagram
+        </h2>
+
+        <div class="bab-Grid bab-Grid--inlineBlock bab-Grid--xSmallGutters">
+            {% for photo in photos %}
+            <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
+                <a
+                    class="InstagramPhoto"
+                    href="{{ photo.url }}"
+                    target="_blank"
+                    style="background-image: url('{{ photo.sourceURL }}');"
+                ></a>
+            </div>
+            {% endfor %}
+
+            <div class="bab-Grid-cell bab-Grid-cell--1-10 bab-Grid-cell--1-5@medium bab-Grid-cell--1-2@small">
+                <a
+                    class="InstagramPhoto InstagramPhoto--more"
+                    href="https://www.instagram.com/babdelaura/"
+                    target="_blank"
+                ></a>
+            </div>
         </div>
     </div>
-</section>
+{% endif %}

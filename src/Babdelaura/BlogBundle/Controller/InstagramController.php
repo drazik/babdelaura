@@ -5,17 +5,45 @@
 namespace Babdelaura\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Babdelaura\BlogBundle\Entity\InstagramPhoto;
 
 class InstagramController extends Controller
 {
-    public function chargerFluxAction() {
-        $query = '504309617';
+    public function getLastPhotosAction() {
+        $repository = $this
+            ->getDoctrine()
+            ->getRepository("BabdelauraBlogBundle:InstagramPhoto");
 
-        $api = $this->get('instaphp');
-        $response = $api->Users->Recent($query, array('count' => 8));
-        $results = $response->data;
+        $lastPhotos = $repository->findBy([], ["id" => "DESC"], 9, 0);
 
-        return $this->render('BabdelauraBlogBundle:Instagram:chargerFlux.html.twig', array('results' => $results));
+        return $this->render(
+            'BabdelauraBlogBundle:Layout:instagram.html.twig',
+            [
+                'photos' => $lastPhotos
+            ]
+        );
+    }
+
+    public function addPhotoAction(Request $request) {
+        $sourceURL = $request->request->get("sourceURL");
+        $url = $request->request->get("url");
+        $caption = $request->request->get("caption");
+
+        $instagramPhoto = new InstagramPhoto();
+        $instagramPhoto->setUrl($url);
+        $instagramPhoto->setCaption($caption);
+        $instagramPhoto->setSourceUrl($sourceURL);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($instagramPhoto);
+        $em->flush();
+
+        return new JsonResponse([
+            "sourceURL" => $sourceURL,
+            "url" => $url,
+            "caption" => $caption,
+        ]);
     }
 }
