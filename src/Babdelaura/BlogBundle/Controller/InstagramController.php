@@ -21,7 +21,7 @@ class InstagramController extends Controller
         return $this->render('BabdelauraBlogBundle:Instagram:chargerFlux.html.twig', array('results' => $results));
     }
 
-    public function addPhoto(Request $request) {
+    public function addPhotoAction(Request $request) {
         $sourceURL = $request->request->get("sourceURL");
         $url = $request->request->get("url");
         $caption = $request->request->get("caption");
