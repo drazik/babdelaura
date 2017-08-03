@@ -11,7 +11,7 @@
 
 .InstagramPhoto:hover,
 .InstagramPhoto:focus {
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .InstagramPhoto::before {
