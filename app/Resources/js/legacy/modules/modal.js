@@ -4,10 +4,14 @@ import delegate from "dom-delegate";
  * Fenêtre modale
  */
 class Modal {
-  constructor(container) {
+  constructor(container, options = {}) {
     this.options = {
       openClass: "bab-Modal--open",
-      noScrollClass: "noscroll"
+      noScrollClass: "noscroll",
+      /* eslint-disable no-empty-function */
+      onOpen: () => {},
+      /* eslint-enable */
+      ...options
     };
 
     this.container = container;
@@ -50,6 +54,7 @@ class Modal {
      * Ouverture de la modale
      */
   open() {
+    this.options.onOpen();
     this.container.classList.add(this.options.openClass);
     document.documentElement.classList.add(this.options.noScrollClass);
     document.body.classList.add(this.options.noScrollClass);

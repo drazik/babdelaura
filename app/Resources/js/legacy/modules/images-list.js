@@ -49,6 +49,8 @@ class ImagesList {
     this.containerDelegate.on("click", ".js-images-gallery-next", () =>
       this.getNextPage()
     );
+
+    window.addEventListener("modal-image-picker-open", () => this.refresh());
   }
 
   renderImagesList(images) {
@@ -81,14 +83,9 @@ class ImagesList {
   }
 
   changeCurrentPage(page = this.currentPage) {
-    this.loading().then(() => this.getImages(page)).then(data => {
-      const { images, pagination } = data;
-
-      this.updateList(images);
-      this.updatePagination(pagination);
-
-      this.currentPage = page;
-    });
+    this.loading()
+      .then(() => this.getImages(page))
+      .then(data => this.update(data.images, data.pagination, page));
   }
 
   loading() {
@@ -98,6 +95,12 @@ class ImagesList {
 
       resolve();
     });
+  }
+
+  update(images, pagination, page) {
+    this.updateList(images);
+    this.updatePagination(pagination);
+    this.currentPage = page;
   }
 
   updateList(images) {
