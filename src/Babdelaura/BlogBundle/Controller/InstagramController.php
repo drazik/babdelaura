@@ -11,14 +11,19 @@ use Babdelaura\BlogBundle\Entity\InstagramPhoto;
 
 class InstagramController extends Controller
 {
-    public function chargerFluxAction() {
-        $query = '504309617';
+    public function getLastPhotosAction() {
+        $repository = $this
+            ->getDoctrine()
+            ->getRepository("BabdelauraBlogBundle:InstagramPhoto");
 
-        $api = $this->get('instaphp');
-        $response = $api->Users->Recent($query, array('count' => 8));
-        $results = $response->data;
+        $lastPhotos = $repository->findBy([], ["id" => "DESC"], 9, 0);
 
-        return $this->render('BabdelauraBlogBundle:Instagram:chargerFlux.html.twig', array('results' => $results));
+        return $this->render(
+            'BabdelauraBlogBundle:Layout:instagram.html.twig',
+            [
+                'photos' => $lastPhotos
+            ]
+        );
     }
 
     public function addPhotoAction(Request $request) {
