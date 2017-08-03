@@ -12,7 +12,9 @@ class ModalImagePicker {
 
     this.container = container;
 
-    this.modal = new Modal(this.container);
+    this.modal = new Modal(this.container, {
+      onOpen: this.onOpen.bind(this)
+    });
     this.imagePicker = new ImagePicker(
       this.container.querySelector(".js-preview-modal-image-picker-picker"),
       {
@@ -30,8 +32,8 @@ class ModalImagePicker {
     this.close();
   }
 
-  open() {
-    this.modal.open();
+  onOpen() {
+    window.dispatchEvent(new Event("modal-image-picker-open"));
   }
 
   close() {
