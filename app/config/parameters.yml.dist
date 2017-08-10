@@ -21,10 +21,6 @@ parameters:
     nbElementsParPageAdmin: 15
     nbImagesParPage: 10
     nbImagesParPageGalerie: 32
-    instagram_api_client_id: instagram_api_client_id
-    instagram_api_client_secret: instagram_api_client_secret
-    instagram_timeout: 30
-    instagram_connect_timeout: 8
     recaptcha_public_key: recaptcha_public_key
     recaptcha_private_key: recaptcha_private_key
     mail_contact: mail_contact
