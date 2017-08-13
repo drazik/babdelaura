@@ -9,7 +9,8 @@
     "start": "npm run clean && webpack -w",
     "dploy:preprod": "dploy preprod",
     "dploy:prod": "dploy prod",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "backup": "dumper"
   },
   "lint-staged": {
     "*.js": [
@@ -56,6 +57,7 @@
     "webpack": "^3.4.1"
   },
   "dependencies": {
+    "@drazik/dumper": "github:drazik/dumper",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.20.0",
     "classlist-polyfill": "^1.0.3",
