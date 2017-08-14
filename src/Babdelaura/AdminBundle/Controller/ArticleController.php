@@ -1,6 +1,6 @@
 <?php
 
-// src/Babdelaura/BlogBundle/Controller/ArticleController.php
+// src/Babdelaura/AdminBundle/Controller/ArticleController.php
 
 namespace Babdelaura\AdminBundle\Controller;
 
@@ -14,8 +14,8 @@ use Babdelaura\BlogBundle\Entity\Tag;
 use Babdelaura\BlogBundle\Entity\Article;
 use Babdelaura\AdminBundle\Form\ArticleType;
 use Babdelaura\BlogBundle\Entity\Commentaire;
-use Babdelaura\BlogBundle\Form\CommentaireType;
-use Babdelaura\BlogBundle\Form\ImageType;
+use Babdelaura\AdminBundle\Form\CommentaireType;
+use Babdelaura\AdminBundle\Form\ImageType;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ArticleController extends Controller
@@ -206,7 +206,7 @@ class ArticleController extends Controller
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $listeArticles->setTemplate('BabdelauraAdminBundle:Admin:sliding.html.twig');
+        $listeArticles->setTemplate('BabdelauraAdminBundle::sliding.html.twig');
 
 
         return $this->render('BabdelauraAdminBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles, 'form' => $form->createView()));

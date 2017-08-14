@@ -79,7 +79,7 @@ class CommentaireController extends Controller
             $requestQuery->get('page', 1),
             $nbCommentairesParPage
         );
-        $listeCommentaires->setTemplate('BabdelauraAdminBundle:Admin:sliding.html.twig');
+        $listeCommentaires->setTemplate('BabdelauraAdminBundle::sliding.html.twig');
 
         return $this->render('BabdelauraAdminBundle:Commentaire:listerCommentairesNonValides.html.twig', array('listeCommentaires' => $listeCommentaires));
     }
