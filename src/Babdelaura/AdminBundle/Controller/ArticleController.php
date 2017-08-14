@@ -132,7 +132,7 @@ class ArticleController extends Controller
         $path = $this->get('router')->generate('babdelaurablog_admin_supprimerArticle', array('slug' => $article->getSlug()));
 
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+        return $this->render('BabdelauraAdminBundle:Admin:confirmationSuppression.html.twig', array(
           'entite' => $article,
           'form'    => $form->createView(),
           'path'    => $path
@@ -206,10 +206,10 @@ class ArticleController extends Controller
             $request->query->get('page', 1),
             $nbArticlesParPage
         );
-        $listeArticles->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
+        $listeArticles->setTemplate('BabdelauraAdminBundle:Admin:sliding.html.twig');
 
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles, 'form' => $form->createView()));
+        return $this->render('BabdelauraAdminBundle:Article:listerArticles.html.twig', array('listeArticles' => $listeArticles, 'form' => $form->createView()));
 
     }
 
@@ -222,7 +222,7 @@ class ArticleController extends Controller
         $listeArticles = $repository->getArticles($nbArticlesParPage, true);
 
 
-        return $this->render('BabdelauraBlogBundle:Article:listerArticlesGrille.html.twig', array(
+        return $this->render('BabdelauraAdminBundle:Article:listerArticlesGrille.html.twig', array(
             'listeArticles' => $listeArticles,
             'admin' => true
         ));
@@ -245,7 +245,7 @@ class ArticleController extends Controller
         $commentaire->setSite('http://www.bricabrac-de-laura.fr');
         $form = $this->createForm(CommentaireType::class , $commentaire);
 
-        return $this->render('BabdelauraBlogBundle:Article:afficherArticle.html.twig',array('article' => $article,'form' => $form->createView()));
+        return $this->render('BabdelauraAdminBundle:Article:afficherArticle.html.twig',array('article' => $article,'form' => $form->createView()));
     }
 
     public function validerCommentairesAction($slug) {

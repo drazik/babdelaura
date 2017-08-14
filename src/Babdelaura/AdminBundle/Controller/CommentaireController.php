@@ -37,7 +37,7 @@ class CommentaireController extends Controller
                 $form = $this->createForm(CommentaireType::class, new Commentaire);
             }
 
-            return $this->render('BabdelauraBlogBundle:Admin/Article:afficherArticle.html.twig', array(
+            return $this->render('BabdelauraAdminBundle:Article:afficherArticle.html.twig', array(
                 'article' => $article,
                 'form' => $form->createView()));
         }
@@ -79,9 +79,9 @@ class CommentaireController extends Controller
             $requestQuery->get('page', 1),
             $nbCommentairesParPage
         );
-        $listeCommentaires->setTemplate('BabdelauraBlogBundle:Admin:sliding.html.twig');
+        $listeCommentaires->setTemplate('BabdelauraAdminBundle:Admin:sliding.html.twig');
 
-        return $this->render('BabdelauraBlogBundle:Admin/Commentaire:listerCommentairesNonValides.html.twig', array('listeCommentaires' => $listeCommentaires));
+        return $this->render('BabdelauraAdminBundle:Commentaire:listerCommentairesNonValides.html.twig', array('listeCommentaires' => $listeCommentaires));
     }
 
     public function supprimerCommentaireAction(Request $request, $idCom)
@@ -113,7 +113,7 @@ class CommentaireController extends Controller
         $path = $this->get('router')->generate('babdelaurablog_admin_supprimerCommentaire', array('idCom' => $commentaire->getId()));
 
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+        return $this->render('BabdelauraAdminBundle::confirmationSuppression.html.twig', array(
           'entite' => $commentaire,
           'form'    => $form->createView(),
           'path'    => $path

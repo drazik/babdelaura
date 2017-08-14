@@ -1,4 +1,4 @@
-{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+{% extends "BabdelauraAdminBundle::layout.html.twig" %}
 
 {% block content %}
     <h1>Ajout d'un article</h1>
@@ -71,7 +71,7 @@
             </button>
 
             <div class="js-preview-modal-image-picker-picker">
-                {% include 'BabdelauraBlogBundle:Admin/Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
+                {% include 'BabdelauraAdminBundle:Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
             </div>
         </div>
     </div>
