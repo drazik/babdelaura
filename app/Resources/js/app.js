@@ -1,11 +1,11 @@
 import "babel-polyfill";
 import "classlist-polyfill";
 
-import Search from "./new/modules/search";
-import Comments from "./new/modules/comments";
-import Header from "./new/modules/header";
-import ImagesSlideshow from "./new/modules/images-slideshow";
-import CookieBar from "./new/modules/cookie-bar";
+import Search from "./modules/search";
+import Comments from "./modules/comments";
+import Header from "./modules/header";
+import ImagesSlideshow from "./modules/images-slideshow";
+import CookieBar from "./modules/cookie-bar";
 
 import "../css/main.css";
 
