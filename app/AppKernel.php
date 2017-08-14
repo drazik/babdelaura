@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             new Kachkaev\AssetsVersionBundle\KachkaevAssetsVersionBundle(),
+            new Babdelaura\AdminBundle\BabdelauraAdminBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {
