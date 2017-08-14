@@ -5,99 +5,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Administration - Bric à Brac de Laura</title>
-    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" media="screen" href="{{asset('assets/css/admin.css') }}" />
-
-     {% include 'BabdelauraBlogBundle::favicon.html.twig' %}
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Vollkorn:400,400i,700,700i" rel="stylesheet" />
+    <script src="{{ asset('assets/admin.js') }}"></script>
 </head>
 
 <body>
-    <header class="bab-Header"></header>
-    <nav class="bab-MainNav js-nav">
-        <div class="bab-Wrapper">
-            <button class="bab-MainNav-toggle js-nav-toggle">
-                <i class="fa fa-bars js-nav-toggle-icon"></i>
-            </button>
-            <ul class="bab-MainNav-container js-nav-items">
-                <li class="bab-MainNav-item">
-                    <a href="{{ path('babdelaurablog_admin_accueil')}}" title="">Accueil</a>
-                </li>
-                <li class="bab-MainNav-item">
-                    <a href="#" title="">Articles <i class="fa fa-caret-down"></i></a>
-                    <ul class="bab-MainNav-submenu">
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path('babdelaurablog_admin_listerArticles') }}">Liste des articles</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path('babdelaurablog_admin_listerArticlesGrille') }}">Liste en grille</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path('babdelaurablog_admin_ajouterArticle') }}">Ajouter un article</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="bab-MainNav-item">
-                    <a href="#" title="">Catégories et tags<i class="fa fa-caret-down"></i></a>
-                    <ul class="bab-MainNav-submenu">
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_listerCategories')}}">Liste des catégories</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_ajouterCategorie')}}">Ajouter une catégorie</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_listerTags')}}">Liste des tags</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_ajouterTag')}}">Ajouter un tag</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="bab-MainNav-item">
-                    <a href="#" title="">Commentaires <i class="fa fa-caret-down"></i></a>
-                    <ul class="bab-MainNav-submenu">
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_listerCommentairesNonValides')}}">Valider les commentaires</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="bab-MainNav-item">
-                    <a href="#" title="">Pages <i class="fa fa-caret-down"></i></a>
-                    <ul class="bab-MainNav-submenu">
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_listerPages')}}">Liste des pages</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_ajouterPageInterne')}}">Ajouter une page interne</a>
-                        </li>
-                        <li class="bab-MainNav-submenuItem">
-                            <a href="{{ path ('babdelaurablog_admin_ajouterPageExterne')}}">Ajouter une page externe</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="bab-MainNav-item">
-                    <a href="{{ path('babdelaurablog_admin_galerieImages') }}" title="">Galerie</a>
-                </li>
-                <li class="bab-MainNav-item">
-                    <a href="{{ path('logout') }}" title="">Déconnexion</a>
-                </li>
-            </ul>
+    <div class="Sidebar">
+      <nav class="Navigation">
+        <div class="Navigation_item Navigation_item-current">
+          <a href="#" class="Navigation_link">Accueil</a>
         </div>
-    </nav>
-    <div class="content-inner bab-Wrapper">
-        <div class="bab-Grid">
-            <div class="bab-Grid-cell bab-Grid-cell--1-1">
-                {% block content %}{% endblock %}
-            </div>
+        <div class="Navigation_item">
+          <a href="#" class="Navigation_link">Statistiques</a>
         </div>
+      </nav>
     </div>
-    <footer class="bab-Footer">
-        Site développé du bout de mes ongles.
-    </footer>
-
-    {% block javascripts %}
-        <script src="{{ asset('assets/admin.js') }}"></script>
-    {% endblock %}
 </body>
 
 </html>

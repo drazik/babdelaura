@@ -1,0 +1,19 @@
+.Navigation_item {
+  padding: 2px 20px;
+
+  font-size: 18px;
+}
+
+.Navigation_item:hover {
+  background-color: #000;
+}
+
+.Navigation_item-current {
+  background-color: var(--main-color);
+  font-weight: bold;
+}
+
+.Navigation_link {
+  text-decoration: none;
+  color: #fff;
+}
