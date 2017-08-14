@@ -13,16 +13,25 @@
     <div class="Sidebar">
       <nav class="Navigation">
         <div class="Navigation_item Navigation_item">
-          <a href="#" class="Navigation_link">Accueil</a>
+          <a href="#" class="Navigation_link">
+            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'home', 'size': 14} only %}
+            Accueil
+          </a>
         </div>
         <div class="Navigation_item">
-          <a href="#" class="Navigation_link">Statistiques</a>
+          <a href="#" class="Navigation_link">
+            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'stats', 'size': 14} only %}
+            Statistiques
+          </a>
         </div>
       </nav>
 
       <nav class="Navigation">
         <div class="Navigation_item Navigation_item-hasSubNav Navigation_item-current">
-          <a href="#" class="Navigation_link">Articles</a>
+          <a href="#" class="Navigation_link">
+            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'articles', 'size': 14} only %}
+            Articles
+          </a>
           <div class="Navigation_subNav">
             <div class="Navigation_item">
               <a href="#" class="Navigation_link">Tous les articles</a>
@@ -39,7 +48,10 @@
           </div>
         </div>
         <div class="Navigation_item Navigation_item-hasSubNav">
-          <a href="#" class="Navigation_link">Pages</a>
+          <a href="#" class="Navigation_link">
+            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'pages', 'size': 14} only %}
+            Pages
+          </a>
           <div class="Navigation_subNav">
             <div class="Navigation_item">
               <a href="#" class="Navigation_link">Toutes les pages</a>
@@ -53,10 +65,16 @@
           </div>
         </div>
         <div class="Navigation_item Navigation_item">
-          <a href="#" class="Navigation_link">Commentaires</a>
+          <a href="#" class="Navigation_link">
+            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'comments', 'size': 14} only %}
+            Commentaires
+          </a>
         </div>
         <div class="Navigation_item">
-          <a href="#" class="Navigation_link">Galerie</a>
+          <a href="#" class="Navigation_link">
+            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'gallery', 'size': 14} only %}
+            Galerie
+          </a>
         </div>
       </nav>
     </div>

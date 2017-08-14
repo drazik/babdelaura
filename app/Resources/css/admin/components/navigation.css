@@ -30,6 +30,10 @@
   transform: translateY(-50%);
 }
 
+.Navigation_link .Icon {
+  margin-right: 5px;
+}
+
 .Navigation_item-hasSubNav:hover > .Navigation_link::after {
   border-right-color: #3a3a3a;
 }
@@ -69,6 +73,7 @@
   top: 0;
 
   display: none;
+  padding-top: 5px;
   padding-bottom: 5px;
 
   background-color: #3a3a3a;

@@ -3,6 +3,7 @@
 @import "base/typography.css";
 @import "layout/sidebar.css";
 @import "components/navigation.css";
+@import "components/icon.css";
 
 body {
   background-color: #f1f1f1;
