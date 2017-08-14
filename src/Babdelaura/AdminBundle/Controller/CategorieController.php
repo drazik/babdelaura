@@ -1,15 +1,15 @@
 <?php
 
-// src/Babdelaura/BlogBundle/Controller/ArticleController.php
+// src/Babdelaura/AdminBundle/Controller/ArticleController.php
 
-namespace Babdelaura\BlogBundle\Controller;
+namespace Babdelaura\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Babdelaura\BlogBundle\Entity\Categorie;
-use Babdelaura\BlogBundle\Form\CategorieType;
+use Babdelaura\AdminBundle\Form\CategorieType;
 
 class CategorieController extends Controller
 {
@@ -37,7 +37,7 @@ class CategorieController extends Controller
 
         }
 
-         return $this->render('BabdelauraBlogBundle:Admin/Categorie:enregistrerCategorie.html.twig', array('form' => $form->createView()));
+         return $this->render('BabdelauraAdminBundle:Categorie:enregistrerCategorie.html.twig', array('form' => $form->createView()));
 
      }
 
@@ -53,7 +53,7 @@ class CategorieController extends Controller
         $session = $this->get('session');
         $session->set('url', $this->generateUrl('babdelaurablog_admin_listerCategories'));
 
-        return $this->render('BabdelauraBlogBundle:Admin/Categorie:listerCategories.html.twig', array(
+        return $this->render('BabdelauraAdminBundle:Categorie:listerCategories.html.twig', array(
           'listeCategories' => $listeCategories
         ));
     }
@@ -94,7 +94,7 @@ class CategorieController extends Controller
         $path = $this->get('router')->generate('babdelaurablog_admin_supprimerCategorie', array('slug' => $categorie->getSlug()));
 
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+        return $this->render('BabdelauraAdminBundle::confirmationSuppression.html.twig', array(
           'entite' => $categorie,
           'form'    => $form->createView(),
           'path'    => $path

@@ -19,7 +19,7 @@ class ImageController extends Controller
             'action' => $this->generateUrl('babdelaurablog_admin_uploaderImage')
         ]);
 
-        return $this->render('BabdelauraBlogBundle:Admin/Image:galerie.html.twig', array(
+        return $this->render('BabdelauraAdminBundle:Image:galerie.html.twig', array(
           'form' => $form->createView(),
         ));
     }

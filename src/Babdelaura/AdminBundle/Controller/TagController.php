@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Babdelaura\BlogBundle\Controller;
+namespace Babdelaura\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Babdelaura\BlogBundle\Entity\Tag;
-use Babdelaura\BlogBundle\Form\TagType;
+use Babdelaura\AdminBundle\Form\TagType;
 
 class TagController extends Controller
 {
@@ -37,7 +37,7 @@ class TagController extends Controller
 
         }
 
-        return $this->render('BabdelauraBlogBundle:Admin/Tag:enregistrerTag.html.twig', array('form' => $form->createView()));
+        return $this->render('BabdelauraAdminBundle:Tag:enregistrerTag.html.twig', array('form' => $form->createView()));
 
     }
 
@@ -53,7 +53,7 @@ class TagController extends Controller
         $session = $this->get('session');
         $session->set('url', $this->generateUrl('babdelaurablog_admin_listerTags'));
 
-        return $this->render('BabdelauraBlogBundle:Admin/Tag:listerTags.html.twig', array(
+        return $this->render('BabdelauraAdminBundle:Tag:listerTags.html.twig', array(
           'listeTags' => $listeTags
         ));
     }
@@ -88,7 +88,7 @@ class TagController extends Controller
         $path = $this->get('router')->generate('babdelaurablog_admin_supprimerTag', array('slug' => $tag->getSlug()));
 
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-        return $this->render('BabdelauraBlogBundle:Admin:confirmationSuppression.html.twig', array(
+        return $this->render('BabdelauraAdminBundle::confirmationSuppression.html.twig', array(
           'entite' => $tag,
           'form'    => $form->createView(),
           'path'    => $path
