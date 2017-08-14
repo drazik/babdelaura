@@ -1,11 +1,11 @@
 babdelaurablog_admin_galerieImages:
     path: /admin/galerie
-    defaults: {_controller: BabdelauraBlogBundle:Image:afficherGalerie}
+    defaults: {_controller: BabdelauraAdminBundle:Image:afficherGalerie}
 
 babdelaurablog_admin_getImages:
     path: /admin/getImages
-    defaults: {_controller: BabdelauraBlogBundle:Image:getImages}
+    defaults: {_controller: BabdelauraAdminBundle:Image:getImages}
 
 babdelaurablog_admin_uploaderImage:
     path: /admin/uploadImage
-    defaults: {_controller: BabdelauraBlogBundle:Image:upload}
+    defaults: {_controller: BabdelauraAdminBundle:Image:upload}

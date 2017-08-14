@@ -1,19 +1,19 @@
 babdelaurablog_admin_listerTags:
     path: /admin/tags
-    defaults: {_controller: BabdelauraBlogBundle:Tag:listerTousTags}
+    defaults: {_controller: BabdelauraAdminBundle:Tag:listerTousTags}
 
 babdelaurablog_admin_ajouterTag:
     path: /admin/ajouterTag
-    defaults: {_controller: BabdelauraBlogBundle:Tag:enregistrerTag}
+    defaults: {_controller: BabdelauraAdminBundle:Tag:enregistrerTag}
 
 babdelaurablog_admin_modifierTag:
     path: /admin/modifierTag/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Tag:enregistrerTag}
+    defaults: {_controller: BabdelauraAdminBundle:Tag:enregistrerTag}
 
 babdelaurablog_admin_supprimerTag:
     path: /admin/supprimerTag/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Tag:supprimerTag}
+    defaults: {_controller: BabdelauraAdminBundle:Tag:supprimerTag}
 
 babdelaurablog_admin_listerTagsAutocomplete:
     path: /admin/tags-autocomplete
-    defaults: {_controller: BabdelauraBlogBundle:Tag:getTags}
+    defaults: {_controller: BabdelauraAdminBundle:Tag:getTags}

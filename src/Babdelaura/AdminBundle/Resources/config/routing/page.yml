@@ -1,31 +1,31 @@
 babdelaurablog_admin_ajouterPageInterne:
     path: /admin/ajouterPageInterne
-    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageInterne}
+    defaults: {_controller: BabdelauraAdminBundle:Page:enregistrerPageInterne}
 
 babdelaurablog_admin_afficherPage:
     path: /admin/page/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Page:afficherPageAdmin}
+    defaults: {_controller: BabdelauraAdminBundle:Page:afficherPageAdmin}
 
 babdelaurablog_admin_modifierPageInterne:
     path: /admin/modifierPageInterne/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageInterne}
+    defaults: {_controller: BabdelauraAdminBundle:Page:enregistrerPageInterne}
 
 babdelaurablog_admin_listerPages:
     path: /admin/pages
-    defaults: {_controller: BabdelauraBlogBundle:Page:listerToutesPagesAdmin}
+    defaults: {_controller: BabdelauraAdminBundle:Page:listerToutesPagesAdmin}
 
 babdelaurablog_admin_publierPage:
     path: /admin/publierPage/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Page:publierPage}
+    defaults: {_controller: BabdelauraAdminBundle:Page:publierPage}
 
 babdelaurablog_admin_supprimerPage:
     path: /admin/supprimerPage/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Page:supprimerPage}
+    defaults: {_controller: BabdelauraAdminBundle:Page:supprimerPage}
 
 babdelaurablog_admin_ajouterPageExterne:
     path: /admin/ajouterPageExterne
-    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageExterne}
+    defaults: {_controller: BabdelauraAdminBundle:Page:enregistrerPageExterne}
 
 babdelaurablog_admin_modifierPageExterne:
     path: /admin/modifierPageExterne/{slug}
-    defaults: {_controller: BabdelauraBlogBundle:Page:enregistrerPageExterne}
+    defaults: {_controller: BabdelauraAdminBundle:Page:enregistrerPageExterne}
