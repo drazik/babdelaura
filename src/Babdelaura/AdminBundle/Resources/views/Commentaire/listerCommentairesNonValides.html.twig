@@ -1,0 +1,52 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% block content %}
+
+<h1>Liste des commentaires non validés</h1>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Article</th>
+            <th>Auteur</th>
+            <th>Contenu</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for commentaire in listeCommentaires %}
+            <tr>
+                <td><a href="{{ path('babdelaurablog_admin_afficherArticle', {'slug' : commentaire.article.slug}) }}#commentaires">
+                    {{ commentaire.article.titre }}
+                    </a>
+                </td>
+                <td>
+                    {% if commentaire.site %}
+                            <a href="{{ asset(commentaire.site) }}" target="_blank">{{ commentaire.auteur }}</a>
+                    {% else %}
+                            {{ commentaire.auteur }}
+                    {% endif %}
+                </td>
+                <td>{{ commentaire.contenu }}</td>
+                <td>{{ commentaire.email }}</td>
+                <td>{{ commentaire.datePublication|date("d/m/Y H:i") }}</td>
+                 <td>
+                    <ul class="actions">
+                        <li class="action">
+                            <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : commentaire.article.slug, 'idCom' : commentaire.id})}}"><i class="fa fa-check-square-o"></i></a>
+                        </li>
+                        <li class="action">
+                            <a href="{{ path('babdelaurablog_admin_supprimerCommentaire', {'idCom' : commentaire.id}) }}"><i class="fa fa-trash-o"></i></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <div class="text-centered">
+        {{ knp_pagination_render(listeCommentaires) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('info') %}
+        <div class="bab-Notification bab-Notification--success">
+            <div class="bab-Notification-content">{{ flashMessage }}</div>
+        </div>
+    {% endfor %}
+    <h1>Liste des tags</h1>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tag in listeTags %}
+                <tr>
+                    <td>
+
+                        {{ tag.nom }}
+                    </td>
+                    <td>
+                        <ul class="actions">
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_modifierTag', {'slug' : tag.slug}) }}"><i class="fa fa-edit"></i></a>
+                            </li>
+                            <li class="action">
+                                <a href="{{ path('babdelaurablog_admin_supprimerTag', {'slug' : tag.slug}) }}"><i class="fa fa-trash-o"></i></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

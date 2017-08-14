@@ -1,0 +1,31 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% block content %}
+<div class="bab-Grid">
+    <div class="bab-Grid-cell bab-Grid-cell--2-3">
+        <h1>Visualiser la page</h1>
+        <section class="bab-Article">
+            <header>
+                {% if page.publication %}
+                    {% set classTitre = "article-title" %}
+                {% else %}
+                    {% set classTitre = "article-title draft" %}
+                {% endif %}
+
+                <h1 class="{{classTitre}}">{{ page.titre }}</h1>
+
+                <aside class="bab-Article-infos">
+                    Le {{ page.datePublication|date("d/m/Y à H:i") }}
+                </aside>
+            </header>
+            <div class="bab-Article-content">
+                {{page.contenu | raw}}
+            </div>
+        </section>
+    </div>
+    <div class="bab-Grid-cell bab-Grid-cell--1-3">
+        <h1>Gestion</h1>
+        <a class="bab-Button" href="{{ path('babdelaurablog_admin_modifierPageInterne', {'slug' : page.slug}) }}"><i class="fa fa-edit"></i> Modifier</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
+
+{% block content %}
+    <h1>Ajout d'un tag</h1>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.nom, "Nom") }}
+            {{ form_errors(form.nom)}}
+            {{ form_widget(form.nom) }}
+        </div>
+        <button class="bab-Button" type="submit">Enregistrer le tag</button>
+    {{ form_end(form) }}
+{% endblock %}
