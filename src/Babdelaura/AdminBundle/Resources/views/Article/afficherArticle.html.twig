@@ -1,4 +1,4 @@
-{% extends "BabdelauraBlogBundle:Admin:layout.html.twig" %}
+{% extends "BabdelauraBlogBundle::layout.html.twig" %}
 
 {% block content %}
 <div class="bab-Grid">
@@ -25,10 +25,10 @@
                     <ul class="bab-Article-categories">
                             <li class="bab-Article-category"><a href="#">{{article.categorie.nom}}</a></li>
                     </ul>
-                    
+
                     {% if article.tags|length > 0 %}
                         Tags :
-                        <ul class="bab-Article-categories">    
+                        <ul class="bab-Article-categories">
                             {% for tag in article.tags %}
                                 <li class="bab-Article-category">{{ tag }}</li>
                             {% endfor %}
@@ -68,7 +68,7 @@
                             {{ commentaire.auteur }}
                         {% endif %}
                         <span class="bab-Comment-date">le {{ commentaire.datePublication|date("d/m/Y à H:i") }}</span>
-                        
+
                         <a href="{{path('babdelaurablog_admin_supprimerCommentaire', {'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-trash-o"></i> Supprimer</a>
                         {% if commentaire.valide == false %}
                             <a href="{{path('babdelaurablog_admin_validerCommentaire', {'slug' : article.slug, 'idCom' : commentaire.id})}}" class="bab-Button bab-Button--small pull-right"><i class="fa fa-check-square-o"></i> Valider</a>

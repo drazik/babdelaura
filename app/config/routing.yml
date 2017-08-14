@@ -11,7 +11,7 @@ babdelaura_admin:
     prefix:   /
 
 babdelaura_adminArticle:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminArticle.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/article.yml"
     prefix:   /
 
 babdelaura_adminCategorie:
