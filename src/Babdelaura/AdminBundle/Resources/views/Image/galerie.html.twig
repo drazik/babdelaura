@@ -1,0 +1,7 @@
+{% extends "BabdelauraAdminBundle::layout.html.twig" %}
+
+{% block content %}
+    <h1>Galerie</h1>
+
+    {% include 'BabdelauraAdminBundle:Image:uploadListeImage.html.twig' with {'form': form} only %}
+{% endblock %}

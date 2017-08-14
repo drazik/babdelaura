@@ -1,0 +1,20 @@
+babdelaurablog_admin_validerCommentaire:
+    path: /admin/validerCommentaire/{slug}/{idCom}
+    defaults: {_controller: BabdelauraAdminBundle:Commentaire:validerCommentaire}
+
+babdelaurablog_admin_validerCommentairesArticle:
+    path: /admin/validerTousCommentaires/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Article:validerCommentaires}
+
+babdelaurablog_admin_listerCommentairesNonValides:
+    path: /admin/commentairesNonValides/
+    defaults: {_controller: BabdelauraAdminBundle:Commentaire:listerCommentairesNonValides}
+
+babdelaurablog_admin_ajouterCommentaire:
+    path: /admin/article/{slug}
+    methods: [POST]
+    defaults: {_controller: BabdelauraAdminBundle:Commentaire:enregistrerCommentaireAdmin}
+
+babdelaurablog_admin_supprimerCommentaire:
+    path: /admin/supprimerCommentaire/{idCom}
+    defaults: {_controller: BabdelauraAdminBundle:Commentaire:supprimerCommentaire}

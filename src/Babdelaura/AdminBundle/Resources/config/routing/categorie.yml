@@ -1,0 +1,19 @@
+babdelaurablog_admin_listerCategories:
+    path: /admin/categories
+    defaults: {_controller: BabdelauraAdminBundle:Categorie:listerToutesCategories}
+
+babdelaurablog_admin_ajouterCategorie:
+    path: /admin/ajouterCategorie
+    defaults: {_controller: BabdelauraAdminBundle:Categorie:enregistrerCategorie}
+
+babdelaurablog_admin_modifierCategorie:
+    path: /admin/modifierCategorie/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Categorie:enregistrerCategorie}
+
+babdelaurablog_admin_supprimerCategorie:
+    path: /admin/supprimerCategorie/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Categorie:supprimerCategorie}
+
+babdelaurablog_admin_changerVisibiliteCategorie:
+    path: /admin/changerVisibiliteCategorie/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Categorie:changerVisibiliteCategorie}

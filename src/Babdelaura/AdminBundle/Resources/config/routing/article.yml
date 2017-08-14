@@ -1,0 +1,28 @@
+babdelaurablog_admin_listerArticles:
+    path: /admin/articles/
+    defaults: {_controller: BabdelauraAdminBundle:Article:listerTousArticlesAdmin}
+
+babdelaurablog_admin_listerArticlesGrille:
+    path: /admin/articles/grille
+    defaults: {_controller: BabdelauraAdminBundle:Article:listerArticlesGrilleAdmin}
+
+babdelaurablog_admin_afficherArticle:
+    path: /admin/article/{slug}
+    methods: [GET]
+    defaults: {_controller: BabdelauraAdminBundle:Article:afficherArticleAdmin}
+
+babdelaurablog_admin_ajouterArticle:
+    path: /admin/ajouterArticle
+    defaults: {_controller: BabdelauraAdminBundle:Article:enregistrerArticle}
+
+babdelaurablog_admin_modifierArticle:
+    path: /admin/modifierArticle/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Article:enregistrerArticle}
+
+babdelaurablog_admin_supprimerArticle:
+    path: /admin/supprimerArticle/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Article:supprimerArticle}
+
+babdelaurablog_admin_publierArticle:
+    path: /admin/publierArticle/{slug}
+    defaults: {_controller: BabdelauraAdminBundle:Article:publierArticle}

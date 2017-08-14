@@ -1,0 +1,23 @@
+{% extends "BabdelauraAdminBundle::layout.html.twig" %}
+
+{% block content %}
+    <h1>Ajout d'une catégorie</h1>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.nom, "Nom") }}
+            {{ form_errors(form.nom)}}
+            {{ form_widget(form.nom) }}
+        </div>
+        <div class="checkbox">
+            {{ form_widget(form.visible) }}
+            {{ form_label(form.visible, "Visible dans le menu") }}
+            {{ form_errors(form.visible)}}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.position, "Position") }}
+            {{ form_errors(form.position)}}
+            {{ form_widget(form.position) }}
+        </div>
+        <button class="bab-Button" type="submit">Enregistrer la catégorie</button>
+    {{ form_end(form) }}
+{% endblock %}
