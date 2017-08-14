@@ -1,6 +1,6 @@
 <?php
 
-namespace Babdelaura\BlogBundle\Form;
+namespace Babdelaura\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,6 +42,6 @@ class ImageType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'babdelaura_blogbundle_image';
+        return 'babdelaura_adminbundle_image';
     }
 }

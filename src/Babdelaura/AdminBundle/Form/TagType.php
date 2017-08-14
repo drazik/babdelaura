@@ -1,6 +1,6 @@
 <?php
 
-namespace Babdelaura\BlogBundle\Form;
+namespace Babdelaura\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ class TagType extends AbstractType
             ->add('nom')
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

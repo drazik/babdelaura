@@ -1,6 +1,6 @@
 <?php
 
-namespace Babdelaura\BlogBundle\Form;
+namespace Babdelaura\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('visible', CheckboxType::class, array('required' => false))            
+            ->add('visible', CheckboxType::class, array('required' => false))
             ->add('position', IntegerType::class, array('required' => false))
         ;
     }
@@ -40,6 +40,6 @@ class CategorieType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'babdelaura_blogbundle_categorie';
+        return 'babdelaura_adminbundle_categorie';
     }
 }

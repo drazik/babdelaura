@@ -1,6 +1,6 @@
 <?php
 
-namespace Babdelaura\BlogBundle\Form;
+namespace Babdelaura\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,9 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class PageExterneType extends AbstractType
+class PageInterneType extends AbstractType
 {
-    /**
+        /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -20,8 +20,7 @@ class PageExterneType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class)
-            ->add('lienExterne', TextType::class)
-            ->add('targetBlank', CheckboxType::class, array('required' => false))
+            ->add('contenu', TextareaType::class)
             ->add('publication', CheckboxType::class, array('required' => false))
             ->add('inMenu', CheckboxType::class, array('required' => false))
             ->add('inFooter', CheckboxType::class, array('required' => false))
@@ -45,6 +44,6 @@ class PageExterneType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'babdelaura_blogbundle_page';
+        return 'babdelaura_adminbundle_page';
     }
 }
