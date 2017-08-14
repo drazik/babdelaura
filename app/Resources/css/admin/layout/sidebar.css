@@ -3,7 +3,7 @@
 	top: 0;
 	bottom: 0;
 
-	width: 160px;
+	width: 215px;
 
   /* FIXME dissocier de --title-color */
   background-color: var(--title-color);
