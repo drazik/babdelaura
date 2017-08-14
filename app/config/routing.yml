@@ -7,7 +7,7 @@ babdelaura_blog:
     prefix:   /
 
 babdelaura_admin:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/admin.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/admin.yml"
     prefix:   /
 
 babdelaura_adminArticle:
@@ -15,23 +15,23 @@ babdelaura_adminArticle:
     prefix:   /
 
 babdelaura_adminCategorie:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminCategorie.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/categorie.yml"
     prefix:   /
 
 babdelaura_adminCommentaire:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminCommentaire.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/commentaire.yml"
     prefix:   /
 
 babdelaura_adminImage:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminImage.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/image.yml"
     prefix:   /
 
 babdelaura_adminPage:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminPage.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/page.yml"
     prefix:   /
 
 babdelaura_adminTag:
-    resource: "@BabdelauraBlogBundle/Resources/config/routing/adminTag.yml"
+    resource: "@BabdelauraAdminBundle/Resources/config/routing/tag.yml"
     prefix:   /
 
 #ohinstagrambundle:
