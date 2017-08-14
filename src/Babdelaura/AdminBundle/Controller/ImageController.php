@@ -1,8 +1,8 @@
 <?php
 
-// src/Babdelaura/BlogBundle/Controller/ImageController.php
+// src/Babdelaura/AdminBundle/Controller/ImageController.php
 
-namespace Babdelaura\BlogBundle\Controller;
+namespace Babdelaura\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Babdelaura\BlogBundle\Entity\Image;
-use Babdelaura\BlogBundle\Form\ImageType;
+use Babdelaura\AdminBundle\Form\ImageType;
 
 class ImageController extends Controller
 {
