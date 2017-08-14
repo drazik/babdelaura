@@ -1,0 +1,84 @@
+{% extends "BabdelauraAdminBundle::layout.html.twig" %}
+
+{% block content %}
+    <h1>Ajout d'un article</h1>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.titre, "Titre") }}
+            {{ form_errors(form.titre)}}
+            {{ form_widget(form.titre) }}
+        </div>
+
+        <div
+            class="form-group js-wysiwyg-editor"
+            data-browse-url="{{ path('babdelaurablog_admin_galerieImages') }}"
+            data-css-url="{{ asset('css/contents.css') }}">
+            {{ form_label(form.contenu, "Contenu de l'article") }}
+            {{ form_errors(form.contenu)}}
+            {{ form_widget(form.contenu) }}
+        </div>
+
+        <div class="bab-Grid">
+            <div class="form-group bab-Grid-cell bab-Grid-cell--1-2">
+                <button class="bab-Button js-modal-opener" data-target="choose-main-image" type="button">
+                    <i class="fa fa-camera"></i> Choisir une image principale
+                </button>
+
+                {% if article.image %}
+                    {% set src = asset(article.image.webPath) %}
+                {% else %}
+                    {% set src = asset('images/no-photo.png') %}
+                {% endif %}
+
+                <img class="image-preview" id="image-preview" src="{{ src }}" />
+                {{ form_widget(form.imageTemp) }}
+            </div>
+
+            <div class="form-group bab-Grid-cell bab-Grid-cell--1-2">
+                {{ form_label(form.categorie, "Catégorie") }}
+                {{ form_errors(form.categorie)}}
+                {{ form_widget(form.categorie) }}
+                <hr />
+                <div class="bab-Autocomplete js-autocomplete" data-source-url="{{ path('babdelaurablog_admin_listerTagsAutocomplete') }}">
+                    <div class="bab-Autocomplete-selectedChoices js-autocomplete-selected-choices"></div>
+                    <input class="bab-Autocomplete-input js-autocomplete-input" type="text" placeholder="Ajouter un tag..." />
+                    <ul class="bab-Autocomplete-choices js-autocomplete-available-choices"></ul>
+                    {{ form_widget(form.tags) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.datePublication, "Date de publication") }}
+            {{ form_errors(form.datePublication)}}
+            {{ form_widget(form.datePublication) }}
+        </div>
+
+        <div class="checkbox">
+            {{ form_widget(form.publication) }}
+            {{ form_label(form.publication, "Publier l'article") }}
+            {{ form_errors(form.publication)}}
+        </div>
+
+        <button class="bab-Button" id="submit-btn" type="submit">Enregistrer l'article</button>
+    {{ form_end(form) }}
+
+    <div class="bab-Modal js-preview-modal-image-picker" id="choose-main-image" data-preview-element="#image-preview" data-input="#babdelaura_blogbundle_article_imageTemp">
+        <div class="bab-Modal-shadow"></div>
+        <div class="bab-Modal-container">
+            <button class="bab-Modal-close js-modal-closer" type="button">
+                <i class="fa fa-times"></i>
+            </button>
+
+            <div class="js-preview-modal-image-picker-picker">
+                {% include 'BabdelauraAdminBundle:Image:uploadListeImage.html.twig' with {'form': uploadImageForm} only %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+
+    {{ parent() }}
+{% endblock %}
