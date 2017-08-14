@@ -8,7 +8,7 @@
     height: var(--separator-element-height);
     margin: 0 5px;
 
-    background-image: url('../../images/new/separator.svg');
+    background-image: url('../../images/separator.svg');
     background-size: cover;
 	vertical-align: middle;
 }
