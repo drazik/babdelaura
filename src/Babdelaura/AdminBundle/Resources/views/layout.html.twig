@@ -1,3 +1,5 @@
+{% import "BabdelauraAdminBundle:Macros:topbar.html.twig" as topbar %}
+
 <!doctype html>
 <html lang="fr">
 
@@ -10,25 +12,36 @@
 </head>
 
 <body>
-  <nav class="Topbar">
-    <div class="Topbar_group">
-      <a href="#" class="Topbar_link">
-        {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'eye', 'size': 12} only %}
-        Se rendre sur le blog
-      </a>
-      <a href="#" class="Topbar_link">
-        {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'comments', 'size': 12} only %}
-        44
-      </a>
-    </div>
+  {{
+    topbar.topbar([
+      {
+        pullRight: false,
+        items: [
+          {
+            href: "#",
+            icon: "eye",
+            text: "Se rendre sur le blog"
+          },
+          {
+            href: "#",
+            icon: "comments",
+            text: "44"
+          },
+        ]
+      },
+      {
+        pullRight: true,
+        items: [
+          {
+            href: "#",
+            icon: "logout",
+            text: "Se déconnecter"
+          },
+        ]
+      }
+    ])
+  }}
 
-    <div class="Topbar_group-pullRight">
-      <a href="#" class="Topbar_link">
-        {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'logout', 'size': 12} only %}
-        Se déconnecter
-      </a>
-    </div>
-  </nav>
   <div class="Sidebar">
     <nav class="Navigation">
       <div class="Navigation_item Navigation_item">
