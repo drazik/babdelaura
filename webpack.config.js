@@ -8,8 +8,8 @@ const production = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: {
-    app: "./app/Resources/js/app.js",
-    admin: "./app/Resources/js/admin.js"
+    app: "./src/Babdelaura/BlogBundle/Resources/public/js/app.js",
+    admin: "./src/Babdelaura/AdminBundle/Resources/public/js/admin.js"
   },
   output: {
     path: path.resolve(__dirname, "web", "assets"),
@@ -25,7 +25,16 @@ module.exports = {
           presets: ["env"],
           plugins: ["transform-object-rest-spread"]
         },
-        include: path.resolve(__dirname, "app/Resources/js")
+        include: [
+          path.resolve(
+            __dirname,
+            "src/Babdelaura/AdminBundle/Resources/public/js"
+          ),
+          path.resolve(
+            __dirname,
+            "src/Babdelaura/BlogBundle/Resources/public/js"
+          )
+        ]
       },
       {
         test: /\.css$/,

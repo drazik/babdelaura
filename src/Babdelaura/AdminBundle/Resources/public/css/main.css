@@ -1,4 +1,4 @@
-@import "../helpers/variables.css";
+@import "helpers/variables.css";
 @import "base/base.css";
 @import "base/typography.css";
 @import "layout/sidebar.css";
