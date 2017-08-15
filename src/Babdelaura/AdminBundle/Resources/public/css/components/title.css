@@ -1,0 +1,13 @@
+.Title {
+  /* styles communs à tous les titres (font-family, font-weight, color...) */
+}
+
+.Title-main {
+  /* titre principal */
+  font-size: 30px;
+}
+
+.Title-secondary {
+  /* titre secondaire */
+  font-size: 18px;
+}
