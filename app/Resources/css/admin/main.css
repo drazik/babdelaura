@@ -2,6 +2,7 @@
 @import "base/base.css";
 @import "base/typography.css";
 @import "layout/sidebar.css";
+@import "layout/topbar.css";
 @import "components/navigation.css";
 @import "components/icon.css";
 

@@ -2,82 +2,101 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Administration - Bric à Brac de Laura</title>
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Vollkorn:400,400i,700,700i" rel="stylesheet" />
-    <script src="{{ asset('assets/admin.js') }}"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Administration - Bric à Brac de Laura</title>
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Vollkorn:400,400i,700,700i" rel="stylesheet" />
+  <script src="{{ asset('assets/admin.js') }}"></script>
 </head>
 
 <body>
-    <div class="Sidebar">
-      <nav class="Navigation">
-        <div class="Navigation_item Navigation_item">
-          <a href="#" class="Navigation_link">
-            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'home', 'size': 14} only %}
-            Accueil
-          </a>
-        </div>
-        <div class="Navigation_item">
-          <a href="#" class="Navigation_link">
-            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'stats', 'size': 14} only %}
-            Statistiques
-          </a>
-        </div>
-      </nav>
-
-      <nav class="Navigation">
-        <div class="Navigation_item Navigation_item-hasSubNav Navigation_item-current">
-          <a href="#" class="Navigation_link">
-            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'articles', 'size': 14} only %}
-            Articles
-          </a>
-          <div class="Navigation_subNav">
-            <div class="Navigation_item">
-              <a href="#" class="Navigation_link">Tous les articles</a>
-            </div>
-            <div class="Navigation_item">
-              <a href="#" class="Navigation_link">Ajouter un article</a>
-            </div>
-            <div class="Navigation_item Navigation_item-current">
-              <a href="#" class="Navigation_link">Catégories</a>
-            </div>
-            <div class="Navigation_item">
-              <a href="#" class="Navigation_link">Tags</a>
-            </div>
-          </div>
-        </div>
-        <div class="Navigation_item Navigation_item-hasSubNav">
-          <a href="#" class="Navigation_link">
-            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'pages', 'size': 14} only %}
-            Pages
-          </a>
-          <div class="Navigation_subNav">
-            <div class="Navigation_item">
-              <a href="#" class="Navigation_link">Toutes les pages</a>
-            </div>
-            <div class="Navigation_item">
-              <a href="#" class="Navigation_link">Ajouter une page interne</a>
-            </div>
-            <div class="Navigation_item">
-              <a href="#" class="Navigation_link">Ajouter une page externe</a>
-            </div>
-          </div>
-        </div>
-        <div class="Navigation_item Navigation_item">
-          <a href="#" class="Navigation_link">
-            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'comments', 'size': 14} only %}
-            Commentaires
-          </a>
-        </div>
-        <div class="Navigation_item">
-          <a href="#" class="Navigation_link">
-            {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'gallery', 'size': 14} only %}
-            Galerie
-          </a>
-        </div>
-      </nav>
+  <nav class="Topbar">
+    <div class="Topbar_group">
+      <a href="#" class="Topbar_link">
+        {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'eye', 'size': 12} only %}
+        Se rendre sur le blog
+      </a>
+      <a href="#" class="Topbar_link">
+        {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'comments', 'size': 12} only %}
+        44
+      </a>
     </div>
+
+    <div class="Topbar_group-pullRight">
+      <a href="#" class="Topbar_link">
+        {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'logout', 'size': 12} only %}
+        Se déconnecter
+      </a>
+    </div>
+  </nav>
+  <div class="Sidebar">
+    <nav class="Navigation">
+      <div class="Navigation_item Navigation_item">
+        <a href="#" class="Navigation_link">
+          {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'home', 'size': 14} only %}
+          Accueil
+        </a>
+      </div>
+      <div class="Navigation_item">
+        <a href="#" class="Navigation_link">
+          {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'stats', 'size': 14} only %}
+          Statistiques
+        </a>
+      </div>
+    </nav>
+
+    <nav class="Navigation">
+      <div class="Navigation_item Navigation_item-hasSubNav Navigation_item-current">
+        <a href="#" class="Navigation_link">
+          {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'articles', 'size': 14} only %}
+          Articles
+        </a>
+        <div class="Navigation_subNav">
+          <div class="Navigation_item">
+            <a href="#" class="Navigation_link">Tous les articles</a>
+          </div>
+          <div class="Navigation_item">
+            <a href="#" class="Navigation_link">Ajouter un article</a>
+          </div>
+          <div class="Navigation_item Navigation_item-current">
+            <a href="#" class="Navigation_link">Catégories</a>
+          </div>
+          <div class="Navigation_item">
+            <a href="#" class="Navigation_link">Tags</a>
+          </div>
+        </div>
+      </div>
+      <div class="Navigation_item Navigation_item-hasSubNav">
+        <a href="#" class="Navigation_link">
+          {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'pages', 'size': 14} only %}
+          Pages
+        </a>
+        <div class="Navigation_subNav">
+          <div class="Navigation_item">
+            <a href="#" class="Navigation_link">Toutes les pages</a>
+          </div>
+          <div class="Navigation_item">
+            <a href="#" class="Navigation_link">Ajouter une page interne</a>
+          </div>
+          <div class="Navigation_item">
+            <a href="#" class="Navigation_link">Ajouter une page externe</a>
+          </div>
+        </div>
+      </div>
+      <div class="Navigation_item Navigation_item">
+        <a href="#" class="Navigation_link">
+          {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'comments', 'size': 14} only %}
+          Commentaires
+        </a>
+      </div>
+      <div class="Navigation_item">
+        <a href="#" class="Navigation_link">
+          {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': 'gallery', 'size': 14} only %}
+          Galerie
+        </a>
+      </div>
+    </nav>
+  </div>
 </body>
 
 </html>
