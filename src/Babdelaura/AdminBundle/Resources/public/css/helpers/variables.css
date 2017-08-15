@@ -1,0 +1,21 @@
+:root {
+    /* Colors */
+    --main-color: #4fafb9;
+    --title-color: #4a4949;
+    --text-color: #444;
+    --text-light-color: #898c8c;
+    --success-color: #2ecc71;
+    --error-color: #c0392b;
+
+    /* Grid */
+    --grid-horizontal-gutter: 30px;
+    --grid-vertical-gutter: 35px;
+
+    --grid-horizontal-gutter-small: 6px;
+    --grid-horizontal-gutter-x-small: 3px;
+
+    --grid-vertical-gutter-small: 10px;
+
+    /* Fonts */
+    --base-font-stack: 'Vollkorn', serif;
+}
