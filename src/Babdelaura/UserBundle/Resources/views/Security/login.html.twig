@@ -7,27 +7,115 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Connexion à l'espace d'administration</title>
-    <link rel="stylesheet" media="screen" href="{{asset('css/main.css') }}" />
+
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            margin: 0;
+            background-color: #f1f1f1;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+
+        .LoginForm {
+            width: 400px;
+            margin: auto;
+            padding: 20px 25px;
+            border: 1px solid #ddd;
+            border-bottom-width: 2px;
+
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .Form_row + .Form_row {
+            margin-top: 20px;
+        }
+
+        .Form_actions {
+            margin-top: 20px;
+        }
+
+        .Form_label {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .Form_widget input[type="text"],
+        .Form_widget input[type="password"] {
+            width: 100%;
+            padding: 8px 5px;
+            border: 1px solid #ddd;
+
+            border-radius: 5px;
+        }
+
+        .Form_actions {
+            display: flex;
+        }
+
+        .Form_actions > * {
+            flex: 1;
+        }
+
+        .Button {
+            padding: 15px 20px;
+            border-width: 0;
+
+            background-color: #4fafb9;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .Button:hover,
+        .Button:focus {
+            background-color: #43a0aa;
+        }
+    </style>
 </head>
 
 <body>
-    <form class="form-login bab-Wrapper bab-Wrapper--small" method="post" action="{{ path('login_check') }}">
+    <form class="Form LoginForm" method="post" action="{{ path('login_check') }}">
         {% if error %}
-            <div class="alert alert-danger">
+            <div class="Alert Alert-danger">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
         {% endif %}
-        <div class="form-group">
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" name="_username" id="username" value="{{ last_username }}"/>
+        <div class="Form_row">
+            <label for="username" class="Form_label">Nom d'utilisateur</label>
+            <div class="Form_widget">
+                <input type="text" name="_username" id="username" value="{{ last_username }}"/>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" name="_password" id="password" />
+        <div class="Form_row">
+            <label for="password" class="Form_label">Mot de passe</label>
+            <div class="Form_widget">
+                <input type="password" name="_password" id="password" />
+            </div>
         </div>
-        <input type="checkbox" id="remember_me" name="_remember_me" checked />
-        <label for="remember_me">Se souvenir de moi</label>
-        <button class="bab-Button bab-Button-fullWidth" type="submit">Connexion</button>
+        <div class="Form_row">
+            <div class="Form_widget">
+                <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                <label for="remember_me">Se souvenir de moi</label>
+            </div>
+        </div>
+        <div class="Form_actions">
+            <button class="Button" type="submit">Connexion</button>
+        </div>
     </form>
 </body>
 
