@@ -8,8 +8,14 @@ const production = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: {
-    app: "./src/Babdelaura/BlogBundle/Resources/public/js/app.js",
-    admin: "./src/Babdelaura/AdminBundle/Resources/public/js/admin.js"
+    app: [
+      "./src/Babdelaura/BlogBundle/Resources/public/css/main.css",
+      "./src/Babdelaura/BlogBundle/Resources/public/js/app.js"
+    ],
+    admin: [
+      "./src/Babdelaura/AdminBundle/Resources/public/css/main.css",
+      "./src/Babdelaura/AdminBundle/Resources/public/js/admin.js"
+    ]
   },
   output: {
     path: path.resolve(__dirname, "web", "assets"),

@@ -7,8 +7,6 @@ import Header from "./modules/header";
 import ImagesSlideshow from "./modules/images-slideshow";
 import CookieBar from "./modules/cookie-bar";
 
-import "../css/main.css";
-
 const searchContainer = document.querySelector(".js-search");
 
 if (searchContainer) {
