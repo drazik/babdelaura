@@ -1,5 +1,5 @@
-.Title {
-  /* styles communs à tous les titres (font-family, font-weight, color...) */
+.Title:first-child {
+  margin-top: 0;
 }
 
 .Title-main {
