@@ -3,6 +3,7 @@
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require("webpack");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const production = process.env.NODE_ENV === "production";
 
@@ -114,6 +115,10 @@ module.exports = {
     new ExtractTextPlugin({
       filename: "css/[name].css",
       disable: !production
+    }),
+    new CleanWebpackPlugin(["assets"], {
+      root: path.join(__dirname, "web"),
+      verbose: true
     })
   ]
 };
