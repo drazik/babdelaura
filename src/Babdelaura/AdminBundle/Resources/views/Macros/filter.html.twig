@@ -1,7 +1,7 @@
 {% macro filter(items) %}
+  {% import _self as filter %}
   <div class="Filter">
     {% for item in items %}
-      {% import _self as filter %}
       {{filter.item(item.current, item.href, item.text, item.count)}}
     {% endfor %}
   </div>
