@@ -1,5 +1,6 @@
 {% import "BabdelauraAdminBundle:Macros:topbar.html.twig" as topbar %}
 {% import "BabdelauraAdminBundle:Macros:navigation.html.twig" as navigation %}
+{% import "BabdelauraAdminBundle:Macros:filter.html.twig" as filter %}
 
 <!doctype html>
 <html lang="fr">
@@ -140,10 +141,35 @@
     <div class="Box">
       <h2 class="Title Title-secondary">Ajouter une nouvelle catégorie </h2>
       <p>Lalalla <br>
-      lalalla <br>
-    lallala <br>
-  lallala</p>
+        lalalla <br>
+        lallala <br>
+        lallala</p>
     </div>
+
+    {{
+      filter.filter([
+        {
+          current: true,
+          href: '#',
+          text: 'Tous',
+          count: 5
+        },
+        {
+        current: false,
+        href: '#',
+        text: 'Publiés',
+        count: 3
+        },
+        {
+        current: false,
+        href: '#',
+        text: 'Brouillons',
+        count: 2
+        }
+      ])
+    }}
+
+
   </div>
 </body>
 
