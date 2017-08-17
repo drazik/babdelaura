@@ -1,0 +1,24 @@
+.Filter {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.Filter_link {
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.Filter_link:not(:last-child):after {
+  content:'|';
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.Filter_link:not(.Filter_link-current):hover {
+  color: var(--main-color);
+}
+
+.Filter_link-current {
+  font-weight: bold;
+}

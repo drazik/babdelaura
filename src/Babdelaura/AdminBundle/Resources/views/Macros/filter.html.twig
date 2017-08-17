@@ -1,0 +1,15 @@
+{% macro filter(items) %}
+  <div class="Filter">
+    {% for item in items %}
+      {% import _self as filter %}
+      {{filter.item(item.current, item.href, item.text, item.count)}}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+
+{% macro item(current, href, text, count) %}
+<a href="{{href}}" class="Filter_link {% if current %}Filter_link-current{% endif %}">
+  {{text}} ({{count}})
+</a>
+{% endmacro %}
