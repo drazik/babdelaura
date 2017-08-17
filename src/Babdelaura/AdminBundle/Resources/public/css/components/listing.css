@@ -1,0 +1,89 @@
+.Listing {
+  width: 100%;
+  border: 1px solid #dcdcdc;
+
+  border-collapse: collapse;
+}
+
+.Listing_head {
+  border-bottom: 1px solid #dcdcdc;
+
+  background-color: #fff;
+}
+
+.Listing_cell {
+  padding: 15px 20px;
+}
+
+.Listing_cell-heading {
+  font-weight: normal;
+}
+
+.Listing_cell-alignLeft {
+  text-align: left;
+}
+
+.Listing_cell-alignCenter {
+  text-align: center;
+}
+
+.Listing_cell-highlighted {
+  font-weight: bold;
+}
+
+.Listing_line {
+  background-color: #f9f9f9;
+}
+
+.Listing_actions {
+  display: flex;
+  margin-top: 20px;
+
+  font-weight: normal;
+
+  flex-wrap: nowrap;
+  visibility: hidden;
+}
+
+.Listing_cell:hover .Listing_actions {
+  visibility: visible;
+}
+
+.Listing_action {
+  padding: 0;
+  border-width: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.Listing_action:hover,
+.Listing_action:focus {
+  color: #777;
+}
+
+.Listing_action:not(:last-child) {
+  margin-right: 10px;
+}
+
+.Listing_action:not(:first-child)::before {
+  content: "|";
+
+  display: inline-block;
+  margin-right: 10px;
+
+  color: var(--text-color);
+}
+
+.Listing_action-dangerous {
+  color: #c0392b;
+}
+
+.Listing_action-dangerous:hover {
+  color: #e74c3c;
+}
