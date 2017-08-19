@@ -35,6 +35,10 @@
   background-color: #f9f9f9;
 }
 
+.Listing_line-quickEdit {
+  background-color: #fff;
+}
+
 .Listing_actions {
   display: flex;
   margin-top: 20px;
