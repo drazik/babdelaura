@@ -16,7 +16,7 @@
 }
 
 .Filter_link:not(.Filter_link-current):hover {
-  color: var(--main-color);
+  color: #777;
 }
 
 .Filter_link-current {

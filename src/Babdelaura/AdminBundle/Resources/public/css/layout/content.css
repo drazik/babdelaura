@@ -1,8 +1,6 @@
 .Content {
   height: 100%;
-
-  padding-top: 60px;
-  padding-left: 245px;
+  padding: 60px 30px 30px 245px;
 
   background-color: #f1f1f1;
 }
