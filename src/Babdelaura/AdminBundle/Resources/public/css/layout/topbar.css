@@ -1,0 +1,35 @@
+.Topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  height: 35px;
+  padding-left: 20px;
+
+  background-color: #3a3a3a;
+  font-size: 14px;
+  z-index: 1;
+  align-items: center;
+}
+
+.Topbar_group-pullRight {
+  margin-left: auto;
+}
+
+.Topbar_link {
+  margin-right: 10px;
+
+  text-decoration: none;
+  color: #fff;
+}
+
+.Topbar_link:hover {
+  color: var(--main-color);
+}
+
+.Topbar_link:not(:first-child) {
+    border-left: 1px solid #fff;
+    padding-left: 10px;
+}

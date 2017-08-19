@@ -3,13 +3,20 @@
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require("webpack");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const production = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: {
-    app: "./app/Resources/js/app.js",
-    admin: "./app/Resources/js/admin.js"
+    app: [
+      "./src/Babdelaura/BlogBundle/Resources/public/css/main.css",
+      "./src/Babdelaura/BlogBundle/Resources/public/js/app.js"
+    ],
+    admin: [
+      "./src/Babdelaura/AdminBundle/Resources/public/css/main.css",
+      "./src/Babdelaura/AdminBundle/Resources/public/js/admin.js"
+    ]
   },
   output: {
     path: path.resolve(__dirname, "web", "assets"),
@@ -25,7 +32,16 @@ module.exports = {
           presets: ["env"],
           plugins: ["transform-object-rest-spread"]
         },
-        include: path.resolve(__dirname, "app/Resources/js")
+        include: [
+          path.resolve(
+            __dirname,
+            "src/Babdelaura/AdminBundle/Resources/public/js"
+          ),
+          path.resolve(
+            __dirname,
+            "src/Babdelaura/BlogBundle/Resources/public/js"
+          )
+        ]
       },
       {
         test: /\.css$/,
@@ -99,6 +115,10 @@ module.exports = {
     new ExtractTextPlugin({
       filename: "css/[name].css",
       disable: !production
+    }),
+    new CleanWebpackPlugin(["assets"], {
+      root: path.join(__dirname, "web"),
+      verbose: true
     })
   ]
 };

@@ -1,0 +1,6 @@
+{% set size = size|default(12) %}
+{% set className = 'Icon Icon-' ~ name ~ ' Icon-' ~ size %}
+
+<svg class="{{ className }}" width="{{ size }}" height="{{ size }}">
+    <use xlink:href="{{ asset('images/icons.svg') }}#Icon-{{ name }}"></use>
+</svg>

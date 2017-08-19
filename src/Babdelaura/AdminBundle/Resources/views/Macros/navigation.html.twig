@@ -1,0 +1,33 @@
+{% macro navigation(items) %}
+{% import _self as navigation %}
+<nav class="Navigation">
+  {% for item in items %}
+    {{navigation.item(item.subItems, item.current, item.href, item.icon, item.text)}}
+  {% endfor %}
+
+</nav>
+{% endmacro %}
+
+{% macro item(subItems, current, href, icon, text)%}
+  {% import _self as navigation %}
+  <div class="Navigation_item {% if subItems|length > 0 %}Navigation_item-hasSubNav{% endif %} {% if current %}Navigation_item-current{% endif %}">
+    {{navigation.link(href, icon, text)}}
+
+    {% if subItems|length > 0 %}
+      <div class="Navigation_subNav">
+        {% for item in subItems %}
+          {{navigation.item([], item.current, item.href, false, item.text)}}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro link(href, icon, text) %}
+  <a href="{{href}}" class="Navigation_link">
+    {% if icon %}
+      {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': icon, 'size': 14} only %}
+    {% endif %}
+    {{text}}
+  </a>
+{% endmacro %}

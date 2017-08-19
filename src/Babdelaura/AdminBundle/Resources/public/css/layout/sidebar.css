@@ -1,0 +1,11 @@
+.Sidebar {
+	position: fixed;
+	top: 35px;
+	bottom: 0;
+
+	width: 215px;
+
+  /* FIXME dissocier de --title-color */
+  background-color: var(--title-color);
+	color: #fff;
+}

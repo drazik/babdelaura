@@ -1,0 +1,14 @@
+{% macro group(pullRight, items) %}
+  <div class="Topbar_group {% if pullRight %}Topbar_group-pullRight{% endif %}">
+    {% for item in items %}
+      {{machin.item(item.href, item.icon, item.text)}}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro item(href, icon, text) %}
+  <a href="{{href}}" class="Topbar_link">
+    {% include 'BabdelauraAdminBundle:Components:icon.html.twig' with {'name': icon, 'size': 12} only %}
+    {{text}}
+  </a>
+{% endmacro %}

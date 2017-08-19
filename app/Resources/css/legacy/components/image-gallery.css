@@ -1,8 +1,0 @@
-.bab-ImageGallery-item {
-    width: 200px;
-    cursor: pointer;
-}
-
-.bab-ImageGallery-item:hover {
-    outline: 2px solid #16a085;
-}
