@@ -1,0 +1,19 @@
+.Tag {
+  display: inline-block;
+  padding: 5px 15px;
+  margin-bottom: 5px;
+  border-width: 0;
+
+  border-radius: 50px;
+  background-color: #4fafb9;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.Tag + .Tag {
+  margin-left: 5px;
+}
+
+.Tag-clickable {
+  cursor: pointer;
+}

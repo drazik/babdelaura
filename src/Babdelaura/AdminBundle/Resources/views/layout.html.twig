@@ -225,7 +225,72 @@
         </tr>
         <tr class="Listing_line Listing_line-quickEdit">
           <td class="Listing_cell" colspan="6">
-
+            <form class="Form Form-quickEdit">
+              <h2 class="Title Title-secondary">Modification rapide</h2>
+              <div class="Grid">
+                <div class="Grid_cell">
+                  <fieldset class="Form_group">
+                    <div class="Form_row">
+                      <label class="Form_label">
+                        Titre
+                      </label>
+                      <div class="Form_widget">
+                        <input type="text" class="Form_field" />
+                      </div>
+                    </div>
+                    <div class="Form_row">
+                      <label class="Form_label">Date</label>
+                      <div class="Form_widget">
+                        <input type="datetime-local" class="Form_field" />
+                      </div>
+                    </div>
+                    <div class="Form_row">
+                      <label class="Form_label">Etat</label>
+                      <div class="Form_widget">
+                        <select class="Form_field">
+                          <option>Publié</option>
+                          <option>Brouillon</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="Grid_cell">
+                  <fieldset class="Form_group">
+                    <div class="Form_row">
+                      <label class="Form_label">Catégorie</label>
+                      <div class="Form_widget">
+                        <select class="Form_field">
+                          <option>Mode et beauté</option>
+                          <option>Humeur</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="Grid_cell">
+                  <fieldset class="Form_group">
+                    <div class="Form_row">
+                      <label class="Form_label">Tags</label>
+                      <div class="Form_widget">
+                        <input type="text" class="Form_field" />
+                        <p>Tags les plus utilisés :</p>
+                        <div>
+                          <button class="Tag Tag-clickable" type="button">Machin</button>
+                          <button class="Tag Tag-clickable" type="button">Chose</button>
+                          <button class="Tag Tag-clickable" type="button">Truc</button>
+                          <button class="Tag Tag-clickable" type="button">Bidule</button>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="Form_actions">
+                <button class="Form_field Form_field-button" type="button">Annuler</button>
+                <button class="Form_field Form_field-button Form_field-submit" type="submit">Enregistrer</button>
+              </div>
+            </form>
           </td>
         </tr>
       </tbody>
