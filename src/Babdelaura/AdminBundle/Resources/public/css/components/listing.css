@@ -13,6 +13,7 @@
 
 .Listing_cell {
   padding: 15px 20px;
+  vertical-align: top;
 }
 
 .Listing_cell-heading {
