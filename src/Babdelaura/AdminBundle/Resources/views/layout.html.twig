@@ -10,11 +10,11 @@
   <meta name="viewport" content="width=device-width" />
   <title>Administration - Bric à Brac de Laura</title>
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Vollkorn:400,400i,700,700i" rel="stylesheet" />
-  <script src="{{ asset('assets/admin.js') }}"></script>
 </head>
 
 <body>
-  {{
+  <div id="app"></div>
+  {#{{
     topbar.topbar([
       {
         pullRight: false,
@@ -185,7 +185,9 @@
     </form>
 
 
-  </div>
+  </div>#}
+
+  <script src="{{ asset('assets/admin.js') }}"></script>
 </body>
 
 </html>
