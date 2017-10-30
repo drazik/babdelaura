@@ -1,7 +1,31 @@
 .Navigation {
+  padding-top: 30px;
+}
+
+.Navigation_group + .Navigation_group {
   margin-top: 30px;
 }
 
+.Navigation_item-hasSubNav > .Navigation_group {
+  position: absolute;
+  left: 100%;
+  top: 0;
+
+  display: none;
+
+  white-space: nowrap;
+  background-color: #3a3a3a;
+}
+
+.Navigation_item-hasSubNav:hover > .Navigation_group {
+  display: block;
+}
+
+.Navigation_item-current.Navigation_item-hasSubNav > .Navigation_group {
+  position: static;
+
+  display: block;
+}
 
 .Navigation_item {
   position: relative;
@@ -13,8 +37,19 @@
   background-color: #000;
 }
 
-.Navigation_item:hover .Navigation_subNav {
+.Navigation_link {
+  position: relative;
+
   display: block;
+  padding: 2px 20px;
+
+  text-decoration: none;
+  color: #fff;
+}
+
+.Navigation_item-current > .Navigation_link {
+  background-color: var(--main-color);
+  font-weight: bold;
 }
 
 .Navigation_link::after {
@@ -30,72 +65,19 @@
   transform: translateY(-50%);
 }
 
-.Navigation_link .Icon {
-  margin-right: 5px;
-}
-
 .Navigation_item-hasSubNav:hover > .Navigation_link::after {
   border-right-color: #3a3a3a;
 }
 
-.Navigation_item-current > .Navigation_link {
-  background-color: var(--main-color);
-  font-weight: bold;
+.Navigation_item-current > .Navigation_link::after,
+.Navigation_item-current:hover > .Navigation_link::after {
+  border-right-color: #fff;
 }
 
-.Navigation_item-current:hover > .Navigation_link {
-  background-color: var(--main-color);
-}
-
-.Navigation_item-current .Navigation_subNav{
-  position: static;
-
-  display: block;
-}
-
-.Navigation_item-current > .Navigation_link::after {
-  border-right-color: #f1f1f1 !important;
-}
-
-.Navigation_link {
-  position: relative;
-
-  display: block;
-  padding: 2px 20px;
-
-  text-decoration: none;
-  color: #fff;
-}
-
-.Navigation_subNav {
-  position: absolute;
-  left: 100%;
-  top: 0;
-
-  display: none;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
-  background-color: #3a3a3a;
-  white-space: nowrap;
-}
-
-.Navigation_subNav .Navigation_item {
-  font-size: 16px;
-  font-weight: normal;
-
+.Navigation_item-hasSubNav > .Navigation_group .Navigation_item {
   background-color: transparent;
 }
 
-.Navigation_subNav .Navigation_item-current .Navigation_link {
-  font-weight: bold;
-  background-color: transparent;
-}
-
-.Navigation_subNav .Navigation_item-current .Navigation_link::after {
-  display: none;
-}
-
-.Navigation_subNav .Navigation_link:hover {
-  color: var(--main-color);
+.Navigation_item-hasSubNav > .Navigation_group .Navigation_link::after {
+  border-right-color: transparent;
 }
