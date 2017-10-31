@@ -35,16 +35,16 @@
           count: 5
         },
         {
-        current: false,
-        href: '#',
-        text: 'Publiés',
-        count: 3
+          current: false,
+          href: '#',
+          text: 'Publiés',
+          count: 3
         },
         {
-        current: false,
-        href: '#',
-        text: 'Brouillons',
-        count: 2
+          current: false,
+          href: '#',
+          text: 'Brouillons',
+          count: 2
         }
       ])
     }}
@@ -64,6 +64,117 @@
       <button type="submit" class="Form_field Form_field-button Form_field-submit" name="button">Enregistrer</button>
     </form>
 
+    <table class="Listing">
+      <thead class="Listing_head">
+        <tr>
+          <th class="Listing_cell Listing_cell-heading Listing_cell-alignLeft">Titre</th>
+          <th class="Listing_cell Listing_cell-heading Listing_cell-alignLeft">Catégorie</th>
+          <th class="Listing_cell Listing_cell-heading">Tags</th>
+          <th class="Listing_cell Listing_cell-heading">Com</th>
+          <th class="Listing_cell Listing_cell-heading">Date</th>
+          <th class="Listing_cell Listing_cell-heading">Etat</th>
+        </tr>
+      </thead>
+      <tbody class="Listing_body">
+        <tr class="Listing_line">
+          <td class="Listing_cell Listing_cell-highlighted">
+            5 raisons pour lesquelles j'aime l'été
+
+            <div class="Listing_actions">
+              <a href="#" class="Listing_action">Modification</a>
+              <button type="button" class="Listing_action">Modification rapide</button>
+              <button type="button" class="Listing_action Listing_action-dangerous">Supprimer</button>
+              <a href="#" class="Listing_action">Afficher</a>
+            </div>
+          </td>
+          <td class="Listing_cell">
+            Humeur
+          </td>
+          <td class="Listing_cell Listing_cell-alignCenter">
+            été, lifestyle
+          </td>
+          <td class="Listing_cell Listing_cell-alignCenter">
+            -
+          </td>
+          <td class="Listing_cell Listing_cell-alignCenter">
+            15/08/2017
+          </td>
+          <td class="Listing_cell Listing_cell-alignCenter Listing_cell-highlighted">
+            Brouillon
+          </td>
+        </tr>
+        <tr class="Listing_line Listing_line-quickEdit">
+          <td class="Listing_cell" colspan="6">
+            <form class="Form Form-quickEdit">
+              <h2 class="Title Title-secondary">Modification rapide</h2>
+              <div class="Grid">
+                <div class="Grid_cell">
+                  <fieldset class="Form_group">
+                    <div class="Form_row">
+                      <label class="Form_label">
+                        Titre
+                      </label>
+                      <div class="Form_widget">
+                        <input type="text" class="Form_field" />
+                      </div>
+                    </div>
+                    <div class="Form_row">
+                      <label class="Form_label">Date</label>
+                      <div class="Form_widget">
+                        <input type="datetime-local" class="Form_field" />
+                      </div>
+                    </div>
+                    <div class="Form_row">
+                      <label class="Form_label">Etat</label>
+                      <div class="Form_widget">
+                        <select class="Form_field">
+                          <option>Publié</option>
+                          <option>Brouillon</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="Grid_cell">
+                  <fieldset class="Form_group">
+                    <div class="Form_row">
+                      <label class="Form_label">Catégorie</label>
+                      <div class="Form_widget">
+                        <select class="Form_field">
+                          <option>Mode et beauté</option>
+                          <option>Humeur</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="Grid_cell">
+                  <fieldset class="Form_group">
+                    <div class="Form_row">
+                      <label class="Form_label">Tags</label>
+                      <div class="Form_widget">
+                        <input type="text" class="Form_field" />
+                        <p>Tags les plus utilisés :</p>
+                        <div>
+                          <button class="Tag Tag-clickable" type="button">Machin</button>
+                          <button class="Tag Tag-clickable" type="button">Chose</button>
+                          <button class="Tag Tag-clickable" type="button">Truc</button>
+                          <button class="Tag Tag-clickable" type="button">Bidule</button>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="Form_actions">
+                <button class="Form_field Form_field-button" type="button">Annuler</button>
+                <button class="Form_field Form_field-button Form_field-submit" type="submit">Enregistrer</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   </div>#}
 
