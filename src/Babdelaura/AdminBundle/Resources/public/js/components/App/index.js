@@ -1,6 +1,15 @@
 import { h, Component } from "preact";
 import { Topbar, TopbarGroup, TopbarItem } from "../Topbar";
-import { IconEye, IconBubble, IconLogout } from "../Icon";
+import {
+  IconEye,
+  IconBubble,
+  IconLogout,
+  IconHome,
+  IconGraph,
+  IconPencil,
+  IconSheet,
+  IconCamera
+} from "../Icon";
 import {
   Navigation,
   NavigationGroup,
@@ -51,15 +60,36 @@ class App extends Component {
           <Navigation>
             <NavigationGroup>
               <NavigationItem>
-                <NavigationLink href="#">Accueil</NavigationLink>
+                <NavigationLink href="#">
+                  <IconHome
+                    width={14}
+                    height={14}
+                    className="Navigation_icon"
+                  />
+                  Accueil
+                </NavigationLink>
               </NavigationItem>
               <NavigationItem>
-                <NavigationLink href="#">Statistiques</NavigationLink>
+                <NavigationLink href="#">
+                  <IconGraph
+                    width={14}
+                    height={14}
+                    className="Navigation_icon"
+                  />
+                  Statistiques
+                </NavigationLink>
               </NavigationItem>
             </NavigationGroup>
             <NavigationGroup>
               <NavigationItem isCurrent hasSubNav>
-                <NavigationLink href="#">Articles</NavigationLink>
+                <NavigationLink href="#">
+                  <IconPencil
+                    width={14}
+                    height={14}
+                    className="Navigation_icon"
+                  />
+                  Articles
+                </NavigationLink>
                 <NavigationGroup>
                   <NavigationItem>
                     <NavigationLink href="#">Tous les articles</NavigationLink>
@@ -76,7 +106,14 @@ class App extends Component {
                 </NavigationGroup>
               </NavigationItem>
               <NavigationItem>
-                <NavigationLink href="#">Pages</NavigationLink>
+                <NavigationLink href="#">
+                  <IconSheet
+                    width={14}
+                    height={14}
+                    className="Navigation_icon"
+                  />
+                  Pages
+                </NavigationLink>
                 <NavigationGroup>
                   <NavigationItem>
                     <NavigationLink href="#">Toutes les pages</NavigationLink>
@@ -94,10 +131,24 @@ class App extends Component {
                 </NavigationGroup>
               </NavigationItem>
               <NavigationItem>
-                <NavigationLink href="#">Commentaires</NavigationLink>
+                <NavigationLink href="#">
+                  <IconBubble
+                    width={14}
+                    height={14}
+                    className="Navigation_icon"
+                  />
+                  Commentaires
+                </NavigationLink>
               </NavigationItem>
               <NavigationItem>
-                <NavigationLink href="#">Gallerie</NavigationLink>
+                <NavigationLink href="#">
+                  <IconCamera
+                    width={14}
+                    height={14}
+                    className="Navigation_icon"
+                  />
+                  Gallerie
+                </NavigationLink>
               </NavigationItem>
             </NavigationGroup>
           </Navigation>

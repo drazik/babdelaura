@@ -81,3 +81,7 @@
 .Navigation_item-hasSubNav > .Navigation_group .Navigation_link::after {
   border-right-color: transparent;
 }
+
+.Navigation_icon {
+  margin-right: 5px;
+}

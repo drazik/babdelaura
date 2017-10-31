@@ -1,7 +1,7 @@
 import { h, Component } from "preact";
 
 class IconBubble extends Component {
-  render({ width = 36, height = 32, fillColor, className }) {
+  render({ width = 36, height = 32, fillColor = "currentColor", className }) {
     return (
       <svg
         class={className}

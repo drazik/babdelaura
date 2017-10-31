@@ -1,7 +1,7 @@
 import { h, Component } from "preact";
 
 class IconLogout extends Component {
-  render({ width = 32, height = 32, fillColor, className }) {
+  render({ width = 32, height = 32, fillColor = "currentColor", className }) {
     return (
       <svg
         class={className}
