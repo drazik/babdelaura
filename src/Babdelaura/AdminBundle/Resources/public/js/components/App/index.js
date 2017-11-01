@@ -17,6 +17,7 @@ import {
   NavigationLink
 } from "../Navigation";
 import Sidebar from "../Sidebar";
+import Content from "../Content";
 
 class App extends Component {
   render() {
@@ -153,6 +154,10 @@ class App extends Component {
             </NavigationGroup>
           </Navigation>
         </Sidebar>
+
+        <Content>
+          <p>Hello world</p>
+        </Content>
       </div>
     );
   }

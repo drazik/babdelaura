@@ -71,7 +71,7 @@
 
 .Navigation_item-current > .Navigation_link::after,
 .Navigation_item-current:hover > .Navigation_link::after {
-  border-right-color: #fff;
+  border-right-color: #f1f1f1;
 }
 
 .Navigation_item-hasSubNav > .Navigation_group .Navigation_item {
