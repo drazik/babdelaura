@@ -1,13 +1,9 @@
 .Title:first-child {
   margin-top: 0;
-}
 
-.Title-main {
-  /* titre principal */
   font-size: 30px;
 }
 
-.Title-secondary {
-  /* titre secondaire */
+.Title-small {
   font-size: 18px;
 }

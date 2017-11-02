@@ -18,6 +18,7 @@ import {
 } from "../Navigation";
 import Sidebar from "../Sidebar";
 import Content from "../Content";
+import Title from "../Title";
 
 class App extends Component {
   render() {
@@ -156,7 +157,8 @@ class App extends Component {
         </Sidebar>
 
         <Content>
-          <p>Hello world</p>
+          <Title>Accueil</Title>
+          <Title small>Accueil</Title>
         </Content>
       </div>
     );
