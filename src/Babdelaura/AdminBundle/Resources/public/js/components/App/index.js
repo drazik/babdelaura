@@ -19,6 +19,7 @@ import {
 import Sidebar from "../Sidebar";
 import Content from "../Content";
 import Title from "../Title";
+import Box from "../Box";
 
 class App extends Component {
   render() {
@@ -159,6 +160,10 @@ class App extends Component {
         <Content>
           <Title>Accueil</Title>
           <Title small>Accueil</Title>
+
+          <Box>
+            <p>Lorem ipsum dolor sit amet</p>
+          </Box>
         </Content>
       </div>
     );
