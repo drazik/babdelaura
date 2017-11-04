@@ -21,6 +21,7 @@ import Content from "../Content";
 import Title from "../Title";
 import Box from "../Box";
 import { FilterBar, FilterLink } from "../Filter";
+import Button from "../Button";
 
 class App extends Component {
   render() {
@@ -173,6 +174,12 @@ class App extends Component {
             <FilterLink href="#">Publiés (3)</FilterLink>
             <FilterLink href="#">Brouillons (2)</FilterLink>
           </FilterBar>
+          <Button>Wesh</Button>
+          <Button primary>Primary</Button>
+          <Button href="https://qwant.com">qwant.com</Button>
+          <Button href="https://qwant.com" target="_blank" primary>
+            qwant.com
+          </Button>
         </Content>
       </div>
     );

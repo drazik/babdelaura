@@ -1,0 +1,27 @@
+.Button {
+  display: inline-flex;
+  padding: 5px 10px;
+  border: 1px solid #e0e0e0;
+
+  font-family: var(--base-font-stack);
+  font-size: 1rem;
+
+  background-color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.Button + .Button {
+  margin-left: 10px;
+}
+
+.Button[disabled],
+.Button-disabled {
+  cursor: default;
+}
+
+.Button-primary {
+  background-color: var(--main-color);
+  color: #fff;
+}
