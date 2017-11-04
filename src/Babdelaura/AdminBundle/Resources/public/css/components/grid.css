@@ -1,0 +1,18 @@
+.Grid {
+  display: flex;
+
+  flex-wrap: wrap;
+}
+
+.Grid-gutters {
+  width: calc(100% + var(--grid-horizontal-gutter));
+  margin: 0 calc(-1 * var(--grid-horizontal-gutter) / 2);
+}
+
+.Grid_cell {
+  flex: 1;
+}
+
+.Grid-gutters .Grid_cell {
+  padding: 0 calc(var(--grid-horizontal-gutter) / 2);
+}

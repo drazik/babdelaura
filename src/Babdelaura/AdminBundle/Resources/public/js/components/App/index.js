@@ -22,6 +22,7 @@ import Title from "../Title";
 import Box from "../Box";
 import { FilterBar, FilterLink } from "../Filter";
 import Button from "../Button";
+import { Grid, GridCell } from "../Grid";
 
 class App extends Component {
   render() {
@@ -180,6 +181,14 @@ class App extends Component {
           <Button href="https://qwant.com" target="_blank" primary>
             qwant.com
           </Button>
+          <Grid hasGutters>
+            <GridCell>
+              <Box>Wesh</Box>
+            </GridCell>
+            <GridCell>
+              <Box>Morray</Box>
+            </GridCell>
+          </Grid>
         </Content>
       </div>
     );
