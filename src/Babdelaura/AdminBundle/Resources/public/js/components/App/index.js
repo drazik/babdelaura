@@ -20,6 +20,7 @@ import Sidebar from "../Sidebar";
 import Content from "../Content";
 import Title from "../Title";
 import Box from "../Box";
+import { FilterBar, FilterLink } from "../Filter";
 
 class App extends Component {
   render() {
@@ -164,6 +165,14 @@ class App extends Component {
           <Box>
             <p>Lorem ipsum dolor sit amet</p>
           </Box>
+
+          <FilterBar>
+            <FilterLink href="#" current>
+              Tous (5)
+            </FilterLink>
+            <FilterLink href="#">Publiés (3)</FilterLink>
+            <FilterLink href="#">Brouillons (2)</FilterLink>
+          </FilterBar>
         </Content>
       </div>
     );

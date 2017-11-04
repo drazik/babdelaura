@@ -16,29 +16,6 @@
   <div id="app"></div>
   {#
   <div class="Content">
-    {{
-      filter.filter([
-        {
-          current: true,
-          href: '#',
-          text: 'Tous',
-          count: 5
-        },
-        {
-        current: false,
-        href: '#',
-        text: 'Publiés',
-        count: 3
-        },
-        {
-        current: false,
-        href: '#',
-        text: 'Brouillons',
-        count: 2
-        }
-      ])
-    }}
-
     <form class="Form" action="#" method="post">
       <input type="text" class="Form_field Form_field-input" name="" value="">
       <button type="submit" class="Form_field Form_field-button" name="button">Rechercher</button>
